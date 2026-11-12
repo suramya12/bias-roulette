@@ -55,6 +55,10 @@ The toggle at the top switches to a second mode: a ring of photocards on a conce
 
 `npm run charts` rebuilds `data/charts.json` from kworb.net (pages cached in `.cache/`; add `-- --fresh` for today's numbers). It prints songs it could not match, so you can add video ids to `EXTRA_VIDEOS`.
 
+## Cards and collection
+
+Every idol you win in Bias Roulette and every song you pull in the Top 100 becomes a collectible card (`src/card.js`). Rarity comes from the Top 100: Legendary (top 10), Epic (11-30), Rare (31-100), Common (not charted). Song cards show rank, Spotify streams and MV views. Idol cards show Power (how much their group and solo acts have charted), and how many group and solo songs are in their deck. Cards you collect are kept in the browser (localStorage) and shown in the collection binder.
+
 ## Testing the player
 
 `http://localhost:5173/?forceVideo=VIDEO_ID` plays that ID on every result. `IX1dkYoLHVs` (age-restricted) and `_k7gZaDjTTM` (embedding blocked) show the fallback.

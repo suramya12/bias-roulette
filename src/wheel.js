@@ -1,7 +1,7 @@
 // Draws the wheel once per segment change and spins it with a CSS transform.
 // It never decides an outcome: spinTo() is told which segment to land on.
 
-const INK = '#2a1840';
+const INK = '#0b0716';
 
 export class Wheel {
   /** @param opts {onTick(segIndex)} — called whenever a new segment passes the pointer */
@@ -50,10 +50,10 @@ export class Wheel {
       ctx.moveTo(0, 0);
       ctx.arc(0, 0, R, i * a, (i + 1) * a);
       ctx.closePath();
-      ctx.fillStyle = seg.taken ? '#ddd6e6' : seg.color;
+      ctx.fillStyle = seg.taken ? '#241c33' : seg.color;
       ctx.fill();
       ctx.lineWidth = dense ? 0.6 : 2.5;
-      ctx.strokeStyle = dense ? 'rgba(42,24,64,.45)' : INK;
+      ctx.strokeStyle = dense ? 'rgba(11,7,22,.55)' : INK;
       ctx.stroke();
     });
 
@@ -71,7 +71,13 @@ export class Wheel {
       const fit = () => { ctx.font = `700 ${size2}px Fredoka, ui-rounded, system-ui, sans-serif`; return ctx.measureText(text).width <= maxLen; };
       while (!fit() && size2 > Math.max(5, font * 0.72)) size2 -= 0.5;
       while (!fit() && text.length > 4) text = text.slice(0, -2).trimEnd() + '…';
-      ctx.fillStyle = seg.taken ? '#a79fb5' : INK;
+      if (!seg.taken) {
+        ctx.lineJoin = 'round';
+        ctx.lineWidth = Math.max(1.6, size2 * 0.3);
+        ctx.strokeStyle = 'rgba(11,7,22,.9)';
+        ctx.strokeText(text, R * 0.95, 0);
+      }
+      ctx.fillStyle = seg.taken ? '#5d5270' : '#fff';
       ctx.fillText(text, R * 0.95, 0);
       ctx.restore();
     });

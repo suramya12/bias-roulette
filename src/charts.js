@@ -5,6 +5,7 @@
 import { cryptoInt } from './game.js';
 import { VideoPlayer } from './player.js';
 import * as fx from './fx.js';
+import { makeCard, songCard, playIn, collection, openBinder } from './card.js';
 
 const $ = (id) => document.getElementById(id);
 const SLOTS = 14;
@@ -29,6 +30,8 @@ function hslToRgb(h, s, l) {
   const f = (n) => { const k = (n + h / 30) % 12; return Math.round(255 * (l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)))); };
   return [f(0), f(8), f(4)];
 }
+/** "#rrggbb" or "rgb(r, g, b)" -> [r, g, b] */
+export const toRgb = (c) => (c.startsWith('#') ? hexToRgb(c) : c.match(/d+/g).slice(0, 3).map(Number));
 const hexToRgb = (hex) => { const n = parseInt(hex.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
 const css = ([r, g, b]) => `rgb(${r}, ${g}, ${b})`;
 const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
@@ -45,7 +48,7 @@ function el(tag, props = {}, ...children) {
 }
 
 // ---------- lightstick crowd ----------
-class Crowd {
+export class Crowd {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
@@ -193,7 +196,6 @@ export class Charts {
 
   async activate() {
     this.active = true;
-    document.body.classList.add('night');
     if (!(await this.load())) return;
     this.crowd.resize();
     this.crowd.start();
@@ -202,7 +204,6 @@ export class Charts {
 
   deactivate() {
     this.active = false;
-    document.body.classList.remove('night');
     this.crowd.stop();
     cancelAnimationFrame(this.idleRaf);
     this.player.stop();
@@ -413,20 +414,10 @@ export class Charts {
   reveal(song, { fromList = false } = {}) {
     this.song = song;
     if (fromList) { this.#dropLift(); this.#setAccent(song); }
-    const tier = tierOf(song.rank);
-    const holo = $('holo');
-    holo.dataset.tier = tier;
-    holo.style.setProperty('--c', css(colorOf(song.artist)));
-    $('holoImg').src = thumb(song.videoId, 'hqdefault');
-    $('holoTier').textContent = TIER_LABEL[tier];
-    $('holoRank').textContent = `#${song.rank}`;
-    $('holoTitle').textContent = song.title;
-    $('holoArtist').textContent = song.artist;
-    $('holoVibe').hidden = !song.vibe;
-    $('holoVibe').textContent = song.vibe || '';
-    holo.classList.remove('reveal');
-    void holo.offsetWidth; // restart the flip
-    holo.classList.add('reveal');
+    const data = songCard(song);
+    const card = makeCard(data, { isNew: collection.add('song', data.key) });
+    $('songCardSlot').replaceChildren(card);
+    playIn(card, { reduced: fx.prefersReducedMotion() });
 
     const stat = (label, value, note) => [el('dt', { text: label }), el('dd', {}, el('b', { text: value }), note ? el('small', { text: note }) : '')];
     $('stats').replaceChildren(
@@ -480,19 +471,12 @@ export class Charts {
     $('listNew').addEventListener('click', () => this.#setList('new'));
     for (const n of [10, 50, 100]) $(`r${n}`).addEventListener('click', () => this.#setRange(n));
 
-    // Tilt the holographic card under the pointer.
-    const holo = $('holo');
-    holo.addEventListener('pointermove', (e) => {
-      const r = holo.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width;
-      const py = (e.clientY - r.top) / r.height;
-      holo.style.setProperty('--rx', `${((0.5 - py) * 18).toFixed(1)}deg`);
-      holo.style.setProperty('--ry', `${((px - 0.5) * 22).toFixed(1)}deg`);
-      holo.style.setProperty('--mx', `${(px * 100).toFixed(1)}%`);
-      holo.style.setProperty('--my', `${(py * 100).toFixed(1)}%`);
-    });
-    holo.addEventListener('pointerleave', () => {
-      for (const p of ['--rx', '--ry', '--mx', '--my']) holo.style.removeProperty(p);
+    $('binderSongs').addEventListener('click', () => {
+      if (!this.data) return;
+      openBinder({
+        title: this.list === 'new' ? 'New to K-pop cards' : 'Top 100 cards',
+        kind: 'song', cards: this.songs.map(songCard), reduced: fx.prefersReducedMotion(),
+      });
     });
     document.addEventListener('visibilitychange', () => {
       if (!this.active) return;

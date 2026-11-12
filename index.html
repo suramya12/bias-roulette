@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <!-- YouTube needs a Referer from the embedding page (player error 153 without it). -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="theme-color" content="#ffd6ec">
+  <meta name="theme-color" content="#1a0e35">
   <title>Bias Roulette</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="night">
   <div class="sky" id="sky" aria-hidden="true"></div>
 
   <main class="app" id="app">
@@ -34,9 +34,11 @@
       <li><b>4</b>Song showdown</li>
     </ol>
 
-    <p class="announce" id="announce" role="status" aria-live="polite">Loading…</p>
+    <p class="announce night" id="announce" role="status" aria-live="polite">Loading…</p>
 
     <section id="play" aria-label="Wheel">
+      <div class="stage stage-wheel" id="wheelStage">
+      <div class="beams" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="wheel-wrap" id="wheelWrap">
         <div class="rim" id="rim" aria-hidden="true"></div>
         <button class="wheel-btn" id="wheelBtn" type="button" aria-label="Spin the wheel"><canvas id="wheel"></canvas></button>
@@ -45,6 +47,8 @@
         <div class="pointer" aria-hidden="true"></div>
         <div class="stamp" id="stamp" hidden></div>
       </div>
+      <canvas class="crowd" id="crowdWheel" aria-hidden="true"></canvas>
+      </div>
       <p class="readout" id="readout" aria-hidden="true">&nbsp;</p>
       <div class="actions">
         <button class="btn btn-pink btn-big" id="spinBtn" type="button">Spin!</button>
@@ -52,7 +56,9 @@
       </div>
     </section>
 
-    <section id="result" aria-label="Winning video" hidden>
+    <section id="result" class="pull" aria-label="Winning video" hidden>
+      <div class="card-slot" id="idolCardSlot"></div>
+      <div class="screen">
       <div class="player-card">
         <div class="player-box" id="playerBox">
           <div id="player"></div>
@@ -74,13 +80,15 @@
         <button class="btn btn-mint" id="anotherBtn" type="button">Another song</button>
         <button class="btn btn-sky" id="restartBtn" type="button">Start over</button>
       </div>
+      </div>
     </section>
 
     <section class="finalists" aria-labelledby="finalistsTitle">
       <h2 id="finalistsTitle">Finalists</h2>
       <p class="chip" id="idolChip" hidden></p>
-      <ul id="finalists"></ul>
+      <ul class="hand" id="finalists"></ul>
     </section>
+    <button class="btn btn-small binder-btn" id="binderIdols" type="button">🃏 Idol collection</button>
 
     <footer class="options">
       <div class="seg" role="group" aria-label="Showdown length">
@@ -119,23 +127,7 @@
       </div>
 
       <section class="pull" id="pull" aria-label="Your card" hidden>
-        <div class="holo" id="holo">
-          <div class="holo-inner">
-            <div class="holo-front">
-              <img class="holo-img" id="holoImg" alt="">
-              <div class="holo-foil"></div>
-              <div class="holo-glare"></div>
-              <span class="holo-tier" id="holoTier"></span>
-              <span class="holo-rank" id="holoRank"></span>
-              <div class="holo-info">
-                <b id="holoTitle"></b>
-                <span id="holoArtist"></span>
-                <span class="holo-vibe" id="holoVibe" hidden></span>
-              </div>
-            </div>
-            <div class="holo-back" aria-hidden="true"><span>K-POP<br>TOP 100</span></div>
-          </div>
-        </div>
+        <div class="card-slot" id="songCardSlot"></div>
         <div class="screen">
           <div class="player-card">
             <div class="player-box" id="stageBox">
@@ -157,6 +149,8 @@
         </div>
       </section>
 
+      <button class="btn btn-small binder-btn" id="binderSongs" type="button">🃏 Song collection</button>
+
       <details class="chart" id="chart">
         <summary><span id="chartName">The Top 100</span> <small>tap a song to play it</small></summary>
         <p class="method" id="method"></p>
@@ -168,6 +162,15 @@
       <button class="btn btn-small" id="soundBtn" type="button" aria-pressed="true">Sound on</button>
     </footer>
   </main>
+
+  <dialog class="binder" id="binder" aria-labelledby="binderTitle">
+    <div class="binder-head">
+      <h2><span id="binderTitle">Collection</span><small id="binderCount"></small><span class="binder-meter"><i id="binderMeter"></i></span></h2>
+      <button class="btn btn-small" id="binderClose" type="button">Close</button>
+    </div>
+    <div class="binder-grid" id="binderGrid"></div>
+    <div class="binder-view" id="binderView" hidden></div>
+  </dialog>
 
   <div class="fx" id="fx" aria-hidden="true"></div>
   <script type="module" src="src/main.js"></script>

@@ -6,7 +6,8 @@ import { Wheel } from './wheel.js';
 import { Sound } from './sound.js';
 import { VideoPlayer, loadApi } from './player.js';
 import * as fx from './fx.js';
-import { Charts } from './charts.js';
+import { Charts, Crowd, toRgb } from './charts.js';
+import { makeCard, cardBack, idolCard, rouletteSongCard, chartIndex, playIn, collection, openBinder } from './card.js';
 
 const $ = (id) => document.getElementById(id);
 const CANDY = ['#ff5fa2', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff', '#ffb38a'];
@@ -29,11 +30,11 @@ function el(tag, props = {}, ...children) {
   return node;
 }
 
-/** Blend a hex colour towards white. */
-function tint(hex, amount) {
+/** Blend a hex colour towards the night sky. */
+function shade(hex, amount) {
   const n = parseInt(hex.slice(1), 16);
-  const ch = (shift) => Math.round(((n >> shift) & 255) + (255 - ((n >> shift) & 255)) * amount);
-  return `rgb(${ch(16)}, ${ch(8)}, ${ch(0)})`;
+  const ch = (shift, to) => Math.round(((n >> shift) & 255) + (to - ((n >> shift) & 255)) * amount);
+  return `rgb(${ch(16, 18)}, ${ch(8, 10)}, ${ch(0, 36)})`;
 }
 
 const sound = new Sound(store.get('sound', 'on') === 'on');
@@ -49,6 +50,10 @@ const player = new VideoPlayer({
   message: $('fallbackMsg'), link: $('watchLink'), hint: $('playHint'),
 });
 const charts = new Charts({ sound, store });
+const wheelCrowd = new Crowd($('crowdWheel'));
+let chartIdx = null; // Top 100 by act, for card power
+let catalogIdols = [];
+const reduced = () => fx.prefersReducedMotion();
 const forceVideo = new URLSearchParams(location.search).get('forceVideo'); // for testing the player, see README
 
 let game = null;
@@ -88,13 +93,13 @@ function renderWheel() {
     readout: `${nameOf(w.stage, s.item)} · ${subOf(w.stage, s.item)}`,
     taken: s.taken,
     color: w.kind === 'duel' ? CANDY[s.finalist % CANDY.length]
-      : w.stage === 'idol' ? tint(s.item.color, i % 2 ? 0.38 : 0.08)
+      : w.stage === 'idol' ? shade(s.item.color, i % 2 ? 0.34 : 0.06)
         : CANDY[i % CANDY.length],
   })));
   $('wheelBtn').setAttribute('aria-label', `Spin the wheel: ${intro()}`);
 }
 
-function renderFinalists(flash = -1) {
+function renderFinalists(flash = -1, flip = -1) {
   const stage = game.stage === 'result' ? 'song' : game.stage;
   const list = game.finalists(stage);
   const needed = game.drawsNeeded(stage);
@@ -113,14 +118,15 @@ function renderFinalists(flash = -1) {
   for (let i = 0; i < needed; i++) {
     const f = list[i];
     if (!f) {
-      rows.push(el('li', { class: 'card empty' }, el('span', { class: 'badge', text: '?' }),
-        el('span', { class: 'sub', text: `Finalist ${i + 1}: not drawn yet` })));
+      rows.push(el('li', { class: 'hand-slot empty' }, cardBack('mini', String(i + 1)),
+        el('span', { class: 'hand-name', text: 'Not drawn yet' })));
       continue;
     }
-    const name = nameOf(stage, f.item);
-    const row = el('li', { class: 'card' + (f.index === winner ? ' winner' : '') + (i === flash ? ' flash' : '') },
-      el('span', { class: 'badge', style: `--c:${CANDY[i % CANDY.length]}`, text: [...name.replace(/^[^\p{L}\p{N}]+/u, '')][0]?.toUpperCase() || '♥', 'aria-hidden': 'true' }),
-      el('span', {}, el('span', { class: 'name', text: name }), el('br'), el('span', { class: 'sub', text: subOf(stage, f.item) })));
+    const data = stage === 'idol' ? idolCard(f.item, chartIdx) : rouletteSongCard(f.item, chartIdx);
+    const card = makeCard(data, { size: 'mini' });
+    const row = el('li', { class: 'hand-slot' + (f.index === winner ? ' winner' : '') + (i === flash ? ' flash' : '') },
+      card, el('span', { class: 'hand-name', text: nameOf(stage, f.item) }), el('span', { class: 'hand-sub', text: subOf(stage, f.item) }));
+    if (i === flip) playIn(card, { reduced: reduced() });
     if (duel) {
       const hearts = el('span', { class: 'hearts', role: 'img', 'aria-label': `${f.hits} of ${game.duelTarget} hits` });
       for (let h = 0; h < game.duelTarget; h++) {
@@ -146,6 +152,8 @@ function renderOptions() {
 function setBusy(on) {
   busy = on;
   $('wheelWrap').classList.toggle('spinning', on);
+  $('wheelStage').classList.toggle('spinning', on);
+  wheelCrowd.hype = on ? 1 : 0;
   for (const id of ['spinBtn', 'autoBtn', 'wheelBtn']) $(id).setAttribute('aria-disabled', String(on));
 }
 
@@ -169,6 +177,11 @@ function showResult() {
   $('songTitle').textContent = song.title;
   $('songArtist').textContent = song.artist;
   $('drawnFor').textContent = `Drawn for ${idol.name} · ${idol.label}`;
+  setAccent(idol.color);
+  const data = idolCard(idol, chartIdx);
+  const card = makeCard(data, { isNew: collection.add('idol', data.key) });
+  $('idolCardSlot').replaceChildren(card);
+  playIn(card, { reduced: reduced() });
   renderSteps();
   renderFinalists();
   announce(`Winner: ${song.title} by ${song.artist}, drawn for ${idol.name}.`);
@@ -207,6 +220,7 @@ async function spin() {
     if (ev.stage === 'idol') {
       announce(`${name} wins the idol showdown!`);
       fx.setSkyColor(ev.item.color);
+      setAccent(ev.item.color);
       celebrate(name, ev.item.color);
       await sleep(reducedMotion ? 900 : 1900);
       showPlay();
@@ -220,12 +234,12 @@ async function spin() {
     const what = ev.stage === 'idol' ? 'Finalist' : 'Song';
     announce(`${what} ${ev.count} of ${ev.needed}: ${name} (${subOf(ev.stage, ev.item)}).`);
     if (ev.phaseAfter !== ev.phase) {
-      renderFinalists();
+      renderFinalists(-1, ev.count - 1);
       await sleep(900);
       showPlay();
     } else {
       renderWheel(); // greys out the segment that was just drawn
-      renderFinalists();
+      renderFinalists(-1, ev.count - 1);
     }
   } else {
     announce(`${name} scores! ${ev.hits} of ${ev.target}.`);
@@ -247,6 +261,7 @@ function startOver() {
   if (busy || !game) return;
   game.reset();
   fx.setSkyColor(null);
+  setAccent(null);
   showPlay();
 }
 
@@ -263,6 +278,12 @@ function setTarget(n) {
   renderOptions();
   if (game.duelTarget !== n) announce(`First to ${n} starts with the next showdown.`);
   else if (!busy && game.phase !== 'result') { renderFinalists(); announce(intro()); }
+}
+
+function setAccent(color) {
+  const root = document.documentElement.style;
+  if (color) root.setProperty('--accent', color); else root.removeProperty('--accent');
+  wheelCrowd.setColor(color ? toRgb(color) : null);
 }
 
 // ---------- modes ----------
@@ -290,8 +311,12 @@ function setMode(next) {
     player.stop();
     fx.setSkyColor(null);
     charts.activate().then(() => { if (mode === 'charts') setTicker(charts.tickerItems()); });
+    wheelCrowd.stop();
   } else {
     charts.deactivate();
+    setAccent(game?.idol?.color || null);
+    wheelCrowd.resize();
+    wheelCrowd.start();
     if (rouletteTicker.length) setTicker(rouletteTicker);
   }
 }
@@ -317,6 +342,7 @@ async function start() {
   try {
     const load = (f) => fetch(f, { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(f); return r.json(); });
     [roster, videos] = await Promise.all([load('data/roster.json'), load('data/videos.json')]);
+    chartIdx = chartIndex((await load('data/charts.json').catch(() => null))?.top);
   } catch {
     announce(location.protocol === 'file:'
       ? 'This page needs a web server. Run "npm start" and open the address it prints.'
@@ -324,6 +350,7 @@ async function start() {
     return;
   }
   const catalog = buildCatalog(roster, videos);
+  catalogIdols = catalog.idols;
   if (!catalog.idols.length) { announce('No songs have videos yet. Run "npm run resolve", then reload.'); return; }
 
   game = new Game(catalog.idols, { target: store.get('target', '3') === '2' ? 2 : 3 });
@@ -337,6 +364,9 @@ async function start() {
   $('againBtn').addEventListener('click', () => chooseForMe({ restart: true }));
   $('anotherBtn').addEventListener('click', anotherSong);
   $('restartBtn').addEventListener('click', startOver);
+  $('binderIdols').addEventListener('click', () => openBinder({
+    title: 'Idol cards', kind: 'idol', cards: catalogIdols.map((i) => idolCard(i, chartIdx)), reduced: reduced(),
+  }));
   $('resetBtn').addEventListener('click', startOver);
   $('t3').addEventListener('click', () => setTarget(3));
   $('t2').addEventListener('click', () => setTarget(2));
