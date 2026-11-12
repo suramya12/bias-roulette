@@ -3,14 +3,31 @@
 // Used for song cards (Top 100) and idol cards (Bias Roulette). Also keeps the
 // viewer's collection in localStorage.
 
+import { showArt } from './art.js';
+
 const thumb = (id, size = 'hqdefault') => `https://i.ytimg.com/vi/${encodeURIComponent(id)}/${size}.jpg`;
 export const short = (n) => (n >= 1e9 ? `${(n / 1e9).toFixed(n >= 1e10 ? 1 : 2)}B` : n >= 1e6 ? `${Math.round(n / 1e6)}M` : String(n));
 export const norm = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^\p{L}\p{N}]+/gu, '');
-const ALIAS = { gidle: 'idle', txt: 'tomorrowxtogether', seventeen: 'seventeen' };
+const ALIAS = { gidle: 'idle', txt: 'tomorrowxtogether' };
 const actKey = (a) => { const k = norm(a); return ALIAS[k] || k; };
+/**
+ * Ways an act may be credited on the chart, best first. Only the lead artist counts, so a
+ * feature never lends another idol's hits: "ROSÉ & Bruno Mars" -> ROSÉ, "V BTS" -> V,
+ * "LOONA HeeJin" -> HeeJin.
+ */
+function actKeys(artist) {
+  const lead = String(artist).split(/\s+(?:feat\.?|ft\.|x|&|with)\s+|,\s*/i)[0].trim();
+  const words = lead.split(/\s+/);
+  const keys = [actKey(lead)];
+  if (words.length > 1) keys.push(actKey(words.slice(0, -1).join(' ')), actKey(words.slice(1).join(' ')));
+  return keys.filter((k, i) => k && keys.indexOf(k) === i);
+}
 
 export const TIERS = { legend: 'Legendary', epic: 'Epic', rare: 'Rare', common: 'Common' };
-export const tierOf = (rank) => (!rank ? 'common' : rank <= 10 ? 'legend' : rank <= 30 ? 'epic' : 'rare');
+export const tierOf = (rank) => (!rank || rank > 100 ? 'common' : rank <= 10 ? 'legend' : rank <= 30 ? 'epic' : 'rare');
+/** Rank among all songs (both lists share it), so a song is the same card everywhere. */
+const overall = (s) => s.overall ?? s.rank;
+const ART_WORDS = { 'HUNTR/X': 'demon hunt golden', 'Saja Boys': 'demon hunt', 'K/DA': 'legend game' };
 const SOLO = new Set(['Jung Kook', 'Jimin', 'V', 'RM', 'Jin', 'j-hope', 'Agust D', 'ROSÉ', 'LISA', 'JENNIE', 'JISOO', 'PSY', 'IU', 'TAEYEON', 'HWASA', 'Jay Park', 'G-DRAGON']);
 const SOUNDTRACK = { 'HUNTR/X': 'Soundtrack', 'Saja Boys': 'Soundtrack', 'K/DA': 'Game Anthem' };
 
@@ -34,11 +51,16 @@ export function songCard(s) {
   if (SOLO.has(s.artist)) kw.push('Solo');
   return {
     kind: 'song', key: `${s.artist} | ${s.title}`, name: s.title, type: 'Song', act: s.artist, color: colorOf(s.artist),
-    art: thumb(s.videoId), tier: tierOf(s.rank), gem: s.rank, gemLabel: 'Rank',
+    art: {
+      seed: `song|${s.artist}|${s.title}`, kind: 'song', title: s.title, act: s.artist, color: colorOf(s.artist), tier: tierOf(overall(s)),
+      words: `${s.title} ${s.vibe || ''} ${ART_WORDS[s.artist] || ''}`, photo: { kind: 'mv', src: thumb(s.videoId) },
+    },
+    tier: tierOf(overall(s)), gem: overall(s), gemLabel: 'Rank',
     left: { value: short(s.streams), label: 'Streams', icon: '♫' },
     right: { value: short(s.views), label: 'Views', icon: '▶' },
     keywords: kw.slice(0, 3),
     flavor: s.vibe ? `“${s.vibe}.” Score ${short(s.score)}.` : `Score ${short(s.score)}: streams and MV views, averaged.`,
+    credit: null,
   };
 }
 
@@ -55,22 +77,65 @@ export function chartIndex(top) {
 }
 
 /** The chart entry for a roulette song, if it charted. */
-export const chartSong = (index, artist, title) => index?.songs.get(actKey(artist) + '|' + norm(title)) || null;
+export function chartSong(index, artist, title) {
+  if (!index) return null;
+  for (const k of actKeys(artist)) { const s = index.songs.get(k + '|' + norm(title)); if (s) return s; }
+  return null;
+}
+/** Chart songs credited to this act (first credit form that matches). */
+function actHits(index, artist) {
+  for (const k of actKeys(artist)) { const list = index?.byAct.get(k); if (list) return list; }
+  return [];
+}
 
 /**
  * Card for an idol: {name, label, color, songs:[{artist, title, videoId}]}.
  * Power comes from the Top 100: how much the idol's group and solo acts have charted.
  */
-export function idolCard(idol, index) {
+/**
+ * Who gets which picture, decided for all idols at once so no two share one: their own
+ * photo first; then a frame from an MV they lead (solo), not taken by anyone else; then an
+ * unused group MV. Returns name -> {photo, credit}.
+ */
+export function artPlan(idols, portraits) {
+  const plan = new Map(), used = new Set();
+  for (const i of idols) {
+    const p = portraits?.[i.name];
+    if (p && !used.has(p.src)) { used.add(p.src); plan.set(i.name, { photo: { kind: 'portrait', src: p.src, focus: [0.5, 0.3] }, credit: { text: `Photo: ${p.author}, ${p.license}`, href: p.file } }); }
+  }
+  const take = (i, songs) => {
+    for (const s of songs) {
+      if (!s.videoId || used.has(s.videoId)) continue;
+      used.add(s.videoId);
+      plan.set(i.name, { photo: { kind: 'mv', src: thumb(s.videoId, 'hq2') }, credit: null }); // a mid-video frame, so it differs from the song card
+      return true;
+    }
+    return false;
+  };
+  const rest = idols.filter((i) => !plan.has(i.name));
+  const groupAct = (i) => i.songs[0]?.artist;
+  for (const i of rest) take(i, i.label === 'Solo' ? i.songs : i.songs.filter((s) => s.artist !== groupAct(i)));
+  for (const i of rest) if (!plan.has(i.name)) take(i, i.songs);
+  return plan;
+}
+
+export function idolCard(idol, index, plan = null) {
   const acts = [...new Set(idol.songs.map((s) => s.artist))];
-  const hits = acts.flatMap((a) => index?.byAct.get(actKey(a)) || []).sort((a, b) => a.rank - b.rank);
+  const hits = [...new Set(acts.flatMap((a) => actHits(index, a)))].sort((a, b) => a.rank - b.rank);
+  const groupHits = new Set(idol.label === 'Solo' ? [] : actHits(index, idol.songs[0]?.artist || ''));
+  const groupHit = (s) => groupHits.has(s);
   const best = hits[0];
   const total = hits.reduce((n, s) => n + s.score, 0);
-  const power = hits.length ? Math.min(10, 2 + Math.round(total / 1e9)) : 1;
+  // Power 1-10 on a log scale: solo hits count fully, group hits at a third.
+  const soloTotal = hits.filter((s) => !groupHit(s)).reduce((n, s) => n + s.score, 0);
+  const weighted = soloTotal + (total - soloTotal) / 3;
+  const power = weighted > 0 ? Math.max(1, Math.min(10, Math.round(1 + (9 * Math.log10(Math.max(1, weighted / 5e7))) / Math.log10(200)))) : 1;
   const groupAct = idol.songs[0]?.artist;
-  const group = idol.songs.filter((s) => s.artist === groupAct).length;
+  const soloist = idol.label === 'Solo'; // a soloist's "group" in the roster is their own act
+  const group = soloist ? 0 : idol.songs.filter((s) => s.artist === groupAct).length;
   const own = idol.songs.length - group;
-  const artSong = (best && idol.songs.find((s) => norm(s.title) === norm(best.title))) || idol.songs[0];
+  const ownSong = idol.songs.find((s) => s.artist !== groupAct || soloist);
+  const pick = plan?.get(idol.name) || null;
   const kw = [];
   if (best) kw.push(`#${best.rank} Peak`);
   if (hits.some((s) => s.streams >= 1e9 || s.views >= 1e9)) kw.push('Billion Club');
@@ -78,8 +143,13 @@ export function idolCard(idol, index) {
   if (hits.length >= 5) kw.push('Hitmaker');
   if (!hits.length) kw.push('Hidden Gem');
   return {
-    kind: 'idol', key: idol.name, name: idol.name, type: 'Idol', act: idol.label, color: idol.color,
-    art: thumb(artSong?.videoId || ''), tier: best ? tierOf(best.rank) : 'common', gem: power, gemLabel: 'Power',
+    kind: 'idol', key: idol.name, name: idol.name, type: soloist ? 'Soloist' : 'Idol', act: soloist ? groupAct : idol.label, color: idol.color,
+    art: {
+      seed: `idol|${idol.name}|${idol.label}`, kind: 'idol', title: idol.name, act: idol.label, color: idol.color, tier: best ? tierOf(best.rank) : 'common',
+      words: `${best?.title || ownSong?.title || ''} ${idol.name}`, photo: pick?.photo || null,
+    },
+    credit: pick?.credit || null,
+    tier: best ? tierOf(best.rank) : 'common', gem: power, gemLabel: 'Power',
     left: { value: String(group), label: 'Group', icon: '♪' },
     right: { value: String(own), label: 'Solo', icon: '★' },
     keywords: kw.slice(0, 3),
@@ -95,7 +165,8 @@ export function rouletteSongCard(song, index) {
   if (c) return songCard(c);
   return {
     kind: 'song', key: `${song.artist} | ${song.title}`, name: song.title, type: 'Song', act: song.artist, color: colorOf(song.artist),
-    art: thumb(song.videoId), tier: 'common', gem: '–', gemLabel: 'Rank',
+    art: { seed: `song|${song.artist}|${song.title}`, kind: 'song', title: song.title, act: song.artist, color: colorOf(song.artist), tier: 'common', words: song.title, photo: song.videoId ? { kind: 'mv', src: thumb(song.videoId) } : null },
+    credit: null, tier: 'common', gem: '–', gemLabel: 'Rank',
     left: { value: '–', label: 'Streams', icon: '♫' }, right: { value: '–', label: 'Views', icon: '▶' },
     keywords: [], flavor: 'A deep cut: outside the all-time Top 100.',
   };
@@ -111,11 +182,8 @@ function el(tag, cls, ...children) {
 
 /** Build a card. size: 'big' | 'mid' | 'mini'. */
 export function makeCard(d, { size = 'big', isNew = false } = {}) {
-  const img = el('img');
-  img.alt = '';
-  img.decoding = 'async';
-  if (size !== 'big') img.loading = 'lazy';
-  img.src = d.art;
+  const img = el('canvas', 'tcg-canvas');
+  showArt(img, d.art, size === 'big' ? 'big' : 'small');
   const name = el('b', 'tcg-name', d.name);
   if (d.name.length > 22) name.classList.add('xlong');
   else if (d.name.length > 13) name.classList.add('long');
@@ -143,6 +211,11 @@ export function makeCard(d, { size = 'big', isNew = false } = {}) {
     d.tier === 'legend' && size === 'big' ? el('div', 'tcg-sparks', ...Array.from({ length: 10 }, (_, i) => { const s = el('i'); s.style.setProperty('--i', i); return s; })) : null,
     d.tier === 'legend' ? el('div', 'tcg-flare', `★ ${TIERS.legend} ★`) : null,
     isNew ? el('span', 'tcg-new', 'NEW!') : null);
+  if (size === 'big' && d.credit) {
+    const a = el('a', 'tcg-credit', d.credit.text);
+    a.href = d.credit.href; a.target = '_blank'; a.rel = 'noopener';
+    wrap.append(a);
+  }
   wrap.dataset.tier = d.tier;
   wrap.setAttribute('role', 'img');
   wrap.setAttribute('aria-label', `${TIERS[d.tier]} ${d.type.toLowerCase()} card: ${d.name}, ${d.act}. ${d.gemLabel} ${d.gem}. ${d.left.label} ${d.left.value}, ${d.right.label} ${d.right.value}.${d.keywords.length ? ' ' + d.keywords.join(', ') + '.' : ''}`);

@@ -28,6 +28,8 @@ runs the game-logic tests.
 | `src/catalog.js` | Joins roster and videos. |
 | `src/wheel.js`, `fx.js`, `sound.js`, `player.js`, `main.js` | Drawing, effects, audio, YouTube player, wiring. |
 | `src/charts.js`, `data/charts.json` | Top 100 mode, and its data (built by `scripts/charts.mjs`). |
+| `src/card.js`, `src/art.js` | Collectible cards, and the painter for their cover art. |
+| `data/portraits.json` | Idol photos from Wikimedia Commons with credits (built by `scripts/portraits.mjs`). |
 | `scripts/resolve.mjs`, `scripts/serve.mjs` | Video resolver, local server. |
 
 ## Changing songs or videos
@@ -58,6 +60,8 @@ The toggle at the top switches to a second mode: a ring of photocards on a conce
 ## Cards and collection
 
 Every idol you win in Bias Roulette and every song you pull in the Top 100 becomes a collectible card (`src/card.js`). Rarity comes from the Top 100: Legendary (top 10), Epic (11-30), Rare (31-100), Common (not charted). Song cards show rank, Spotify streams and MV views. Idol cards show Power (how much their group and solo acts have charted), and how many group and solo songs are in their deck. Cards you collect are kept in the browser (localStorage) and shown in the collection binder.
+
+Card art is painted in the browser by `src/art.js`, in a digital cel-shaded style. Song cards repaint a frame of the song's own MV. Idol cards repaint a freely licensed photo of that idol from Wikimedia Commons (the photographer and licence are credited under the big card). An idol with no usable photo gets a frame from an MV they lead, and no two idols ever share a picture. Each cover also gets a scene, a motif drawn from the song title (fire, moon, crown, disco ball...), and light effects that grow with rarity. `npm run portraits` refreshes `data/portraits.json`: it only accepts a Wikipedia article about that person (not their group) and an image hosted on Commons.
 
 ## Testing the player
 

@@ -7,7 +7,7 @@ import { Sound } from './sound.js';
 import { VideoPlayer, loadApi } from './player.js';
 import * as fx from './fx.js';
 import { Charts, Crowd, toRgb } from './charts.js';
-import { makeCard, cardBack, idolCard, rouletteSongCard, chartIndex, playIn, collection, openBinder } from './card.js';
+import { makeCard, cardBack, idolCard, artPlan, rouletteSongCard, chartIndex, playIn, collection, openBinder } from './card.js';
 
 const $ = (id) => document.getElementById(id);
 const CANDY = ['#ff5fa2', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff', '#ffb38a'];
@@ -53,6 +53,7 @@ const charts = new Charts({ sound, store });
 const wheelCrowd = new Crowd($('crowdWheel'));
 let chartIdx = null; // Top 100 by act, for card power
 let catalogIdols = [];
+let portraits = null; // data/portraits.json, then the art plan: idol name -> {photo, credit}
 const reduced = () => fx.prefersReducedMotion();
 const forceVideo = new URLSearchParams(location.search).get('forceVideo'); // for testing the player, see README
 
@@ -122,7 +123,7 @@ function renderFinalists(flash = -1, flip = -1) {
         el('span', { class: 'hand-name', text: 'Not drawn yet' })));
       continue;
     }
-    const data = stage === 'idol' ? idolCard(f.item, chartIdx) : rouletteSongCard(f.item, chartIdx);
+    const data = stage === 'idol' ? idolCard(f.item, chartIdx, portraits) : rouletteSongCard(f.item, chartIdx);
     const card = makeCard(data, { size: 'mini' });
     const row = el('li', { class: 'hand-slot' + (f.index === winner ? ' winner' : '') + (i === flash ? ' flash' : '') },
       card, el('span', { class: 'hand-name', text: nameOf(stage, f.item) }), el('span', { class: 'hand-sub', text: subOf(stage, f.item) }));
@@ -178,7 +179,7 @@ function showResult() {
   $('songArtist').textContent = song.artist;
   $('drawnFor').textContent = `Drawn for ${idol.name} · ${idol.label}`;
   setAccent(idol.color);
-  const data = idolCard(idol, chartIdx);
+  const data = idolCard(idol, chartIdx, portraits);
   const card = makeCard(data, { isNew: collection.add('idol', data.key) });
   $('idolCardSlot').replaceChildren(card);
   playIn(card, { reduced: reduced() });
@@ -343,6 +344,7 @@ async function start() {
     const load = (f) => fetch(f, { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(f); return r.json(); });
     [roster, videos] = await Promise.all([load('data/roster.json'), load('data/videos.json')]);
     chartIdx = chartIndex((await load('data/charts.json').catch(() => null))?.top);
+    portraits = await load('data/portraits.json').catch(() => null);
   } catch {
     announce(location.protocol === 'file:'
       ? 'This page needs a web server. Run "npm start" and open the address it prints.'
@@ -351,6 +353,7 @@ async function start() {
   }
   const catalog = buildCatalog(roster, videos);
   catalogIdols = catalog.idols;
+  portraits = artPlan(catalog.idols, portraits);
   if (!catalog.idols.length) { announce('No songs have videos yet. Run "npm run resolve", then reload.'); return; }
 
   game = new Game(catalog.idols, { target: store.get('target', '3') === '2' ? 2 : 3 });
@@ -365,7 +368,7 @@ async function start() {
   $('anotherBtn').addEventListener('click', anotherSong);
   $('restartBtn').addEventListener('click', startOver);
   $('binderIdols').addEventListener('click', () => openBinder({
-    title: 'Idol cards', kind: 'idol', cards: catalogIdols.map((i) => idolCard(i, chartIdx)), reduced: reduced(),
+    title: 'Idol cards', kind: 'idol', cards: catalogIdols.map((i) => idolCard(i, chartIdx, portraits)), reduced: reduced(),
   }));
   $('resetBtn').addEventListener('click', startOver);
   $('t3').addEventListener('click', () => setTarget(3));

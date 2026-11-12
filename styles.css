@@ -338,7 +338,7 @@ body.night .modes { box-shadow: 0 0 0 2px rgba(255,255,255,.14); }
   border: 3px solid #fff; border-radius: 11px; box-shadow: 0 0 0 2px #000, 0 12px 24px rgba(0,0,0,.55);
 }
 .pc-front { background: #222; }
-.pc-front img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pc-front img, .pc-front canvas { width: 100%; height: 100%; object-fit: cover; display: block; }
 .pc[data-tier="legend"] .pc-front { border-color: #ffd34d; }
 .pc[data-tier="epic"] .pc-front { border-color: #ff8ad1; }
 .pc-shine {
@@ -487,6 +487,14 @@ body.night .modes { box-shadow: 0 0 0 2px rgba(255,255,255,.14); }
   border-radius: 48% 48% .35em .35em / 20% 20% .35em .35em; background: #1a1230;
 }
 .tcg-art img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.36); display: block; }
+.tcg-art { background: radial-gradient(90% 70% at 50% 35%, color-mix(in srgb, var(--ac) 55%, #1a1230), #0d0819); }
+.tcg-canvas, .pc-art { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; opacity: 0; transition: opacity .45s ease; }
+.tcg-canvas.painted, .pc-art.painted { opacity: 1; }
+.tcg-credit {
+  position: absolute; left: 0; right: 0; top: calc(100% + .5em); text-align: center;
+  font-size: .5em; line-height: 1.3; color: rgba(255,255,255,.55); text-decoration: none;
+}
+.tcg-credit:hover, .tcg-credit:focus-visible { color: #fff; text-decoration: underline; }
 .tcg-art::after {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(to bottom, transparent 55%, rgba(10,6,20,.85)),

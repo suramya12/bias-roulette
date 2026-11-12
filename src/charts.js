@@ -6,6 +6,7 @@ import { cryptoInt } from './game.js';
 import { VideoPlayer } from './player.js';
 import * as fx from './fx.js';
 import { makeCard, songCard, playIn, collection, openBinder } from './card.js';
+import { showArt } from './art.js';
 
 const $ = (id) => document.getElementById(id);
 const SLOTS = 14;
@@ -16,7 +17,8 @@ const mod = (a, n) => ((a % n) + n) % n;
 
 const thumb = (id, size = 'mqdefault') => `https://i.ytimg.com/vi/${encodeURIComponent(id)}/${size}.jpg`;
 export const short = (n) => (n >= 1e9 ? `${(n / 1e9).toFixed(n >= 1e10 ? 1 : 2)}B` : `${Math.round(n / 1e6)}M`);
-export const tierOf = (rank) => (rank <= 10 ? 'legend' : rank <= 30 ? 'epic' : 'rare');
+export const tierOf = (rank) => (!rank || rank > 100 ? 'common' : rank <= 10 ? 'legend' : rank <= 30 ? 'epic' : 'rare');
+const overall = (s) => s.overall ?? s.rank;
 const TIER_LABEL = { legend: 'LEGEND', epic: 'EPIC', rare: 'RARE' };
 
 /** A stable, bright colour per artist. */
@@ -231,7 +233,7 @@ export class Charts {
     const top = this.songs[0]?.score || 1;
     const rows = this.songs.map((s) => {
       const btn = el('button', { class: 'row', type: 'button', 'aria-label': `Play number ${s.rank}: ${s.title} by ${s.artist}` },
-        el('span', { class: `row-rank ${tierOf(s.rank)}`, text: String(s.rank) }),
+        el('span', { class: `row-rank ${tierOf(overall(s))}`, text: String(s.rank) }),
         el('img', { class: 'row-thumb', src: thumb(s.videoId), alt: '', loading: 'lazy', width: '64', height: '36' }),
         el('span', { class: 'row-text' },
           el('b', { text: s.title }),
@@ -250,7 +252,7 @@ export class Charts {
     ring.replaceChildren();
     this.slots = [];
     for (let i = 0; i < SLOTS; i++) {
-      const img = el('img', { alt: '', decoding: 'async' });
+      const img = el('canvas', { class: 'pc-art' });
       const rank = el('span', { class: 'pc-rank' });
       const card = el('div', { class: 'pc' },
         el('div', { class: 'pc-front' }, img, el('span', { class: 'pc-shine' }), rank),
@@ -277,14 +279,16 @@ export class Charts {
 
   #fill(slot, song) {
     slot.song = song;
-    slot.img.src = thumb(song.videoId);
+    showArt(slot.img, songCard(song).art, 'small');
     slot.rank.textContent = `#${song.rank}`;
     slot.card.style.setProperty('--c', css(colorOf(song.artist)));
-    slot.card.dataset.tier = tierOf(song.rank);
+    slot.card.dataset.tier = tierOf(overall(song));
   }
 
   #randomSong() {
-    const pool = this.pool;
+    // No song twice on the ring when the list is big enough.
+    const showing = new Set(this.slots.map((s) => s.song));
+    const pool = this.pool.length > SLOTS ? this.pool.filter((s) => !showing.has(s)) : this.pool;
     return pool[cryptoInt(pool.length)];
   }
 
@@ -368,7 +372,7 @@ export class Charts {
     this.current = { slot, lifted: true };
     $('stage').classList.remove('spinning');
 
-    const tier = tierOf(song.rank);
+    const tier = tierOf(overall(song));
     const stamp = $('pullStamp');
     stamp.textContent = `${TIER_LABEL[tier]} PULL!`;
     stamp.dataset.tier = tier;

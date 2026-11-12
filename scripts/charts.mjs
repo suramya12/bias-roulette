@@ -300,10 +300,19 @@ async function main() {
     if (!act) continue;
     const songs = songsByAct.get(act);
     const vt = norm(v.title.replace(/\(feat[^)]*\)/gi, ''));
-    let best = null;
-    for (const s of songs.values()) {
-      for (const k of s.keys) if (vt.includes(k) && (!best || k.length > best.k.length)) best = { k, s };
-    }
+    // The quoted song name decides first ("NewJeans 'OMG' MV" is OMG, not the song "New Jeans");
+    // the whole title is only searched when nothing is quoted or the quote matched nothing.
+    const quoted = [...v.title.matchAll(/['‘’"“”「]([^'‘’"“”」]+)['‘’"“”」]/g)].map((m) => norm(m[1])).filter(Boolean);
+    const find = (hay, exact) => {
+      let hit = null;
+      for (const s of songs.values()) {
+        for (const k of s.keys) {
+          if (hay.some((h) => (exact ? h === k : h.includes(k))) && (!hit || k.length > hit.k.length)) hit = { k, s };
+        }
+      }
+      return hit;
+    };
+    const best = (quoted.length && (find(quoted, true) || find(quoted, false))) || find([vt], false);
     if (!best) { unmatched.push(`${act} | ${v.title} (${v.views.toLocaleString('en-US')})`); continue; }
     const key = `${act} | ${best.s.title}`;
     const prev = entries.get(key);
@@ -337,7 +346,8 @@ async function main() {
 
   const all = [...entries.values()]
     .map((e) => ({ ...e, score: Math.round((e.views + e.streams) / 2) }))
-    .sort((a, b) => b.score - a.score);
+    .sort((a, b) => b.score - a.score)
+    .map((e, i) => ({ ...e, overall: i + 1 })); // rank among every scored song, for card rarity
   const top = all.slice(0, 100).map((e, i) => ({ rank: i + 1, ...e }));
 
   const keyOf = (e) => `${e.artist} | ${e.title}`;

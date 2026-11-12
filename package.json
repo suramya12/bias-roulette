@@ -8,6 +8,7 @@
     "start": "node scripts/serve.mjs",
     "test": "node --test \"tests/*.test.mjs\"",
     "resolve": "node scripts/resolve.mjs",
-    "charts": "node scripts/charts.mjs"
+    "charts": "node scripts/charts.mjs",
+    "portraits": "node scripts/portraits.mjs"
   }
 }
