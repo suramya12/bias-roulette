@@ -1,0 +1,311 @@
+// Wires the rules (game.js) to the page: rendering, animation timing, buttons.
+
+import { Game } from './game.js';
+import { buildCatalog } from './catalog.js';
+import { Wheel } from './wheel.js';
+import { Sound } from './sound.js';
+import { VideoPlayer, loadApi } from './player.js';
+import * as fx from './fx.js';
+
+const $ = (id) => document.getElementById(id);
+const CANDY = ['#ff5fa2', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff', '#ffb38a'];
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+const store = {
+  get(key, fallback) { try { return localStorage.getItem('bias-roulette.' + key) ?? fallback; } catch { return fallback; } },
+  set(key, value) { try { localStorage.setItem('bias-roulette.' + key, value); } catch { /* private mode */ } },
+};
+
+function el(tag, props = {}, ...children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(props)) {
+    if (k === 'class') node.className = v;
+    else if (k === 'text') node.textContent = v;
+    else if (k === 'style') node.style.cssText = v;
+    else node.setAttribute(k, v);
+  }
+  node.append(...children);
+  return node;
+}
+
+/** Blend a hex colour towards white. */
+function tint(hex, amount) {
+  const n = parseInt(hex.slice(1), 16);
+  const ch = (shift) => Math.round(((n >> shift) & 255) + (255 - ((n >> shift) & 255)) * amount);
+  return `rgb(${ch(16)}, ${ch(8)}, ${ch(0)})`;
+}
+
+const sound = new Sound(store.get('sound', 'on') === 'on');
+const wheel = new Wheel($('wheel'), {
+  onTick: (i) => {
+    sound.tick();
+    const seg = wheel.segments[i];
+    if (seg) $('readout').textContent = seg.readout;
+  },
+});
+const player = new VideoPlayer({
+  box: $('playerBox'), mountId: 'player', overlay: $('playOverlay'), fallback: $('playerFallback'),
+  message: $('fallbackMsg'), link: $('watchLink'), hint: $('playHint'),
+});
+const forceVideo = new URLSearchParams(location.search).get('forceVideo'); // for testing the player, see README
+
+let game = null;
+let busy = false;
+
+// ---------- rendering ----------
+const announce = (text) => { $('announce').textContent = text; };
+const nameOf = (stage, item) => (stage === 'idol' ? item.name : item.title);
+const subOf = (stage, item) => (stage === 'idol' ? item.label : item.artist);
+
+function intro() {
+  const t = game.duelTarget;
+  switch (game.phase) {
+    case 'idolDraw': return `Round 1: spin to draw ${game.drawsNeeded('idol')} idols.`;
+    case 'idolDuel': return `Round 2: idol showdown! First to ${t} hits wins.`;
+    case 'songDraw': return `Round 3: draw ${game.drawsNeeded('song')} songs for ${game.idol.name}.`;
+    case 'songDuel': return `Round 4: song showdown! First to ${t} hits wins.`;
+    default: return '';
+  }
+}
+
+function renderSteps() {
+  const at = ['idolDraw', 'idolDuel', 'songDraw', 'songDuel', 'result'].indexOf(game.phase);
+  [...$('steps').children].forEach((li, i) => {
+    li.classList.toggle('done', i < at);
+    li.classList.toggle('current', i === at);
+    li.firstElementChild.textContent = i < at ? '✓' : String(i + 1);
+    if (i === at) li.setAttribute('aria-current', 'step');
+    else li.removeAttribute('aria-current');
+  });
+}
+
+function renderWheel() {
+  const w = game.wheel();
+  wheel.setSegments(w.segments.map((s, i) => ({
+    label: nameOf(w.stage, s.item),
+    readout: `${nameOf(w.stage, s.item)} · ${subOf(w.stage, s.item)}`,
+    taken: s.taken,
+    color: w.kind === 'duel' ? CANDY[s.finalist % CANDY.length]
+      : w.stage === 'idol' ? tint(s.item.color, i % 2 ? 0.38 : 0.08)
+        : CANDY[i % CANDY.length],
+  })));
+  $('wheelBtn').setAttribute('aria-label', `Spin the wheel: ${intro()}`);
+}
+
+function renderFinalists(flash = -1) {
+  const stage = game.stage === 'result' ? 'song' : game.stage;
+  const list = game.finalists(stage);
+  const needed = game.drawsNeeded(stage);
+  const duel = list.length === needed && needed > 1;
+  const winner = game.phase === 'result' ? game.songIndex : null;
+
+  $('finalistsTitle').textContent = stage === 'idol' ? 'Idol finalists' : 'Song finalists';
+  const chip = $('idolChip');
+  chip.hidden = !game.idol;
+  if (game.idol) {
+    chip.textContent = `♥ ${game.idol.name} · ${game.idol.label}`;
+    chip.style.setProperty('--c', game.idol.color);
+  }
+
+  const rows = [];
+  for (let i = 0; i < needed; i++) {
+    const f = list[i];
+    if (!f) {
+      rows.push(el('li', { class: 'card empty' }, el('span', { class: 'badge', text: '?' }),
+        el('span', { class: 'sub', text: `Finalist ${i + 1}: not drawn yet` })));
+      continue;
+    }
+    const name = nameOf(stage, f.item);
+    const row = el('li', { class: 'card' + (f.index === winner ? ' winner' : '') + (i === flash ? ' flash' : '') },
+      el('span', { class: 'badge', style: `--c:${CANDY[i % CANDY.length]}`, text: [...name.replace(/^[^\p{L}\p{N}]+/u, '')][0]?.toUpperCase() || '♥', 'aria-hidden': 'true' }),
+      el('span', {}, el('span', { class: 'name', text: name }), el('br'), el('span', { class: 'sub', text: subOf(stage, f.item) })));
+    if (duel) {
+      const hearts = el('span', { class: 'hearts', role: 'img', 'aria-label': `${f.hits} of ${game.duelTarget} hits` });
+      for (let h = 0; h < game.duelTarget; h++) {
+        hearts.append(el('span', { class: (h < f.hits ? 'on' : '') + (i === flash && h === f.hits - 1 ? ' new' : ''), text: '♥', 'aria-hidden': 'true' }));
+      }
+      row.append(hearts);
+    }
+    rows.push(row);
+  }
+  $('finalists').replaceChildren(...rows);
+}
+
+function renderOptions() {
+  $('t3').setAttribute('aria-pressed', String(game.target === 3));
+  $('t2').setAttribute('aria-pressed', String(game.target === 2));
+  $('soundBtn').setAttribute('aria-pressed', String(sound.enabled));
+  $('soundBtn').textContent = sound.enabled ? 'Sound on' : 'Sound off';
+}
+
+function setBusy(on) {
+  busy = on;
+  $('wheelWrap').classList.toggle('spinning', on);
+  for (const id of ['spinBtn', 'autoBtn', 'wheelBtn']) $(id).setAttribute('aria-disabled', String(on));
+}
+
+function showPlay() {
+  player.stop();
+  $('result').hidden = true;
+  $('play').hidden = false;
+  $('stamp').hidden = true;
+  $('readout').textContent = 'Tap the wheel or press Spin';
+  renderSteps();
+  renderWheel();
+  renderFinalists();
+  announce(intro());
+}
+
+function showResult() {
+  const { idol, song } = game;
+  fx.setSkyColor(idol.color);
+  $('play').hidden = true;
+  $('result').hidden = false;
+  $('songTitle').textContent = song.title;
+  $('songArtist').textContent = song.artist;
+  $('drawnFor').textContent = `Drawn for ${idol.name} · ${idol.label}`;
+  renderSteps();
+  renderFinalists();
+  announce(`Winner: ${song.title} by ${song.artist}, drawn for ${idol.name}.`);
+  player.show(forceVideo || song.videoId);
+  $('result').scrollIntoView({ block: 'start', behavior: fx.prefersReducedMotion() ? 'auto' : 'smooth' });
+}
+
+function celebrate(text, color) {
+  const stamp = $('stamp');
+  stamp.textContent = text;
+  stamp.hidden = true;
+  void stamp.offsetWidth; // restart the stamp animation
+  stamp.hidden = false;
+  const r = $('wheelWrap').getBoundingClientRect();
+  fx.confetti($('fx'), r.left + r.width / 2, r.top + r.height / 2, color);
+  sound.fanfare();
+}
+
+// ---------- actions ----------
+async function spin() {
+  if (busy || !game || game.phase === 'result') return;
+  setBusy(true);
+  sound.unlock();
+  $('stamp').hidden = true;
+
+  const ev = game.spin(); // the outcome is decided here; the wheel only acts it out
+  const reducedMotion = fx.prefersReducedMotion();
+  await wheel.spinTo(ev.segment, reducedMotion ? { duration: 450, turns: 0 }
+    : ev.kind === 'draw' ? { duration: 3400, turns: 5 } : { duration: 2700, turns: 4 });
+
+  const name = nameOf(ev.stage, ev.item);
+  $('readout').textContent = `${name} · ${subOf(ev.stage, ev.item)}`;
+
+  if (ev.won) {
+    renderFinalists(ev.finalist);
+    if (ev.stage === 'idol') {
+      announce(`${name} wins the idol showdown!`);
+      fx.setSkyColor(ev.item.color);
+      celebrate(name, ev.item.color);
+      await sleep(reducedMotion ? 900 : 1900);
+      showPlay();
+    } else {
+      announce(`${name} wins the song showdown!`);
+      celebrate(name, game.idol.color);
+      await sleep(reducedMotion ? 900 : 1700);
+      showResult();
+    }
+  } else if (ev.kind === 'draw') {
+    const what = ev.stage === 'idol' ? 'Finalist' : 'Song';
+    announce(`${what} ${ev.count} of ${ev.needed}: ${name} (${subOf(ev.stage, ev.item)}).`);
+    if (ev.phaseAfter !== ev.phase) {
+      renderFinalists();
+      await sleep(900);
+      showPlay();
+    } else {
+      renderWheel(); // greys out the segment that was just drawn
+      renderFinalists();
+    }
+  } else {
+    announce(`${name} scores! ${ev.hits} of ${ev.target}.`);
+    renderFinalists(ev.finalist);
+  }
+  setBusy(false);
+}
+
+function chooseForMe({ restart = false } = {}) {
+  if (busy || !game) return;
+  sound.unlock();
+  if (restart) game.reset();
+  game.chooseForMe();
+  sound.fanfare();
+  showResult();
+}
+
+function startOver() {
+  if (busy || !game) return;
+  game.reset();
+  fx.setSkyColor(null);
+  showPlay();
+}
+
+function anotherSong() {
+  if (busy || !game?.idol) return;
+  game.anotherSong();
+  showPlay();
+  $('play').scrollIntoView({ block: 'nearest' });
+}
+
+function setTarget(n) {
+  game.setTarget(n);
+  store.set('target', String(n));
+  renderOptions();
+  if (game.duelTarget !== n) announce(`First to ${n} starts with the next showdown.`);
+  else if (!busy && game.phase !== 'result') { renderFinalists(); announce(intro()); }
+}
+
+// ---------- start ----------
+async function start() {
+  fx.initSky($('sky'));
+  fx.initRimLights($('rim'));
+  document.addEventListener('pointerdown', (e) => fx.tapBurst($('fx'), e.clientX, e.clientY));
+
+  let roster, videos;
+  try {
+    const load = (f) => fetch(f, { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(f); return r.json(); });
+    [roster, videos] = await Promise.all([load('data/roster.json'), load('data/videos.json')]);
+  } catch {
+    announce(location.protocol === 'file:'
+      ? 'This page needs a web server. Run "npm start" and open the address it prints.'
+      : 'Could not load the song data. Run "npm run resolve" first, then reload.');
+    return;
+  }
+  const catalog = buildCatalog(roster, videos);
+  if (!catalog.idols.length) { announce('No songs have videos yet. Run "npm run resolve", then reload.'); return; }
+
+  game = new Game(catalog.idols, { target: store.get('target', '3') === '2' ? 2 : 3 });
+
+  const names = catalog.idols.map((i) => i.name);
+  const track = $('ticker');
+  for (const n of [...names, ...names]) track.append(el('span', { text: `${n} ✦` }));
+  track.style.setProperty('--dur', `${Math.round(names.length * 1.6)}s`);
+
+  $('spinBtn').addEventListener('click', spin);
+  $('wheelBtn').addEventListener('click', spin);
+  $('autoBtn').addEventListener('click', () => chooseForMe());
+  $('againBtn').addEventListener('click', () => chooseForMe({ restart: true }));
+  $('anotherBtn').addEventListener('click', anotherSong);
+  $('restartBtn').addEventListener('click', startOver);
+  $('resetBtn').addEventListener('click', startOver);
+  $('t3').addEventListener('click', () => setTarget(3));
+  $('t2').addEventListener('click', () => setTarget(2));
+  $('soundBtn').addEventListener('click', () => {
+    sound.enabled = !sound.enabled;
+    store.set('sound', sound.enabled ? 'on' : 'off');
+    sound.unlock();
+    renderOptions();
+  });
+
+  renderOptions();
+  showPlay();
+  loadApi().catch(() => {}); // warm up the YouTube API so the result screen is quick
+  if (new URLSearchParams(location.search).has('debug')) Object.assign(window, { __game: game, __player: player });
+}
+
+start();

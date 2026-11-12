@@ -1,0 +1,25 @@
+# Dropped songs
+
+18 songs are not in the game because no qualifying, embeddable music video was found.
+To bring one back, add `"ARTIST | SONG": "youtube link"` to `data/overrides.json` and run `npm run resolve`.
+
+| Artist \| Song | Reason |
+|---|---|
+| Agust D \| AMYGDALA | dropped by hand in overrides.json |
+| G-DRAGON \| HOME SWEET HOME | dropped by hand in overrides.json |
+| GD & TOP \| HIGH HIGH | dropped by hand in overrides.json |
+| GD & TOP \| KNOCK OUT | dropped by hand in overrides.json |
+| Jackson Wang \| Bullet to the Heart | dropped by hand in overrides.json |
+| Jackson Wang \| Different Game | dropped by hand in overrides.json |
+| Jackson Wang \| Papillon | dropped by hand in overrides.json |
+| JINYOUNG GOT7 \| DIVE | dropped by hand in overrides.json |
+| JUNHO \| Nothing But You | dropped by hand in overrides.json |
+| KARINA aespa \| UP | dropped by hand in overrides.json |
+| LE SSERAFIM \| 1-800-hot-n-fun | dropped by hand in overrides.json |
+| LIA ITZY \| Blossom | dropped by hand in overrides.json |
+| SEO EUNKWANG \| Dear My Dear | dropped by hand in overrides.json |
+| TREASURE \| DARARI | dropped by hand in overrides.json |
+| U-KNOW \| Thank U | dropped by hand in overrides.json |
+| WENDY \| When This Rain Stops | dropped by hand in overrides.json |
+| ZICO \| Eureka | dropped by hand in overrides.json |
+| ZICO \| Tough Cookie | dropped by hand in overrides.json |

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- YouTube needs a Referer from the embedding page (player error 153 without it). -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#ffd6ec">
+  <title>Bias Roulette</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="sky" id="sky" aria-hidden="true"></div>
+
+  <main class="app">
+    <header>
+      <h1 class="title"><span>Bias</span> <span>Roulette</span></h1>
+      <div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+    </header>
+
+    <ol class="steps" id="steps" aria-label="Rounds">
+      <li><b>1</b>Draw 5 idols</li>
+      <li><b>2</b>Idol showdown</li>
+      <li><b>3</b>Draw 5 songs</li>
+      <li><b>4</b>Song showdown</li>
+    </ol>
+
+    <p class="announce" id="announce" role="status" aria-live="polite">Loading…</p>
+
+    <section id="play" aria-label="Wheel">
+      <div class="wheel-wrap" id="wheelWrap">
+        <div class="rim" id="rim" aria-hidden="true"></div>
+        <button class="wheel-btn" id="wheelBtn" type="button" aria-label="Spin the wheel"><canvas id="wheel"></canvas></button>
+        <div class="gloss" aria-hidden="true"></div>
+        <div class="hub" aria-hidden="true">SPIN</div>
+        <div class="pointer" aria-hidden="true"></div>
+        <div class="stamp" id="stamp" hidden></div>
+      </div>
+      <p class="readout" id="readout" aria-hidden="true">&nbsp;</p>
+      <div class="actions">
+        <button class="btn btn-pink btn-big" id="spinBtn" type="button">Spin!</button>
+        <button class="btn btn-lemon" id="autoBtn" type="button">Choose for me</button>
+      </div>
+    </section>
+
+    <section id="result" aria-label="Winning video" hidden>
+      <div class="player-card">
+        <div class="player-box" id="playerBox">
+          <div id="player"></div>
+          <button class="play-overlay" id="playOverlay" type="button" hidden><span class="play-disc" aria-hidden="true">▶</span><span>Tap to play</span></button>
+          <div class="player-fallback" id="playerFallback" hidden>
+            <p id="fallbackMsg">This video can't be played here.</p>
+            <a class="btn btn-pink" id="watchLink" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+          </div>
+        </div>
+        <div class="now">
+          <p class="hint" id="playHint" hidden>Not playing? Tap the video itself.</p>
+          <h2 id="songTitle"></h2>
+          <p class="artist" id="songArtist"></p>
+          <p class="drawn" id="drawnFor"></p>
+        </div>
+      </div>
+      <div class="actions actions-stack">
+        <button class="btn btn-lemon btn-big" id="againBtn" type="button">Choose for me again</button>
+        <button class="btn btn-mint" id="anotherBtn" type="button">Another song</button>
+        <button class="btn btn-sky" id="restartBtn" type="button">Start over</button>
+      </div>
+    </section>
+
+    <section class="finalists" aria-labelledby="finalistsTitle">
+      <h2 id="finalistsTitle">Finalists</h2>
+      <p class="chip" id="idolChip" hidden></p>
+      <ul id="finalists"></ul>
+    </section>
+
+    <footer class="options">
+      <div class="seg" role="group" aria-label="Showdown length">
+        <button class="btn btn-small" id="t3" type="button" aria-pressed="true">First to 3</button>
+        <button class="btn btn-small" id="t2" type="button" aria-pressed="false">First to 2</button>
+      </div>
+      <button class="btn btn-small" id="soundBtn" type="button" aria-pressed="true">Sound on</button>
+      <button class="btn btn-small" id="resetBtn" type="button">Start over</button>
+    </footer>
+  </main>
+
+  <div class="fx" id="fx" aria-hidden="true"></div>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
