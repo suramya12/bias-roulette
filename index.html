@@ -15,12 +15,18 @@
 <body>
   <div class="sky" id="sky" aria-hidden="true"></div>
 
-  <main class="app">
+  <main class="app" id="app">
+    <nav class="modes" aria-label="Game mode">
+      <button class="mode-btn" id="modeRoulette" type="button" aria-pressed="true"><span aria-hidden="true">🎡</span> Bias Roulette</button>
+      <button class="mode-btn" id="modeCharts" type="button" aria-pressed="false"><span aria-hidden="true">💿</span> K-pop Top 100</button>
+    </nav>
+
     <header>
-      <h1 class="title"><span>Bias</span> <span>Roulette</span></h1>
+      <h1 class="title" id="title"><span>Bias</span> <span>Roulette</span></h1>
       <div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
     </header>
 
+    <div id="roulette">
     <ol class="steps" id="steps" aria-label="Rounds">
       <li><b>1</b>Draw 5 idols</li>
       <li><b>2</b>Idol showdown</li>
@@ -81,8 +87,85 @@
         <button class="btn btn-small" id="t3" type="button" aria-pressed="true">First to 3</button>
         <button class="btn btn-small" id="t2" type="button" aria-pressed="false">First to 2</button>
       </div>
-      <button class="btn btn-small" id="soundBtn" type="button" aria-pressed="true">Sound on</button>
       <button class="btn btn-small" id="resetBtn" type="button">Start over</button>
+    </footer>
+    </div>
+
+    <div id="charts" hidden>
+      <div class="lists" role="group" aria-label="Which chart">
+        <button class="list-btn" id="listPro" type="button" aria-pressed="true"><b>Connoisseur</b><span>The real Top 100</span></button>
+        <button class="list-btn" id="listNew" type="button" aria-pressed="false"><b>New to K-pop</b><span>100 easy first loves</span></button>
+      </div>
+
+      <p class="announce night" id="chartsAnnounce" role="status" aria-live="polite">Loading the chart…</p>
+
+      <section class="stage" id="stage" aria-label="Photocard stage">
+        <div class="beams" aria-hidden="true"><i></i><i></i><i></i></div>
+        <button class="ring-hit" id="ringBtn" type="button" aria-label="Pull a photocard"></button>
+        <div class="ring" id="ring" aria-hidden="true"></div>
+        <canvas class="crowd" id="crowd" aria-hidden="true"></canvas>
+        <div class="pull-stamp" id="pullStamp" hidden></div>
+      </section>
+
+      <div class="range" role="group" aria-label="Pull from">
+        <span>Pull from</span>
+        <button class="chip-btn" id="r10" type="button" aria-pressed="false">Top 10</button>
+        <button class="chip-btn" id="r50" type="button" aria-pressed="false">Top 50</button>
+        <button class="chip-btn" id="r100" type="button" aria-pressed="true">Top 100</button>
+      </div>
+      <div class="actions">
+        <button class="btn btn-pink btn-big" id="pullBtn" type="button">Pull a card</button>
+        <button class="btn btn-lemon" id="quickBtn" type="button">Just play one</button>
+      </div>
+
+      <section class="pull" id="pull" aria-label="Your card" hidden>
+        <div class="holo" id="holo">
+          <div class="holo-inner">
+            <div class="holo-front">
+              <img class="holo-img" id="holoImg" alt="">
+              <div class="holo-foil"></div>
+              <div class="holo-glare"></div>
+              <span class="holo-tier" id="holoTier"></span>
+              <span class="holo-rank" id="holoRank"></span>
+              <div class="holo-info">
+                <b id="holoTitle"></b>
+                <span id="holoArtist"></span>
+                <span class="holo-vibe" id="holoVibe" hidden></span>
+              </div>
+            </div>
+            <div class="holo-back" aria-hidden="true"><span>K-POP<br>TOP 100</span></div>
+          </div>
+        </div>
+        <div class="screen">
+          <div class="player-card">
+            <div class="player-box" id="stageBox">
+              <div id="stagePlayer"></div>
+              <button class="play-overlay" id="stageOverlay" type="button" hidden><span class="play-disc" aria-hidden="true">▶</span><span>Tap to play</span></button>
+              <div class="player-fallback" id="stageFallback" hidden>
+                <p id="stageMsg">This video can't be played here.</p>
+                <a class="btn btn-pink" id="stageLink" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+              </div>
+            </div>
+            <p class="hint" id="stageHint" hidden>Not playing? Tap the video itself.</p>
+          </div>
+          <dl class="stats" id="stats"></dl>
+          <div class="actions actions-stack">
+            <button class="btn btn-pink btn-big" id="againPull" type="button">Pull again</button>
+            <button class="btn btn-mint" id="nextPull" type="button">Next on the chart</button>
+            <button class="btn btn-sky" id="chartJump" type="button">Full chart</button>
+          </div>
+        </div>
+      </section>
+
+      <details class="chart" id="chart">
+        <summary><span id="chartName">The Top 100</span> <small>tap a song to play it</small></summary>
+        <p class="method" id="method"></p>
+        <ol id="chartList"></ol>
+      </details>
+    </div>
+
+    <footer class="options shared">
+      <button class="btn btn-small" id="soundBtn" type="button" aria-pressed="true">Sound on</button>
     </footer>
   </main>
 

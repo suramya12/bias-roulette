@@ -27,6 +27,7 @@ runs the game-logic tests.
 | `src/game.js` | Rules only (picking, scoring, phases). Tested. |
 | `src/catalog.js` | Joins roster and videos. |
 | `src/wheel.js`, `fx.js`, `sound.js`, `player.js`, `main.js` | Drawing, effects, audio, YouTube player, wiring. |
+| `src/charts.js`, `data/charts.json` | Top 100 mode, and its data (built by `scripts/charts.mjs`). |
 | `scripts/resolve.mjs`, `scripts/serve.mjs` | Video resolver, local server. |
 
 ## Changing songs or videos
@@ -44,6 +45,15 @@ runs the game-logic tests.
 A link forces that video; `null` drops the song. Other options: `--refresh` (search everything again), `--retry-dropped`, `--recheck-flagged`, `--only "text"`.
 
 The resolver rejects audio, lyric, visualizer, teaser, practice, live and broadcast uploads, prefers verified artist or label channels, and checks YouTube's embed page to see whether the video may play on other sites. Region locks can't be seen from one location; the player shows a "Watch on YouTube" link when a video fails.
+
+## K-pop Top 100 mode
+
+The toggle at the top switches to a second mode: a ring of photocards on a concert stage. Pull a card and its MV plays. Two lists:
+
+- **Connoisseur**: the all-time Top 100, ranked by the average of Spotify streams (all versions of the song) and official music video views on YouTube. K-pop as a genre: groups, soloists, KPop Demon Hunters (HUNTR/X, Saja Boys) and K/DA.
+- **New to K-pop**: 100 hand-picked entry points, ranked by the same score. Edit `NEWBIE` in `scripts/charts.mjs`.
+
+`npm run charts` rebuilds `data/charts.json` from kworb.net (pages cached in `.cache/`; add `-- --fresh` for today's numbers). It prints songs it could not match, so you can add video ids to `EXTRA_VIDEOS`.
 
 ## Testing the player
 

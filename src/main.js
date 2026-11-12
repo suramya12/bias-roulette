@@ -6,6 +6,7 @@ import { Wheel } from './wheel.js';
 import { Sound } from './sound.js';
 import { VideoPlayer, loadApi } from './player.js';
 import * as fx from './fx.js';
+import { Charts } from './charts.js';
 
 const $ = (id) => document.getElementById(id);
 const CANDY = ['#ff5fa2', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff', '#ffb38a'];
@@ -47,6 +48,7 @@ const player = new VideoPlayer({
   box: $('playerBox'), mountId: 'player', overlay: $('playOverlay'), fallback: $('playerFallback'),
   message: $('fallbackMsg'), link: $('watchLink'), hint: $('playHint'),
 });
+const charts = new Charts({ sound, store });
 const forceVideo = new URLSearchParams(location.search).get('forceVideo'); // for testing the player, see README
 
 let game = null;
@@ -132,6 +134,9 @@ function renderFinalists(flash = -1) {
 }
 
 function renderOptions() {
+  $('soundBtn').setAttribute('aria-pressed', String(sound.enabled));
+  $('soundBtn').textContent = sound.enabled ? 'Sound on' : 'Sound off';
+  if (!game) return;
   $('t3').setAttribute('aria-pressed', String(game.target === 3));
   $('t2').setAttribute('aria-pressed', String(game.target === 2));
   $('soundBtn').setAttribute('aria-pressed', String(sound.enabled));
@@ -260,11 +265,53 @@ function setTarget(n) {
   else if (!busy && game.phase !== 'result') { renderFinalists(); announce(intro()); }
 }
 
+// ---------- modes ----------
+let mode = 'roulette';
+let rouletteTicker = [];
+
+function setTicker(items) {
+  const track = $('ticker');
+  track.replaceChildren(...[...items, ...items].map((n) => el('span', { text: `${n} ✦` })));
+  track.style.setProperty('--dur', `${Math.max(12, Math.round(items.reduce((a, n) => a + n.length, 0) * 0.16))}s`);
+}
+
+function setMode(next) {
+  mode = next === 'charts' ? 'charts' : 'roulette';
+  store.set('mode', mode);
+  const isCharts = mode === 'charts';
+  $('modeRoulette').setAttribute('aria-pressed', String(!isCharts));
+  $('modeCharts').setAttribute('aria-pressed', String(isCharts));
+  $('roulette').hidden = isCharts;
+  $('charts').hidden = !isCharts;
+  $('title').replaceChildren(...(isCharts ? ['K-pop', 'Top 100'] : ['Bias', 'Roulette']).flatMap((w, i) => (i ? [' ', el('span', { text: w })] : [el('span', { text: w })])));
+  document.title = isCharts ? 'K-pop Top 100 · Bias Roulette' : 'Bias Roulette';
+  history.replaceState(null, '', isCharts ? '#top100' : location.pathname + location.search);
+  if (isCharts) {
+    player.stop();
+    fx.setSkyColor(null);
+    charts.activate().then(() => { if (mode === 'charts') setTicker(charts.tickerItems()); });
+  } else {
+    charts.deactivate();
+    if (rouletteTicker.length) setTicker(rouletteTicker);
+  }
+}
+charts.onListChange = () => setTicker(charts.tickerItems());
+
 // ---------- start ----------
 async function start() {
   fx.initSky($('sky'));
   fx.initRimLights($('rim'));
   document.addEventListener('pointerdown', (e) => fx.tapBurst($('fx'), e.clientX, e.clientY));
+  $('modeRoulette').addEventListener('click', () => mode !== 'roulette' && setMode('roulette'));
+  $('modeCharts').addEventListener('click', () => mode !== 'charts' && setMode('charts'));
+  $('soundBtn').addEventListener('click', () => {
+    sound.enabled = !sound.enabled;
+    store.set('sound', sound.enabled ? 'on' : 'off');
+    sound.unlock();
+    renderOptions();
+  });
+  renderOptions();
+  setMode(location.hash === '#top100' ? 'charts' : location.hash ? 'roulette' : store.get('mode', 'roulette'));
 
   let roster, videos;
   try {
@@ -281,10 +328,8 @@ async function start() {
 
   game = new Game(catalog.idols, { target: store.get('target', '3') === '2' ? 2 : 3 });
 
-  const names = catalog.idols.map((i) => i.name);
-  const track = $('ticker');
-  for (const n of [...names, ...names]) track.append(el('span', { text: `${n} ✦` }));
-  track.style.setProperty('--dur', `${Math.round(names.length * 1.6)}s`);
+  rouletteTicker = catalog.idols.map((i) => i.name);
+  if (mode === 'roulette') setTicker(rouletteTicker);
 
   $('spinBtn').addEventListener('click', spin);
   $('wheelBtn').addEventListener('click', spin);
@@ -295,13 +340,6 @@ async function start() {
   $('resetBtn').addEventListener('click', startOver);
   $('t3').addEventListener('click', () => setTarget(3));
   $('t2').addEventListener('click', () => setTarget(2));
-  $('soundBtn').addEventListener('click', () => {
-    sound.enabled = !sound.enabled;
-    store.set('sound', sound.enabled ? 'on' : 'off');
-    sound.unlock();
-    renderOptions();
-  });
-
   renderOptions();
   showPlay();
   loadApi().catch(() => {}); // warm up the YouTube API so the result screen is quick

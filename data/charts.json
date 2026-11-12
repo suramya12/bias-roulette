@@ -1,0 +1,1909 @@
+{
+ "updated": "2026-11-12",
+ "source": "kworb.net (Spotify streams, YouTube views)",
+ "method": "Score = (Spotify streams + official video views) / 2",
+ "top": [
+  {
+   "rank": 1,
+   "artist": "PSY",
+   "title": "Gangnam Style",
+   "videoId": "9bZkp7q19f0",
+   "views": 6123830183,
+   "streams": 720089326,
+   "score": 3421959755
+  },
+  {
+   "rank": 2,
+   "artist": "ROSÉ",
+   "title": "APT.",
+   "videoId": "ekr2nIex040",
+   "views": 2754799825,
+   "streams": 2705438090,
+   "score": 2730118958
+  },
+  {
+   "rank": 3,
+   "artist": "BTS",
+   "title": "Dynamite",
+   "videoId": "gdZLi9oWNZg",
+   "views": 2165089161,
+   "streams": 2381913261,
+   "score": 2273501211
+  },
+  {
+   "rank": 4,
+   "artist": "HUNTR/X",
+   "title": "Golden",
+   "videoId": "yebNIHKAC4A",
+   "views": 1751304926,
+   "streams": 2268088437,
+   "score": 2009696682
+  },
+  {
+   "rank": 5,
+   "artist": "Jung Kook",
+   "title": "Seven",
+   "videoId": "QU9c0053UAU",
+   "views": 659572871,
+   "streams": 3240360871,
+   "score": 1949966871
+  },
+  {
+   "rank": 6,
+   "artist": "BTS",
+   "title": "Boy With Luv",
+   "videoId": "XsX3ATc3FbA",
+   "views": 1972818715,
+   "streams": 1445800562,
+   "score": 1709309639
+  },
+  {
+   "rank": 7,
+   "artist": "BLACKPINK",
+   "title": "Kill This Love",
+   "videoId": "2S24-y0Ij3Y",
+   "views": 2251761267,
+   "streams": 1131541537,
+   "score": 1691651402
+  },
+  {
+   "rank": 8,
+   "artist": "BLACKPINK",
+   "title": "DDU-DU DDU-DU",
+   "videoId": "IHNzOHi8sJs",
+   "views": 2418929227,
+   "streams": 913684320,
+   "score": 1666306774
+  },
+  {
+   "rank": 9,
+   "artist": "Jimin",
+   "title": "Who",
+   "videoId": "Av9DvtlJ9_M",
+   "views": 183195522,
+   "streams": 2585640368,
+   "score": 1384417945
+  },
+  {
+   "rank": 10,
+   "artist": "BLACKPINK",
+   "title": "How You Like That",
+   "videoId": "ioNng23DkIM",
+   "views": 1383696024,
+   "streams": 1316435535,
+   "score": 1350065780
+  },
+  {
+   "rank": 11,
+   "artist": "BLACKPINK",
+   "title": "BOOMBAYAH",
+   "videoId": "bwmSjveL3Lc",
+   "views": 1906483059,
+   "streams": 746876562,
+   "score": 1326679811
+  },
+  {
+   "rank": 12,
+   "artist": "BTS",
+   "title": "Butter",
+   "videoId": "WMweEpGlu_U",
+   "views": 1120358745,
+   "streams": 1522899251,
+   "score": 1321628998
+  },
+  {
+   "rank": 13,
+   "artist": "BTS",
+   "title": "FAKE LOVE",
+   "videoId": "7C2z4GqqS5E",
+   "views": 1415885128,
+   "streams": 1162086081,
+   "score": 1288985605
+  },
+  {
+   "rank": 14,
+   "artist": "BTS",
+   "title": "DNA",
+   "videoId": "MBdVXkSdhwU",
+   "views": 1675089302,
+   "streams": 849623525,
+   "score": 1262356414
+  },
+  {
+   "rank": 15,
+   "artist": "BLACKPINK",
+   "title": "As If It's Your Last",
+   "videoId": "Amq-qlqbjYA",
+   "views": 1548819096,
+   "streams": 836531499,
+   "score": 1192675298
+  },
+  {
+   "rank": 16,
+   "artist": "BTS",
+   "title": "IDOL",
+   "videoId": "pBuZEGYXA6E",
+   "views": 1416688148,
+   "streams": 834212814,
+   "score": 1125450481
+  },
+  {
+   "rank": 17,
+   "artist": "BLACKPINK",
+   "title": "Pink Venom",
+   "videoId": "gQlMMD8auMs",
+   "views": 1112968111,
+   "streams": 1047935560,
+   "score": 1080451836
+  },
+  {
+   "rank": 18,
+   "artist": "PSY",
+   "title": "Gentleman",
+   "videoId": "ASO_zypdnsQ",
+   "views": 1768250062,
+   "streams": 195243395,
+   "score": 981746729
+  },
+  {
+   "rank": 19,
+   "artist": "BTS",
+   "title": "MIC Drop",
+   "videoId": "kTlv5_Bs8aw",
+   "views": 1616425774,
+   "streams": 337198338,
+   "score": 976812056
+  },
+  {
+   "rank": 20,
+   "artist": "JENNIE",
+   "title": "SOLO",
+   "videoId": "b73BI9eUkjM",
+   "views": 1092692178,
+   "streams": 821475026,
+   "score": 957083602
+  },
+  {
+   "rank": 21,
+   "artist": "Jung Kook",
+   "title": "Standing Next to You",
+   "videoId": "UNo0TG9LwwI",
+   "views": 244150020,
+   "streams": 1561872392,
+   "score": 903011206
+  },
+  {
+   "rank": 22,
+   "artist": "BTS",
+   "title": "Blood Sweat & Tears",
+   "videoId": "hmE9f-TEutc",
+   "views": 1051627182,
+   "streams": 750134215,
+   "score": 900880699
+  },
+  {
+   "rank": 23,
+   "artist": "BLACKPINK",
+   "title": "Shut Down",
+   "videoId": "POe9SOEKotk",
+   "views": 832375043,
+   "streams": 922534972,
+   "score": 877455008
+  },
+  {
+   "rank": 24,
+   "artist": "Saja Boys",
+   "title": "Soda Pop",
+   "videoId": "983bBbJx0Mk",
+   "views": 827635158,
+   "streams": 916654378,
+   "score": 872144768
+  },
+  {
+   "rank": 25,
+   "artist": "BLACKPINK",
+   "title": "Ice Cream",
+   "videoId": "vRXZj0DzXIA",
+   "views": 1017786578,
+   "streams": 679970742,
+   "score": 848878660
+  },
+  {
+   "rank": 26,
+   "artist": "Jimin",
+   "title": "Like Crazy",
+   "videoId": "nOI67IDlNMQ",
+   "views": 192091722,
+   "streams": 1492070776,
+   "score": 842081249
+  },
+  {
+   "rank": 27,
+   "artist": "BTS",
+   "title": "Life Goes On",
+   "videoId": "-5q5mZbe3V8",
+   "views": 610694521,
+   "streams": 1063263124,
+   "score": 836978823
+  },
+  {
+   "rank": 28,
+   "artist": "TWICE",
+   "title": "What is Love?",
+   "videoId": "i0p1bmr0EmE",
+   "views": 954761858,
+   "streams": 717137452,
+   "score": 835949655
+  },
+  {
+   "rank": 29,
+   "artist": "BLACKPINK",
+   "title": "Lovesick Girls",
+   "videoId": "dyRsYk0LyA8",
+   "views": 871858359,
+   "streams": 774090746,
+   "score": 822974553
+  },
+  {
+   "rank": 30,
+   "artist": "BTS",
+   "title": "Permission to Dance",
+   "videoId": "CuklIb9d3fI",
+   "views": 734951979,
+   "streams": 840612110,
+   "score": 787782045
+  },
+  {
+   "rank": 31,
+   "artist": "BLACKPINK",
+   "title": "PLAYING WITH FIRE",
+   "videoId": "9pdj4iJD08s",
+   "views": 981702553,
+   "streams": 582757544,
+   "score": 782230049
+  },
+  {
+   "rank": 32,
+   "artist": "Jung Kook",
+   "title": "3D",
+   "videoId": "mHNCM-YALSA",
+   "views": 302813771,
+   "streams": 1228838404,
+   "score": 765826088
+  },
+  {
+   "rank": 33,
+   "artist": "BLACKPINK",
+   "title": "WHISTLE",
+   "videoId": "dISNgvVpWlo",
+   "views": 971485311,
+   "streams": 518979386,
+   "score": 745232349
+  },
+  {
+   "rank": 34,
+   "artist": "LISA",
+   "title": "LALISA",
+   "videoId": "awkkyBH2zEo",
+   "views": 786211040,
+   "streams": 660094187,
+   "score": 723152614
+  },
+  {
+   "rank": 35,
+   "artist": "NewJeans",
+   "title": "OMG",
+   "videoId": "sVTy_wmn5SU",
+   "views": 433866113,
+   "streams": 993889409,
+   "score": 713877761
+  },
+  {
+   "rank": 36,
+   "artist": "TWICE",
+   "title": "FANCY",
+   "videoId": "kOHB85vDuow",
+   "views": 706806872,
+   "streams": 650787625,
+   "score": 678797249
+  },
+  {
+   "rank": 37,
+   "artist": "BIGBANG",
+   "title": "BANG BANG BANG",
+   "videoId": "2ips2mM7Zqw",
+   "views": 859996342,
+   "streams": 470984829,
+   "score": 665490586
+  },
+  {
+   "rank": 38,
+   "artist": "BTS",
+   "title": "Dope",
+   "videoId": "BVwAVbKYYeM",
+   "views": 860671154,
+   "streams": 460463495,
+   "score": 660567325
+  },
+  {
+   "rank": 39,
+   "artist": "JISOO",
+   "title": "FLOWER",
+   "videoId": "YudHcBIxlYw",
+   "views": 664904231,
+   "streams": 643228770,
+   "score": 654066501
+  },
+  {
+   "rank": 40,
+   "artist": "V",
+   "title": "Love Me Again",
+   "videoId": "HYzyRHAHJl8",
+   "views": 135376435,
+   "streams": 1159033514,
+   "score": 647204975
+  },
+  {
+   "rank": 41,
+   "artist": "Saja Boys",
+   "title": "Your Idol",
+   "videoId": "cWppAbqm9I8",
+   "views": 461485725,
+   "streams": 828219828,
+   "score": 644852777
+  },
+  {
+   "rank": 42,
+   "artist": "ILLIT",
+   "title": "Magnetic",
+   "videoId": "Vk5-c_v4gMU",
+   "views": 371042373,
+   "streams": 912929767,
+   "score": 641986070
+  },
+  {
+   "rank": 43,
+   "artist": "JENNIE",
+   "title": "like JENNIE",
+   "videoId": "JSFG-IE8n_c",
+   "views": 304066359,
+   "streams": 978788998,
+   "score": 641427679
+  },
+  {
+   "rank": 44,
+   "artist": "HUNTR/X",
+   "title": "How It's Done",
+   "videoId": "QGsevnbItdU",
+   "views": 546004562,
+   "streams": 721633871,
+   "score": 633819217
+  },
+  {
+   "rank": 45,
+   "artist": "BTS",
+   "title": "Spring Day",
+   "videoId": "xEeFrLSkMm8",
+   "views": 579718223,
+   "streams": 683389392,
+   "score": 631553808
+  },
+  {
+   "rank": 46,
+   "artist": "BTS",
+   "title": "Save Me",
+   "videoId": "GZjt_sA2eso",
+   "views": 832090982,
+   "streams": 421655669,
+   "score": 626873326
+  },
+  {
+   "rank": 47,
+   "artist": "BTS",
+   "title": "FIRE",
+   "videoId": "ALj5MKjy2BU",
+   "views": 780828789,
+   "streams": 472730563,
+   "score": 626779676
+  },
+  {
+   "rank": 48,
+   "artist": "NewJeans",
+   "title": "Super Shy",
+   "videoId": "ArmDp-zijuc",
+   "views": 303583107,
+   "streams": 923180634,
+   "score": 613381871
+  },
+  {
+   "rank": 49,
+   "artist": "BTS",
+   "title": "Black Swan",
+   "videoId": "0lapF4DQPKQ",
+   "views": 618991294,
+   "streams": 605566640,
+   "score": 612278967
+  },
+  {
+   "rank": 50,
+   "artist": "BTS",
+   "title": "SWIM",
+   "videoId": "b4iVv91Z6lY",
+   "views": 174302624,
+   "streams": 1048193115,
+   "score": 611247870
+  },
+  {
+   "rank": 51,
+   "artist": "KATSEYE",
+   "title": "Touch",
+   "videoId": "l9CZykYZkOQ",
+   "views": 312263807,
+   "streams": 863512092,
+   "score": 587887950
+  },
+  {
+   "rank": 52,
+   "artist": "BLACKPINK",
+   "title": "JUMP",
+   "videoId": "CgCVZdcKcqY",
+   "views": 447733928,
+   "streams": 722081665,
+   "score": 584907797
+  },
+  {
+   "rank": 53,
+   "artist": "EXO",
+   "title": "Love Shot",
+   "videoId": "pSudEWBAYRE",
+   "views": 680722951,
+   "streams": 466642687,
+   "score": 573682819
+  },
+  {
+   "rank": 54,
+   "artist": "Stray Kids",
+   "title": "God's Menu",
+   "videoId": "TQTlCHxyuu8",
+   "views": 582089027,
+   "streams": 557959254,
+   "score": 570024141
+  },
+  {
+   "rank": 55,
+   "artist": "TWICE",
+   "title": "The Feels",
+   "videoId": "f5_wn8mexmM",
+   "views": 536626146,
+   "streams": 599423565,
+   "score": 568024856
+  },
+  {
+   "rank": 56,
+   "artist": "LISA",
+   "title": "Rockstar",
+   "videoId": "hbcGx4MGUMg",
+   "views": 418987024,
+   "streams": 713697336,
+   "score": 566342180
+  },
+  {
+   "rank": 57,
+   "artist": "K/DA",
+   "title": "POP/STARS",
+   "videoId": "UOxkGD8qRB4",
+   "views": 673778859,
+   "streams": 438966295,
+   "score": 556372577
+  },
+  {
+   "rank": 58,
+   "artist": "TWICE",
+   "title": "I CAN'T STOP ME",
+   "videoId": "CM4CkVFmTds",
+   "views": 577337021,
+   "streams": 529806182,
+   "score": 553571602
+  },
+  {
+   "rank": 59,
+   "artist": "Jin",
+   "title": "Don't Say You Love Me",
+   "videoId": "o7BcyAd6rqg",
+   "views": 57062100,
+   "streams": 1032692422,
+   "score": 544877261
+  },
+  {
+   "rank": 60,
+   "artist": "NewJeans",
+   "title": "Hype Boy",
+   "videoId": "11cta61wi0g",
+   "views": 257043490,
+   "streams": 810220090,
+   "score": 533631790
+  },
+  {
+   "rank": 61,
+   "artist": "BTS",
+   "title": "ON",
+   "videoId": "mPVDGOVjRQ0",
+   "views": 355518933,
+   "streams": 705743518,
+   "score": 530631226
+  },
+  {
+   "rank": 62,
+   "artist": "PSY",
+   "title": "That That",
+   "videoId": "8dJyRm2jJ-U",
+   "views": 687099468,
+   "streams": 368502271,
+   "score": 527800870
+  },
+  {
+   "rank": 63,
+   "artist": "ITZY",
+   "title": "WANNABE",
+   "videoId": "fE2h3lGlOsk",
+   "views": 592891847,
+   "streams": 459429193,
+   "score": 526160520
+  },
+  {
+   "rank": 64,
+   "artist": "NewJeans",
+   "title": "Ditto",
+   "videoId": "pSUydWEqKwE",
+   "views": 67084722,
+   "streams": 984879744,
+   "score": 525982233
+  },
+  {
+   "rank": 65,
+   "artist": "LE SSERAFIM",
+   "title": "ANTIFRAGILE",
+   "videoId": "pyf8cbqyfPs",
+   "views": 288232840,
+   "streams": 761578117,
+   "score": 524905479
+  },
+  {
+   "rank": 66,
+   "artist": "TWICE",
+   "title": "Feel Special",
+   "videoId": "3ymwOvzhwHs",
+   "views": 558987205,
+   "streams": 484309192,
+   "score": 521648199
+  },
+  {
+   "rank": 67,
+   "artist": "NewJeans",
+   "title": "New Jeans",
+   "videoId": "sVTy_wmn5SU",
+   "views": 433866113,
+   "streams": 590422545,
+   "score": 512144329
+  },
+  {
+   "rank": 68,
+   "artist": "Red Velvet",
+   "title": "Psycho",
+   "videoId": "uR8Mrt1IpXg",
+   "views": 440363009,
+   "streams": 578607460,
+   "score": 509485235
+  },
+  {
+   "rank": 69,
+   "artist": "BTS",
+   "title": "Not Today",
+   "videoId": "9DwzBICPhdM",
+   "views": 632400387,
+   "streams": 369887901,
+   "score": 501144144
+  },
+  {
+   "rank": 70,
+   "artist": "TWICE",
+   "title": "TT",
+   "videoId": "ePpPVE-GGJw",
+   "views": 721757578,
+   "streams": 278075398,
+   "score": 499916488
+  },
+  {
+   "rank": 71,
+   "artist": "ROSÉ",
+   "title": "On The Ground",
+   "videoId": "CKZvWhCqx1s",
+   "views": 395002586,
+   "streams": 600345923,
+   "score": 497674255
+  },
+  {
+   "rank": 72,
+   "artist": "Agust D",
+   "title": "Haegeum",
+   "videoId": "iy9qZR_OGa0",
+   "views": 114181444,
+   "streams": 879324061,
+   "score": 496752753
+  },
+  {
+   "rank": 73,
+   "artist": "Agust D",
+   "title": "Daechwita",
+   "videoId": "qGjAWJ2zWWI",
+   "views": 495411523,
+   "streams": 482612412,
+   "score": 489011968
+  },
+  {
+   "rank": 74,
+   "artist": "BTS",
+   "title": "Make It Right",
+   "videoId": "eXBu09fwe3I",
+   "views": 276829096,
+   "streams": 694521797,
+   "score": 485675447
+  },
+  {
+   "rank": 75,
+   "artist": "TWICE",
+   "title": "Likey",
+   "videoId": "V2hlQkVJZhE",
+   "views": 667422804,
+   "streams": 271913414,
+   "score": 469668109
+  },
+  {
+   "rank": 76,
+   "artist": "PSY",
+   "title": "DADDY",
+   "videoId": "FrG4TEcSuRg",
+   "views": 789111479,
+   "streams": 132120305,
+   "score": 460615892
+  },
+  {
+   "rank": 77,
+   "artist": "i-dle",
+   "title": "Queencard",
+   "videoId": "7HDeem-JaSY",
+   "views": 462696076,
+   "streams": 453187049,
+   "score": 457941563
+  },
+  {
+   "rank": 78,
+   "artist": "KATSEYE",
+   "title": "Gnarly",
+   "videoId": "R2-yomhYAj4",
+   "views": 246354139,
+   "streams": 658926821,
+   "score": 452640480
+  },
+  {
+   "rank": 79,
+   "artist": "HUNTR/X",
+   "title": "What It Sounds Like",
+   "videoId": "TbMEMCvFbZk",
+   "views": 215595150,
+   "streams": 687329992,
+   "score": 451462571
+  },
+  {
+   "rank": 80,
+   "artist": "IVE",
+   "title": "After LIKE",
+   "videoId": "F0B7HDiY-10",
+   "views": 374032814,
+   "streams": 494106369,
+   "score": 434069592
+  },
+  {
+   "rank": 81,
+   "artist": "BABYMONSTER",
+   "title": "SHEESH",
+   "videoId": "2wA_b6YHjqQ",
+   "views": 425830794,
+   "streams": 437316582,
+   "score": 431573688
+  },
+  {
+   "rank": 82,
+   "artist": "JENNIE",
+   "title": "Mantra",
+   "videoId": "bB3-CUMERIU",
+   "views": 260690101,
+   "streams": 596942769,
+   "score": 428816435
+  },
+  {
+   "rank": 83,
+   "artist": "IVE",
+   "title": "LOVE DIVE",
+   "videoId": "Y8JFxS1HlDo",
+   "views": 342562269,
+   "streams": 514378520,
+   "score": 428470395
+  },
+  {
+   "rank": 84,
+   "artist": "IVE",
+   "title": "I AM",
+   "videoId": "6ZUIwj3FgUY",
+   "views": 411123903,
+   "streams": 439733778,
+   "score": 425428841
+  },
+  {
+   "rank": 85,
+   "artist": "TWICE",
+   "title": "CHEER UP",
+   "videoId": "c7rCyll5AeY",
+   "views": 607528545,
+   "streams": 241759803,
+   "score": 424644174
+  },
+  {
+   "rank": 86,
+   "artist": "Stray Kids",
+   "title": "MANIAC",
+   "videoId": "OvioeS1ZZ7o",
+   "views": 360194667,
+   "streams": 488301999,
+   "score": 424248333
+  },
+  {
+   "rank": 87,
+   "artist": "BTS",
+   "title": "Boy In Luv",
+   "videoId": "m8MfJg68oCs",
+   "views": 481303405,
+   "streams": 360449579,
+   "score": 420876492
+  },
+  {
+   "rank": 88,
+   "artist": "aespa",
+   "title": "Drama",
+   "videoId": "D8VEhcPeSlc",
+   "views": 317957721,
+   "streams": 517816721,
+   "score": 417887221
+  },
+  {
+   "rank": 89,
+   "artist": "BIGBANG",
+   "title": "FANTASTIC BABY",
+   "videoId": "AAbokV76tkU",
+   "views": 679839595,
+   "streams": 154038622,
+   "score": 416939109
+  },
+  {
+   "rank": 90,
+   "artist": "ROSÉ",
+   "title": "Gone",
+   "videoId": "K9_VFxzCuQ0",
+   "views": 349973711,
+   "streams": 481607802,
+   "score": 415790757
+  },
+  {
+   "rank": 91,
+   "artist": "Red Velvet",
+   "title": "Bad Boy",
+   "videoId": "J_CFBjAyPWE",
+   "views": 452072898,
+   "streams": 378238805,
+   "score": 415155852
+  },
+  {
+   "rank": 92,
+   "artist": "Stray Kids",
+   "title": "Thunderous",
+   "videoId": "EaswWiwMVs8",
+   "views": 458941010,
+   "streams": 356482656,
+   "score": 407711833
+  },
+  {
+   "rank": 93,
+   "artist": "BTS",
+   "title": "I NEED U",
+   "videoId": "NMdTd9e-LEI",
+   "views": 255000139,
+   "streams": 546177961,
+   "score": 400589050
+  },
+  {
+   "rank": 94,
+   "artist": "i-dle",
+   "title": "TOMBOY",
+   "videoId": "Jh4QFaPmdss",
+   "views": 406578176,
+   "streams": 389519533,
+   "score": 398048855
+  },
+  {
+   "rank": 95,
+   "artist": "MAMAMOO",
+   "title": "HIP",
+   "videoId": "KhTeiaCezwM",
+   "views": 469963190,
+   "streams": 321272073,
+   "score": 395617632
+  },
+  {
+   "rank": 96,
+   "artist": "BTS",
+   "title": "Airplane pt.2",
+   "videoId": "CxnJf0tWu48",
+   "views": 344394067,
+   "streams": 444236409,
+   "score": 394315238
+  },
+  {
+   "rank": 97,
+   "artist": "TWICE",
+   "title": "YES or YES",
+   "videoId": "mAKsZ26SabQ",
+   "views": 446934031,
+   "streams": 340107656,
+   "score": 393520844
+  },
+  {
+   "rank": 98,
+   "artist": "HUNTR/X",
+   "title": "Takedown",
+   "videoId": "l8Dr7vzMSVE",
+   "views": 198022046,
+   "streams": 586338126,
+   "score": 392180086
+  },
+  {
+   "rank": 99,
+   "artist": "V",
+   "title": "Winter Ahead",
+   "videoId": "HAWYOuMGkK0",
+   "views": 28646062,
+   "streams": 741353729,
+   "score": 384999896
+  },
+  {
+   "rank": 100,
+   "artist": "Jin",
+   "title": "The Astronaut",
+   "videoId": "c6ASQOwKkhk",
+   "views": 137726949,
+   "streams": 632095178,
+   "score": 384911064
+  }
+ ],
+ "newbie": [
+  {
+   "rank": 1,
+   "artist": "PSY",
+   "title": "Gangnam Style",
+   "videoId": "9bZkp7q19f0",
+   "views": 6123830183,
+   "streams": 720089326,
+   "score": 3421959755,
+   "vibe": "The one that started it"
+  },
+  {
+   "rank": 2,
+   "artist": "ROSÉ",
+   "title": "APT.",
+   "videoId": "ekr2nIex040",
+   "views": 2754799825,
+   "streams": 2705438090,
+   "score": 2730118958,
+   "vibe": "Party chant"
+  },
+  {
+   "rank": 3,
+   "artist": "BTS",
+   "title": "Dynamite",
+   "videoId": "gdZLi9oWNZg",
+   "views": 2165089161,
+   "streams": 2381913261,
+   "score": 2273501211,
+   "vibe": "All-English disco"
+  },
+  {
+   "rank": 4,
+   "artist": "HUNTR/X",
+   "title": "Golden",
+   "videoId": "yebNIHKAC4A",
+   "views": 1751304926,
+   "streams": 2268088437,
+   "score": 2009696682,
+   "vibe": "Movie anthem"
+  },
+  {
+   "rank": 5,
+   "artist": "Jung Kook",
+   "title": "Seven",
+   "videoId": "QU9c0053UAU",
+   "views": 659572871,
+   "streams": 3240360871,
+   "score": 1949966871,
+   "vibe": "English R&B pop"
+  },
+  {
+   "rank": 6,
+   "artist": "BTS",
+   "title": "Boy With Luv",
+   "videoId": "XsX3ATc3FbA",
+   "views": 1972818715,
+   "streams": 1445800562,
+   "score": 1709309639,
+   "vibe": "Feel-good"
+  },
+  {
+   "rank": 7,
+   "artist": "BLACKPINK",
+   "title": "Kill This Love",
+   "videoId": "2S24-y0Ij3Y",
+   "views": 2251761267,
+   "streams": 1131541537,
+   "score": 1691651402,
+   "vibe": "Marching hook"
+  },
+  {
+   "rank": 8,
+   "artist": "BLACKPINK",
+   "title": "DDU-DU DDU-DU",
+   "videoId": "IHNzOHi8sJs",
+   "views": 2418929227,
+   "streams": 913684320,
+   "score": 1666306774,
+   "vibe": "Iconic hook"
+  },
+  {
+   "rank": 9,
+   "artist": "Jimin",
+   "title": "Who",
+   "videoId": "Av9DvtlJ9_M",
+   "views": 183195522,
+   "streams": 2585640368,
+   "score": 1384417945,
+   "vibe": "Smooth"
+  },
+  {
+   "rank": 10,
+   "artist": "BLACKPINK",
+   "title": "How You Like That",
+   "videoId": "ioNng23DkIM",
+   "views": 1383696024,
+   "streams": 1316435535,
+   "score": 1350065780,
+   "vibe": "Big drop"
+  },
+  {
+   "rank": 11,
+   "artist": "BLACKPINK",
+   "title": "BOOMBAYAH",
+   "videoId": "bwmSjveL3Lc",
+   "views": 1906483059,
+   "streams": 746876562,
+   "score": 1326679811,
+   "vibe": "Party starter"
+  },
+  {
+   "rank": 12,
+   "artist": "BTS",
+   "title": "Butter",
+   "videoId": "WMweEpGlu_U",
+   "views": 1120358745,
+   "streams": 1522899251,
+   "score": 1321628998,
+   "vibe": "All-English"
+  },
+  {
+   "rank": 13,
+   "artist": "BTS",
+   "title": "FAKE LOVE",
+   "videoId": "7C2z4GqqS5E",
+   "views": 1415885128,
+   "streams": 1162086081,
+   "score": 1288985605,
+   "vibe": "Emotional"
+  },
+  {
+   "rank": 14,
+   "artist": "BTS",
+   "title": "DNA",
+   "videoId": "MBdVXkSdhwU",
+   "views": 1675089302,
+   "streams": 849623525,
+   "score": 1262356414,
+   "vibe": "Bright"
+  },
+  {
+   "rank": 15,
+   "artist": "BTS",
+   "title": "IDOL",
+   "videoId": "pBuZEGYXA6E",
+   "views": 1416688148,
+   "streams": 834212814,
+   "score": 1125450481,
+   "vibe": "Festival energy"
+  },
+  {
+   "rank": 16,
+   "artist": "BLACKPINK",
+   "title": "Pink Venom",
+   "videoId": "gQlMMD8auMs",
+   "views": 1112968111,
+   "streams": 1047935560,
+   "score": 1080451836,
+   "vibe": "Hard-hitting"
+  },
+  {
+   "rank": 17,
+   "artist": "PSY",
+   "title": "Gentleman",
+   "videoId": "ASO_zypdnsQ",
+   "views": 1768250062,
+   "streams": 195243395,
+   "score": 981746729,
+   "vibe": "Comedy dance"
+  },
+  {
+   "rank": 18,
+   "artist": "BTS",
+   "title": "MIC Drop",
+   "videoId": "kTlv5_Bs8aw",
+   "views": 1616425774,
+   "streams": 337198338,
+   "score": 976812056,
+   "vibe": "Hype"
+  },
+  {
+   "rank": 19,
+   "artist": "JENNIE",
+   "title": "SOLO",
+   "videoId": "b73BI9eUkjM",
+   "views": 1092692178,
+   "streams": 821475026,
+   "score": 957083602,
+   "vibe": "Catchy solo"
+  },
+  {
+   "rank": 20,
+   "artist": "Jung Kook",
+   "title": "Standing Next to You",
+   "videoId": "UNo0TG9LwwI",
+   "views": 244150020,
+   "streams": 1561872392,
+   "score": 903011206,
+   "vibe": "English funk"
+  },
+  {
+   "rank": 21,
+   "artist": "Saja Boys",
+   "title": "Soda Pop",
+   "videoId": "983bBbJx0Mk",
+   "views": 827635158,
+   "streams": 916654378,
+   "score": 872144768,
+   "vibe": "Movie earworm"
+  },
+  {
+   "rank": 22,
+   "artist": "BLACKPINK",
+   "title": "Ice Cream",
+   "videoId": "vRXZj0DzXIA",
+   "views": 1017786578,
+   "streams": 679970742,
+   "score": 848878660,
+   "vibe": "With Selena Gomez"
+  },
+  {
+   "rank": 23,
+   "artist": "Jimin",
+   "title": "Like Crazy",
+   "videoId": "nOI67IDlNMQ",
+   "views": 192091722,
+   "streams": 1492070776,
+   "score": 842081249,
+   "vibe": "Synth-pop"
+  },
+  {
+   "rank": 24,
+   "artist": "BTS",
+   "title": "Life Goes On",
+   "videoId": "-5q5mZbe3V8",
+   "views": 610694521,
+   "streams": 1063263124,
+   "score": 836978823,
+   "vibe": "Gentle"
+  },
+  {
+   "rank": 25,
+   "artist": "TWICE",
+   "title": "What is Love?",
+   "videoId": "i0p1bmr0EmE",
+   "views": 954761858,
+   "streams": 717137452,
+   "score": 835949655,
+   "vibe": "Bubblegum"
+  },
+  {
+   "rank": 26,
+   "artist": "BTS",
+   "title": "Permission to Dance",
+   "videoId": "CuklIb9d3fI",
+   "views": 734951979,
+   "streams": 840612110,
+   "score": 787782045,
+   "vibe": "All-English"
+  },
+  {
+   "rank": 27,
+   "artist": "Jung Kook",
+   "title": "3D",
+   "videoId": "mHNCM-YALSA",
+   "views": 302813771,
+   "streams": 1228838404,
+   "score": 765826088,
+   "vibe": "English R&B pop"
+  },
+  {
+   "rank": 28,
+   "artist": "NewJeans",
+   "title": "OMG",
+   "videoId": "sVTy_wmn5SU",
+   "views": 433866113,
+   "streams": 993889409,
+   "score": 713877761,
+   "vibe": "Breezy"
+  },
+  {
+   "rank": 29,
+   "artist": "TWICE",
+   "title": "FANCY",
+   "videoId": "kOHB85vDuow",
+   "views": 706806872,
+   "streams": 650787625,
+   "score": 678797249,
+   "vibe": "Sweet synth"
+  },
+  {
+   "rank": 30,
+   "artist": "BIGBANG",
+   "title": "BANG BANG BANG",
+   "videoId": "2ips2mM7Zqw",
+   "views": 859996342,
+   "streams": 470984829,
+   "score": 665490586,
+   "vibe": "Classic banger"
+  },
+  {
+   "rank": 31,
+   "artist": "JISOO",
+   "title": "FLOWER",
+   "videoId": "YudHcBIxlYw",
+   "views": 664904231,
+   "streams": 643228770,
+   "score": 654066501,
+   "vibe": "Easy hook"
+  },
+  {
+   "rank": 32,
+   "artist": "V",
+   "title": "Love Me Again",
+   "videoId": "HYzyRHAHJl8",
+   "views": 135376435,
+   "streams": 1159033514,
+   "score": 647204975,
+   "vibe": "Smooth"
+  },
+  {
+   "rank": 33,
+   "artist": "Saja Boys",
+   "title": "Your Idol",
+   "videoId": "cWppAbqm9I8",
+   "views": 461485725,
+   "streams": 828219828,
+   "score": 644852777,
+   "vibe": "Movie villain bop"
+  },
+  {
+   "rank": 34,
+   "artist": "ILLIT",
+   "title": "Magnetic",
+   "videoId": "Vk5-c_v4gMU",
+   "views": 371042373,
+   "streams": 912929767,
+   "score": 641986070,
+   "vibe": "Cute hook"
+  },
+  {
+   "rank": 35,
+   "artist": "JENNIE",
+   "title": "like JENNIE",
+   "videoId": "JSFG-IE8n_c",
+   "views": 304066359,
+   "streams": 978788998,
+   "score": 641427679,
+   "vibe": "Club banger"
+  },
+  {
+   "rank": 36,
+   "artist": "HUNTR/X",
+   "title": "How It's Done",
+   "videoId": "QGsevnbItdU",
+   "views": 546004562,
+   "streams": 721633871,
+   "score": 633819217,
+   "vibe": "Movie anthem"
+  },
+  {
+   "rank": 37,
+   "artist": "BTS",
+   "title": "Spring Day",
+   "videoId": "xEeFrLSkMm8",
+   "views": 579718223,
+   "streams": 683389392,
+   "score": 631553808,
+   "vibe": "Emotional"
+  },
+  {
+   "rank": 38,
+   "artist": "NewJeans",
+   "title": "Super Shy",
+   "videoId": "ArmDp-zijuc",
+   "views": 303583107,
+   "streams": 923180634,
+   "score": 613381871,
+   "vibe": "Breezy"
+  },
+  {
+   "rank": 39,
+   "artist": "KATSEYE",
+   "title": "Touch",
+   "videoId": "l9CZykYZkOQ",
+   "views": 312263807,
+   "streams": 863512092,
+   "score": 587887950,
+   "vibe": "All-English"
+  },
+  {
+   "rank": 40,
+   "artist": "BLACKPINK",
+   "title": "JUMP",
+   "videoId": "CgCVZdcKcqY",
+   "views": 447733928,
+   "streams": 722081665,
+   "score": 584907797,
+   "vibe": "EDM rush"
+  },
+  {
+   "rank": 41,
+   "artist": "EXO",
+   "title": "Love Shot",
+   "videoId": "pSudEWBAYRE",
+   "views": 680722951,
+   "streams": 466642687,
+   "score": 573682819,
+   "vibe": "Smooth"
+  },
+  {
+   "rank": 42,
+   "artist": "Stray Kids",
+   "title": "God's Menu",
+   "videoId": "TQTlCHxyuu8",
+   "views": 582089027,
+   "streams": 557959254,
+   "score": 570024141,
+   "vibe": "Loud and fun"
+  },
+  {
+   "rank": 43,
+   "artist": "TWICE",
+   "title": "The Feels",
+   "videoId": "f5_wn8mexmM",
+   "views": 536626146,
+   "streams": 599423565,
+   "score": 568024856,
+   "vibe": "All-English"
+  },
+  {
+   "rank": 44,
+   "artist": "LISA",
+   "title": "Rockstar",
+   "videoId": "hbcGx4MGUMg",
+   "views": 418987024,
+   "streams": 713697336,
+   "score": 566342180,
+   "vibe": "Swagger"
+  },
+  {
+   "rank": 45,
+   "artist": "K/DA",
+   "title": "POP/STARS",
+   "videoId": "UOxkGD8qRB4",
+   "views": 673778859,
+   "streams": 438966295,
+   "score": 556372577,
+   "vibe": "League of Legends"
+  },
+  {
+   "rank": 46,
+   "artist": "NewJeans",
+   "title": "Hype Boy",
+   "videoId": "11cta61wi0g",
+   "views": 257043490,
+   "streams": 810220090,
+   "score": 533631790,
+   "vibe": "Breezy"
+  },
+  {
+   "rank": 47,
+   "artist": "BTS",
+   "title": "ON",
+   "videoId": "mPVDGOVjRQ0",
+   "views": 355518933,
+   "streams": 705743518,
+   "score": 530631226,
+   "vibe": "Epic"
+  },
+  {
+   "rank": 48,
+   "artist": "ITZY",
+   "title": "WANNABE",
+   "videoId": "fE2h3lGlOsk",
+   "views": 592891847,
+   "streams": 459429193,
+   "score": 526160520,
+   "vibe": "Confident"
+  },
+  {
+   "rank": 49,
+   "artist": "NewJeans",
+   "title": "Ditto",
+   "videoId": "pSUydWEqKwE",
+   "views": 67084722,
+   "streams": 984879744,
+   "score": 525982233,
+   "vibe": "Dreamy"
+  },
+  {
+   "rank": 50,
+   "artist": "LE SSERAFIM",
+   "title": "ANTIFRAGILE",
+   "videoId": "pyf8cbqyfPs",
+   "views": 288232840,
+   "streams": 761578117,
+   "score": 524905479,
+   "vibe": "Dance hook"
+  },
+  {
+   "rank": 51,
+   "artist": "TWICE",
+   "title": "Feel Special",
+   "videoId": "3ymwOvzhwHs",
+   "views": 558987205,
+   "streams": 484309192,
+   "score": 521648199,
+   "vibe": "Uplifting"
+  },
+  {
+   "rank": 52,
+   "artist": "Red Velvet",
+   "title": "Psycho",
+   "videoId": "uR8Mrt1IpXg",
+   "views": 440363009,
+   "streams": 578607460,
+   "score": 509485235,
+   "vibe": "Lush"
+  },
+  {
+   "rank": 53,
+   "artist": "TWICE",
+   "title": "TT",
+   "videoId": "ePpPVE-GGJw",
+   "views": 721757578,
+   "streams": 278075398,
+   "score": 499916488,
+   "vibe": "Cute classic"
+  },
+  {
+   "rank": 54,
+   "artist": "ROSÉ",
+   "title": "On The Ground",
+   "videoId": "CKZvWhCqx1s",
+   "views": 395002586,
+   "streams": 600345923,
+   "score": 497674255,
+   "vibe": "Soaring"
+  },
+  {
+   "rank": 55,
+   "artist": "Agust D",
+   "title": "Haegeum",
+   "videoId": "iy9qZR_OGa0",
+   "views": 114181444,
+   "streams": 879324061,
+   "score": 496752753,
+   "vibe": "Hard rap"
+  },
+  {
+   "rank": 56,
+   "artist": "PSY",
+   "title": "DADDY",
+   "videoId": "FrG4TEcSuRg",
+   "views": 789111479,
+   "streams": 132120305,
+   "score": 460615892,
+   "vibe": "Comedy dance"
+  },
+  {
+   "rank": 57,
+   "artist": "i-dle",
+   "title": "Queencard",
+   "videoId": "7HDeem-JaSY",
+   "views": 462696076,
+   "streams": 453187049,
+   "score": 457941563,
+   "vibe": "Sassy"
+  },
+  {
+   "rank": 58,
+   "artist": "KATSEYE",
+   "title": "Gnarly",
+   "videoId": "R2-yomhYAj4",
+   "views": 246354139,
+   "streams": 658926821,
+   "score": 452640480,
+   "vibe": "All-English"
+  },
+  {
+   "rank": 59,
+   "artist": "HUNTR/X",
+   "title": "What It Sounds Like",
+   "videoId": "TbMEMCvFbZk",
+   "views": 215595150,
+   "streams": 687329992,
+   "score": 451462571,
+   "vibe": "Movie ballad"
+  },
+  {
+   "rank": 60,
+   "artist": "IVE",
+   "title": "After LIKE",
+   "videoId": "F0B7HDiY-10",
+   "views": 374032814,
+   "streams": 494106369,
+   "score": 434069592,
+   "vibe": "Disco sample"
+  },
+  {
+   "rank": 61,
+   "artist": "BABYMONSTER",
+   "title": "SHEESH",
+   "videoId": "2wA_b6YHjqQ",
+   "views": 425830794,
+   "streams": 437316582,
+   "score": 431573688,
+   "vibe": "Hype"
+  },
+  {
+   "rank": 62,
+   "artist": "JENNIE",
+   "title": "Mantra",
+   "videoId": "bB3-CUMERIU",
+   "views": 260690101,
+   "streams": 596942769,
+   "score": 428816435,
+   "vibe": "Catchy"
+  },
+  {
+   "rank": 63,
+   "artist": "IVE",
+   "title": "LOVE DIVE",
+   "videoId": "Y8JFxS1HlDo",
+   "views": 342562269,
+   "streams": 514378520,
+   "score": 428470395,
+   "vibe": "Elegant pop"
+  },
+  {
+   "rank": 64,
+   "artist": "IVE",
+   "title": "I AM",
+   "videoId": "6ZUIwj3FgUY",
+   "views": 411123903,
+   "streams": 439733778,
+   "score": 425428841,
+   "vibe": "Big chorus"
+  },
+  {
+   "rank": 65,
+   "artist": "Stray Kids",
+   "title": "MANIAC",
+   "videoId": "OvioeS1ZZ7o",
+   "views": 360194667,
+   "streams": 488301999,
+   "score": 424248333,
+   "vibe": "Loud and fun"
+  },
+  {
+   "rank": 66,
+   "artist": "BIGBANG",
+   "title": "FANTASTIC BABY",
+   "videoId": "AAbokV76tkU",
+   "views": 679839595,
+   "streams": 154038622,
+   "score": 416939109,
+   "vibe": "Classic banger"
+  },
+  {
+   "rank": 67,
+   "artist": "i-dle",
+   "title": "TOMBOY",
+   "videoId": "Jh4QFaPmdss",
+   "views": 406578176,
+   "streams": 389519533,
+   "score": 398048855,
+   "vibe": "Rock-pop"
+  },
+  {
+   "rank": 68,
+   "artist": "MAMAMOO",
+   "title": "HIP",
+   "videoId": "KhTeiaCezwM",
+   "views": 469963190,
+   "streams": 321272073,
+   "score": 395617632,
+   "vibe": "Sassy"
+  },
+  {
+   "rank": 69,
+   "artist": "HUNTR/X",
+   "title": "Takedown",
+   "videoId": "l8Dr7vzMSVE",
+   "views": 198022046,
+   "streams": 586338126,
+   "score": 392180086,
+   "vibe": "Movie anthem"
+  },
+  {
+   "rank": 70,
+   "artist": "LE SSERAFIM",
+   "title": "CRAZY",
+   "videoId": "n6B5gQXlB-0",
+   "views": 240518457,
+   "streams": 525485938,
+   "score": 383002198,
+   "vibe": "Club"
+  },
+  {
+   "rank": 71,
+   "artist": "aespa",
+   "title": "Whiplash",
+   "videoId": "jWQx2f-CErU",
+   "views": 327766182,
+   "streams": 438058381,
+   "score": 382912282,
+   "vibe": "Sleek"
+  },
+  {
+   "rank": 72,
+   "artist": "ENHYPEN",
+   "title": "Bite Me",
+   "videoId": "wXFLzODIdUI",
+   "views": 216121842,
+   "streams": 548610226,
+   "score": 382366034,
+   "vibe": "Dark pop"
+  },
+  {
+   "rank": 73,
+   "artist": "i-dle",
+   "title": "Nxde",
+   "videoId": "fCO7f0SmrDc",
+   "views": 415252698,
+   "streams": 346782338,
+   "score": 381017518,
+   "vibe": "Theatrical"
+  },
+  {
+   "rank": 74,
+   "artist": "BABYMONSTER",
+   "title": "DRIP",
+   "videoId": "Zp-Jhuhq0bQ",
+   "views": 421065547,
+   "streams": 326238936,
+   "score": 373652242,
+   "vibe": "Hype"
+  },
+  {
+   "rank": 75,
+   "artist": "Stray Kids",
+   "title": "Chk Chk Boom",
+   "videoId": "0P0aQreFs8w",
+   "views": 220068284,
+   "streams": 517548538,
+   "score": 368808411,
+   "vibe": "Loud and fun"
+  },
+  {
+   "rank": 76,
+   "artist": "V",
+   "title": "FRI(END)S",
+   "videoId": "62peQdQv4uo",
+   "views": 86584614,
+   "streams": 637867996,
+   "score": 362226305,
+   "vibe": "Smooth"
+  },
+  {
+   "rank": 77,
+   "artist": "LE SSERAFIM",
+   "title": "Perfect Night",
+   "videoId": "hLvWy2b857I",
+   "views": 153577659,
+   "streams": 560468342,
+   "score": 357023001,
+   "vibe": "All-English"
+  },
+  {
+   "rank": 78,
+   "artist": "aespa",
+   "title": "Supernova",
+   "videoId": "phuiiNCxRMg",
+   "views": 259223173,
+   "streams": 450151191,
+   "score": 354687182,
+   "vibe": "Futuristic"
+  },
+  {
+   "rank": 79,
+   "artist": "Stray Kids",
+   "title": "S-Class",
+   "videoId": "JsOOis4bBFg",
+   "views": 324177309,
+   "streams": 379645832,
+   "score": 351911571,
+   "vibe": "Loud and fun"
+  },
+  {
+   "rank": 80,
+   "artist": "j-hope",
+   "title": "Chicken Noodle Soup",
+   "videoId": "i23NEQEFpgQ",
+   "views": 428434414,
+   "streams": 239243091,
+   "score": 333838753,
+   "vibe": "Dance"
+  },
+  {
+   "rank": 81,
+   "artist": "aespa",
+   "title": "Next Level",
+   "videoId": "4TWR90KJl84",
+   "views": 327874506,
+   "streams": 332338422,
+   "score": 330106464,
+   "vibe": "Futuristic"
+  },
+  {
+   "rank": 82,
+   "artist": "ROSÉ",
+   "title": "toxic till the end",
+   "videoId": "eA0lHNZ1KCA",
+   "views": 145597157,
+   "streams": 498170690,
+   "score": 321883924,
+   "vibe": "Bittersweet"
+  },
+  {
+   "rank": 83,
+   "artist": "SEVENTEEN",
+   "title": "Super",
+   "videoId": "-GQg25oP0S4",
+   "views": 308128418,
+   "streams": 329716685,
+   "score": 318922552,
+   "vibe": "Epic choreo"
+  },
+  {
+   "rank": 84,
+   "artist": "ITZY",
+   "title": "DALLA DALLA",
+   "videoId": "pNfTK39k55U",
+   "views": 338081532,
+   "streams": 292672731,
+   "score": 315377132,
+   "vibe": "Confident"
+  },
+  {
+   "rank": 85,
+   "artist": "NewJeans",
+   "title": "ETA",
+   "videoId": "jOTfBlKSQYY",
+   "views": 122490813,
+   "streams": 501617753,
+   "score": 312054283,
+   "vibe": "Upbeat"
+  },
+  {
+   "rank": 86,
+   "artist": "KATSEYE",
+   "title": "Gameboy",
+   "videoId": "-bC4iak3kxg",
+   "views": 221940818,
+   "streams": 366337751,
+   "score": 294139285,
+   "vibe": "All-English"
+  },
+  {
+   "rank": 87,
+   "artist": "Girls' Generation",
+   "title": "Gee",
+   "videoId": "U7mPqycQ0tQ",
+   "views": 366022304,
+   "streams": 204249846,
+   "score": 285136075,
+   "vibe": "Classic"
+  },
+  {
+   "rank": 88,
+   "artist": "K/DA",
+   "title": "MORE",
+   "videoId": "3VTkBuxU4yk",
+   "views": 250390025,
+   "streams": 301199058,
+   "score": 275794542,
+   "vibe": "League of Legends"
+  },
+  {
+   "rank": 89,
+   "artist": "EXO",
+   "title": "Growl",
+   "videoId": "I3dezFzsNss",
+   "views": 353911874,
+   "streams": 188180300,
+   "score": 271046087,
+   "vibe": "Classic"
+  },
+  {
+   "rank": 90,
+   "artist": "aespa",
+   "title": "Armageddon",
+   "videoId": "nFYwcndNuOY",
+   "views": 185931012,
+   "streams": 349983962,
+   "score": 267957487,
+   "vibe": "Futuristic"
+  },
+  {
+   "rank": 91,
+   "artist": "SEVENTEEN",
+   "title": "HOT",
+   "videoId": "gRnuFC4Ualw",
+   "views": 214809330,
+   "streams": 304930641,
+   "score": 259869986,
+   "vibe": "Epic choreo"
+  },
+  {
+   "rank": 92,
+   "artist": "LE SSERAFIM",
+   "title": "EASY",
+   "videoId": "bNKXxwOQYB8",
+   "views": 123386772,
+   "streams": 364572099,
+   "score": 243979436,
+   "vibe": "Smooth"
+  },
+  {
+   "rank": 93,
+   "artist": "TOMORROW X TOGETHER",
+   "title": "Sugar Rush Ride",
+   "videoId": "P9tKTxbgdkk",
+   "views": 162370162,
+   "streams": 252444776,
+   "score": 207407469,
+   "vibe": "Smooth"
+  },
+  {
+   "rank": 94,
+   "artist": "IU",
+   "title": "Celebrity",
+   "videoId": "0-q1KafFCLU",
+   "views": 198803300,
+   "streams": 207485475,
+   "score": 203144388,
+   "vibe": "Warm pop"
+  },
+  {
+   "rank": 95,
+   "artist": "TWICE",
+   "title": "Strategy",
+   "videoId": "Sz_wWzgh-vQ",
+   "views": 181673379,
+   "streams": 218990506,
+   "score": 200331943,
+   "vibe": "English hook"
+  },
+  {
+   "rank": 96,
+   "artist": "NCT 127",
+   "title": "Kick It",
+   "videoId": "2OvyA2__Eas",
+   "views": 201545974,
+   "streams": 178284498,
+   "score": 189915236,
+   "vibe": "Hype"
+  },
+  {
+   "rank": 97,
+   "artist": "IU",
+   "title": "Palette",
+   "videoId": "d9IxdwEFk1c",
+   "views": 213475288,
+   "streams": 154730412,
+   "score": 184102850,
+   "vibe": "Mellow"
+  },
+  {
+   "rank": 98,
+   "artist": "Red Velvet",
+   "title": "Russian Roulette",
+   "videoId": "QslJYDX3o8s",
+   "views": 300986892,
+   "streams": 37496456,
+   "score": 169241674,
+   "vibe": "Bright"
+  },
+  {
+   "rank": 99,
+   "artist": "NCT DREAM",
+   "title": "Candy",
+   "videoId": "zuoSn3ObMz4",
+   "views": 78662174,
+   "streams": 160939524,
+   "score": 119800849,
+   "vibe": "Retro"
+  },
+  {
+   "rank": 100,
+   "artist": "G-DRAGON",
+   "title": "POWER",
+   "videoId": "NMjhjrBIrG8",
+   "views": 80485029,
+   "streams": 101752654,
+   "score": 91118842,
+   "vibe": "Swagger"
+  }
+ ]
+}
