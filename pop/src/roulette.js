@@ -54,6 +54,7 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     chosen = null;
     $('.spin').textContent = 'SPIN';
     $('.auto').hidden = false;
+    $('.another').hidden = true;
     $('.restart').hidden = true;
     steps('artist');
     startStage('artist', G.shuffle(pool));
@@ -102,6 +103,8 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     stage = 'done';
     $('.spin').textContent = 'AGAIN';
     $('.auto').hidden = true;
+    $('.another').hidden = G.wheelSongs(chosen, songsById, Infinity).length < 2; // one song: nothing to redo
+    $('.another').textContent = `Another ${chosen.name} song`;
     steps('mv');
     $('.result').scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'nearest' });
   }
@@ -144,6 +147,17 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     while (stage !== 'done') await step(true);
   }));
   $('.restart').addEventListener('click', () => !busy && newGame());
+  // Same artist, new song: redo the song draw and showdown. The current MV keeps playing until a new song wins.
+  $('.another').addEventListener('click', () => {
+    if (busy || !chosen) return;
+    $('.spin').textContent = 'SPIN';
+    $('.auto').hidden = false;
+    $('.another').hidden = true;
+    steps('song');
+    startStage('song', G.wheelSongs(chosen, songsById, Infinity));
+    hint(`Still ${chosen.name}. ${$('.hint').textContent}`);
+    $('.wheel-zone').scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'nearest' });
+  });
   newGame();
   return { stop: () => player.stop() };
 }

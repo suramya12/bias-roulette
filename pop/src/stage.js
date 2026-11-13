@@ -7,7 +7,7 @@ export function startCrowd(canvas) {
   const ctx = canvas.getContext('2d');
   let w = 0, h = 0, fans = [], raf = 0;
   const resize = () => {
-    const dpr = Math.min(devicePixelRatio || 1, 2);
+    const dpr = Math.min(devicePixelRatio || 1, 2) * (canvas.currentCSSZoom || 1);
     w = canvas.clientWidth; h = canvas.clientHeight;
     canvas.width = w * dpr; canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);

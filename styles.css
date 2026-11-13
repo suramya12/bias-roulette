@@ -15,7 +15,7 @@ html, body { overflow-x: clip; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
-  min-height: 100dvh;
+  min-height: calc(100dvh / var(--z, 1));
   font: 500 1rem/1.35 var(--body);
   color: var(--ink);
   background: linear-gradient(160deg, #ffd6ec 0%, #e8d6ff 48%, #cfe9ff 100%) fixed;
@@ -38,8 +38,8 @@ body {
   transition: color .8s;
 }
 @keyframes drift {
-  from { transform: translateY(108vh) rotate(0deg); }
-  to { transform: translateY(-12vh) rotate(360deg); }
+  from { transform: translateY(calc(108vh / var(--z, 1))) rotate(0deg); }
+  to { transform: translateY(calc(-12vh / var(--z, 1))) rotate(360deg); }
 }
 
 /* ---------- title and ticker ---------- */
@@ -734,7 +734,7 @@ body.night .btn:active { box-shadow: 1px 1px 0 var(--accent); }
    Collection binder
    ========================================================================= */
 .binder {
-  width: min(960px, 100vw - 16px); max-height: calc(100dvh - 16px); padding: 0; color: #fff;
+  width: min(960px, (100vw - 16px) / var(--z, 1)); max-height: calc((100dvh - 16px) / var(--z, 1)); padding: 0; color: #fff;
   background: #120a24; border: 3px solid #000; border-radius: 22px; box-shadow: 0 0 0 2px rgba(255,255,255,.12), 0 20px 60px rgba(0,0,0,.6);
 }
 .binder::backdrop { background: rgba(5,2,12,.72); backdrop-filter: blur(4px); }

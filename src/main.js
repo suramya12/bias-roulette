@@ -180,6 +180,9 @@ function showResult() {
   $('songTitle').textContent = song.title;
   $('songArtist').textContent = song.artist;
   $('drawnFor').textContent = `Drawn for ${idol.name} · ${idol.label}`;
+  // Keep this idol, redo only the song rounds. Hidden when there is no other song to draw.
+  $('anotherBtn').textContent = `Another ${idol.name} song`;
+  $('anotherBtn').hidden = idol.songs.length < 2;
   setAccent(idol.color);
   const data = idolCard(idol, chartIdx, portraits);
   const card = makeCard(data, { isNew: collection.add('idol', data.key) });

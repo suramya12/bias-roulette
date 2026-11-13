@@ -11,6 +11,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>
+    // Big screens: zoom the whole page so it fills the display (laid out for about 1200x720).
+    // --z lets the CSS undo the zoom on viewport units, which would otherwise grow with it.
+    (function () {
+      function fit() {
+        var z = Math.min(innerWidth / 1200, innerHeight / 720, 3);
+        z = z > 1.05 ? Math.round(z * 100) / 100 : 1;
+        var s = document.documentElement.style;
+        s.zoom = z === 1 ? '' : String(z);
+        s.setProperty('--z', String(z));
+      }
+      fit();
+      addEventListener('resize', fit);
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='3' width='20' height='26' rx='4' fill='%23ff4fa3'/%3E%3Ccircle cx='16' cy='14' r='5' fill='%23ffd76a'/%3E%3C/svg%3E">
 </head>
@@ -69,6 +84,7 @@
           <p class="hint" role="status">Loading…</p>
           <div class="hand"></div>
           <div class="row-btns">
+            <button class="ghost another" hidden>Another song</button>
             <button class="ghost auto">Choose for me</button>
             <button class="ghost restart" hidden>Start over</button>
           </div>

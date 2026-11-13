@@ -13,6 +13,7 @@ export class Wheel {
     this.rot = 0; // degrees, clockwise
     this.raf = 0;
     new ResizeObserver(() => this.draw()).observe(canvas.parentElement);
+    addEventListener('resize', () => this.draw()); // page zoom changes pixel density
   }
 
   /** @param segments [{label, color, taken}] */
@@ -33,7 +34,7 @@ export class Wheel {
     const { canvas, ctx, segments } = this;
     const size = canvas.parentElement.clientWidth;
     if (!size) return;
-    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    const dpr = Math.min((window.devicePixelRatio || 1) * (canvas.currentCSSZoom || 1), 4);
     canvas.width = canvas.height = Math.round(size * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, size, size);

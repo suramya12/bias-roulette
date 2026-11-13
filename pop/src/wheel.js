@@ -11,10 +11,17 @@ export function createWheel(canvas, fills = FILLS) {
   const ctx = canvas.getContext('2d');
   let labels = [], taken = [], rotation = 0;
 
+  // Drawn at the screen's real pixel density, in CSS pixels, so labels stay sharp on phones.
   function draw() {
-    const S = canvas.width, R = S / 2, n = labels.length;
-    ctx.clearRect(0, 0, S, S);
-    const seg = (Math.PI * 2) / n;
+    const css = canvas.clientWidth, n = labels.length;
+    if (!css || !n) return;
+    const dpr = Math.min((window.devicePixelRatio || 1) * (canvas.currentCSSZoom || 1), 4);
+    const px = Math.round(css * dpr);
+    if (canvas.width !== px) canvas.width = canvas.height = px;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, css, css);
+    const R = css / 2, seg = (Math.PI * 2) / n, dense = n > 36;
+    const rim = R - 4;
     for (let i = 0; i < n; i++) {
       // segment i is centred at angle i*seg + seg/2 measured clockwise from the top
       const a0 = -Math.PI / 2 + i * seg, a1 = a0 + seg;
@@ -22,30 +29,42 @@ export function createWheel(canvas, fills = FILLS) {
       const g = ctx.createRadialGradient(R, R, R * 0.15, R, R, R);
       g.addColorStop(0, c2); g.addColorStop(1, c1);
       ctx.fillStyle = g;
-      ctx.globalAlpha = taken[i] ? 0.3 : 1; // already drawn as a finalist
-      ctx.beginPath(); ctx.moveTo(R, R); ctx.arc(R, R, R - 6, a0, a1); ctx.closePath(); ctx.fill();
+      ctx.globalAlpha = taken[i] ? 0.25 : 1; // already drawn as a finalist
+      ctx.beginPath(); ctx.moveTo(R, R); ctx.arc(R, R, rim, a0, a1); ctx.closePath(); ctx.fill();
       ctx.globalAlpha = 1;
-      ctx.strokeStyle = 'rgba(255,255,255,.55)'; ctx.lineWidth = n > 36 ? 1 : 3; ctx.stroke();
+      ctx.strokeStyle = dense ? 'rgba(11,7,22,.45)' : 'rgba(255,255,255,.55)'; ctx.lineWidth = dense ? 0.6 : 2; ctx.stroke();
+    }
+    // Labels read outwards along the radius. Font fits the slice at the rim, never under 7px.
+    const base = n <= 12 ? Math.min(20, R * 0.09) : Math.max(7, Math.min(16, rim * 0.92 * seg * 0.8));
+    const maxLen = R * 0.6;
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
+    for (let i = 0; i < n; i++) {
       ctx.save();
-      ctx.translate(R, R); ctx.rotate(a0 + seg / 2);
-      ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
-      ctx.fillStyle = taken[i] ? 'rgba(255,255,255,.4)' : '#fff'; ctx.shadowColor = 'rgba(0,0,0,.7)'; ctx.shadowBlur = n > 36 ? 2 : 6;
-      // Font fits the slice width at the rim, so a full deck of 100+ names still reads.
-      const size = Math.max(9, Math.min(30, (R - 26) * seg * 0.85));
-      ctx.font = `800 ${size}px "Baloo 2", system-ui, sans-serif`;
-      let t = labels[i];
-      while (ctx.measureText(t).width > R * 0.62 && t.length > 4) t = t.slice(0, -2).trimEnd() + '…';
-      if (t !== labels[i] && !t.endsWith('…')) t += '…';
-      ctx.fillText(t, R - 26, 0);
+      ctx.translate(R, R); ctx.rotate(-Math.PI / 2 + (i + 0.5) * seg);
+      let size = base, t = labels[i];
+      const fit = () => { ctx.font = `800 ${size}px "Baloo 2", system-ui, sans-serif`; return ctx.measureText(t).width <= maxLen; };
+      while (!fit() && size > base * 0.75) size -= 0.5;
+      while (!fit() && t.length > 4) t = t.slice(0, -2).trimEnd() + '…';
+      const x = rim - (dense ? 6 : 14);
+      if (!taken[i]) {
+        // A dark outline instead of a blurred shadow: crisp at small sizes.
+        ctx.lineWidth = Math.max(2, size * 0.28); ctx.strokeStyle = 'rgba(11,7,22,.85)';
+        ctx.strokeText(t, x, 0);
+      }
+      ctx.fillStyle = taken[i] ? 'rgba(255,255,255,.35)' : '#fff';
+      ctx.fillText(t, x, 0);
       ctx.restore();
     }
     // studs (only while there is room for them)
-    for (let i = 0; i < (n > 36 ? 0 : n); i++) {
+    for (let i = 0; i < (dense ? 0 : n); i++) {
       const a = -Math.PI / 2 + i * seg;
       ctx.fillStyle = '#fff6c8';
-      ctx.beginPath(); ctx.arc(R + Math.cos(a) * (R - 16), R + Math.sin(a) * (R - 16), 5, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(R + Math.cos(a) * (rim - 6), R + Math.sin(a) * (rim - 6), 3, 0, Math.PI * 2); ctx.fill();
     }
   }
+  // Redraw when the wheel changes size (rotation, window resize, or a hidden deck being shown).
+  new ResizeObserver(() => draw()).observe(canvas);
+  addEventListener("resize", () => draw()); // browser zoom changes pixel density
 
   return {
     set(list, flags = []) { labels = list; taken = flags; document.fonts?.ready.then(draw); draw(); canvas.setAttribute('aria-label', `Wheel: ${list.join(', ')}`); },

@@ -36,6 +36,8 @@ export function initRimLights(el, count = 24) {
 
 function spray(layer, x, y, { count, spread, size, time, colors }) {
   if (reduced.matches) return;
+  const z = layer.currentCSSZoom || 1; // screen coordinates in, zoomed layer out
+  x /= z; y /= z;
   for (let i = 0; i < count; i++) {
     const s = document.createElement('span');
     const ang = rand(0, Math.PI * 2);

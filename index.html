@@ -10,6 +10,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    // Big screens: zoom the whole page so it fills the display (laid out for about 1200x720).
+    // --z lets the CSS undo the zoom on viewport units, which would otherwise grow with it.
+    (function () {
+      function fit() {
+        var z = Math.min(innerWidth / 1200, innerHeight / 720, 3);
+        z = z > 1.05 ? Math.round(z * 100) / 100 : 1;
+        var s = document.documentElement.style;
+        s.zoom = z === 1 ? '' : String(z);
+        s.setProperty('--z', String(z));
+      }
+      fit();
+      addEventListener('resize', fit);
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="night">
