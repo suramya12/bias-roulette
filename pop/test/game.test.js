@@ -87,3 +87,22 @@ test('the ring keeps changing after every song has been shown', () => {
     assert.equal(new Set(ring.map((s) => s.id)).size, 6);
   }
 });
+
+test('Duel: draw 5 distinct finalists, then first to 3 wins', () => {
+  const d = new G.Duel(100, { rand: G.rng(7) });
+  for (let k = 0; k < 5; k++) assert.equal(d.spin().kind, 'draw');
+  assert.equal(new Set(d.fin).size, 5);
+  assert.equal(d.phase, 'duel');
+  assert.equal(d.wheel().length, 10);
+  let ev;
+  do { ev = d.spin(); assert.equal(ev.kind, 'hit'); assert.equal(d.wheel()[ev.segment].index, ev.index); } while (!ev.won);
+  assert.equal(Math.max(...d.hits), 3);
+  assert.ok(d.fin.includes(d.winner));
+});
+
+test('Duel: small pools draw everything, one item wins at once', () => {
+  const d = new G.Duel(3, { rand: G.rng(1) });
+  for (let k = 0; k < 3; k++) d.spin();
+  assert.equal(d.phase, 'duel');
+  assert.equal(new G.Duel(1).winner, 0);
+});

@@ -2,7 +2,7 @@
 
 The English-language and Latin pop side of Bias Roulette. It lives in `pop/`; the K-pop side is the site root. The genre menu at the top left of either page switches between them and keeps you in the same mode (Roulette or Top 100). No build step, no dependencies.
 
-- **Roulette**: spin a wheel of artists, watch a three-card showdown, then spin that artist's songs. The winning song's official MV plays in the page. Two decks, picked with the chip under the header:
+- **Roulette**: the same rules as the K-pop side. Every artist in the deck is on the wheel: spin to draw 5 finalists, then the wheel holds only those 5 and the first to 3 hits wins. That artist's songs go on the wheel for another draw and showdown, and the winning song's official MV plays in the page. **Choose for me** plays the remaining spins quickly. Two decks, picked with the chip under the header:
   - **All**: the 138 biggest English and Latin acts (`ROSTER` in `scripts/roster.mjs`).
   - **Favourites**: a curated 100 on a gold wheel (the `BIAS` list, in its own order). Fifth Harmony counts as a group; members who also had a band (Gwen Stefani, Nicole Scherzinger, Cheryl, Andrea Corr, Anahí, Mette Lindberg, Gloria Estefan) get their band's songs on their wheel too.
 - **Top 100**: a ring of face-down photocards on a concert stage. Pull one and its MV plays. The full ranked chart sits below the stage; tap a row to play it.

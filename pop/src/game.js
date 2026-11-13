@@ -181,3 +181,46 @@ export function wheelSongs(artist, songsById, max = 12) {
     .filter((s) => s && !seen.has(s.id) && seen.add(s.id))
     .slice(0, max);
 }
+
+/**
+ * One roulette stage, the same rules as the K-pop side:
+ * the wheel holds every item; spin to draw up to 5 finalists (each can be drawn once),
+ * then the wheel holds only the finalists (each twice) and the first to `target` hits wins.
+ */
+export const FINALISTS = 5;
+export class Duel {
+  constructor(n, { target = 3, rand = Math.random } = {}) {
+    if (n < 1) throw new Error('Nothing to spin');
+    Object.assign(this, { n, target, rand, fin: [], hits: [], winner: null, phase: 'draw' });
+    if (n === 1) { this.fin = [0]; this.hits = [0]; this.winner = 0; this.phase = 'done'; }
+  }
+
+  get needed() { return Math.min(FINALISTS, this.n); }
+
+  /** Wheel slots. draw: every item, `taken` if already a finalist. duel: each finalist twice. */
+  wheel() {
+    if (this.phase === 'draw') return Array.from({ length: this.n }, (_, i) => ({ index: i, taken: this.fin.includes(i) }));
+    const once = this.fin.map((index, finalist) => ({ index, finalist, taken: false }));
+    return [...once, ...once];
+  }
+
+  /** One spin; the state has already moved on when it returns. */
+  spin() {
+    if (this.phase === 'done') throw new Error('This stage is over');
+    const pick = (k) => Math.floor(this.rand() * k);
+    if (this.phase === 'draw') {
+      const open = [];
+      for (let i = 0; i < this.n; i++) if (!this.fin.includes(i)) open.push(i);
+      const index = open[pick(open.length)];
+      this.fin.push(index); this.hits.push(0);
+      const ev = { kind: 'draw', segment: index, index, finalist: this.fin.length - 1, count: this.fin.length, needed: this.needed, won: false };
+      if (this.fin.length >= this.needed) this.phase = 'duel';
+      return ev;
+    }
+    const f = pick(this.fin.length);
+    this.hits[f] += 1;
+    const ev = { kind: 'hit', segment: f + pick(2) * this.fin.length, index: this.fin[f], finalist: f, hits: this.hits[f], target: this.target, won: false };
+    if (this.hits[f] >= this.target) { this.winner = this.fin[f]; this.phase = 'done'; ev.won = true; }
+    return ev;
+  }
+}
