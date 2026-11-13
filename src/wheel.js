@@ -69,7 +69,7 @@ export class Wheel {
       ctx.rotate((i + 0.5) * a);
       let size2 = font;
       let text = seg.label;
-      const fit = () => { ctx.font = `700 ${size2}px Fredoka, ui-rounded, system-ui, sans-serif`; return ctx.measureText(text).width <= maxLen; };
+      const fit = () => { ctx.font = `600 ${size2}px Outfit, ui-sans-serif, system-ui, sans-serif`; return ctx.measureText(text).width <= maxLen; };
       while (!fit() && size2 > Math.max(5, font * 0.72)) size2 -= 0.5;
       while (!fit() && text.length > 4) text = text.slice(0, -2).trimEnd() + '…';
       if (!seg.taken) {
