@@ -1,0 +1,10 @@
+{
+  "name": "encore-cards",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test",
+    "data": "node scripts/chart.mjs && node scripts/portraits.mjs"
+  }
+}

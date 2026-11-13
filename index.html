@@ -16,10 +16,20 @@
   <div class="sky" id="sky" aria-hidden="true"></div>
 
   <main class="app" id="app">
-    <nav class="modes" aria-label="Game mode">
-      <button class="mode-btn" id="modeRoulette" type="button" aria-pressed="true"><span aria-hidden="true">🎡</span> Bias Roulette</button>
-      <button class="mode-btn" id="modeCharts" type="button" aria-pressed="false"><span aria-hidden="true">💿</span> K-pop Top 100</button>
-    </nav>
+    <div class="topbar" id="topbar">
+      <details class="genre" id="genre">
+        <summary aria-label="Music: K-pop. Switch music">K-pop <span aria-hidden="true">▾</span></summary>
+        <div class="genre-menu">
+          <a aria-current="page" href="#roulette" id="toKpop">K-pop</a>
+          <a id="toPop" href="pop/#roulette">Pop &amp; Latin</a>
+        </div>
+      </details>
+      <div class="tabs" role="group" aria-label="Game mode">
+        <button class="mode-btn" id="modeRoulette" type="button" aria-pressed="true">Roulette</button>
+        <button class="mode-btn" id="modeCharts" type="button" aria-pressed="false">Top 100</button>
+      </div>
+      <button class="hdr-binder" id="openBinder" type="button" aria-haspopup="dialog" aria-label="Open your collection"><span class="long">Collection</span><span class="icon" aria-hidden="true">🃏</span> <b id="binderCount">0</b></button>
+    </div>
 
     <header>
       <h1 class="title" id="title"><span>Bias</span> <span>Roulette</span></h1>
@@ -88,7 +98,6 @@
       <p class="chip" id="idolChip" hidden></p>
       <ul class="hand" id="finalists"></ul>
     </section>
-    <button class="btn btn-small binder-btn" id="binderIdols" type="button">🃏 Idol collection</button>
 
     <footer class="options">
       <div class="seg" role="group" aria-label="Showdown length">
@@ -100,9 +109,12 @@
     </div>
 
     <div id="charts" hidden>
-      <div class="lists" role="group" aria-label="Which chart">
-        <button class="list-btn" id="listPro" type="button" aria-pressed="true"><b>Connoisseur</b><span>The real Top 100</span></button>
-        <button class="list-btn" id="listNew" type="button" aria-pressed="false"><b>New to K-pop</b><span>100 easy first loves</span></button>
+      <div class="deckbar">
+        <div class="chips" role="radiogroup" aria-label="Which chart">
+          <button class="list-chip" id="listPro" type="button" role="radio" aria-checked="true">Real 100</button>
+          <button class="list-chip" id="listNew" type="button" role="radio" aria-checked="false">Easy 100</button>
+        </div>
+        <p class="list-note" id="listNote"></p>
       </div>
 
       <p class="announce night" id="chartsAnnounce" role="status" aria-live="polite">Loading the chart…</p>
@@ -149,8 +161,6 @@
         </div>
       </section>
 
-      <button class="btn btn-small binder-btn" id="binderSongs" type="button">🃏 Song collection</button>
-
       <details class="chart" id="chart">
         <summary><span id="chartName">The Top 100</span> <small>tap a song to play it</small></summary>
         <p class="method" id="method"></p>
@@ -160,6 +170,14 @@
 
     <footer class="options shared">
       <button class="btn btn-small" id="soundBtn" type="button" aria-pressed="true">Sound on</button>
+    </footer>
+
+    <footer class="credits">
+      <p>Fan project, not affiliated with any artist or label. Stream and view counts: <a href="https://kworb.net/" target="_blank" rel="noopener">kworb.net</a>. Videos play from YouTube. Idol photos: Wikimedia Commons, each under its own licence.</p>
+      <details id="credits">
+        <summary>Photo credits</summary>
+        <ul id="creditList"></ul>
+      </details>
     </footer>
   </main>
 

@@ -2,6 +2,15 @@
 
 Spin a wheel of idols, a showdown picks one, spin a wheel of that idol's songs, a second showdown picks one, and the music video plays in the page. Static site, no dependencies, no build step.
 
+## Two sides, one site
+
+| Side | Where | What |
+|---|---|---|
+| **K-pop** | the site root (this README) | Bias Roulette of idols, K-pop Top 100 (Real 100 / Easy 100) |
+| **Pop & Latin** | [`pop/`](pop/README.md) | Roulette of English and Latin artists (All / Favourites decks), Pop & Latin Top 100 |
+
+Both pages share one header row: the genre menu (K-pop / Pop & Latin), the Roulette and Top 100 tabs, and the Binder. Switching genre keeps you in the same mode. The two sides keep their own code, data, update scripts and binder. Nothing is shared but the URL, so either side can be rebuilt without touching the other.
+
 ## Run it
 
 ```bash
@@ -69,7 +78,7 @@ Card art is painted in the browser by `src/art.js`, in a digital cel-shaded styl
 
 ## Deploy
 
-No build: upload `index.html`, `styles.css`, `src/` and `data/` to any static host. All paths are relative, so a sub-path works.
+No build: upload `index.html`, `styles.css`, `src/`, `data/` and the `pop/` folder (its `index.html`, `styles.css`, `src/`, `data/`) to any static host. All paths are relative, so a sub-path works. `.nojekyll` makes GitHub Pages serve the files as they are.
 
 - **GitHub Pages**: push the folder to a repo, then Settings, Pages, Deploy from branch, `main`, `/ (root)`.
 - **Netlify or Cloudflare Pages**: drag the folder into the dashboard, or connect the repo with no build command and the root as output folder.

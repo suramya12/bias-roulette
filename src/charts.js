@@ -215,13 +215,16 @@ export class Charts {
   #say(text) { $('chartsAnnounce').textContent = text; }
 
   #intro() {
-    const what = this.list === 'new' ? 'New to K-pop' : 'Connoisseur';
+    const what = this.list === 'new' ? 'Easy 100' : 'Real 100';
     return `${what} · Top ${this.range}: pull a photocard to play its music video.`;
   }
 
   #renderControls() {
-    $('listPro').setAttribute('aria-pressed', String(this.list === 'pro'));
-    $('listNew').setAttribute('aria-pressed', String(this.list === 'new'));
+    $('listPro').setAttribute('aria-checked', String(this.list === 'pro'));
+    $('listNew').setAttribute('aria-checked', String(this.list === 'new'));
+    $('listPro').tabIndex = this.list === 'pro' ? 0 : -1;
+    $('listNew').tabIndex = this.list === 'new' ? 0 : -1;
+    $('listNote').textContent = this.list === 'new' ? 'Hand-picked first loves.' : 'The all-time chart, by streams and views.';
     for (const n of [10, 50, 100]) $(`r${n}`).setAttribute('aria-pressed', String(this.range === n));
     $('chartName').textContent = this.list === 'new' ? 'New to K-pop: 100 easy first loves' : 'The all-time K-pop Top 100';
     $('method').textContent = this.list === 'new'
@@ -420,6 +423,7 @@ export class Charts {
     if (fromList) { this.#dropLift(); this.#setAccent(song); }
     const data = songCard(song);
     const card = makeCard(data, { isNew: collection.add('song', data.key) });
+    this.onCollect?.();
     $('songCardSlot').replaceChildren(card);
     playIn(card, { reduced: fx.prefersReducedMotion() });
 
@@ -437,6 +441,24 @@ export class Charts {
     this.player.show(new URLSearchParams(location.search).get('forceVideo') || song.videoId);
     this.#say(`Now playing #${song.rank}: ${song.title} by ${song.artist}.`);
     $('pull').scrollIntoView({ block: 'start', behavior: fx.prefersReducedMotion() ? 'auto' : 'smooth' });
+  }
+
+  /** Switch list from outside (URL hash). Before the chart has loaded it only records the choice. */
+  chooseList(list) {
+    if (list !== 'pro' && list !== 'new') return;
+    if (this.data) this.#setList(list);
+    else { this.list = list; this.store.set('chart.list', list); }
+  }
+
+  /** Songs of the current list the viewer has collected. */
+  collectedCount() { return this.data ? collection.count('song', this.songs.map((s) => songCard(s).key)) : 0; }
+
+  openCollection() {
+    if (!this.data) return;
+    openBinder({
+      title: this.list === 'new' ? 'Easy 100 cards' : 'Top 100 cards',
+      kind: 'song', cards: this.songs.map(songCard), reduced: fx.prefersReducedMotion(),
+    });
   }
 
   #setList(list) {
@@ -473,15 +495,16 @@ export class Charts {
     $('chartJump').addEventListener('click', () => { $('chart').open = true; $('chart').scrollIntoView({ block: 'start', behavior: 'smooth' }); });
     $('listPro').addEventListener('click', () => this.#setList('pro'));
     $('listNew').addEventListener('click', () => this.#setList('new'));
+    for (const [id, other] of [['listPro', 'new'], ['listNew', 'pro']]) {
+      $(id).addEventListener('keydown', (e) => {
+        if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) return;
+        e.preventDefault();
+        this.#setList(other);
+        $(other === 'new' ? 'listNew' : 'listPro').focus();
+      });
+    }
     for (const n of [10, 50, 100]) $(`r${n}`).addEventListener('click', () => this.#setRange(n));
 
-    $('binderSongs').addEventListener('click', () => {
-      if (!this.data) return;
-      openBinder({
-        title: this.list === 'new' ? 'New to K-pop cards' : 'Top 100 cards',
-        kind: 'song', cards: this.songs.map(songCard), reduced: fx.prefersReducedMotion(),
-      });
-    });
     document.addEventListener('visibilitychange', () => {
       if (!this.active) return;
       if (document.hidden) this.crowd.stop(); else this.crowd.start();

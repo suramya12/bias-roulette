@@ -49,6 +49,8 @@ const player = new VideoPlayer({
   box: $('playerBox'), mountId: 'player', overlay: $('playOverlay'), fallback: $('playerFallback'),
   message: $('fallbackMsg'), link: $('watchLink'), hint: $('playHint'),
 });
+// #top100/easy opens the Easy 100 list; the choice is remembered like any other.
+if (location.hash === '#top100/easy') store.set('chart.list', 'new');
 const charts = new Charts({ sound, store });
 const wheelCrowd = new Crowd($('crowdWheel'));
 let chartIdx = null; // Top 100 by act, for card power
@@ -181,6 +183,7 @@ function showResult() {
   setAccent(idol.color);
   const data = idolCard(idol, chartIdx, portraits);
   const card = makeCard(data, { isNew: collection.add('idol', data.key) });
+  updateBinder();
   $('idolCardSlot').replaceChildren(card);
   playIn(card, { reduced: reduced() });
   renderSteps();
@@ -307,7 +310,8 @@ function setMode(next) {
   $('charts').hidden = !isCharts;
   $('title').replaceChildren(...(isCharts ? ['K-pop', 'Top 100'] : ['Bias', 'Roulette']).flatMap((w, i) => (i ? [' ', el('span', { text: w })] : [el('span', { text: w })])));
   document.title = isCharts ? 'K-pop Top 100 · Bias Roulette' : 'Bias Roulette';
-  history.replaceState(null, '', isCharts ? '#top100' : location.pathname + location.search);
+  syncUrl();
+  updateBinder();
   if (isCharts) {
     player.stop();
     fx.setSkyColor(null);
@@ -321,7 +325,57 @@ function setMode(next) {
     if (rouletteTicker.length) setTicker(rouletteTicker);
   }
 }
-charts.onListChange = () => setTicker(charts.tickerItems());
+charts.onListChange = () => { setTicker(charts.tickerItems()); syncUrl(); updateBinder(); };
+charts.onCollect = () => updateBinder();
+
+/** The hash that names the current screen. */
+const hashFor = () => (mode === 'charts' ? (charts.list === 'new' ? '#top100/easy' : '#top100') : '#roulette');
+function syncUrl() {
+  const hash = hashFor();
+  if (location.hash !== hash) history.replaceState(null, '', location.pathname + location.search + hash);
+  $('toKpop').setAttribute('href', hash); // already here: a no-op link
+  $('toPop').setAttribute('href', 'pop/' + hash.split('/')[0]); // pop has no Easy list
+}
+
+/** Collection button in the header: the count for whatever deck is on screen. */
+function updateBinder() {
+  const n = mode === 'charts' ? charts.collectedCount()
+    : collection.count('idol', catalogIdols.map((i) => idolCard(i, chartIdx, portraits).key));
+  $('binderCount').textContent = String(n);
+  $('openBinder').setAttribute('aria-label', `Open your ${mode === 'charts' ? 'song' : 'idol'} collection, ${n} collected`);
+}
+function openCollection() {
+  if (mode === 'charts') return charts.openCollection();
+  if (!catalogIdols.length) return undefined;
+  return openBinder({
+    title: 'Idol cards', kind: 'idol', cards: catalogIdols.map((i) => idolCard(i, chartIdx, portraits)), reduced: reduced(),
+  });
+}
+
+/** #roulette, #top100, #top100/easy. No hash: the stored mode. Unknown hash: roulette, as before. */
+function applyHash({ navigated = false } = {}) {
+  const h = location.hash;
+  if (h === '#top100/easy') charts.chooseList('new');
+  else if (h === '#top100' && navigated) charts.chooseList('pro'); // at load, #top100 keeps the stored list
+  const next = h.startsWith('#top100') ? 'charts' : h ? 'roulette' : store.get('mode', 'roulette');
+  if (!navigated || next !== mode) setMode(next);
+  else syncUrl();
+}
+
+// ---------- photo credits (built when first opened) ----------
+async function buildCredits() {
+  const box = $('creditList');
+  if (!$('credits').open || box.children.length) return;
+  let all;
+  try { all = await fetch('data/portraits.json').then((r) => { if (!r.ok) throw new Error(); return r.json(); }); } catch {
+    box.replaceChildren(el('li', { text: 'Could not load the credits.' }));
+    return;
+  }
+  box.replaceChildren(...Object.entries(all).sort(([a], [b]) => a.localeCompare(b)).map(([name, p]) => {
+    const link = el('a', { href: p.file || p.page || '#', target: '_blank', rel: 'noopener', text: [p.author, p.license].filter(Boolean).join(', ') || 'Wikimedia Commons' });
+    return el('li', {}, `${name}: `, link, ' (cropped)');
+  }));
+}
 
 // ---------- start ----------
 async function start() {
@@ -337,7 +391,16 @@ async function start() {
     renderOptions();
   });
   renderOptions();
-  setMode(location.hash === '#top100' ? 'charts' : location.hash ? 'roulette' : store.get('mode', 'roulette'));
+  applyHash();
+  addEventListener('hashchange', () => applyHash({ navigated: true }));
+  $('openBinder').addEventListener('click', openCollection);
+  const genre = $('genre');
+  document.addEventListener('click', (e) => { if (genre.open && !genre.contains(e.target)) genre.open = false; });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && genre.open) { genre.open = false; genre.querySelector('summary').focus(); }
+  });
+  $('toKpop').addEventListener('click', () => { genre.open = false; });
+  $('credits').addEventListener('toggle', buildCredits);
 
   let roster, videos;
   try {
@@ -367,13 +430,11 @@ async function start() {
   $('againBtn').addEventListener('click', () => chooseForMe({ restart: true }));
   $('anotherBtn').addEventListener('click', anotherSong);
   $('restartBtn').addEventListener('click', startOver);
-  $('binderIdols').addEventListener('click', () => openBinder({
-    title: 'Idol cards', kind: 'idol', cards: catalogIdols.map((i) => idolCard(i, chartIdx, portraits)), reduced: reduced(),
-  }));
   $('resetBtn').addEventListener('click', startOver);
   $('t3').addEventListener('click', () => setTarget(3));
   $('t2').addEventListener('click', () => setTarget(2));
   renderOptions();
+  updateBinder();
   showPlay();
   loadApi().catch(() => {}); // warm up the YouTube API so the result screen is quick
   if (new URLSearchParams(location.search).has('debug')) Object.assign(window, { __game: game, __player: player });

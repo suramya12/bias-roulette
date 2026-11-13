@@ -11,10 +11,14 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const port = Number(process.env.PORT) || 5173;
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.ico': 'image/x-icon' };
-const PUBLIC = ['index.html', 'styles.css', 'src/', 'data/'];
+// The K-pop side at the root, and the Pop & Latin side in pop/ (same layout).
+const PUBLIC = ['index.html', 'styles.css', 'src/', 'data/', 'pop/index.html', 'pop/styles.css', 'pop/src/', 'pop/data/'];
 
 createServer(async (req, res) => {
-  let rel = decodeURIComponent(new URL(req.url, 'http://x').pathname).replace(/^\/+/, '') || 'index.html';
+  const url = new URL(req.url, 'http://x');
+  if (url.pathname.replace(/^\/+/, '') === 'pop') { res.writeHead(301, { Location: '/pop/' + url.search }); return res.end(); }
+  let rel = decodeURIComponent(url.pathname).replace(/^\/+/, '') || 'index.html';
+  if (rel.endsWith('/')) rel += 'index.html';
   const file = path.resolve(root, rel);
   const ok = file.startsWith(root + path.sep) && PUBLIC.some((p) => rel === p || (p.endsWith('/') && rel.startsWith(p)));
   try {
