@@ -905,6 +905,7 @@ export function paint(ctx, W, H, spec, img = null) {
   const motif = motifFor(spec.words || spec.title, R);
   const scenes = SCENES[motif] || ['night'];
   const P = palette(hueOf(spec.color) + (R() - 0.5) * 40, scenes[Math.floor(R() * scenes.length)], R);
+  if (img && spec.photo.kind === 'custom') return paintCustom(ctx, W, H, img);
   if (img) return paintPhoto(ctx, W, H, spec, img, R, fxLevel, motif, scenes);
   const withFigure = spec.kind === 'idol' || R() < 0.5;
   const side = R() < 0.5 ? -1 : 1;
@@ -949,6 +950,15 @@ export function paint(ctx, W, H, spec, img = null) {
   return { motif, scene: P.scene };
 }
 
+/** An illustrated cover (data/cardart.json): shown as it is, scaled to cover the canvas, kept to the top. */
+function paintCustom(ctx, W, H, img) {
+  const s = Math.max(W / img.naturalWidth, H / img.naturalHeight);
+  const sw = W / s, sh = H / s;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(img, (img.naturalWidth - sw) / 2, (img.naturalHeight - sh) * 0.1, sw, sh, 0, 0, W, H);
+  return { custom: true };
+}
+
 /** A real photo (idols) or MV frame (songs), repainted, inside a painted scene. */
 function paintPhoto(ctx, W, H, spec, img, R, fxLevel, motif, scenes) {
   const P = palette(hueOf(spec.color) + (R() - 0.5) * 40, scenes[Math.floor(R() * scenes.length)], R);
@@ -982,6 +992,8 @@ function paintPhoto(ctx, W, H, spec, img, R, fxLevel, motif, scenes) {
 
 // ---------- scheduling: paint on demand, a few per frame, cached ----------
 const SIZES = { big: [520, 500], small: [240, 320] };
+const CUSTOM_SIZES = { big: [640, 960], small: [256, 384] }; // illustrated covers keep their 2:3 shape
+const sizeOf = (spec, size) => (spec.photo?.kind === 'custom' ? CUSTOM_SIZES : SIZES)[size];
 const cache = new Map(); // key -> canvas, least recently used first
 const CACHE_MAX = 160;
 const queue = [];
@@ -1017,8 +1029,10 @@ function run() {
       continue;
     }
     if (!src) {
-      const [w, h] = SIZES[job.size];
+      const [w, h] = job.img ? sizeOf(job.spec, job.size) : SIZES[job.size]; // a cover that failed to load falls back to a painted one
       src = document.createElement('canvas'); src.width = w; src.height = h;
+      if (job.canvas.width !== w) job.canvas.width = w;
+      if (job.canvas.height !== h) job.canvas.height = h;
       const g = src.getContext('2d', { willReadFrequently: true });
       try { paint(g, w, h, job.spec, job.img); } catch { g.reset?.(); paint(g, w, h, job.spec, null); } // a tainted or broken photo
     }
@@ -1043,11 +1057,11 @@ const seen = typeof IntersectionObserver === 'function'
 /** Show a card's cover in this canvas. size: 'big' | 'small'. Paints when the canvas is on screen. */
 export function showArt(canvas, spec, size = 'small') {
   const key = `${spec.seed}@${size}`;
-  const [w, h] = SIZES[size];
+  const done = cache.get(key);
+  const [w, h] = done ? [done.width, done.height] : sizeOf(spec, size);
   if (canvas.width !== w) canvas.width = w;
   if (canvas.height !== h) canvas.height = h;
   canvas.dataset.art = key;
-  const done = cache.get(key);
   if (done) { remember(key, done); canvas.getContext('2d').drawImage(done, 0, 0); canvas.classList.add('painted'); return; }
   canvas.classList.remove('painted');
   canvas.getContext('2d').clearRect(0, 0, w, h);

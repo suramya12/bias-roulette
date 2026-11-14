@@ -23,6 +23,18 @@ function actKeys(artist) {
   return keys.filter((k, i) => k && keys.indexOf(k) === i);
 }
 
+/**
+ * Illustrated covers: data/cardart.json maps a card key to a picture in art/, as
+ * {song: {"ARTIST | TITLE": "art/song/x.webp"}, idol: {"Name": "art/idol/x.webp"}}.
+ * A card listed there shows that picture as it is; every other card keeps its painted cover.
+ */
+let custom = {};
+try {
+  const r = await fetch('data/cardart.json', { cache: 'no-cache' });
+  if (r.ok) custom = await r.json();
+} catch { /* no file, or not in a browser: painted covers only */ }
+const customArt = (kind, key) => (custom[kind]?.[key] ? { kind: 'custom', src: custom[kind][key] } : null);
+
 export const TIERS = { legend: 'Legendary', epic: 'Epic', rare: 'Rare', common: 'Common' };
 export const tierOf = (rank) => (!rank || rank > 100 ? 'common' : rank <= 10 ? 'legend' : rank <= 30 ? 'epic' : 'rare');
 /** Rank among all songs (both lists share it), so a song is the same card everywhere. */
@@ -53,7 +65,8 @@ export function songCard(s) {
     kind: 'song', key: `${s.artist} | ${s.title}`, name: s.title, type: 'Song', act: s.artist, color: colorOf(s.artist),
     art: {
       seed: `song|${s.artist}|${s.title}`, kind: 'song', title: s.title, act: s.artist, color: colorOf(s.artist), tier: tierOf(overall(s)),
-      words: `${s.title} ${s.vibe || ''} ${ART_WORDS[s.artist] || ''}`, photo: { kind: 'mv', src: thumb(s.videoId) },
+      words: `${s.title} ${s.vibe || ''} ${ART_WORDS[s.artist] || ''}`,
+      photo: customArt('song', `${s.artist} | ${s.title}`) || { kind: 'mv', src: thumb(s.videoId) },
     },
     tier: tierOf(overall(s)), gem: overall(s), gemLabel: 'Rank',
     left: { value: short(s.streams), label: 'Streams', icon: '♫' },
@@ -135,7 +148,8 @@ export function idolCard(idol, index, plan = null) {
   const group = soloist ? 0 : idol.songs.filter((s) => s.artist === groupAct).length;
   const own = idol.songs.length - group;
   const ownSong = idol.songs.find((s) => s.artist !== groupAct || soloist);
-  const pick = plan?.get(idol.name) || null;
+  const drawn = customArt('idol', idol.name);
+  const pick = drawn ? { photo: drawn, credit: null } : plan?.get(idol.name) || null;
   const kw = [];
   if (best) kw.push(`#${best.rank} Peak`);
   if (hits.some((s) => s.streams >= 1e9 || s.views >= 1e9)) kw.push('Billion Club');
@@ -165,7 +179,7 @@ export function rouletteSongCard(song, index) {
   if (c) return songCard(c);
   return {
     kind: 'song', key: `${song.artist} | ${song.title}`, name: song.title, type: 'Song', act: song.artist, color: colorOf(song.artist),
-    art: { seed: `song|${song.artist}|${song.title}`, kind: 'song', title: song.title, act: song.artist, color: colorOf(song.artist), tier: 'common', words: song.title, photo: song.videoId ? { kind: 'mv', src: thumb(song.videoId) } : null },
+    art: { seed: `song|${song.artist}|${song.title}`, kind: 'song', title: song.title, act: song.artist, color: colorOf(song.artist), tier: 'common', words: song.title, photo: customArt('song', `${song.artist} | ${song.title}`) || (song.videoId ? { kind: 'mv', src: thumb(song.videoId) } : null) },
     credit: null, tier: 'common', gem: '–', gemLabel: 'Rank',
     left: { value: '–', label: 'Streams', icon: '♫' }, right: { value: '–', label: 'Views', icon: '▶' },
     keywords: [], flavor: 'A deep cut: outside the all-time Top 100.',
@@ -205,7 +219,8 @@ export function makeCard(d, { size = 'big', isNew = false } = {}) {
     el('div', 'tcg-gem', el('i', '', el('b', 'tcg-num', String(d.gem))), el('small', '', d.gemLabel)),
     stat('left', d.left), stat('right', d.right));
 
-  const card = el('div', `tcg ${d.tier}`, face, el('div', 'tcg-backface', cardBackArt()));
+  const fullArt = d.art.photo?.kind === 'custom'; // an illustrated cover fills the whole card
+  const card = el('div', `tcg ${d.tier}${fullArt ? ' fullart' : ''}`, face, el('div', 'tcg-backface', cardBackArt()));
   card.style.setProperty('--ac', d.color);
   const wrap = el('div', `tcg-wrap ${size}`, card,
     d.tier === 'legend' && size === 'big' ? el('div', 'tcg-sparks', ...Array.from({ length: 10 }, (_, i) => { const s = el('i'); s.style.setProperty('--i', i); return s; })) : null,
