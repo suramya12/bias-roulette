@@ -1,5 +1,6 @@
 // Canvas crowd: rows of swaying lightsticks and phone lights in pop/latin night colours.
 import { reduced } from './cards.js';
+import { isLite } from '../../src/fx.js'; // shared lite mode for slow devices
 
 const COLORS = ['#ff4fa3', '#3de8ff', '#ffd76a', '#8b5cff', '#ffffff', '#ff7a3d'];
 
@@ -38,23 +39,32 @@ export function startCrowd(canvas) {
       ctx.beginPath(); ctx.arc(x, f.y + 6 + f.depth * 8, 5 + f.depth * 9, 0, Math.PI * 2); ctx.fill();
       const tx = x + Math.sin(sway) * f.len, ty = f.y - Math.cos(sway) * f.len;
       ctx.globalAlpha = 0.45 + f.depth * 0.45 + beat * 0.1;
+      // Glow is a wide faint pass under the core: canvas shadowBlur on every stick, every frame, is far too slow.
+      const a = ctx.globalAlpha;
       if (f.phone) {
         ctx.fillStyle = '#fff';
-        ctx.shadowColor = '#fff'; ctx.shadowBlur = 10;
-        ctx.fillRect(tx - 2, ty - 3, 4, 6);
+        ctx.globalAlpha = a * 0.22; ctx.fillRect(tx - 6, ty - 7, 12, 14);
+        ctx.globalAlpha = a; ctx.fillRect(tx - 2, ty - 3, 4, 6);
       } else {
-        ctx.strokeStyle = f.c; ctx.lineWidth = 2 + f.depth * 2.5; ctx.lineCap = 'round';
-        ctx.shadowColor = f.c; ctx.shadowBlur = 12;
-        ctx.beginPath(); ctx.moveTo(x, f.y); ctx.lineTo(tx, ty); ctx.stroke();
+        const lw = 2 + f.depth * 2.5;
+        ctx.strokeStyle = f.c; ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.moveTo(x, f.y); ctx.lineTo(tx, ty);
+        ctx.globalAlpha = a * 0.25; ctx.lineWidth = lw * 3.2; ctx.stroke();
+        ctx.globalAlpha = a; ctx.lineWidth = lw; ctx.stroke();
       }
-      ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+      ctx.globalAlpha = 1;
     }
     ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
   };
-  const loop = (t) => { draw(t); raf = requestAnimationFrame(loop); };
+  let last = 0;
+  const loop = (t) => {
+    if (isLite()) { draw(t); return; } // went lite mid-show: hold a still frame
+    if (t - last >= 30) { last = t; draw(t); } // ~30 fps is plenty for swaying lights
+    raf = requestAnimationFrame(loop);
+  };
   const run = () => {
     cancelAnimationFrame(raf);
-    if (!reduced.matches && !document.hidden) raf = requestAnimationFrame(loop);
+    if (!reduced.matches && !isLite() && !document.hidden) raf = requestAnimationFrame(loop);
   };
   addEventListener('resize', resize);
   document.addEventListener('visibilitychange', run);
