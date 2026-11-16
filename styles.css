@@ -152,12 +152,13 @@ button { font-family: inherit; }
 .rim i {
   position: absolute; left: var(--lx); top: var(--ly); width: 2%; aspect-ratio: 1; translate: -50% -50%;
   border-radius: 50%; background: #fff;
+  box-shadow: 0 0 8px 2px color-mix(in srgb, var(--accent) 70%, #fff); /* fixed glow: only opacity animates, so no repaints */
   animation: chase 1.44s linear infinite; animation-delay: var(--ld);
 }
 .spinning .rim i { animation-duration: .48s; }
 @keyframes chase {
-  0%, 30% { opacity: 1; box-shadow: 0 0 8px 2px color-mix(in srgb, var(--accent) 70%, #fff); }
-  45%, 100% { opacity: .22; box-shadow: none; }
+  0%, 30% { opacity: 1; }
+  45%, 100% { opacity: .22; }
 }
 .wheel-btn {
   position: absolute; inset: 6%; padding: 0; overflow: hidden; cursor: pointer;
@@ -480,6 +481,7 @@ button { font-family: inherit; }
 .tcg-art { background: radial-gradient(90% 70% at 50% 35%, color-mix(in srgb, var(--ac) 55%, #1a1230), #0d0819); }
 .tcg-canvas, .pc-art { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; opacity: 0; transition: opacity .45s ease; }
 .tcg-canvas.painted, .pc-art.painted { opacity: 1; }
+img.tcg-canvas, img.pc-art { transform: none; object-position: 50% 10%; } /* illustrated covers load as images */
 .tcg-credit {
   position: absolute; left: 0; right: 0; top: calc(100% + .5em); text-align: center;
   font-size: .5em; line-height: 1.3; color: rgba(255,255,255,.55); text-decoration: none;
@@ -772,3 +774,15 @@ button { font-family: inherit; }
 .credits summary { display: inline-block; cursor: pointer; font-weight: 500; color: var(--text); }
 .credits ul { columns: 2 240px; margin: 8px 0 0; padding: 0 0 0 18px; text-align: left; }
 .credits li { break-inside: avoid; margin: 0 0 4px; overflow-wrap: anywhere; }
+
+/* ---------- lite: slow devices (see fx.js) keep the game and drop the ambient effects ---------- */
+.lite .sky { display: none; }
+.lite .beams i { animation: none; mix-blend-mode: normal; opacity: .07; }
+.lite .stage.spinning .beams i { opacity: .14; }
+.lite .rim i { animation: none; opacity: .5; }
+.lite .spinning .rim i { animation: chase .48s linear infinite; animation-delay: var(--ld); }
+.lite .play-disc { animation: none; }
+.lite .topbar { background: color-mix(in srgb, var(--bg) 96%, transparent); }
+.lite .topbar, .lite .binder-head, .lite .stamp, .lite .pull-stamp, .lite .binder::backdrop { -webkit-backdrop-filter: none; backdrop-filter: none; }
+.lite .tcg-wrap.big, .lite .tcg-wrap[data-tier="legend"] .tcg-face::before { animation: none; }
+.lite .tcg-sparks { display: none; }
