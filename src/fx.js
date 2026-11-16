@@ -7,6 +7,40 @@ const rand = (a, b) => a + Math.random() * (b - a);
 
 export const prefersReducedMotion = () => reduced.matches;
 
+// ---------- lite mode: slow devices keep the game but drop the ambient effects ----------
+// On when the device says it is small or saving data, or when frames measure slow after load.
+// ?lite=1 / ?lite=0 force it for testing.
+const LITE_KEY = 'bias-roulette.lite';
+const forced = new URLSearchParams(location.search).get('lite');
+const remembered = (() => { try { if (forced === '0') localStorage.removeItem(LITE_KEY); return localStorage.getItem(LITE_KEY); } catch { return null; } })();
+const nav = navigator;
+let lite = forced === '1' || (forced !== '0' && (remembered === '1' || !!nav.connection?.saveData
+  || (nav.deviceMemory > 0 && nav.deviceMemory <= 2) || (nav.hardwareConcurrency > 0 && nav.hardwareConcurrency <= 2)));
+const applyLite = () => document.documentElement.classList.toggle('lite', lite);
+applyLite();
+export const isLite = () => lite;
+
+if (!lite && forced !== '0') {
+  // Sample ~90 frames once the page has settled; a median over 24 ms (under ~40 fps) means struggling.
+  const sample = () => {
+    if (document.visibilityState !== 'visible') { document.addEventListener('visibilitychange', sample, { once: true }); return; }
+    const gaps = []; let last = 0;
+    const frame = (t) => {
+      if (document.visibilityState !== 'visible') return; // throttled background frames prove nothing
+      if (last) gaps.push(t - last);
+      last = t;
+      if (gaps.length < 90) { requestAnimationFrame(frame); return; }
+      gaps.sort((a, b) => a - b);
+      if (gaps[45] > 24) {
+        lite = true; applyLite();
+        try { localStorage.setItem(LITE_KEY, '1'); } catch { /* private mode */ }
+      }
+    };
+    requestAnimationFrame(frame);
+  };
+  addEventListener('load', () => setTimeout(sample, 2500), { once: true });
+}
+
 export function initSky(el, count = 18) {
   for (let i = 0; i < count; i++) {
     const s = document.createElement('span');
@@ -36,6 +70,7 @@ export function initRimLights(el, count = 24) {
 
 function spray(layer, x, y, { count, spread, size, time, colors }) {
   if (reduced.matches) return;
+  if (lite) count = Math.ceil(count / 3);
   const z = layer.currentCSSZoom || 1; // screen coordinates in, zoomed layer out
   x /= z; y /= z;
   for (let i = 0; i < count; i++) {

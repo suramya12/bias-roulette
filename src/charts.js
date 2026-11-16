@@ -6,7 +6,7 @@ import { cryptoInt } from './game.js';
 import { VideoPlayer } from './player.js';
 import * as fx from './fx.js';
 import { makeCard, songCard, playIn, collection, openBinder } from './card.js';
-import { showArt } from './art.js';
+import { artNode } from './art.js';
 
 const $ = (id) => document.getElementById(id);
 const SLOTS = 14;
@@ -14,6 +14,11 @@ const STEP = 360 / SLOTS;
 const CANDY = ['#ff4fa3', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff'];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const mod = (a, n) => ((a % n) + n) % n;
+let chartFetch = null;
+/** data/charts.json, fetched once and shared by both screens. */
+export const loadChartData = () => (chartFetch ??= fetch('data/charts.json', { cache: 'no-cache' })
+  .then((r) => { if (!r.ok) throw new Error('charts'); return r.json(); })
+  .catch((e) => { chartFetch = null; throw e; }));
 
 const thumb = (id, size = 'mqdefault') => `https://i.ytimg.com/vi/${encodeURIComponent(id)}/${size}.jpg`;
 export const short = (n) => (n >= 1e9 ? `${(n / 1e9).toFixed(n >= 1e10 ? 1 : 2)}B` : `${Math.round(n / 1e6)}M`);
@@ -102,11 +107,23 @@ export class Crowd {
   }
 
   start() {
-    if (this.running || fx.prefersReducedMotion()) { this.draw(performance.now() + 2000); return; }
+    if (fx.prefersReducedMotion() || fx.isLite()) { this.draw(performance.now() + 2000); return; }
     this.running = true;
+    if (!this.io && typeof IntersectionObserver === 'function') { // no drawing while scrolled out of view
+      this.onScreen = true;
+      this.io = new IntersectionObserver(([e]) => { this.onScreen = e.isIntersecting; if (this.onScreen) this.#tick(); });
+      this.io.observe(this.canvas);
+    }
+    this.#tick();
+  }
+
+  #tick() {
+    if (this.ticking || !this.running || this.onScreen === false) return;
+    this.ticking = true;
+    let last = 0;
     const loop = (t) => {
-      if (!this.running) return;
-      this.draw(t);
+      if (!this.running || this.onScreen === false || fx.isLite()) { this.ticking = false; if (fx.isLite()) { this.running = false; this.draw(t + 2000); } return; }
+      if (t - last >= 30) { last = t; this.draw(t); } // ~30 fps is plenty for swaying light sticks
       requestAnimationFrame(loop);
     };
     requestAnimationFrame(loop);
@@ -177,9 +194,7 @@ export class Charts {
   async load() {
     if (this.data) return true;
     try {
-      const r = await fetch('data/charts.json', { cache: 'no-cache' });
-      if (!r.ok) throw new Error();
-      this.data = await r.json();
+      this.data = await loadChartData();
     } catch {
       this.#say('Could not load the chart. Run "npm run charts", then reload.');
       return false;
@@ -282,7 +297,7 @@ export class Charts {
 
   #fill(slot, song) {
     slot.song = song;
-    showArt(slot.img, songCard(song).art, 'small');
+    slot.img = artNode(slot.img, songCard(song).art, 'small', 'pc-art', '122px');
     slot.rank.textContent = `#${song.rank}`;
     slot.card.style.setProperty('--c', css(colorOf(song.artist)));
     slot.card.dataset.tier = tierOf(overall(song));

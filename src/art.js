@@ -995,12 +995,13 @@ const SIZES = { big: [520, 500], small: [240, 320] };
 const CUSTOM_SIZES = { big: [640, 960], small: [256, 384] }; // illustrated covers keep their 2:3 shape
 const sizeOf = (spec, size) => (spec.photo?.kind === 'custom' ? CUSTOM_SIZES : SIZES)[size];
 const cache = new Map(); // key -> canvas, least recently used first
-const CACHE_MAX = 160;
+const CACHE_MAX = 48; // painted covers kept for reuse; each holds a bitmap, so keep it small for phones
 const queue = [];
 const images = new Map();
 /** Load a cross-origin image for pixel access. Resolves null if it fails. */
 export function loadImage(src) {
   if (!images.has(src)) {
+    if (images.size >= 40) images.delete(images.keys().next().value); // drop the oldest source photo
     images.set(src, new Promise((done) => {
       const img = new Image();
       img.crossOrigin = 'anonymous'; img.decoding = 'async';
@@ -1053,6 +1054,32 @@ const seen = typeof IntersectionObserver === 'function'
     }
   }, { rootMargin: '200px' })
   : null;
+
+/**
+ * The element that shows a card's cover. Illustrated covers are plain lazy <img>s (the browser
+ * decodes, scales and frees them); everything else is painted into a canvas. Pass the element
+ * the slot holds now and it is reused or swapped. sizes: the CSS width hint for the srcset.
+ */
+export function artNode(current, spec, size, cls, sizes) {
+  if (spec.photo?.kind === 'custom') {
+    const img = current?.tagName === 'IMG' ? current : document.createElement('img');
+    if (img !== current) { img.className = cls; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async'; current?.replaceWith(img); }
+    const full = spec.photo.src, small = full.replace(/\/([^/]+)$/, '/s/$1');
+    if (img.dataset.art === full) return img;
+    img.dataset.art = full;
+    img.classList.remove('painted');
+    img.onload = () => img.classList.add('painted');
+    img.sizes = sizes;
+    img.srcset = `${small} 400w, ${full} 768w`;
+    img.src = small;
+    if (img.complete && img.naturalWidth) img.classList.add('painted');
+    return img;
+  }
+  const canvas = current?.tagName === 'CANVAS' ? current : document.createElement('canvas');
+  if (canvas !== current) { canvas.className = cls; current?.replaceWith(canvas); }
+  showArt(canvas, spec, size);
+  return canvas;
+}
 
 /** Show a card's cover in this canvas. size: 'big' | 'small'. Paints when the canvas is on screen. */
 export function showArt(canvas, spec, size = 'small') {

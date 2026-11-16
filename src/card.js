@@ -3,7 +3,8 @@
 // Used for song cards (Top 100) and idol cards (Bias Roulette). Also keeps the
 // viewer's collection in localStorage.
 
-import { showArt } from './art.js';
+import { artNode } from './art.js';
+const CARD_SIZES = { mini: '104px', mid: '150px', big: 'min(300px, 76vw)' }; // widest each card size gets, for srcset
 
 const thumb = (id, size = 'hqdefault') => `https://i.ytimg.com/vi/${encodeURIComponent(id)}/${size}.jpg`;
 export const short = (n) => (n >= 1e9 ? `${(n / 1e9).toFixed(n >= 1e10 ? 1 : 2)}B` : n >= 1e6 ? `${Math.round(n / 1e6)}M` : String(n));
@@ -34,6 +35,7 @@ try {
   if (r.ok) custom = await r.json();
 } catch { /* no file, or not in a browser: painted covers only */ }
 const customArt = (kind, key) => (custom[kind]?.[key] ? { kind: 'custom', src: custom[kind][key] } : null);
+export const hasArt = (kind, key) => Boolean(custom[kind]?.[key]);
 
 export const TIERS = { legend: 'Legendary', epic: 'Epic', rare: 'Rare', common: 'Common' };
 export const tierOf = (rank) => (!rank || rank > 100 ? 'common' : rank <= 10 ? 'legend' : rank <= 30 ? 'epic' : 'rare');
@@ -196,8 +198,7 @@ function el(tag, cls, ...children) {
 
 /** Build a card. size: 'big' | 'mid' | 'mini'. */
 export function makeCard(d, { size = 'big', isNew = false } = {}) {
-  const img = el('canvas', 'tcg-canvas');
-  showArt(img, d.art, size === 'big' ? 'big' : 'small');
+  const img = artNode(null, d.art, size === 'big' ? 'big' : 'small', 'tcg-canvas', CARD_SIZES[size] || CARD_SIZES.big);
   const name = el('b', 'tcg-name', d.name);
   if (d.name.length > 22) name.classList.add('xlong');
   else if (d.name.length > 13) name.classList.add('long');
@@ -252,16 +253,20 @@ export function cardBack(size = 'mini', label = '') {
 /** Pointer tilt, gloss and glare. */
 export function attachTilt(wrap) {
   const card = wrap.firstElementChild;
-  wrap.addEventListener('pointermove', (e) => {
+  let at = null; // latest pointer, applied once per frame
+  wrap.addEventListener('pointermove', (e) => { if (!at) requestAnimationFrame(apply); at = e; });
+  function apply() {
+    if (!at) return;
     const r = wrap.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width;
-    const py = (e.clientY - r.top) / r.height;
+    const px = (at.clientX - r.left) / r.width;
+    const py = (at.clientY - r.top) / r.height;
+    at = null;
     card.style.setProperty('--rx', `${((0.5 - py) * 20).toFixed(1)}deg`);
     card.style.setProperty('--ry', `${((px - 0.5) * 24).toFixed(1)}deg`);
     card.style.setProperty('--mx', `${(px * 100).toFixed(1)}%`);
     card.style.setProperty('--my', `${(py * 100).toFixed(1)}%`);
-  });
-  wrap.addEventListener('pointerleave', () => { for (const p of ['--rx', '--ry', '--mx', '--my']) card.style.removeProperty(p); });
+  }
+  wrap.addEventListener('pointerleave', () => { at = null; for (const p of ['--rx', '--ry', '--mx', '--my']) card.style.removeProperty(p); });
 }
 
 /** Reveal: flip in, sweep the shine, count the numbers up. Resolves when done. */

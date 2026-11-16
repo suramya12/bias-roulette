@@ -6,8 +6,8 @@ import { Wheel } from './wheel.js';
 import { Sound } from './sound.js';
 import { VideoPlayer, loadApi } from './player.js';
 import * as fx from './fx.js';
-import { Charts, Crowd, toRgb } from './charts.js';
-import { makeCard, cardBack, idolCard, artPlan, rouletteSongCard, chartIndex, playIn, collection, openBinder } from './card.js';
+import { Charts, Crowd, toRgb, loadChartData } from './charts.js';
+import { makeCard, cardBack, idolCard, artPlan, rouletteSongCard, chartIndex, playIn, collection, openBinder, hasArt } from './card.js';
 
 const $ = (id) => document.getElementById(id);
 const CANDY = ['#ff5fa2', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff', '#ffb38a'];
@@ -408,9 +408,13 @@ async function start() {
   let roster, videos;
   try {
     const load = (f) => fetch(f, { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(f); return r.json(); });
+    const chartData = loadChartData().catch(() => null); // in parallel with the rest
     [roster, videos] = await Promise.all([load('data/roster.json'), load('data/videos.json')]);
-    chartIdx = chartIndex((await load('data/charts.json').catch(() => null))?.top);
-    portraits = await load('data/portraits.json').catch(() => null);
+    // Photos are only painted for idols without an illustrated cover.
+    const needPhotos = (roster.idols || []).some((i) => !hasArt('idol', i.name));
+    let top;
+    [top, portraits] = await Promise.all([chartData, needPhotos ? load('data/portraits.json').catch(() => null) : null]);
+    chartIdx = chartIndex(top?.top);
   } catch {
     announce(location.protocol === 'file:'
       ? 'This page needs a web server. Run "npm start" and open the address it prints.'
