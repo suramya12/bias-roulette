@@ -301,3 +301,9 @@ dialog::backdrop { background: rgba(0, 0, 0, .7); backdrop-filter: blur(4px); }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .ring { animation: none; }
 }
+
+/* lite: slow devices (see src/fx.js) keep the game and drop the ambient effects */
+.lite .beam { animation: none; mix-blend-mode: normal; opacity: .2; }
+.lite .top { background: rgba(7, 6, 26, .95); backdrop-filter: none; }
+.lite dialog::backdrop { backdrop-filter: none; }
+.lite .flare { animation: fadeIn 1s .6s both; }
