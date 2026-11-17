@@ -28,7 +28,7 @@ export function createPlayer(host, { onEnd, onFail, onPlay, onBlocked } = {}) {
     const mine = generation;
     let failed = false;
     const valid = () => mine === generation;
-    const fail = () => {
+    const fail = (code) => {
       if (!valid() || failed) return;
       failed = true;
       try { player?.destroy?.(); } catch {}
@@ -41,7 +41,7 @@ export function createPlayer(host, { onEnd, onFail, onPlay, onBlocked } = {}) {
       a.href = `https://www.youtube.com/watch?v=${id}`;
       a.target = '_blank'; a.rel = 'noopener'; a.textContent = '▶ Watch on YouTube';
       f.append(a); host.append(f);
-      onFail?.(token);
+      onFail?.(token, { code });
     };
     try {
       const YT = await loadApi();
@@ -58,7 +58,7 @@ export function createPlayer(host, { onEnd, onFail, onPlay, onBlocked } = {}) {
             if (e.data === 0) onEnd?.(token);
             if (e.data === 1) { host.querySelector('.tap-to-play')?.remove(); onPlay?.(token); }
           },
-          onError: (e) => { if ([2, 5, 100, 101, 150, 153].includes(e.data)) fail(); },
+          onError: (e) => { if ([2, 5, 100, 101, 150, 153].includes(e.data)) fail(e.data); },
           onAutoplayBlocked: (e) => {
             if (!valid() || failed) return;
             host.querySelector('.tap-to-play')?.remove();
