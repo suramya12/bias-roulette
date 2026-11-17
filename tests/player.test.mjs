@@ -1,7 +1,8 @@
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
-import { VideoPlayer } from '../src/player.js';
+import { VideoPlayer, loadApi } from '../src/player.js';
 import { createAutoAdvance } from '../src/auto-advance.js';
+import { createPlayer } from '../pop/src/player.js';
 
 class Element {
   constructor() {
@@ -13,6 +14,7 @@ class Element {
   get textContent() { return this.text || ''; }
   append(...items) { for (const item of items) { this.children.push(item); if (typeof item === 'object') item.parent = this; } }
   prepend(item) { this.children.unshift(item); item.parent = this; }
+  replaceChildren(...items) { this.children = []; this.append(...items); }
   remove() { if (this.parent) this.parent.children = this.parent.children.filter((item) => item !== this); }
   setAttribute(k, v) { this.attrs[k] = v; }
   addEventListener(k, fn) { this.listeners[k] = fn; }
@@ -32,6 +34,42 @@ beforeEach(() => {
     destroy() { this.destroyed = true; }
     getPlayerState() { return this.state; }
   } } };
+});
+
+test('both players share an 8-second API timeout and show their watch links before retrying', async () => {
+  const YT = window.YT;
+  delete window.YT;
+  document.head = new Element();
+  const createElement = document.createElement;
+  document.createElement = () => Object.assign(createElement(), { style: {} });
+  const kpop = setup();
+  const host = new Element();
+  const failures = [];
+  const pop = createPlayer(host, { onFail: (token, error) => failures.push([token, error.code]) });
+  const first = loadApi();
+  assert.equal(loadApi(), first);
+  const kpopResult = kpop.player.show('kpop-video', 1);
+  const popResult = pop.play('pop-video', 2);
+  const [timeout] = timers.values();
+  assert.equal(timeout.ms, 8000);
+  assert.equal(document.head.children.length, 1);
+  timeout.fn();
+  await assert.rejects(first, /timed out/);
+  await Promise.all([kpopResult, popResult]);
+  assert.equal(timers.size, 0);
+  assert.equal(document.head.children.length, 0);
+  assert.equal(kpop.fallback.hidden, false);
+  assert.match(kpop.message.textContent, /could not load/);
+  assert.equal(host.children[0].children[0].href, 'https://www.youtube.com/watch?v=pop-video');
+  assert.deepEqual(failures, [[2, 'api']]);
+
+  const retry = pop.play('pop-video', 3);
+  assert.equal(document.head.children.length, 1);
+  window.YT = YT;
+  window.onYouTubeIframeAPIReady();
+  await retry;
+  assert.equal(instances.length, 1);
+  assert.equal(timers.size, 0);
 });
 function setup(callbacks = {}) {
   box = new Element();
