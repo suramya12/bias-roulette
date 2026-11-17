@@ -18,7 +18,7 @@ const page = player => `var ytInitialPlayerResponse = ${JSON.stringify(player)};
 const hd = { formats: [{ width: 1280, height: 720, qualityLabel: '720p' }] };
 const player = (extra = {}) => ({ playabilityStatus: { status: 'OK', playableInEmbed: true },
   videoDetails: { viewCount: '1000000' }, streamingData: hd, ...extra });
-const candidate = (n, extra = {}) => ({ id: id(n), title: 'Song opening', channel: 'Reviewed',
+const candidate = (n, extra = {}) => ({ id: id(n), title: 'Show Song opening', channel: 'Reviewed',
   channelId: 'official', seconds: 90, views: 10, ...extra });
 const search = videos => `var ytInitialData = ${JSON.stringify({ contents: videos.map(v => ({ videoRenderer: {
   videoId: v.id, title: { simpleText: v.title }, lengthText: { simpleText: '1:30' },
@@ -73,7 +73,7 @@ test('official requires reviewed channel ID; names and badges cannot establish i
 test('copy ordering keeps content/source tiers ahead of resolution; equal tiers prefer higher dimensions', () => {
   const items = [copy(1), { ...copy(2), kind: 'mv' }, { ...copy(3), source: 'fan', kind: 'creditless' },
     { ...copy(4), kind: 'creditless' }, { ...copy(5), quality: { width: 1920, height: 1080 } }];
-  assert.deepEqual(orderCopies([...items, items[0]]).map(v => v.id), [id(4), id(5), id(1), id(2)]);
+  assert.deepEqual(orderCopies([...items, items[0]]).map(v => v.id), [id(4), id(5), id(1), id(3)]);
 });
 
 test('resolver collects four distinct valid copies beyond four failed checks, ranks HD, and never fetches booted IDs', async () => {
@@ -199,8 +199,8 @@ test('health bypasses disk cache, retry/backoff produces one strike, and subsequ
         page(player({ playabilityStatus: { status: 'UNPLAYABLE', reason: 'Video unavailable' } })) };
     },
   } });
-  assert.equal(watches, 4); assert.deepEqual(waits, [15000, 45000, 120000, 2500, 2500]);
-  assert.deepEqual(starts, [0, 15000, 60000, 180000, 182500, 185000]);
+  assert.equal(watches, 4); assert.deepEqual(waits, [15000, 45000, 120000, 2500, 2500, 2500]);
+  assert.deepEqual(starts, [0, 15000, 60000, 180000, 182500, 185000, 187500]);
   assert.equal((await env.read('health.json'))[id(1)].strikes.length, 1);
 });
 
@@ -271,7 +271,7 @@ test('a full queue cannot bypass changed channel policy during refill', async ()
 
 test('unknown HD cannot enter new queues or bypass gates through overrides', async () => {
   const loadPage = async url => url.includes('/results?') ? search([candidate(1)]) : page(player({
-    videoDetails: { title: 'Song opening', author: 'Reviewed', channelId: 'official', lengthSeconds: '90' }, streamingData: undefined,
+    videoDetails: { title: 'Show Song opening', author: 'Reviewed', channelId: 'official', lengthSeconds: '90' }, streamingData: undefined,
   }));
   const options = { channels, overrides: {}, checked, loadPage };
   const automatic = await resolveSeed(seed, options);

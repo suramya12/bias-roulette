@@ -97,7 +97,8 @@ test('all creditless markers, TV lengths, MV markers, and artist badges classify
   for (const seconds of [59, 151]) assert.ok(classify({ ...video, seconds }, seed, channels).reject);
   for (const marker of ['music video', 'MV', 'official video']) assert.equal(classify({ ...video, title: `unravel ${marker}` }, seed, channels).kind, 'mv');
   assert.equal(classify({ ...video, title: 'unravel', officialArtist: true }, seed, channels).kind, 'mv');
-  assert.equal(classify(video, { ...seed, kind: 'animated-mv' }, channels).reject, 'not a music video');
+  assert.equal(classify({ ...video, channel: 'Fan', channelId: 'fan' }, { ...seed, kind: 'animated-mv' }, channels).reject, 'not a music video');
+  assert.equal(classify(video, { ...seed, kind: 'animated-mv' }, channels).kind, 'mv');
   assert.equal(classify({ ...video, title: 'unravel opening official video' }, { ...seed, kind: 'animated-mv' }, channels).kind, 'mv');
 });
 
@@ -132,4 +133,33 @@ test('all three pruned fixtures remain under 60 KB', async () => {
   for (const name of ['search-unravel', 'watch-ok', 'watch-blocked']) {
     assert.ok((await stat(new URL(`fixtures/${name}.html`, import.meta.url))).size < 60_000);
   }
+});
+
+test('identity gate: real wrong-song copies from the 2026-11-17 run are rejected', async () => {
+  const { sameSong } = await import('../scripts/lib.mjs');
+  const go = parseSeedLine('FLOW | GO!!! | Naruto | OP | 2004 | aka Fighting Dreamers');
+  const habit = parseSeedLine('Linkin Park | Breaking the Habit | Breaking the Habit (animated music video) | MV | 2004', 'animated-mv');
+  const kigeki = parseSeedLine('Gen Hoshino | Kigeki | Spy x Family | ED | 2022 | aka Comedy; 喜劇');
+  assert.equal(sameSong({ title: 'Naruto - Opening 4 | GO!!!' }, go), true);
+  assert.equal(sameSong({ title: 'Naruto Shippuden Opening 6 | Sign by FLOW' }, go), false);
+  assert.equal(sameSong({ title: 'GO!!! by someone else' }, go), false);
+  assert.equal(sameSong({ title: 'Numb (Official Music Video) [4K UPGRADE] – Linkin Park' }, habit), false);
+  assert.equal(sameSong({ title: 'Breaking the Habit (Official Music Video) [HD UPGRADE] – Linkin Park' }, habit), true);
+  assert.equal(sameSong({ title: '星野源「喜劇」:『SPY×FAMILY』エンディング主題歌' }, kigeki), true);
+  for (const title of ['Donald Trump sings Unravel (Tokyo Ghoul OP)', 'Scum\'s Wish Ending Full VALORANT MONTAGE JETT',
+    'Fullmetal Alchemist: Brotherhood All Openings 1-5', 'Daft Punk - Something About Us (Official Audio)',
+    '【MAD】New Danganronpa V3 x Kekkai Sensen Ending', 'Gurren Lagann Opening 1 English by Sapphire HD creditless'])
+    assert.ok(classify({ ...video, title }, seed, channels).reject, title);
+});
+
+test('fan re-edits, covers and crossovers from the second run are rejected', () => {
+  const sorairo = parseSeedLine('Shoko Nakagawa | Sorairo Days | Gurren Lagann | OP | 2007 | aka 空色デイズ');
+  for (const title of ['Avatar The Last Airbender - Anime Opening (Book 1) | "Sorairo Days" - (Gurren Lagann)',
+    '【 8Bit / Chiptune 】Gurren Lagann Opening / "Sorairo Days"', 'Gurren Lagann OPENING HOMURA VER. (Sorairo Days)',
+    'Gurren Lagann x Genshin Anime Opening "Sorairo Days"', 'Sorairo Days (English) - Gurren Lagann OP',
+    'Gurren Lagann OP lofi Sorairo Days', 'Sorairo Days Gurren Lagann OP Cosplay', 'Gurren Lagann OP マイクラ再現 Sorairo Days'])
+    assert.ok(classify({ ...video, title }, sorairo, channels).reject, title);
+  for (const title of ['Gurren Lagann Opening 1 - Sorairo Days | Creditless | English / Romaji Subtitle',
+    'Gurren Lagann OP (TV Size) Sorairo Days', 'Gurren Lagann Opening 1920x1080 Sorairo Days'])
+    assert.equal(classify({ ...video, title }, sorairo, channels).reject, undefined, title);
 });

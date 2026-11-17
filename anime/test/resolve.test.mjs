@@ -37,10 +37,16 @@ test('help exits offline and invalid options fail before doing work', () => {
 });
 
 test('queries distinguish OP, ED, insert, and registry MV groups', () => {
-  assert.equal(queriesFor(seed)[0], 'Tokyo Ghoul opening unravel creditless');
+  assert.deepEqual(queriesFor(seed), [
+    'Tokyo Ghoul opening unravel creditless',
+    `${seed.artist} unravel Tokyo Ghoul`,
+    'Tokyo Ghoul opening unravel',
+  ]);
   assert.equal(queriesFor({ ...seed, use: 'ED' })[0], 'Tokyo Ghoul ending unravel creditless');
   assert.equal(queriesFor({ ...seed, use: 'IN' })[0], 'Tokyo Ghoul insert song unravel creditless');
-  assert.deepEqual(queriesFor({ ...seed, kind: 'game-mv' }), [`${seed.artist} unravel official music video`]);
+  for (const kind of ['game-mv', 'animated-mv']) {
+    assert.deepEqual(queriesFor({ ...seed, kind }), [`${seed.artist} unravel official music video`, `${seed.artist} unravel`]);
+  }
 });
 
 test('official TV ranks ahead of an eligible fan creditless copy', async () => {
@@ -54,7 +60,7 @@ test('official TV ranks ahead of an eligible fan creditless copy', async () => {
   assert.equal(result.videos.length, 2);
   assert.equal(result.video.checked, checked);
   assert.equal(result.flag, null);
-  assert.equal(calls.filter(url => url.includes('/results?')).length, 2);
+  assert.equal(calls.filter(url => url.includes('/results?')).length, 3);
   assert.equal(calls.filter(url => url.includes('/watch?')).length, 2);
 });
 
@@ -82,7 +88,7 @@ test('candidate checks deduplicate queries and continue beyond four failures', a
     watches++;
     return playerPage('UNPLAYABLE', false);
   } });
-  assert.equal(searches, 2);
+  assert.equal(searches, 3);
   assert.equal(watches, 7);
   assert.equal(result.video, null);
   assert.match(result.flag, /set aside: no eligible HD copy/);
@@ -102,7 +108,7 @@ test('each query takes at most 15 candidates', async () => {
   assert.equal(result.video, null);
 });
 
-test('animated MVs issue one query and require an MV on a trusted channel', async () => {
+test('animated MVs issue two queries and require an MV on a trusted channel', async () => {
   let searches = 0;
   const result = await resolveSeed({ ...seed, kind: 'animated-mv' }, { channels, overrides: {}, checked, loadPage: async url => {
     if (url.includes('/results?')) {
@@ -111,8 +117,8 @@ test('animated MVs issue one query and require an MV on a trusted channel', asyn
     }
     return playerPage('OK', true);
   } });
-  assert.equal(searches, 1);
-  assert.equal(result.video.id, id(2));
+  assert.equal(searches, 2);
+  assert.equal(result.video.id, id(1));
   assert.equal(result.video.kind, 'mv');
 });
 
@@ -170,7 +176,7 @@ test('HTTP errors and malformed challenge responses are not cached', async () =>
   const url = 'https://www.youtube.com/results?search_query=x';
   const badHTTP = createPageLoader({ cacheDir, fetchImpl: async () => ({ ok: false, status: 503 }) });
   await assert.rejects(badHTTP(url), /HTTP 503/);
-  const challenge = createPageLoader({ cacheDir, fetchImpl: async () => ({ ok: true, text: async () => '<html>challenge</html>' }) });
+  const challenge = createPageLoader({ cacheDir, sleep: async () => {}, fetchImpl: async () => ({ ok: true, text: async () => '<html>challenge</html>' }) });
   await assert.rejects(challenge(url), /Missing or malformed/);
 });
 
@@ -187,7 +193,7 @@ async function sandbox() {
   let requests = 0;
   const loadPage = async url => {
     requests++;
-    if (url.includes('/results?')) return searchPage([video(1)]);
+    if (url.includes('/results?')) return searchPage([video(1, { title: 'Tokyo Ghoul unravel Naruto GO!!! opening' })]);
     return playerPage('OK', true);
   };
   const run = options => runResolver({ root, loadPage, log: quiet, now: () => checked, ...options });
@@ -198,24 +204,24 @@ test('incremental resolver searches changed seeds only; refresh/only, aliases, a
   const env = await sandbox();
   const beforeSeeds = await readFile(join(env.root, 'data', 'seeds', 'themes.txt'), 'utf8');
   await env.run();
-  assert.equal(env.requests(), 6);
+  assert.equal(env.requests(), 8);
   await env.run();
-  assert.equal(env.requests(), 6);
+  assert.equal(env.requests(), 8);
   env.lines[0] = env.lines[0].replace('2014', '2015'); await env.seeds();
   let catalog = await env.run();
-  assert.equal(env.requests(), 9);
+  assert.equal(env.requests(), 12);
   assert.equal(catalog.songs[0].year, 2015);
   catalog = await env.run({ refresh: true, only: 'fighting dreamers' });
-  assert.equal(env.requests(), 12);
+  assert.equal(env.requests(), 16);
   assert.equal(catalog.songs.length, 2);
   await env.json('overrides.json', { 'FLOW | GO!!!': null });
   catalog = await env.run();
-  assert.equal(env.requests(), 12);
+  assert.equal(env.requests(), 16);
   assert.equal(catalog.songs[1].flag, 'dropped by override');
   assert.equal(await readFile(join(env.root, 'data', 'overrides.json'), 'utf8'), '{"FLOW | GO!!!":null}');
   await env.json('overrides.json', {});
   catalog = await env.run();
-  assert.equal(env.requests(), 15);
+  assert.equal(env.requests(), 20);
   assert.ok(catalog.songs[1].video);
   const saved = JSON.parse(await readFile(join(env.root, 'data', 'catalog.json'), 'utf8'));
   assert.deepEqual(saved, catalog);
@@ -229,11 +235,11 @@ test('incremental resolver searches changed seeds only; refresh/only, aliases, a
 test('only on a fresh catalogue keeps unresolved rows available for a later full run', async () => {
   const env = await sandbox();
   let catalog = await env.run({ only: 'Naruto' });
-  assert.equal(env.requests(), 3);
+  assert.equal(env.requests(), 4);
   assert.equal(catalog.songs[0].flag, 'not resolved');
   assert.ok(catalog.songs[1].video);
   catalog = await env.run();
-  assert.equal(env.requests(), 6);
+  assert.equal(env.requests(), 8);
   assert.ok(catalog.songs[0].video);
 });
 
@@ -242,7 +248,7 @@ test('stale sidecar state cannot skip missing catalogue rows', async () => {
   await env.run();
   await env.json('catalog.json', { generated: checked, songs: [] });
   const catalog = await env.run();
-  assert.equal(env.requests(), 12);
+  assert.equal(env.requests(), 16);
   assert.ok(catalog.songs.every(song => song.video));
 });
 
@@ -251,11 +257,11 @@ test('channel policy changes re-evaluate existing rows; bad overrides fail befor
   await env.run();
   await env.json('channels.json', { ...channels, blocked: { reviewed: 'blocked' } });
   const catalog = await env.run();
-  assert.equal(env.requests(), 10);
+  assert.equal(env.requests(), 14);
   assert.ok(catalog.songs.every(song => !song.video));
   await env.json('overrides.json', { 'FLOW | GO!!!': 'invalid' });
   await assert.rejects(env.run(), /Invalid override/);
-  assert.equal(env.requests(), 10);
+  assert.equal(env.requests(), 14);
 });
 
 test('review puts flags first, escapes table cells, and lists every row', () => {
