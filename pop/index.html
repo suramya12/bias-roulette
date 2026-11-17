@@ -7,10 +7,20 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Bias Roulette · Pop &amp; Latin</title>
   <meta name="description" content="Spin for an artist, pull a Top 100 card, watch the MV. English and Latin pop.">
+  <meta property="og:title" content="Bias Roulette · Pop &amp; Latin">
+  <meta property="og:description" content="Spin for an artist, pull a Top 100 card, watch the MV. English and Latin pop.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://suramya12.github.io/bias-roulette/pop/">
+  <meta property="og:image" content="https://suramya12.github.io/bias-roulette/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bias Roulette · Pop &amp; Latin">
+  <meta name="twitter:description" content="Spin for an artist, pull a Top 100 card, watch the MV. English and Latin pop.">
+  <meta name="twitter:image" content="https://suramya12.github.io/bias-roulette/og.png">
   <meta name="theme-color" content="#07061a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
   <script>
     // Big screens: zoom the whole page so it fills the display (laid out for about 1200x720).
     // --z lets the CSS undo the zoom on viewport units, which would otherwise grow with it.
@@ -27,7 +37,7 @@
     })();
   </script>
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='3' width='20' height='26' rx='4' fill='%23ff4fa3'/%3E%3Ccircle cx='16' cy='14' r='5' fill='%23ffd76a'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 </head>
 <body>
   <div class="stage-bg" aria-hidden="true">
@@ -41,21 +51,22 @@
     <details class="genre" id="genre">
       <summary aria-label="Music: Pop and Latin. Switch music">Pop<span class="long"> &amp; Latin</span> <span aria-hidden="true">▾</span></summary>
       <div class="genre-menu">
-        <a id="toKpop" href="../#roulette">K-pop</a>
+        <a id="toKpop" href="../kpop/#roulette">K-pop</a>
         <a aria-current="page" href="#">Pop &amp; Latin</a>
         <a href="../anime/">Anime</a>
       </div>
     </details>
     <div class="toggle" role="tablist" aria-label="Game mode">
-      <button role="tab" id="tab-roulette" aria-selected="true" data-mode="roulette">Roulette</button>
-      <button role="tab" id="tab-top100" aria-selected="false" data-mode="top100">Top 100</button>
+      <button role="tab" id="tab-roulette" aria-selected="true" aria-controls="roulette" data-mode="roulette">Roulette</button>
+      <button role="tab" id="tab-top100" aria-selected="false" aria-controls="top100" tabindex="-1" data-mode="top100">Top 100</button>
     </div>
     <button class="binder-btn" id="openBinder" aria-haspopup="dialog" aria-label="Binder"><span class="long">Binder</span><span class="icon" aria-hidden="true">📒</span> <b id="binderCount">0</b></button>
+    <a class="home-link" href="../">Bias Roulette</a>
   </header>
 
   <main>
     <!-- Mode 1: Roulette, with two decks -->
-    <section id="roulette" class="mode" aria-labelledby="tab-roulette">
+    <section id="roulette" class="mode" role="tabpanel" aria-labelledby="tab-roulette">
       <div class="deckbar">
         <div class="toggle small" role="radiogroup" aria-label="Deck">
           <button role="radio" aria-checked="true" data-deck="all">All <b id="nAll"></b></button>
@@ -108,7 +119,7 @@
     </template>
 
     <!-- Mode 2 -->
-    <section id="top100" class="mode" aria-labelledby="tab-top100" hidden>
+    <section id="top100" class="mode" role="tabpanel" aria-labelledby="tab-top100" hidden>
       <p class="sub">The all-time Top 100 of English &amp; Latin pop. Score = (Spotify streams + official MV views) / 2.</p>
       <div class="ring-stage">
         <div class="ring" id="ring" aria-hidden="true"></div>

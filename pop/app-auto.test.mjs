@@ -47,11 +47,11 @@ test('Top 100 Auto skips stale timers, resumes after three failures, plays hidde
   globalThis.clearTimeout = (id) => timers.delete(id);
   const fire = () => { const [id, timer] = timers.entries().next().value; timers.delete(id); timer.fn(); return timer.ms; };
   const song = { id: 'song', t: 'Song', by: 'Artist', o: 1 };
-  globalThis.fetch = async () => ({ json: async () => ({ artists: [], songs: [song], updated: 'today' }) });
+  globalThis.fetch = async (path) => ({ ok: true, json: async () => path.includes('portraits') ? {} : { artists: [], songs: [song], updated: 'today' } });
   const players = [];
   const h = globalThis.popHarness = {
     game: { top100: (s) => s, wheelSongs: () => [], dealRing: () => [song], songRarity: () => ({ id: 'gold', label: 'Gold' }), collect: (col) => ({ col, isNew: true }), fmt: String, score: () => 1 },
-    cards: { makeCard: () => { const el = new Element(); el.classList = { 1: 'gold', add() {}, toggle() {} }; return el; }, reveal: () => { h.reveals++; }, songModel: () => ({}), artistModel: () => ({}), reduced: { matches: false } },
+    cards: { makeCard: () => { const el = new Element(); el.classList = { 1: 'gold', add() {}, toggle() {} }; return el; }, reveal: () => { h.reveals++; }, songModel: () => ({}), artistModel: () => ({}), setCardImage() {}, creditLine() {}, reduced: { matches: false } },
     player: { createPlayer: (host, callbacks) => { const p = { callbacks, plays: [], play(id, token) { this.plays.push({ id, token }); }, stop() {}, showAutoPaused(resume) { this.resume = resume; }, clearAutoPaused() { this.resume = null; } }; players.push(p); return p; } },
     roulette: { createRoulette: () => ({ stop() {} }) }, stage: { startCrowd() {} },
     sound: { Sound: class { constructor(enabled) { this.enabled = enabled; } unlock() {} } },
