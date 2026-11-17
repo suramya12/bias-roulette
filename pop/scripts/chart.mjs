@@ -1,7 +1,9 @@
 // Builds data/data.json: every roster act's songs (Spotify totals across versions, lead
 // credits only) matched to an official MV (YouTube views), scored and ranked.
 //   node scripts/chart.mjs [--fresh]
-import { getText, decode, fold, key, cleanTitle, num, writeJSON } from './lib.mjs';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
+import { getText, decode, fold, key, cleanTitle, num, writeJSON, readJSON, sleep, CACHE } from './lib.mjs';
 import { ROSTER, ALL, BIAS, BANDS, EXCLUDE, EXTRA_VIDEOS, BAD_VIDEOS } from './roster.mjs';
 
 const K = 'https://kworb.net';
@@ -206,6 +208,65 @@ for (const a of acts) for (const g of a.songs) {
   else prev.s = Math.max(prev.s, song.s);
 }
 
+// ---- 3b. Newest official MV per artist (data/latest.json, written by scripts/latest.mjs) ----
+// Each one is always on its artist's wheel. A song kworb does not list gets streams 0 and its
+// YouTube view count, like the YouTube-only songs above.
+const latest = await readJSON('data/latest.json').catch(() => ({}));
+async function ytViews(id) {
+  const file = `${CACHE}/yt-views-${id}.txt`;
+  if (existsSync(file)) return Number(await readFile(file, 'utf8'));
+  for (let attempt = 0; attempt < 3; attempt++) {
+    await sleep(300 * (attempt + 1));
+    try {
+      const r = await fetch(`https://www.youtube.com/watch?v=${id}`, { headers: { 'User-Agent': 'Mozilla/5.0', 'Accept-Language': 'en' } });
+      const n = num(((await r.text()).match(/"viewCount":"(\d+)"/) || [])[1] || 0);
+      if (n) { await mkdir(CACHE, { recursive: true }); await writeFile(file, String(n)); return n; }
+    } catch { /* try again */ }
+  }
+  return 0;
+}
+/** Song title out of an MV title: the quoted part, else what is left after the act name and "Official Music Video". */
+function songTitleOf(title, names) {
+  const t = title.replace(/[‘’]/g, "'").replace(/[“”]/g, '"');
+  const bare = t.replace(/\s*[([][^)\]]*[)\]]/g, ' ').replace(FEAT, ' ');
+  const dq = bare.match(/(?:^|\s)"([^"]{1,80})"(?=$|[\s,|.!-])/); // "Pa' Que Llorar": the apostrophe is not a quote
+  if (dq) return cleanTitle(dq[1]);
+  const q = bare.match(/(?:^|\s)['"]([^'"]{1,80})['"](?=$|[\s,|.!-])/);
+  if (q) return cleanTitle(q[1]);
+  const nameKeys = new Set(names.map((n) => key(n)));
+  // "Artist, Other Artist - Song": the song is what follows the first spaced dash.
+  const segs = bare.split(/\s+[-–—]\s+/);
+  const rest = segs.length > 1 ? segs.slice(1).join(' - ') : bare;
+  const parts = rest.split(/\s*[|:]\s+|\s+[-–—]|[-–—]\s+/).map((p) => p.trim()).filter(Boolean)
+    .filter((p) => !nameKeys.has(key(p)) && !/^(official )?(music )?video$|^official mv$/i.test(p));
+  return cleanTitle(parts[0] || rest.trim() || title);
+}
+const mustHave = new Map(); // artist name -> video id that has to be on the wheel
+for (const r of ALL) {
+  const l = latest[r.name];
+  if (!l?.id) continue;
+  const ft = fold(l.title);
+  const by = r.name; // a soloist only gets an MV credited to the soloist, never the band's
+  const prev = byVideo.get(l.id);
+  // The same song under another video id is not added a second time.
+  const t0 = songTitleOf(l.title, [r.name]);
+  const twin0 = !prev && [...byVideo.values()].find((x) => x.id !== l.id && (x.by === by || (r.kind !== 'group' ? r.bands : []).includes(x.by)) && key(x.t) === key(t0));
+  if (twin0) { console.warn(`latest MV ${l.id} "${t0}" (${r.name}) skipped: same song as ${twin0.id}`); continue; }
+  mustHave.set(r.name, l.id);
+  if (prev) { // already scored (or added for another act): it only needs its wheel place
+    // A duet found for two acts is credited to the name that comes first in the MV title.
+    const pos = (n) => { const i = ft.indexOf(fold(n)); return i < 0 ? 1e9 : i; };
+    if (prev.fresh && prev.by !== by && pos(by) < pos(prev.by)) Object.assign(prev, { by, latin: acts.find((x) => x.name === by).latin, band: acts.find((x) => x.name === by).isBand });
+    continue;
+  }
+  const a = acts.find((x) => x.name === by);
+  const views = allVideos.get(l.id)?.views || (await ytViews(l.id));
+  if (!views) console.warn(`no view count for latest MV ${l.id} (${r.name})`);
+  const t = t0;
+  byVideo.set(l.id, { id: l.id, t, by, s: 0, v: views, vt: l.title, ch: l.channel, src: 'latest', ver: false, latin: a.latin, band: a.isBand, fresh: true });
+  console.log(`latest MV added: ${by} | ${t} | ${l.published} | ${l.id} | ${views} views`);
+}
+
 // ---- 4. Score, rank, and keep what the game needs ----
 const songs = [...byVideo.values()];
 for (const s of songs) s.score = (s.s + s.v) / 2;
@@ -217,13 +278,22 @@ for (const s of songs) actSongs.get(s.by).push(s);
 const PER_ACT = 15;
 const keep = new Set(songs.filter((s) => s.o <= 100).map((s) => s.id));
 for (const list of actSongs.values()) list.slice(0, PER_ACT).forEach((s) => keep.add(s.id));
+for (const id of mustHave.values()) keep.add(id);
 
 const mainNames = new Set(ROSTER.map((r) => r.name));
 const artists = ALL.map((r) => {
   const solo = r.kind === 'group' ? [] : actSongs.get(r.name);
   const band = r.kind === 'group' ? actSongs.get(r.name) : r.bands.flatMap((b) => actSongs.get(b));
-  const weight = solo.reduce((t, s) => t + s.score, 0) + band.reduce((t, s) => t + s.score, 0) / (r.kind === 'group' ? 1 : 3);
-  const top = [...solo, ...band].filter((s) => keep.has(s.id)).sort((x, y) => x.o - y.o).slice(0, 12);
+  // The newest-MV songs (no streams) do not count towards Power.
+  const weight = solo.filter((s) => !s.fresh).reduce((t, s) => t + s.score, 0) + band.filter((s) => !s.fresh).reduce((t, s) => t + s.score, 0) / (r.kind === 'group' ? 1 : 3);
+  const pool = [...solo, ...band].filter((s) => keep.has(s.id)).sort((x, y) => x.o - y.o);
+  let top = pool.slice(0, 12);
+  const must = mustHave.get(r.name);
+  // The newest MV always makes the wheel; on a full wheel it takes the lowest-scored song's place.
+  if (must && !top.some((s) => s.id === must)) {
+    top = [...pool.slice(0, 11), byVideo.get(must)].sort((x, y) => x.o - y.o);
+    console.log(`wheel: ${r.name} lost "${pool[11]?.t ?? '(none, wheel not full)'}" for the newest MV`);
+  }
   return { name: r.name, kind: r.kind, latin: r.latin, bands: r.bands, main: mainNames.has(r.name), bias: BIAS.indexOf(r.name) + 1, nBand: band.length, nSolo: solo.length, weight, songs: top.map((s) => s.id) };
 });
 // Power 1-10 by rank: each step is a tenth of the artists (10 = top 10%).
