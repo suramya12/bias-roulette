@@ -3,9 +3,10 @@ import { makeCard, reveal, songModel, artistModel, reduced } from './cards.js';
 import { createPlayer } from './player.js';
 import { createRoulette } from './roulette.js';
 import { startCrowd } from './stage.js';
+import { PullMachine } from '../../src/pull-machine.js';
+import { Sound } from '../../src/sound.js';
 
 const $ = (s) => document.querySelector(s);
-const wait = (ms) => new Promise((r) => setTimeout(r, reduced.matches ? Math.min(ms, 60) : ms));
 
 let data, portraits;
 try {
@@ -63,6 +64,7 @@ function setMode(m, d = deck) {
   for (const b of document.querySelectorAll('[data-deck]')) b.setAttribute('aria-checked', b.dataset.deck === d);
   for (const k of ['all', 'favs']) $(`#deck-${k}`).hidden = k !== d;
   $('#deckNote').textContent = DECK_NOTE[d];
+  if (m === 'top100') machine.activate();
   const live = m === 'roulette' ? d : m;
   for (const [k, stop] of Object.entries(stops)) if (k !== live) stop();
   history.replaceState(null, '', m === 'top100' ? '#top100' : d === 'favs' ? '#roulette/favs' : '#roulette');
@@ -90,63 +92,49 @@ $('#nFavs').textContent = biasPool.length;
 
 // ---------- Mode 2: Top 100 ----------
 const tPlayer = createPlayer($('#tPlayer'));
-stops.top100 = () => tPlayer.stop();
-function showBig(slot, card, extra = []) {
+stops.top100 = () => { machine.deactivate(); tPlayer.stop(); };
+function showBig(slot, card, extra = [], valid = () => true) {
   slot.replaceChildren(card, ...extra);
-  requestAnimationFrame(() => reveal(card));
+  requestAnimationFrame(() => { if (valid()) reveal(card); });
 }
-const ringEl = $('#ring');
 const shown = new Set();
 const ringSize = () => (innerWidth < 520 ? 10 : 12);
-let ring = [];
-
-function layoutRing() {
-  const n = ring.length;
-  const w = innerWidth < 520 ? 96 : 132;
-  const R = Math.round((w / 2) / Math.tan(Math.PI / n) + 18);
-  [...ringEl.children].forEach((slot, i) => (slot.style.transform = `rotateY(${(360 / n) * i}deg) translateZ(${R}px)`));
+let soundOn = true;
+try { soundOn = localStorage.getItem('encore.sound') !== 'off'; } catch {}
+const sound = new Sound(soundOn);
+function soundLabel() {
+  $('#sound').textContent = sound.enabled ? 'Sound on' : 'Sound off';
+  $('#sound').setAttribute('aria-pressed', String(sound.enabled));
 }
-function slotFor(song, i) {
-  const slot = document.createElement('div');
-  slot.className = 'slot';
-  const b = document.createElement('button');
-  b.setAttribute('aria-label', `Pull card ${i + 1}`);
-  b.append(songCard(song, { size: 'mini', faceDown: true }));
-  b.addEventListener('click', () => pull(i));
-  slot.append(b);
-  return slot;
-}
-function dealRing() {
-  ring = G.dealRing(TOP, ringSize(), shown);
-  ringEl.replaceChildren(...ring.map(slotFor));
-  layoutRing();
-}
-let pulling = false;
-/** The slot currently facing the audience (random when the ring is not turning). */
-function frontSlot() {
-  const anim = ringEl.getAnimations()[0];
-  if (!anim || reduced.matches) return Math.floor(Math.random() * ring.length);
-  const progress = (anim.currentTime % 40000) / 40000;
-  return Math.round(progress * ring.length) % ring.length;
-}
-async function pull(i = frontSlot()) {
-  if (pulling) return;
-  pulling = true;
-  try {
-    const song = ring[i];
-    shown.add(song.id);
-    ringEl.children[i].classList.add('pulled');
+$('#sound').addEventListener('click', () => {
+  sound.enabled = !sound.enabled;
+  if (sound.enabled) sound.unlock();
+  try { localStorage.setItem('encore.sound', sound.enabled ? 'on' : 'off'); } catch {}
+  soundLabel();
+});
+soundLabel();
+const machine = new PullMachine({
+  ring: $('#ring'), hit: $('#ringBtn'), buttons: [$('#pull')], slots: ringSize,
+  radius: (width, n) => Math.round((width / 2) / Math.tan(Math.PI / n) + 18),
+  renderSlot: (slot, song) => {
+    slot.classList.add('slot');
+    slot.replaceChildren(songCard(song, { size: 'mini', faceDown: true }));
+  },
+  sound, tierOf: (song) => G.songRarity(song.o).id,
+  say: (text) => { $('#topAnnounce').textContent = text; },
+  onLand: (song, tier) => { $('#topAnnounce').textContent = `#${song.o} ${song.t} ? ${tier}!`; },
+  onReveal: (song) => {
+    const token = machine.generation;
     const isNew = win('song', song.id);
-    playTop(song, true, isNew);
-    await wait(650);
-    ring = G.refillRing(ring, i, TOP, shown);
-    ringEl.replaceChild(slotFor(ring[i], i), ringEl.children[i]);
-    layoutRing();
-  } finally {
-    pulling = false;
-  }
-}
-function playTop(song, pulled, isNew) {
+    playTop(song, true, isNew, () => machine.generation === token && machine.active);
+  },
+});
+machine.setPool(TOP, () => {
+  const song = G.dealRing(TOP, 1, shown)[0];
+  if (song) shown.add(song.id);
+  return song;
+});
+function playTop(song, pulled, isNew, valid) {
   const card = songCard(song, { size: 'big' });
   const extra = [];
   if (pulled) {
@@ -156,14 +144,12 @@ function playTop(song, pulled, isNew) {
     extra.push(stamp);
   }
   $('#tResult').hidden = false;
-  showBig($('#tCard'), card, extra);
+  showBig($('#tCard'), card, extra, valid);
   tPlayer.play(song.id);
   $('#tNow').replaceChildren('Now playing: ', Object.assign(document.createElement('b'), { textContent: song.t }), ` · ${song.by} · #${song.o}`);
   document.querySelectorAll('.chart li').forEach((li) => li.classList.toggle('playing', li.dataset.id === song.id));
   $('#tResult').scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'nearest' });
 }
-$('#pull').addEventListener('click', () => pull());
-addEventListener('resize', () => { if (pulling) return; if (ring.length !== ringSize()) dealRing(); else layoutRing(); });
 
 function renderChart() {
   const frag = document.createDocumentFragment();
@@ -179,7 +165,11 @@ function renderChart() {
     li.querySelector('.tt span').textContent = s.by;
     li.querySelector('.nums b').textContent = G.fmt(G.score(s)) + ' pts';
     li.querySelector('.nums').append(`${s.s ? G.fmt(s.s) : '—'} streams · ${G.fmt(s.v)} views`);
-    li.querySelector('button').addEventListener('click', () => playTop(s, false));
+    li.querySelector('button').addEventListener('click', () => {
+      machine.cancel();
+      const token = machine.generation;
+      playTop(s, false, undefined, () => machine.generation === token && machine.active);
+    });
     frag.append(li);
   }
   $('#chart').replaceChildren(frag);
@@ -234,7 +224,6 @@ $('#credits').addEventListener('toggle', () => {
 
 // ---------- boot ----------
 startCrowd($('#crowd'));
-dealRing();
 renderChart();
 updateCount();
 /** #top100, #roulette, #roulette/favs; old #top and #bias links still work. No hash: last deck used. */
