@@ -283,6 +283,15 @@ button { font-family: inherit; }
 .autoplay > summary::-webkit-details-marker { display: none; }
 .auto-state { padding: 3px 8px; border-radius: 999px; background: var(--line); color: var(--muted); font-size: .72rem; font-weight: 600; }
 .autoplay.is-on .auto-state { background: var(--accent); color: var(--on-light); }
+.roulette-auto { display: flex; justify-content: flex-end; max-width: 520px; }
+.roulette-auto .auto-menu { bottom: auto; top: calc(100% + 8px); }
+.chart-actions { grid-template-columns: minmax(0, 1fr) auto; }
+.chart-actions #pullBtn { grid-column: 1; }
+.chart-actions #quickBtn { grid-column: 1 / -1; }
+.chart-actions #chartAutoPill { grid-column: 2; grid-row: 1; }
+.chart-auto { margin: 0; gap: 8px; }
+.chart-auto.switch span { display: flex; align-items: center; gap: 6px; }
+.chart-auto.is-on .auto-state { background: var(--accent); color: var(--on-light); }
 .auto-menu {
   position: absolute; right: 0; bottom: calc(100% + 8px); z-index: 20; display: grid; gap: 2px;
   width: min(300px, calc(100vw - 32px)); padding: 6px; background: #16121f;

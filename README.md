@@ -59,7 +59,11 @@ The resolver rejects audio, lyric, visualizer, teaser, practice, live and broadc
 
 ## Autoplay
 
-**Auto**, next to Start over on the result screen, has two switches. **Autoplay**: when the MV ends, the next round is chosen and plays by itself (a video that can't play here is skipped after a few seconds). **Same idol**: keep the idol and draw another of their songs, never the one that just played; an idol with one song gets a new idol instead. Both are remembered in the browser.
+**Auto** (on the Roulette screen from the start) has two switches. **Autoplay**: when the MV ends, the next round is chosen and plays by itself (a video that can't play here is skipped after a few seconds). **Same idol**: keep the idol and draw another of their songs, never the one that just played; an idol with one song gets a new idol instead. Both are remembered in the browser.
+
+Top 100 has its own **Auto** switch next to Pull: when an MV ends the ring does a quick 1.2 s spin and the next card plays (no stamp or confetti; a manual pull still gets the full show and works as Skip). In a background tab it skips the spin so the music keeps going.
+
+Everywhere: a video that can't play here is skipped after 4 s; after 3 in a row Auto pauses and shows **Resume**. If the browser blocks autoplay, a **Tap to play** button appears.
 
 ## K-pop Top 100 mode
 

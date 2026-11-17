@@ -61,6 +61,16 @@
 
     <p class="announce night" id="announce" role="status" aria-live="polite">Loading…</p>
 
+    <div class="roulette-auto">
+      <details class="autoplay" id="autoplay">
+        <summary class="btn">Auto <span class="auto-state" id="autoState">off</span></summary>
+        <div class="auto-menu">
+          <label class="switch"><input type="checkbox" id="autoOn"><span>Autoplay<small>When the MV ends, the next round starts by itself</small></span></label>
+          <label class="switch"><input type="checkbox" id="autoSame"><span>Same idol<small>Keep this idol and draw another of their songs</small></span></label>
+        </div>
+      </details>
+    </div>
+
     <section id="play" aria-label="Wheel">
       <div class="stage stage-wheel" id="wheelStage">
       <div class="beams" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -104,13 +114,6 @@
         <button class="btn btn-lemon btn-big" id="againBtn" type="button">Choose for me again</button>
         <button class="btn btn-mint" id="anotherBtn" type="button">Another song</button>
         <button class="btn btn-sky" id="restartBtn" type="button">Start over</button>
-        <details class="autoplay" id="autoplay">
-          <summary class="btn">Auto <span class="auto-state" id="autoState">off</span></summary>
-          <div class="auto-menu">
-            <label class="switch"><input type="checkbox" id="autoOn"><span>Autoplay<small>When the MV ends, the next round starts by itself</small></span></label>
-            <label class="switch"><input type="checkbox" id="autoSame"><span>Same idol<small>Keep this idol and draw another of their songs</small></span></label>
-          </div>
-        </details>
       </div>
       </div>
     </section>
@@ -155,8 +158,9 @@
         <button class="chip-btn" id="r50" type="button" aria-pressed="false">Top 50</button>
         <button class="chip-btn" id="r100" type="button" aria-pressed="true">Top 100</button>
       </div>
-      <div class="actions">
+      <div class="actions chart-actions">
         <button class="btn btn-pink btn-big" id="pullBtn" type="button">Pull a card</button>
+        <label class="btn switch chart-auto" id="chartAutoPill"><input type="checkbox" id="chartAuto" disabled><span>Auto <b class="auto-state" id="chartAutoState">off</b></span></label>
         <button class="btn btn-lemon" id="quickBtn" type="button">Just play one</button>
       </div>
 
