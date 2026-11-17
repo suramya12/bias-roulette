@@ -6,23 +6,8 @@
 // Autoplay with sound is up to the browser, so there is always a way out:
 // a big play button if playback has not started, and a "Watch on YouTube" link on errors.
 
-let apiPromise = null;
-
-export function loadApi() {
-  if (window.YT?.Player) return Promise.resolve();
-  if (apiPromise) return apiPromise;
-  apiPromise = new Promise((resolve, reject) => {
-    const fail = (why) => { apiPromise = null; reject(new Error(why)); };
-    const prev = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = () => { prev?.(); resolve(); };
-    const s = document.createElement('script');
-    s.src = 'https://www.youtube.com/iframe_api';
-    s.onerror = () => fail('blocked');
-    document.head.append(s);
-    setTimeout(() => { if (!window.YT?.Player) fail('timeout'); }, 12000);
-  });
-  return apiPromise;
-}
+import { loadApi } from './youtube-api.js';
+export { loadApi };
 
 const MESSAGES = {
   2: 'This video link looks broken.',

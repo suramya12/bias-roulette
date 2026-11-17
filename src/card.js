@@ -31,10 +31,13 @@ function actKeys(artist) {
  */
 let custom = {};
 try {
-  const r = await fetch('data/cardart.json', { cache: 'no-cache' });
+  const r = await fetch(new URL('../data/cardart.json', import.meta.url), { cache: 'no-cache' });
   if (r.ok) custom = await r.json();
 } catch { /* no file, or not in a browser: painted covers only */ }
-const customArt = (kind, key) => (custom[kind]?.[key] ? { kind: 'custom', src: custom[kind][key] } : null);
+function customArt(kind, key) {
+  const path = custom[kind]?.[key];
+  return path ? { kind: 'custom', src: new URL(`../${path}`, import.meta.url).href } : null;
+}
 export const hasArt = (kind, key) => Boolean(custom[kind]?.[key]);
 
 export const TIERS = { legend: 'Legendary', epic: 'Epic', rare: 'Rare', common: 'Common' };
@@ -298,7 +301,19 @@ function countUp(node, duration, delay) {
 
 // ---------- collection ----------
 const STORE = 'bias-roulette.collection';
-function readAll() { try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch { return {}; } }
+let collectionSnapshot = {};
+let unsavedCards = {};
+function readAll() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORE));
+    collectionSnapshot = saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {};
+    for (const [kind, cards] of Object.entries(unsavedCards)) {
+      const box = (collectionSnapshot[kind] ||= {});
+      for (const [key, count] of Object.entries(cards)) box[key] = (box[key] || 0) + count;
+    }
+  } catch { /* keep the last readable collection and any in-memory changes */ }
+  return collectionSnapshot;
+}
 export const collection = {
   has(kind, key) { return Boolean(readAll()[kind]?.[key]); },
   /** Returns true the first time a card is collected. */
@@ -307,7 +322,12 @@ export const collection = {
     const box = (all[kind] ||= {});
     const isNew = !box[key];
     box[key] = (box[key] || 0) + 1;
-    try { localStorage.setItem(STORE, JSON.stringify(all)); } catch { /* private mode: not saved */ }
+    const pending = (unsavedCards[kind] ||= {});
+    pending[key] = (pending[key] || 0) + 1;
+    try {
+      localStorage.setItem(STORE, JSON.stringify(all));
+      unsavedCards = {};
+    } catch { /* keep this addition for the current visit */ }
     return isNew;
   },
   count(kind, keys) { const box = readAll()[kind] || {}; return keys.filter((k) => box[k]).length; },

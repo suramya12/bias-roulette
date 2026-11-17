@@ -14,8 +14,12 @@ const $ = (id) => document.getElementById(id);
 const CANDY = ['#ff4fa3', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff'];
 let chartFetch = null;
 /** data/charts.json, fetched once and shared by both screens. */
-export const loadChartData = () => (chartFetch ??= fetch('data/charts.json', { cache: 'no-cache' })
+export const loadChartData = () => (chartFetch ??= fetch(new URL('../data/charts.json', import.meta.url), { cache: 'no-cache' })
   .then((r) => { if (!r.ok) throw new Error('charts'); return r.json(); })
+  .then((data) => {
+    if (!Array.isArray(data?.top) || !Array.isArray(data?.newbie)) throw new Error('Invalid chart data');
+    return data;
+  })
   .catch((e) => { chartFetch = null; throw e; }));
 
 const thumb = (id, size = 'mqdefault') => `https://i.ytimg.com/vi/${encodeURIComponent(id)}/${size}.jpg`;
@@ -229,17 +233,27 @@ export class Charts {
 
   async load() {
     if (this.data) return true;
+    const actions = ['pullBtn', 'ringBtn', 'quickBtn', 'chartAuto', 'listPro', 'listNew', 'r10', 'r50', 'r100'];
+    for (const id of actions) $(id).disabled = true;
+    this.#say('Loading the chart…');
     try {
       this.data = await loadChartData();
-    } catch {
-      this.#say('Could not load the chart. Run "npm run charts", then reload.');
+    } catch (error) {
+      console.warn('Could not load chart data. Generate it with npm run charts.', error);
+      this.#say('Could not load the chart. ');
+      const retry = el('button', { type: 'button', class: 'btn btn-small', text: 'Retry' });
+      retry.addEventListener('click', async () => {
+        await this.activate();
+        if (this.active && this.data) this.onListChange?.();
+      });
+      $('chartsAnnounce').append(retry);
       return false;
     }
     this.machine.setPool(this.pool, () => this.#pick());
     this.#renderControls();
     this.#renderList();
     this.#say(this.#intro());
-    $('chartAuto').disabled = false;
+    for (const id of actions) $(id).disabled = false;
     return true;
   }
 
@@ -441,7 +455,10 @@ export class Charts {
       this.pull();
     });
     $('nextPull').addEventListener('click', () => { const n = this.songs[this.song?.rank]; if (n) this.reveal(n, { fromList: true }); });
-    $('chartJump').addEventListener('click', () => { $('chart').open = true; $('chart').scrollIntoView({ block: 'start', behavior: 'smooth' }); });
+    $('chartJump').addEventListener('click', () => {
+      $('chart').open = true;
+      $('chart').scrollIntoView({ block: 'start', behavior: fx.prefersReducedMotion() ? 'auto' : 'smooth' });
+    });
     $('listPro').addEventListener('click', () => this.#setList('pro'));
     $('listNew').addEventListener('click', () => this.#setList('new'));
     for (const [id, other] of [['listPro', 'new'], ['listNew', 'pro']]) {

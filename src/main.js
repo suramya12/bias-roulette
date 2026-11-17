@@ -18,6 +18,7 @@ const store = {
   get(key, fallback) { try { return localStorage.getItem('bias-roulette.' + key) ?? fallback; } catch { return fallback; } },
   set(key, value) { try { localStorage.setItem('bias-roulette.' + key, value); } catch { /* private mode */ } },
 };
+store.set('lastSide', 'kpop');
 
 function el(tag, props = {}, ...children) {
   const node = document.createElement(tag);
@@ -354,7 +355,9 @@ function setMode(next) {
   $('modeCharts').setAttribute('aria-pressed', String(isCharts));
   $('roulette').hidden = isCharts;
   $('charts').hidden = !isCharts;
-  $('title').replaceChildren(...(isCharts ? ['K-pop', 'Top 100'] : ['Bias', 'Roulette']).flatMap((w, i) => (i ? [' ', el('span', { text: w })] : [el('span', { text: w })])));
+  $('rouletteTitle').hidden = isCharts;
+  $('chartsTitle').hidden = !isCharts;
+  $('homeLink').hidden = !isCharts;
   document.title = isCharts ? 'K-pop Top 100 · Bias Roulette' : 'Bias Roulette';
   syncUrl();
   updateBinder();
@@ -381,7 +384,7 @@ function syncUrl() {
   const hash = hashFor();
   if (location.hash !== hash) history.replaceState(null, '', location.pathname + location.search + hash);
   $('toKpop').setAttribute('href', hash); // already here: a no-op link
-  $('toPop').setAttribute('href', 'pop/' + hash.split('/')[0]); // pop has no Easy list
+  $('toPop').setAttribute('href', '../pop/' + hash.split('/')[0]); // pop has no Easy list
 }
 
 /** Collection button in the header: the count for whatever deck is on screen. */
@@ -414,7 +417,7 @@ async function buildCredits() {
   const box = $('creditList');
   if (!$('credits').open || box.children.length) return;
   let all;
-  try { all = await fetch('data/portraits.json').then((r) => { if (!r.ok) throw new Error(); return r.json(); }); } catch {
+  try { all = await fetch(new URL('../data/portraits.json', import.meta.url)).then((r) => { if (!r.ok) throw new Error(); return r.json(); }); } catch {
     box.replaceChildren(el('li', { text: 'Could not load the credits.' }));
     return;
   }
@@ -451,28 +454,38 @@ async function start() {
   $('toKpop').addEventListener('click', () => { genre.open = false; });
   $('credits').addEventListener('toggle', buildCredits);
 
-  let roster, videos;
+  await loadRoulette();
+}
+
+async function loadRoulette() {
+  const actions = ['spinBtn', 'autoBtn', 'wheelBtn', 't3', 't2', 'resetBtn'];
+  for (const id of actions) $(id).disabled = true;
+  announce('Loading…');
+  let catalog;
   try {
-    const load = (f) => fetch(f, { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(f); return r.json(); });
+    const load = (f) => fetch(new URL(`../data/${f}`, import.meta.url), { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(f); return r.json(); });
     const chartData = loadChartData().catch(() => null); // in parallel with the rest
-    [roster, videos] = await Promise.all([load('data/roster.json'), load('data/videos.json')]);
+    const [roster, videos] = await Promise.all([load('roster.json'), load('videos.json')]);
     // Photos are only painted for idols without an illustrated cover.
     const needPhotos = (roster.idols || []).some((i) => !hasArt('idol', i.name));
     let top;
-    [top, portraits] = await Promise.all([chartData, needPhotos ? load('data/portraits.json').catch(() => null) : null]);
+    [top, portraits] = await Promise.all([chartData, needPhotos ? load('portraits.json').catch(() => null) : null]);
     chartIdx = chartIndex(top?.top);
-  } catch {
-    announce(location.protocol === 'file:'
-      ? 'This page needs a web server. Run "npm start" and open the address it prints.'
-      : 'Could not load the song data. Run "npm run resolve" first, then reload.');
+    catalog = buildCatalog(roster, videos);
+    if (!catalog.idols.length) throw new Error('No songs have videos');
+  } catch (error) {
+    console.warn('Could not load Roulette data. Serve the site with npm start and generate video data with npm run resolve.', error);
+    announce('Could not load the song data. ');
+    const retry = el('button', { type: 'button', class: 'btn btn-small', text: 'Retry' });
+    retry.addEventListener('click', loadRoulette);
+    $('announce').append(retry);
     return;
   }
-  const catalog = buildCatalog(roster, videos);
   catalogIdols = catalog.idols;
   portraits = artPlan(catalog.idols, portraits);
-  if (!catalog.idols.length) { announce('No songs have videos yet. Run "npm run resolve", then reload.'); return; }
 
   game = new Game(catalog.idols, { target: store.get('target', '3') === '2' ? 2 : 3 });
+  for (const id of actions) $(id).disabled = false;
 
   rouletteTicker = catalog.idols.map((i) => i.name);
   if (mode === 'roulette') setTicker(rouletteTicker);
