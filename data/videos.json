@@ -9090,5 +9090,145 @@
   "channel": "JYP Entertainment",
   "flags": [],
   "source": "override"
+ },
+ "IVE | Looks Can Kill": {
+  "id": "rsNhWkC4neE",
+  "title": "IVE 아이브 'Looks Can Kill' MV",
+  "channel": "STARSHIP",
+  "flags": [],
+  "source": "override"
+ },
+ "NCT DREAM | Boogie Woogie": {
+  "id": "wG7pnZttup8",
+  "title": "NCT DREAM 엔시티 드림 'Boogie Woogie' MV",
+  "channel": "SMTOWN",
+  "flags": [],
+  "source": "override"
+ },
+ "BIGBANG | BiiiG": {
+  "id": "L8ZnXgbyUuc",
+  "title": "BIGBANG - ‘BiiiG’ M/V",
+  "channel": "BIGBANG",
+  "flags": [],
+  "source": "override"
+ },
+ "TXT | Angel Bite": {
+  "id": "Cf3daiQ4lBU",
+  "title": "TXT (투모로우바이투게더) ‘Angel Bite’ Official MV",
+  "channel": "HYBE LABELS",
+  "flags": [],
+  "source": "override"
+ },
+ "ENHYPEN | I Want You": {
+  "id": "tngDB-qo2A0",
+  "title": "#ENHYPEN (#엔하이픈) 'I Want You' Official MV",
+  "channel": "HYBE LABELS",
+  "flags": [],
+  "source": "override"
+ },
+ "MONSTA X | YOU CAN'T HOLD MY HEART": {
+  "id": "AWV3pIesd0Y",
+  "title": "Monsta X - YOU CAN'T HOLD MY HEART (Official Video)",
+  "channel": "MONSTAXVEVO",
+  "flags": [],
+  "source": "override"
+ },
+ "HyunA | Mrs. Nail": {
+  "id": "4no_auZ_WtY",
+  "title": "현아 (HyunA) - 못 (Mrs. Nail) (Official MV)",
+  "channel": "HyunA",
+  "flags": [],
+  "source": "override"
+ },
+ "Red Velvet - IRENE & SEULGI | Cheetah": {
+  "id": "Ts8HTHBRxvw",
+  "title": "Red Velvet - IRENE & SEULGI 'Cheetah' MV",
+  "channel": "SMTOWN",
+  "flags": [],
+  "source": "override"
+ },
+ "JENNIE | FALLEN ANGEL": {
+  "id": "s466YCiHfKw",
+  "title": "JENNIE - FALLEN ANGEL (Official Video)",
+  "channel": "JennieRubyJaneVEVO",
+  "flags": [],
+  "source": "override"
+ },
+ "LISA | Tarantino": {
+  "id": "-5ZXrO_lYSA",
+  "title": "LISA - Tarantino (Official Music Video)",
+  "channel": "LISAOfficialVEVO",
+  "flags": [],
+  "source": "override"
+ },
+ "ROSÉ | new trick": {
+  "id": "Lufa9QAFFeY",
+  "title": "ROSÉ - new trick (OFFICIAL MUSIC VIDEO)",
+  "channel": "ROSÉ",
+  "flags": [],
+  "source": "override"
+ },
+ "CHAERYEONG ITZY | Lovesick": {
+  "id": "8L3eSq5FLP0",
+  "title": "CHAERYEONG “Lovesick” M/V",
+  "channel": "JYP Entertainment",
+  "flags": [],
+  "source": "override"
+ },
+ "MAX CHANGMIN | All Of My Life": {
+  "id": "7XMkfsmNeNg",
+  "title": "MAX CHANGMIN 최강창민 'All Of My Life' MV",
+  "channel": "SMTOWN",
+  "flags": [],
+  "source": "override"
+ },
+ "KIM HYUN JOONG | Chicken & Beer": {
+  "id": "WnYyIAlWsx8",
+  "title": "KIMHYUNJOONG(김현중) - 치킨이야(Chicken & Beer) [Official Music Video]",
+  "channel": "KIM HYUN JOONG.official",
+  "flags": [],
+  "source": "override"
+ },
+ "Jackson Wang | Thank You": {
+  "id": "KzM1arYmO4w",
+  "title": "Jackson Wang - Thank You (Official Music Video)",
+  "channel": "Jackson Wang",
+  "flags": [],
+  "source": "override"
+ },
+ "CHEN | Arcadia": {
+  "id": "1ttnNaRE8i4",
+  "title": "첸 (CHEN) 'Arcadia' MV",
+  "channel": "INB100",
+  "flags": [],
+  "source": "override"
+ },
+ "TAEMIN | Veil": {
+  "id": "jZ5IoxGW48o",
+  "title": "태민 (TAEMIN) - 'Veil' MV",
+  "channel": "BPM Entertainment",
+  "flags": [],
+  "source": "override"
+ },
+ "XIUMIN | Overdrop": {
+  "id": "s4rG7VoGmiE",
+  "title": "시우민 (XIUMIN) 'Overdrop' MV",
+  "channel": "INB100",
+  "flags": [],
+  "source": "override"
+ },
+ "CL | Chuck": {
+  "id": "o0AkME8JD14",
+  "title": "CL - Chuck (Official Video)",
+  "channel": "CL",
+  "flags": [],
+  "source": "override"
+ },
+ "WHEE IN | coco water": {
+  "id": "IKISOlTAYLY",
+  "title": "휘인(Whee In) - coco water MV",
+  "channel": "THEL1VE",
+  "flags": [],
+  "source": "override"
  }
 }
