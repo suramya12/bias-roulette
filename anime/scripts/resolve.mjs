@@ -4,7 +4,7 @@ import { resolve as resolvePath, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import {
   parseSeedLine, extractInitialData, extractPlayerResponse, videosFromSearch,
-  playability, classify, score, watchMetadata, copySource, copyGate, orderCopies, COPY_POLICY,
+  playability, classify, score, watchMetadata, copySource, copyGate, orderCopies, sameSong, COPY_POLICY,
 } from './lib.mjs';
 
 const animeRoot = fileURLToPath(new URL('../', import.meta.url));
@@ -101,9 +101,9 @@ export function createPageLoader({
 }
 
 export function queriesFor(seed) {
-  if (seed.kind !== 'theme') return [`${seed.artist} ${seed.title} official music video`];
+  if (seed.kind !== 'theme') return [`${seed.artist} ${seed.title} official music video`, `${seed.artist} ${seed.title}`];
   const use = { OP: 'opening', ED: 'ending', IN: 'insert song' }[seed.use];
-  return [`${seed.show} ${use} ${seed.title} creditless`, `${seed.artist} ${seed.title} ${seed.show}`];
+  return [`${seed.show} ${use} ${seed.title} creditless`, `${seed.artist} ${seed.title} ${seed.show}`, `${seed.show} ${use} ${seed.title}`];
 }
 
 const watchURL = id => `https://www.youtube.com/watch?v=${id}`;
@@ -133,7 +133,7 @@ async function manualPick(seed, id, channels, loadPage, checked, health) {
       verified: false, officialArtist: false, ...watchMetadata(html, checked),
     };
     const result = classify(candidate, seed, channels);
-    const gate = copyGate(candidate, seed, channels, checked);
+    const gate = copyGate(candidate, seed, channels, checked, { manual: true });
     if (gate) return failed(`override rejected: ${gate}`);
     const video = pickedVideo(candidate, result.kind, checked, channels);
     return { videos: [video], video,
@@ -170,7 +170,7 @@ export async function resolveSeed(seed, { channels, overrides, loadPage, checked
     .map(v => [v.id, { ...v, source: copySource(v, channels) }]));
   // Check distinct candidates beyond the old four-watch budget. Search pages
   // remain bounded (15 each); gather all eligible copies before quality ranking.
-  for (const candidate of ranked.filter(video => !classify(video, seed, channels).reject && !health[video.id]?.booted)) {
+  for (const candidate of ranked.filter(video => !classify(video, seed, channels).reject && sameSong(video, seed) && !health[video.id]?.booted)) {
     try {
       const html = await loadPage(watchURL(candidate.id));
       const { status, embed } = playability(html);

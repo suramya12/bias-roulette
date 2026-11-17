@@ -80,7 +80,7 @@ export function playability(html) {
   }
 }
 
-export const COPY_POLICY = 'phase3b-1';
+export const COPY_POLICY = 'phase3c-identity-2';
 
 export function watchMetadata(html, checked) {
   const player = extractPlayerResponse(html), details = player.videoDetails ?? {};
@@ -120,16 +120,34 @@ export function fanEligible(video, checked) {
     (typeof video.published === 'string' && video.published <= cutoff);
 }
 
-export function copyGate(video, seed, channels, checked) {
+// The copy must be this song: its title (or an alias) appears as whole words.
+// A short Latin title ("GO!!!", "Idol", "99") also needs the show, source or artist.
+export function sameSong(video, seed) {
+  const title = normalize(video.title);
+  const names = [seed.title, ...(seed.aliases ?? [])].map(normalize).filter(Boolean);
+  const hit = names.find(name => contains(title, name) ||
+    (/[^\x00-\x7f]/.test(name) && title.replace(/ /g, '').includes(name.replace(/ /g, ''))));
+  if (!hit) return false;
+  const short = !/[^\x00-\x7f]/.test(hit) && hit.replace(/ /g, '').length <= 5;
+  if (!short) return true;
+  return [seed.show ?? seed.source, seed.artist].map(normalize).some(name => contains(title, name));
+}
+
+export function copyGate(video, seed, channels, checked, { manual = false } = {}) {
   const result = classify(video, seed, channels);
   if (result.reject) return result.reject;
+  if (!manual && !sameSong(video, seed)) return 'not this song';
+  if (!manual && seed.kind !== 'theme' && copySource(video, channels) === 'fan') return 'fan copy of an animated MV';
   if (video.hd !== true) return video.hd === false ? 'SD source' : 'unknown HD quality';
   if (copySource(video, channels) === 'fan' && !fanEligible(video, checked)) return 'fan age/views gate unknown or unmet';
   return null;
 }
 
 export function orderCopies(videos) {
-  const rank = v => ({ creditless: 3, tv: 2, mv: 1 })[v.kind] + (v.source === 'official' ? 3 : 0);
+  // TV-size first (DESIGN: full MVs are opt-in): official creditless > official tv >
+  // fan creditless > fan tv > official mv > fan mv.
+  const rank = v => ({ creditless: 4, tv: 2, mv: 0 })[v.kind] + (v.source === 'official' ? 1 : 0) +
+    (v.kind === 'mv' ? 0 : v.source === 'official' ? 2 : 0);
   return [...new Map(videos.map(v => [v.id, v])).values()].sort((a, b) => rank(b) - rank(a) ||
     Math.min(b.quality?.width ?? 0, b.quality?.height ?? 0) - Math.min(a.quality?.width ?? 0, a.quality?.height ?? 0) ||
     (b.views ?? 0) - (a.views ?? 0) || a.id.localeCompare(b.id)).slice(0, 4);
@@ -208,15 +226,21 @@ export function classify(video, seed, channels = defaultChannels) {
   let outside = ` ${normalize(video.title)} `;
   for (const name of [seed.title, seed.show ?? seed.source, ...(seed.aliases ?? [])].filter(Boolean)
     .map(normalize).sort((a, b) => b.length - a.length)) outside = outside.replaceAll(` ${name} `, ' ');
-  const unwanted = /\b(?:AMVs?|covers?|lyrics?|nightcore|slowed|reverb|reactions?|piano|guitar|drums?|karaoke|instrumental|8D|fan\s*made|edits?|mirrored|extended)\b|\bsped\s+up\b|\b(?:1|10)\s*(?:hours?|hrs?)\b/i;
+  const unwanted = /\b(?:AMVs?|MAD|MMD|covers?|lyrics?|nightcore|slowed|reverb|react(?:ions?|s|ing)?|mashups?|montage|parody|meme|remix|medley|compilation|sings|plays|piano|guitar|drums?|karaoke|instrumental|no\s+vocals?|off\s+vocal|8D|fan\s*made|edits?|mirrored|extended|audio|trailer|teaser|preview|commentary|openings|endings)\b|\bsped\s+up\b|\bai\s+upscal|\benglish\b(?!\s+(?:romaji\s+)?sub)|\b(?:chiptune|8\s*bit|lo\s*fi|cosplay|minecraft|roblox|genshin|avatar|making\s+of|behind\s+the\s+scenes|ceremony)\b|予告|再現|実写|マイクラ|\b(?:1|10)\s*(?:hours?|hrs?)\b/i;
   if (unwanted.test(outside)) return rejected('excluded title');
+  // Re-edits: "HOMURA VER.", "Show x Other Show" crossovers (song/show names are already removed).
+  if (/\b(?!tv\b|full\b|short\b|size\b|anime\b|op\b|ed\b)[a-z]+\s+ver(?:sion)?\b|\bx\b/i.test(outside)) return rejected('re-edit or crossover');
   if (/\b(?:live|concert)\b/i.test(outside)) return rejected('live/concert');
   if (!Number.isFinite(video.seconds) || video.seconds < 45) return rejected('short or unknown duration');
   if (video.seconds > 720) return rejected('over 12 minutes');
   if (Object.hasOwn(channels.blocked ?? {}, video.channelId)) return rejected('blocked channel');
   if (/(?:^|[\s-])topic\s*$/i.test(video.channel)) return rejected('Topic channel');
   if (seed.kind === 'theme' && kind === 'mv' && copySource(video, channels) === 'fan') return rejected('fan MV for a theme');
-  if (seed.kind !== 'theme' && kind !== 'mv') return rejected('not a music video');
+  // An animated MV on a reviewed channel is the video itself, whatever its title says.
+  if (seed.kind !== 'theme' && kind !== 'mv') {
+    if (copySource(video, channels) === 'official') return { kind: 'mv' };
+    return rejected('not a music video');
+  }
   if (kind === 'other') return rejected('unrecognised video kind');
   return { kind };
 }
