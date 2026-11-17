@@ -48,6 +48,8 @@ const wheel = new Wheel($('wheel'), {
 const player = new VideoPlayer({
   box: $('playerBox'), mountId: 'player', overlay: $('playOverlay'), fallback: $('playerFallback'),
   message: $('fallbackMsg'), link: $('watchLink'), hint: $('playHint'),
+  onEnd: () => autoNext(1200),
+  onFail: () => autoNext(4000), // a video that can't play here: show the message briefly, then move on
 });
 // #top100/easy opens the Easy 100 list; the choice is remembered like any other.
 if (location.hash === '#top100/easy') store.set('chart.list', 'new');
@@ -264,6 +266,37 @@ function chooseForMe({ restart = false } = {}) {
   showResult();
 }
 
+// ---------- autoplay ----------
+// On: when the MV ends, play the next round by itself. Same idol: keep the idol, draw another of their songs.
+const auto = { on: store.get('auto', 'off') === 'on', same: store.get('auto.same', 'off') === 'on' };
+let autoTimer = 0;
+
+function renderAuto() {
+  $('autoOn').checked = auto.on;
+  $('autoSame').checked = auto.same;
+  $('autoSame').disabled = !auto.on;
+  $('autoplay').classList.toggle('is-on', auto.on);
+  $('autoState').textContent = !auto.on ? 'off' : auto.same ? 'same idol' : 'on';
+}
+
+function autoNext(delay) {
+  clearTimeout(autoTimer);
+  const ready = () => auto.on && mode === 'roulette' && game?.phase === 'result';
+  if (!ready()) return;
+  autoTimer = setTimeout(() => {
+    if (!ready() || busy) return; // busy: a failed video can report while the last spin still ends
+    const { idol } = game;
+    if (auto.same && idol.songs.length > 1) {
+      // Another song of the same idol, never the one that just played.
+      const last = game.song.videoId;
+      for (let i = 0; i < 12 && game.song.videoId === last; i++) { game.anotherSong(); game.chooseForMe(); }
+      sound.fanfare();
+      showResult();
+    } else chooseForMe({ restart: true });
+    announce(`Autoplay: ${game.song.title} by ${game.song.artist}.`);
+  }, delay);
+}
+
 function startOver() {
   if (busy || !game) return;
   game.reset();
@@ -438,6 +471,12 @@ async function start() {
   $('anotherBtn').addEventListener('click', anotherSong);
   $('restartBtn').addEventListener('click', startOver);
   $('resetBtn').addEventListener('click', startOver);
+  $('autoOn').addEventListener('change', (e) => { auto.on = e.target.checked; store.set('auto', auto.on ? 'on' : 'off'); if (!auto.on) clearTimeout(autoTimer); renderAuto(); });
+  $('autoSame').addEventListener('change', (e) => { auto.same = e.target.checked; store.set('auto.same', auto.same ? 'on' : 'off'); renderAuto(); });
+  const autoMenu = $('autoplay');
+  document.addEventListener('click', (e) => { if (autoMenu.open && !autoMenu.contains(e.target)) autoMenu.open = false; });
+  autoMenu.addEventListener('keydown', (e) => { if (e.key === 'Escape' && autoMenu.open) { autoMenu.open = false; autoMenu.querySelector('summary').focus(); } });
+  renderAuto();
   $('t3').addEventListener('click', () => setTarget(3));
   $('t2').addEventListener('click', () => setTarget(2));
   renderOptions();

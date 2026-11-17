@@ -36,8 +36,9 @@ const MESSAGES = {
 };
 
 export class VideoPlayer {
-  constructor({ box, mountId, overlay, fallback, message, link, hint }) {
-    Object.assign(this, { box, mountId, overlay, fallback, message, link, hint });
+  /** onEnd: the video played to the end. onFail: it cannot play here (both used by autoplay). */
+  constructor({ box, mountId, overlay, fallback, message, link, hint, onEnd, onFail }) {
+    Object.assign(this, { box, mountId, overlay, fallback, message, link, hint, onEnd, onFail });
     this.player = null;
     this.ready = false;
     this.failed = false;
@@ -111,7 +112,7 @@ export class VideoPlayer {
       clearTimeout(this.timer);
       this.overlay.hidden = true;
       this.hint.hidden = true;
-    }
+    } else if (s === 0) this.onEnd?.(); // ended
   }
 
   showPlayButton() {
@@ -137,5 +138,6 @@ export class VideoPlayer {
     this.message.textContent = MESSAGES[code] || 'This video cannot be played here.';
     this.fallback.hidden = false;
     try { if (this.ready) this.player.stopVideo(); } catch { /* ignore */ }
+    this.onFail?.();
   }
 }
