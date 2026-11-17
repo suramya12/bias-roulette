@@ -110,12 +110,15 @@
     <section id="top100" class="mode" aria-labelledby="tab-top100" hidden>
       <p class="sub">The all-time Top 100 of English &amp; Latin pop. Score = (Spotify streams + official MV views) / 2.</p>
       <div class="ring-stage">
-        <div class="ring" id="ring"></div>
+        <div class="ring" id="ring" aria-hidden="true"></div>
+        <button class="ring-hit" id="ringBtn" type="button" aria-label="Pull a card"></button>
         <div class="floor" aria-hidden="true"></div>
       </div>
       <div class="row-btns center">
         <button class="pull" id="pull">Pull a card</button>
+        <button class="ghost" id="sound" type="button" aria-pressed="true">Sound on</button>
       </div>
+      <p class="sr-only" id="topAnnounce" role="status" aria-live="polite"></p>
       <div class="result" id="tResult" hidden>
         <div class="big-slot" id="tCard"></div>
         <div class="player-slot">
@@ -147,6 +150,7 @@
     <div class="grid" id="binderGrid"></div>
   </dialog>
 
+  <div id="fx" aria-hidden="true"></div>
   <noscript><p class="noscript">This game needs JavaScript.</p></noscript>
   <script type="module" src="src/app.js"></script>
 </body>

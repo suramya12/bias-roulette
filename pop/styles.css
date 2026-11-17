@@ -150,7 +150,6 @@ main { max-width: 1160px; margin: 0 auto; padding: 16px 16px 120px; }
 /* Bias Roulette: a gold-and-rose spin button */
 .bias .spin { background: radial-gradient(circle at 35% 30%, #fff1b8, var(--gold) 45%, #c27b00); color: #4a2600; box-shadow: 0 6px 24px rgba(255, 215, 106, .55), inset 0 -6px 12px rgba(0, 0, 0, .2); }
 .bias .steps li.on { border-color: var(--gold); box-shadow: 0 0 14px rgba(255, 215, 106, .4) inset; }
-.ring .slot button:focus-visible { outline: 3px solid var(--cyan); outline-offset: 2px; }
 .spin:disabled { filter: grayscale(.6) brightness(.8); cursor: default; }
 .spin:not(:disabled):hover { transform: translate(-50%, -50%) scale(1.05); }
 
@@ -177,13 +176,21 @@ main { max-width: 1160px; margin: 0 auto; padding: 16px 16px 120px; }
 
 /* ---------- Top 100 ring ---------- */
 .ring-stage { position: relative; height: 360px; perspective: 1300px; margin: 8px auto 0; max-width: 900px; }
-.ring { position: absolute; left: 50%; top: 70px; transform: translateZ(-220px) rotateX(-9deg); width: 0; height: 0; transform-style: preserve-3d; animation: spinRing 40s linear infinite; }
-.ring:hover, .ring.paused { animation-play-state: paused; }
-@keyframes spinRing { from { transform: translateZ(-220px) rotateX(-9deg) rotateY(0deg); } to { transform: translateZ(-220px) rotateX(-9deg) rotateY(-360deg); } }
+.ring { position: absolute; left: 50%; top: 70px; width: 0; height: 0; transform-style: preserve-3d; }
 .ring .slot { position: absolute; width: 132px; left: -66px; transform-style: preserve-3d; transition: transform .6s, opacity .4s; }
-.ring .slot button { all: unset; display: block; width: 100%; cursor: pointer; }
 .ring .slot .card { width: 100%; }
-.ring .slot.pulled { opacity: 0; }
+.ring .slot[data-tier="legendary"] { --incoming: var(--gold); }
+.ring .slot[data-tier="epic"] { --incoming: #d48bff; }
+.ring .slot[data-tier="rare"] { --incoming: #5cc8ff; }
+.ring .slot[data-tier="common"] { --incoming: #c9ccd8; }
+.ring .slot.incoming .card { filter: drop-shadow(0 0 9px var(--incoming)); animation: incoming-glow .45s ease-in-out infinite alternate; }
+.ring .slot.lifted .card { filter: drop-shadow(0 0 16px var(--incoming)); }
+@keyframes incoming-glow { to { filter: drop-shadow(0 0 16px var(--incoming)); } }
+.ring-hit { position: absolute; inset: 0; z-index: 3; background: none; border: 0; border-radius: var(--r); cursor: pointer; touch-action: manipulation; }
+.ring-hit:focus-visible { outline: 3px solid var(--cyan); outline-offset: -3px; }
+#fx { position: fixed; inset: 0; pointer-events: none; z-index: 100; overflow: hidden; }
+#fx span { position: absolute; left: var(--x); top: var(--y); font-size: var(--s); color: var(--c); line-height: 1; animation: pull-confetti var(--t) ease-out both; }
+@keyframes pull-confetti { to { transform: translate(var(--dx), var(--dy)) rotate(var(--r)); opacity: 0; } }
 .floor { position: absolute; left: 50%; bottom: 0; width: 100%; height: 120px; transform: translateX(-50%);
   background: radial-gradient(50% 50% at 50% 50%, rgba(255, 79, 163, .35), rgba(139, 92, 255, .15) 50%, transparent 70%); filter: blur(4px); }
 .pull {
@@ -328,7 +335,7 @@ dialog::backdrop { background: rgba(0, 0, 0, .7); backdrop-filter: blur(4px); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-  .ring { animation: none; }
+  .ring .slot.incoming .card { animation: none; }
 }
 
 /* lite: slow devices (see src/fx.js) keep the game and drop the ambient effects */
