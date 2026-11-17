@@ -89,6 +89,6 @@ export function tapBurst(layer, x, y) {
   spray(layer, x, y, { count: 5, spread: 60, size: 20, time: 600, colors: ['#ff4fa3', '#ff8ac4', '#ffe45c'] });
 }
 
-export function confetti(layer, x, y, color) {
-  spray(layer, x, y, { count: 40, spread: 230, size: 34, time: 1300, colors: color ? [color, ...CANDY] : CANDY });
+export function confetti(layer, x, y, color, scale = 1) {
+  spray(layer, x, y, { count: Math.round(40 * scale), spread: 230 * Math.sqrt(scale), size: 34, time: 1300, colors: color ? [color, ...CANDY] : CANDY });
 }

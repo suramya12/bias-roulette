@@ -7,13 +7,10 @@ import { VideoPlayer } from './player.js';
 import * as fx from './fx.js';
 import { makeCard, songCard, playIn, collection, openBinder } from './card.js';
 import { artNode } from './art.js';
+import { PullMachine } from './pull-machine.js';
 
 const $ = (id) => document.getElementById(id);
-const SLOTS = 14;
-const STEP = 360 / SLOTS;
 const CANDY = ['#ff4fa3', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff'];
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const mod = (a, n) => ((a % n) + n) % n;
 let chartFetch = null;
 /** data/charts.json, fetched once and shared by both screens. */
 export const loadChartData = () => (chartFetch ??= fetch('data/charts.json', { cache: 'no-cache' })
@@ -24,7 +21,7 @@ const thumb = (id, size = 'mqdefault') => `https://i.ytimg.com/vi/${encodeURICom
 export const short = (n) => (n >= 1e9 ? `${(n / 1e9).toFixed(n >= 1e10 ? 1 : 2)}B` : `${Math.round(n / 1e6)}M`);
 export const tierOf = (rank) => (!rank || rank > 100 ? 'common' : rank <= 10 ? 'legend' : rank <= 30 ? 'epic' : 'rare');
 const overall = (s) => s.overall ?? s.rank;
-const TIER_LABEL = { legend: 'LEGEND', epic: 'EPIC', rare: 'RARE' };
+const TIER_LABEL = { legendary: 'LEGEND', epic: 'EPIC', rare: 'RARE', common: 'COMMON' };
 
 /** A stable, bright colour per artist. */
 export function colorOf(artist) {
@@ -173,20 +170,41 @@ export class Charts {
     this.data = null;
     this.list = store.get('chart.list', 'pro') === 'new' ? 'new' : 'pro';
     this.range = Number(store.get('chart.range', '100')) || 100;
-    this.angle = 0;
-    this.slots = [];
-    this.current = null;
     this.recent = [];
-    this.busy = false;
     this.active = false;
-    this.idleRaf = 0;
     this.player = new VideoPlayer({
       box: $('stageBox'), mountId: 'stagePlayer', overlay: $('stageOverlay'), fallback: $('stageFallback'),
       message: $('stageMsg'), link: $('stageLink'), hint: $('stageHint'),
     });
     this.crowd = new Crowd($('crowd'));
+    this.machine = new PullMachine({
+      ring: $('ring'), hit: $('ringBtn'), buttons: [$('pullBtn')], sound,
+      renderSlot: (card, song) => this.#renderSlot(card, song),
+      tierOf: (song) => { const tier = tierOf(overall(song)); return tier === 'legend' ? 'legendary' : tier; },
+      say: (text) => {
+        this.crowd.hype = 1;
+        $('pullStamp').hidden = true;
+        $('quickBtn').setAttribute('aria-disabled', 'true');
+        this.#say(text);
+      },
+      onLand: (song, tier) => {
+        this.crowd.hype = 0;
+        const stamp = $('pullStamp');
+        stamp.textContent = `${TIER_LABEL[tier]} PULL!`;
+        stamp.dataset.tier = tier === 'legendary' ? 'legend' : tier;
+        stamp.hidden = false;
+        this.#setAccent(song);
+        this.#say(`#${song.rank}: ${song.title} by ${song.artist}!`);
+      },
+      onReveal: (song) => {
+        $('quickBtn').setAttribute('aria-disabled', 'false');
+        this.reveal(song);
+      },
+    });
     this.#bind();
   }
+
+  get busy() { return ['spinning', 'landing', 'revealing'].includes(this.machine.state); }
 
   get songs() { return this.data ? (this.list === 'new' ? this.data.newbie : this.data.top) : []; }
   get pool() { return this.songs.slice(0, this.range); }
@@ -199,7 +217,7 @@ export class Charts {
       this.#say('Could not load the chart. Run "npm run charts", then reload.');
       return false;
     }
-    this.#buildRing();
+    this.machine.setPool(this.pool, () => this.#pick());
     this.#renderControls();
     this.#renderList();
     this.#say(this.#intro());
@@ -213,16 +231,19 @@ export class Charts {
 
   async activate() {
     this.active = true;
-    if (!(await this.load())) return;
+    if (!(await this.load()) || !this.active) return;
     this.crowd.resize();
     this.crowd.start();
-    this.#idleSpin();
+    this.machine.activate();
   }
 
   deactivate() {
     this.active = false;
     this.crowd.stop();
-    cancelAnimationFrame(this.idleRaf);
+    this.machine.deactivate();
+    this.crowd.hype = 0;
+    $('pullStamp').hidden = true;
+    $('quickBtn').setAttribute('aria-disabled', 'false');
     this.player.stop();
   }
 
@@ -265,67 +286,17 @@ export class Charts {
     $('chartList').replaceChildren(...rows);
   }
 
-  #buildRing() {
-    const ring = $('ring');
-    ring.replaceChildren();
-    this.slots = [];
-    for (let i = 0; i < SLOTS; i++) {
-      const img = el('canvas', { class: 'pc-art' });
-      const rank = el('span', { class: 'pc-rank' });
-      const card = el('div', { class: 'pc' },
-        el('div', { class: 'pc-front' }, img, el('span', { class: 'pc-shine' }), rank),
-        el('div', { class: 'pc-back' }, el('span', { text: '♥' })));
-      ring.append(card);
-      const slot = { card, img, rank, song: null };
-      this.slots.push(slot);
-      this.#fill(slot, this.#randomSong());
+  #renderSlot(card, song) {
+    card.classList.add('pc');
+    if (!card.firstChild) {
+      card.append(
+        el('div', { class: 'pc-front' }, el('canvas', { class: 'pc-art' }),
+          el('span', { class: 'pc-shine' }), el('span', { class: 'pc-rank' })),
+        el('div', { class: 'pc-back' }, el('span', { text: '?' })));
     }
-    this.#layoutRing();
-    new ResizeObserver(() => this.#layoutRing()).observe($('stage'));
-  }
-
-  #layoutRing() {
-    const w = this.slots[0]?.card.offsetWidth || 110;
-    this.radius = Math.round((w * 1.14) / (2 * Math.tan(Math.PI / SLOTS)));
-    this.slots.forEach((s, i) => { s.base = `rotateY(${i * STEP}deg) translateZ(${this.radius}px)`; s.card.style.transform = s.base; });
-    this.#applyAngle();
-  }
-
-  #applyAngle() {
-    $('ring').style.transform = `translateZ(${-this.radius}px) rotateX(-7deg) rotateY(${this.angle}deg)`;
-  }
-
-  #fill(slot, song) {
-    slot.song = song;
-    slot.img = artNode(slot.img, songCard(song).art, 'small', 'pc-art', '122px');
-    slot.rank.textContent = `#${song.rank}`;
-    slot.card.style.setProperty('--c', css(colorOf(song.artist)));
-    slot.card.dataset.tier = tierOf(overall(song));
-  }
-
-  #randomSong() {
-    // No song twice on the ring when the list is big enough.
-    const showing = new Set(this.slots.map((s) => s.song));
-    const pool = this.pool.length > SLOTS ? this.pool.filter((s) => !showing.has(s)) : this.pool;
-    return pool[cryptoInt(pool.length)];
-  }
-
-  #frontIndex() { return mod(Math.round(-this.angle / STEP), SLOTS); }
-
-  #idleSpin() {
-    cancelAnimationFrame(this.idleRaf);
-    if (fx.prefersReducedMotion()) return;
-    let last = performance.now();
-    const loop = (t) => {
-      if (!this.active) return;
-      if (!this.busy && !this.current?.lifted) {
-        this.angle -= ((t - last) / 1000) * 7;
-        this.#applyAngle();
-      }
-      last = t;
-      this.idleRaf = requestAnimationFrame(loop);
-    };
-    this.idleRaf = requestAnimationFrame(loop);
+    artNode(card.querySelector('.pc-art'), songCard(song).art, 'small', 'pc-art', '122px');
+    card.querySelector('.pc-rank').textContent = `#${song.rank}`;
+    card.style.setProperty('--c', css(colorOf(song.artist)));
   }
 
   // ---------- actions ----------
@@ -340,90 +311,17 @@ export class Charts {
     return pool[i];
   }
 
-  async pull() {
-    if (this.busy || !this.data) return;
-    this.busy = true;
-    this.sound.unlock();
-    $('stage').classList.add('spinning');
-    $('pullStamp').hidden = true;
-    for (const id of ['pullBtn', 'quickBtn', 'ringBtn']) $(id).setAttribute('aria-disabled', 'true');
-    this.#dropLift();
-
-    const song = this.#pick();
-    // Put the winner on the card at the back of the ring, then spin it round to the front.
-    const k = mod(this.#frontIndex() + SLOTS / 2, SLOTS);
-    this.#fill(this.slots[k], song);
-    const reduced = fx.prefersReducedMotion();
-    const start = this.angle;
-    const target = -k * STEP;
-    const turns = reduced ? 0 : 3;
-    const end = start - (turns * 360 + mod(start - target, 360));
-    const duration = reduced ? 350 : 3600;
-    this.crowd.hype = 1;
-    this.#say('Shuffling the deck…');
-
-    await new Promise((done) => {
-      const t0 = performance.now();
-      let lastTick = Math.floor(start / STEP);
-      const frame = (t) => {
-        const p = Math.min(1, (t - t0) / duration);
-        const e = 1 - Math.pow(1 - p, 4);
-        this.angle = start + (end - start) * e;
-        this.#applyAngle();
-        const tick = Math.floor(this.angle / STEP);
-        if (tick !== lastTick) {
-          lastTick = tick;
-          this.sound.tick();
-          // Cards passing behind the ring get a fresh song, so the deck feels like 100 cards.
-          const back = mod(this.#frontIndex() + SLOTS / 2, SLOTS);
-          if (back !== k && p < 0.8) this.#fill(this.slots[back], this.#randomSong());
-        }
-        if (p < 1) requestAnimationFrame(frame); else done();
-      };
-      requestAnimationFrame(frame);
-    });
-
-    this.crowd.hype = 0;
-    const slot = this.slots[k];
-    slot.card.classList.add('lifted');
-    slot.card.style.transform = `${slot.base} translateZ(70px) translateY(-6px) scale(1.12)`;
-    this.current = { slot, lifted: true };
-    $('stage').classList.remove('spinning');
-
-    const tier = tierOf(overall(song));
-    const stamp = $('pullStamp');
-    stamp.textContent = `${TIER_LABEL[tier]} PULL!`;
-    stamp.dataset.tier = tier;
-    stamp.hidden = false;
-    this.#setAccent(song);
-    const r = $('stage').getBoundingClientRect();
-    fx.confetti($('fx'), r.left + r.width / 2, r.top + r.height * 0.4, css(colorOf(song.artist)));
-    this.sound.fanfare();
-    this.#say(`#${song.rank}: ${song.title} by ${song.artist}!`);
-    await sleep(reduced ? 500 : 1300);
-    for (const id of ['pullBtn', 'quickBtn', 'ringBtn']) $(id).setAttribute('aria-disabled', 'false');
-    this.busy = false;
-    this.reveal(song);
+  pull() {
+    if (this.machine.state === 'spinning') this.machine.slamStop();
+    else this.machine.pull();
   }
 
   quick() {
     if (this.busy || !this.data) return;
     this.sound.unlock();
-    this.#dropLift();
     const song = this.#pick();
     this.sound.fanfare();
     this.reveal(song, { fromList: true });
-  }
-
-  #dropLift() {
-    if (this.current?.slot) {
-      const { slot } = this.current;
-      slot.card.classList.add('settle');
-      slot.card.classList.remove('lifted');
-      slot.card.style.transform = slot.base;
-      setTimeout(() => slot.card.classList.remove('settle'), 700);
-    }
-    this.current = null;
   }
 
   #setAccent(song) {
@@ -435,7 +333,13 @@ export class Charts {
   /** Show the holographic card for a song and play its video. */
   reveal(song, { fromList = false } = {}) {
     this.song = song;
-    if (fromList) { this.#dropLift(); this.#setAccent(song); }
+    if (fromList) {
+      this.machine.cancel();
+      this.crowd.hype = 0;
+      $('pullStamp').hidden = true;
+      $('quickBtn').setAttribute('aria-disabled', 'false');
+      this.#setAccent(song);
+    }
     const data = songCard(song);
     const card = makeCard(data, { isNew: collection.add('song', data.key) });
     this.onCollect?.();
@@ -483,7 +387,7 @@ export class Charts {
     this.recent = [];
     this.#renderControls();
     this.#renderList();
-    this.slots.forEach((s) => this.#fill(s, this.#randomSong()));
+    this.machine.setPool(this.pool, () => this.#pick());
     this.onListChange?.();
     this.#say(this.#intro());
   }
@@ -494,13 +398,11 @@ export class Charts {
     this.store.set('chart.range', String(n));
     this.recent = [];
     this.#renderControls();
-    this.slots.forEach((s) => this.#fill(s, this.#randomSong()));
+    this.machine.setPool(this.pool, () => this.#pick());
     this.#say(this.#intro());
   }
 
   #bind() {
-    $('pullBtn').addEventListener('click', () => this.pull());
-    $('ringBtn').addEventListener('click', () => this.pull());
     $('quickBtn').addEventListener('click', () => this.quick());
     $('againPull').addEventListener('click', () => {
       $('stage').scrollIntoView({ block: 'center', behavior: fx.prefersReducedMotion() ? 'auto' : 'smooth' });

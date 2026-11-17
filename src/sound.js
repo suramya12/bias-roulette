@@ -39,10 +39,22 @@ export class Sound {
     this.#blip(1250 + Math.random() * 150, this.ctx.currentTime, 0.035, 0.05, 'triangle');
   }
 
-  fanfare() {
+  clack() {
+    if (!this.enabled || !this.ctx) return;
+    this.#blip(90, this.ctx.currentTime, 0.07, 0.16, 'triangle');
+    this.#blip(55, this.ctx.currentTime + 0.01, 0.09, 0.1, 'sine');
+  }
+
+  chime() {
+    if (!this.enabled || !this.ctx) return;
+    this.#blip(1046.5, this.ctx.currentTime, 0.3, 0.055, 'sine');
+  }
+
+  fanfare(tier) {
     if (!this.enabled || !this.ctx) return;
     const t = this.ctx.currentTime + 0.02;
-    [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => this.#blip(f, t + i * 0.1, 0.18, 0.11, 'triangle'));
-    [783.99, 1046.5, 1318.5].forEach((f) => this.#blip(f, t + 0.44, 0.5, 0.07, 'triangle'));
+    const octave = tier === 'legendary' ? 2 : 1;
+    [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => this.#blip(f * octave, t + i * 0.1, 0.18, 0.11, 'triangle'));
+    [783.99, 1046.5, 1318.5].forEach((f) => this.#blip(f * octave, t + 0.44, 0.5, 0.07, 'triangle'));
   }
 }
