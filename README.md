@@ -63,7 +63,7 @@ The resolver rejects audio, lyric, visualizer, teaser, practice, live and broadc
 
 ## K-pop Top 100 mode
 
-The toggle at the top switches to a second mode: a ring of photocards on a concert stage. Pull a card and its MV plays. Two lists:
+The toggle at the top switches to a second mode: a ring of photocards on a concert stage. Pull a card (button, tap the ring, or Enter/Space) and the ring spins round to it; tap again while it spins to stop it early. The winner glows in its tier colour as it comes round, and the celebration grows with rarity. Then its MV plays. The ring is `src/pull-machine.js`, shared with the Pop & Latin Top 100. Two lists:
 
 - **Connoisseur**: the all-time Top 100, ranked by the average of Spotify streams (all versions of the song) and official music video views on YouTube. K-pop as a genre: groups, soloists, KPop Demon Hunters (HUNTR/X, Saja Boys) and K/DA.
 - **New to K-pop**: 100 hand-picked entry points, ranked by the same score. Edit `NEWBIE` in `scripts/charts.mjs`.

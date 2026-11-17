@@ -216,7 +216,7 @@ button { font-family: inherit; }
 }
 .pc-front { background: #222; }
 .pc-front img, .pc-front canvas { width: 100%; height: 100%; object-fit: cover; display: block; }
-.pc[data-tier="legend"] .pc-front { border: 2px solid #ffd34d; }
+.pc[data-tier="legendary"] .pc-front { border: 2px solid #ffd34d; }
 .pc[data-tier="epic"] .pc-front { border: 2px solid #ff8ad1; }
 .pc-shine {
   position: absolute; inset: 0;
@@ -227,9 +227,16 @@ button { font-family: inherit; }
 .pc-back { transform: rotateY(180deg); display: grid; place-items: center; background: linear-gradient(150deg, #241a3a, #110d1b); }
 .pc-back span { font-size: 1.6rem; color: var(--accent); }
 .pc.lifted .pc-front { box-shadow: 0 0 34px 10px var(--c); }
+.pc[data-tier="legendary"] { --incoming: #ffd34d; }
+.pc[data-tier="epic"] { --incoming: #ff8ad1; }
+.pc[data-tier="rare"] { --incoming: #7fd0ff; }
+.pc[data-tier="common"] { --incoming: #c9ccd8; }
+.pc.incoming .pc-front { box-shadow: 0 0 22px 5px var(--incoming); animation: incoming-glow .45s ease-in-out infinite alternate; }
+@keyframes incoming-glow { to { box-shadow: 0 0 34px 9px var(--incoming); } }
+@media (prefers-reduced-motion: reduce) { .pc.incoming .pc-front { animation: none; } }
 .ring-hit {
   position: absolute; left: 22%; right: 22%; top: 8%; height: 66%; z-index: 3;
-  background: none; border: 0; border-radius: var(--r-l); cursor: pointer;
+  background: none; border: 0; border-radius: var(--r-l); cursor: pointer; touch-action: manipulation;
 }
 .ring-hit[aria-disabled="true"] { cursor: default; }
 
