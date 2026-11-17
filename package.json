@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node scripts/serve.mjs",
     "test": "node --test tests/ anime/test/",
-    "anime:resolve": "node anime/scripts/resolve.mjs",
+    "anime:resolve": "node anime/scripts/resolve.mjs && echo Run npm run landing to refresh data/landing.json",
+    "landing": "node scripts/landing-manifest.mjs",
     "anime:health": "node anime/scripts/health.mjs",
     "resolve": "node scripts/resolve.mjs",
     "charts": "node scripts/charts.mjs",

@@ -2,222 +2,91 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <!-- YouTube needs a Referer from the embedding page (player error 153 without it). -->
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="theme-color" content="#0c0a12">
-  <title>Bias Roulette</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Spin for K-pop, Pop &amp; Latin, or Anime, and discover music videos.">
+  <meta name="theme-color" content="#07060d">
+  <meta property="og:title" content="Bias Roulette">
+  <meta property="og:description" content="Spin for K-pop, Pop &amp; Latin, or Anime, and discover music videos.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://suramya12.github.io/bias-roulette/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Bias Roulette">
+  <meta name="twitter:description" content="Spin for K-pop, Pop &amp; Latin, or Anime, and discover music videos.">
   <script>
-    // Big screens: zoom the whole page so it fills the display (laid out for about 1200x720).
-    // --z lets the CSS undo the zoom on viewport units, which would otherwise grow with it.
-    (function () {
-      function fit() {
-        var z = Math.min(innerWidth / 1200, innerHeight / 720, 3);
-        z = z > 1.05 ? Math.round(z * 100) / 100 : 1;
-        var s = document.documentElement.style;
-        s.zoom = z === 1 ? '' : String(z);
-        s.setProperty('--z', String(z));
+    function redirectToKpop() {
+      if (/^#(?:roulette|top100|binder)(?:\/|$)/.test(location.hash) || new URLSearchParams(location.search).has('forceVideo')) {
+        location.replace(new URL('kpop/' + location.search + location.hash, location.href));
       }
-      fit();
-      addEventListener('resize', fit);
-    })();
+    }
+    redirectToKpop();
+    addEventListener('hashchange', redirectToKpop);
   </script>
-  <link rel="stylesheet" href="styles.css">
+  <title>Bias Roulette</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preload" as="image" href="landing-art/kpop-bg.webp">
+  <link rel="preload" as="image" href="landing-art/poplatin-bg.webp">
+  <link rel="preload" as="image" href="landing-art/anime-bg.webp">
+  <link rel="stylesheet" href="landing.css">
+  <script type="module" src="landing.js"></script>
 </head>
-<body class="night">
-  <div class="sky" id="sky" aria-hidden="true"></div>
-
-  <main class="app" id="app">
-    <div class="topbar" id="topbar">
-      <details class="genre" id="genre">
-        <summary aria-label="Music: K-pop. Switch music">K-pop <span aria-hidden="true">▾</span></summary>
-        <div class="genre-menu">
-          <a aria-current="page" href="#roulette" id="toKpop">K-pop</a>
-          <a id="toPop" href="pop/#roulette">Pop &amp; Latin</a>
-          <a href="anime/">Anime</a>
-        </div>
-      </details>
-      <div class="tabs" role="group" aria-label="Game mode">
-        <button class="mode-btn" id="modeRoulette" type="button" aria-pressed="true">Roulette</button>
-        <button class="mode-btn" id="modeCharts" type="button" aria-pressed="false">Top 100</button>
-      </div>
-      <button class="hdr-binder" id="openBinder" type="button" aria-haspopup="dialog" aria-label="Open your collection"><span class="long">Collection</span><span class="icon" aria-hidden="true">🃏</span> <b id="binderCount">0</b></button>
-    </div>
-
-    <header>
-      <h1 class="title" id="title"><span>Bias</span> <span>Roulette</span></h1>
-      <div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
-    </header>
-
-    <div id="roulette">
-    <ol class="steps" id="steps" aria-label="Rounds">
-      <li><b>01</b>Draw 5 idols</li>
-      <li><b>02</b>Idol showdown</li>
-      <li><b>03</b>Draw 5 songs</li>
-      <li><b>04</b>Song showdown</li>
-    </ol>
-
-    <p class="announce night" id="announce" role="status" aria-live="polite">Loading…</p>
-
-    <div class="roulette-auto">
-      <details class="autoplay" id="autoplay">
-        <summary class="btn">Auto <span class="auto-state" id="autoState">off</span></summary>
-        <div class="auto-menu">
-          <label class="switch"><input type="checkbox" id="autoOn"><span>Autoplay<small>When the MV ends, the next round starts by itself</small></span></label>
-          <label class="switch"><input type="checkbox" id="autoSame"><span>Same idol<small>Keep this idol and draw another of their songs</small></span></label>
-        </div>
-      </details>
-    </div>
-
-    <section id="play" aria-label="Wheel">
-      <div class="stage stage-wheel" id="wheelStage">
-      <div class="beams" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="wheel-wrap" id="wheelWrap">
-        <div class="rim" id="rim" aria-hidden="true"></div>
-        <button class="wheel-btn" id="wheelBtn" type="button" aria-label="Spin the wheel"><canvas id="wheel"></canvas></button>
-        <div class="gloss" aria-hidden="true"></div>
-        <div class="hub" aria-hidden="true">SPIN</div>
-        <div class="pointer" aria-hidden="true"></div>
-        <div class="stamp" id="stamp" hidden></div>
-      </div>
-      <canvas class="crowd" id="crowdWheel" aria-hidden="true"></canvas>
-      </div>
-      <p class="readout" id="readout" aria-hidden="true">&nbsp;</p>
-      <div class="actions">
-        <button class="btn btn-pink btn-big" id="spinBtn" type="button">Spin!</button>
-        <button class="btn btn-lemon" id="autoBtn" type="button">Choose for me</button>
-      </div>
-    </section>
-
-    <section id="result" class="pull" aria-label="Winning video" hidden>
-      <div class="card-slot" id="idolCardSlot"></div>
-      <div class="screen">
-      <div class="player-card">
-        <div class="player-box" id="playerBox">
-          <div id="player"></div>
-          <button class="play-overlay" id="playOverlay" type="button" hidden><span class="play-disc" aria-hidden="true">▶</span><span>Tap to play</span></button>
-          <div class="player-fallback" id="playerFallback" hidden>
-            <p id="fallbackMsg">This video can't be played here.</p>
-            <a class="btn btn-pink" id="watchLink" target="_blank" rel="noopener">Watch on YouTube ↗</a>
-          </div>
-        </div>
-        <div class="now">
-          <p class="hint" id="playHint" hidden>Not playing? Tap the video itself.</p>
-          <h2 id="songTitle"></h2>
-          <p class="artist" id="songArtist"></p>
-          <p class="drawn" id="drawnFor"></p>
-        </div>
-      </div>
-      <div class="actions actions-stack">
-        <button class="btn btn-lemon btn-big" id="againBtn" type="button">Choose for me again</button>
-        <button class="btn btn-mint" id="anotherBtn" type="button">Another song</button>
-        <button class="btn btn-sky" id="restartBtn" type="button">Start over</button>
-      </div>
-      </div>
-    </section>
-
-    <section class="finalists" aria-labelledby="finalistsTitle">
-      <h2 id="finalistsTitle">Finalists</h2>
-      <p class="chip" id="idolChip" hidden></p>
-      <ul class="hand" id="finalists"></ul>
-    </section>
-
-    <footer class="options">
-      <div class="seg" role="group" aria-label="Showdown length">
-        <button class="btn btn-small" id="t3" type="button" aria-pressed="true">First to 3</button>
-        <button class="btn btn-small" id="t2" type="button" aria-pressed="false">First to 2</button>
-      </div>
-      <button class="btn btn-small" id="resetBtn" type="button">Start over</button>
-    </footer>
-    </div>
-
-    <div id="charts" hidden>
-      <div class="deckbar">
-        <div class="chips" role="radiogroup" aria-label="Which chart">
-          <button class="list-chip" id="listPro" type="button" role="radio" aria-checked="true">Real 100</button>
-          <button class="list-chip" id="listNew" type="button" role="radio" aria-checked="false">Easy 100</button>
-        </div>
-        <p class="list-note" id="listNote"></p>
-      </div>
-
-      <p class="announce night" id="chartsAnnounce" role="status" aria-live="polite">Loading the chart…</p>
-
-      <section class="stage" id="stage" aria-label="Photocard stage">
-        <div class="beams" aria-hidden="true"><i></i><i></i><i></i></div>
-        <button class="ring-hit" id="ringBtn" type="button" aria-label="Pull a photocard"></button>
-        <div class="ring" id="ring" aria-hidden="true"></div>
-        <canvas class="crowd" id="crowd" aria-hidden="true"></canvas>
-        <div class="pull-stamp" id="pullStamp" hidden></div>
-      </section>
-
-      <div class="range" role="group" aria-label="Pull from">
-        <span>Pull from</span>
-        <button class="chip-btn" id="r10" type="button" aria-pressed="false">Top 10</button>
-        <button class="chip-btn" id="r50" type="button" aria-pressed="false">Top 50</button>
-        <button class="chip-btn" id="r100" type="button" aria-pressed="true">Top 100</button>
-      </div>
-      <div class="actions chart-actions">
-        <button class="btn btn-pink btn-big" id="pullBtn" type="button">Pull a card</button>
-        <label class="btn switch chart-auto" id="chartAutoPill"><input type="checkbox" id="chartAuto" disabled><span>Auto <b class="auto-state" id="chartAutoState">off</b></span></label>
-        <button class="btn btn-lemon" id="quickBtn" type="button">Just play one</button>
-      </div>
-
-      <section class="pull" id="pull" aria-label="Your card" hidden>
-        <div class="card-slot" id="songCardSlot"></div>
-        <div class="screen">
-          <div class="player-card">
-            <div class="player-box" id="stageBox">
-              <div id="stagePlayer"></div>
-              <button class="play-overlay" id="stageOverlay" type="button" hidden><span class="play-disc" aria-hidden="true">▶</span><span>Tap to play</span></button>
-              <div class="player-fallback" id="stageFallback" hidden>
-                <p id="stageMsg">This video can't be played here.</p>
-                <a class="btn btn-pink" id="stageLink" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+<body>
+  <canvas class="particles" aria-hidden="true"></canvas>
+  <main class="stage">
+    <div class="stage-picker">
+      <header class="stage-heading">
+        <h1 class="wordmark">Bias Roulette</h1>
+        <p class="tagline">Spin a wheel. Pull a card. Watch the video.</p>
+      </header>
+      <div class="cards">
+        <a class="stage-card" data-side="kpop" href="kpop/#roulette">
+          <div class="card-tilt"><div class="card-flip">
+            <div class="card-face">
+              <img class="card-scene" src="landing-art/kpop-bg.webp" alt="">
+              <img class="card-figure" data-src="landing-art/kpop-fg.webp" decoding="async" alt="">
+              <div class="card-copy">
+                <h2>K-pop</h2>
+                <p>Bias wheels, showdowns and the all-time Top 100</p>
+                <p class="stat" hidden></p>
+                <span class="enter">Enter <span aria-hidden="true">→</span></span>
               </div>
             </div>
-            <p class="hint" id="stageHint" hidden>Not playing? Tap the video itself.</p>
-          </div>
-          <dl class="stats" id="stats"></dl>
-          <div class="actions actions-stack">
-            <button class="btn btn-pink btn-big" id="againPull" type="button">Pull again</button>
-            <button class="btn btn-mint" id="nextPull" type="button">Next on the chart</button>
-            <button class="btn btn-sky" id="chartJump" type="button">Full chart</button>
-          </div>
-        </div>
-      </section>
-
-      <details class="chart" id="chart">
-        <summary><span id="chartName">The Top 100</span> <small>tap a song to play it</small></summary>
-        <p class="method" id="method"></p>
-        <ol id="chartList"></ol>
-      </details>
+            <div class="card-back" aria-hidden="true">Bias Roulette</div>
+          </div></div>
+        </a>
+        <a class="stage-card" data-side="pop" href="pop/#roulette">
+          <div class="card-tilt"><div class="card-flip">
+            <div class="card-face">
+              <img class="card-scene" src="landing-art/poplatin-bg.webp" alt="">
+              <img class="card-figure" data-src="landing-art/poplatin-fg.webp" decoding="async" alt="">
+              <div class="card-copy">
+                <h2>Pop &amp; Latin</h2>
+                <p>Artist roulette and a bilingual Top 100</p>
+                <p class="stat" hidden></p>
+                <span class="enter">Enter <span aria-hidden="true">→</span></span>
+              </div>
+            </div>
+            <div class="card-back" aria-hidden="true">Bias Roulette</div>
+          </div></div>
+        </a>
+        <a class="stage-card" data-side="anime" href="anime/">
+          <div class="card-tilt"><div class="card-flip">
+            <div class="card-face">
+              <img class="card-scene" src="landing-art/anime-bg.webp" alt="">
+              <img class="card-figure" data-src="landing-art/anime-fg.webp" decoding="async" alt="">
+              <div class="card-copy">
+                <h2>Anime</h2>
+                <p>Openings, endings, MVs and film songs</p>
+                <p class="stat" hidden></p>
+                <span class="enter">Enter <span aria-hidden="true">→</span></span>
+              </div>
+            </div>
+            <div class="card-back" aria-hidden="true">Bias Roulette</div>
+          </div></div>
+        </a>
+        <div class="intro-card card-back" aria-hidden="true" hidden>Bias Roulette</div>
+      </div>
+      <a class="continue" hidden></a>
     </div>
-
-    <footer class="options shared">
-      <button class="btn btn-small" id="soundBtn" type="button" aria-pressed="true">Sound on</button>
-    </footer>
-
-    <footer class="credits">
-      <p>Fan project, not affiliated with any artist or label. Stream and view counts: <a href="https://kworb.net/" target="_blank" rel="noopener">kworb.net</a>. Videos play from YouTube. Idol photos: Wikimedia Commons, each under its own licence.</p>
-      <details id="credits">
-        <summary>Photo credits</summary>
-        <ul id="creditList"></ul>
-      </details>
-    </footer>
   </main>
-
-  <dialog class="binder" id="binder" aria-labelledby="binderTitle">
-    <div class="binder-head">
-      <h2><span id="binderTitle">Collection</span><small id="binderCount"></small><span class="binder-meter"><i id="binderMeter"></i></span></h2>
-      <button class="btn btn-small" id="binderClose" type="button">Close</button>
-    </div>
-    <div class="binder-grid" id="binderGrid"></div>
-    <div class="binder-view" id="binderView" hidden></div>
-  </dialog>
-
-  <div class="fx" id="fx" aria-hidden="true"></div>
-  <script type="module" src="src/main.js"></script>
 </body>
 </html>
