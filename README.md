@@ -57,6 +57,10 @@ A link forces that video; `null` drops the song. Other options: `--refresh` (sea
 
 The resolver rejects audio, lyric, visualizer, teaser, practice, live and broadcast uploads, prefers verified artist or label channels, and checks YouTube's embed page to see whether the video may play on other sites. Region locks can't be seen from one location; the player shows a "Watch on YouTube" link when a video fails.
 
+## Autoplay
+
+**Auto**, next to Start over on the result screen, has two switches. **Autoplay**: when the MV ends, the next round is chosen and plays by itself (a video that can't play here is skipped after a few seconds). **Same idol**: keep the idol and draw another of their songs, never the one that just played; an idol with one song gets a new idol instead. Both are remembered in the browser.
+
 ## K-pop Top 100 mode
 
 The toggle at the top switches to a second mode: a ring of photocards on a concert stage. Pull a card and its MV plays. Two lists:
