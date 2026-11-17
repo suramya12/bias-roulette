@@ -9,6 +9,7 @@ const get = (key, fallback = null) => {
   try { return localStorage.getItem(key) ?? fallback; } catch { return fallback; }
 };
 const put = (key, value) => { try { localStorage.setItem(key, value); } catch {} };
+put('bias-roulette.lastSide', 'anime');
 const read = (key, fallback) => { try { return JSON.parse(get(key)) ?? fallback; } catch { return fallback; } };
 const random = () => crypto.getRandomValues(new Uint32Array(1))[0] / 0x100000000;
 
@@ -83,6 +84,18 @@ async function boot() {
     onFail: (token, { code } = {}) => {
       if (!current(token)) return;
       token.failed = true; playing(null);
+      if (code === 'api') {
+        auto.blocked(attempt.autoToken);
+        status("YouTube's player couldn't load. Watch on YouTube or retry.");
+        const retry = Object.assign(document.createElement('button'), { type: 'button', className: 'ghost', textContent: 'Retry' });
+        retry.addEventListener('click', () => {
+          if (attempt?.current !== token) return;
+          attempt.autoToken = auto.begin();
+          loadCopy(token.video);
+        });
+        $('#playStatus').append(' ', retry);
+        return;
+      }
       // A missing Referer/client identity is a page configuration problem, not a bad copy.
       if (code === 153) {
         auto.blocked(attempt.autoToken);
