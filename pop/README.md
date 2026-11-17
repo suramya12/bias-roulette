@@ -47,7 +47,7 @@ It fails if a video is used for two songs, two cards share art, a soloist has ba
 Downloaded pages are cached in `.cache/` (gitignored). Add `--fresh` to either script to download everything again.
 
 - `scripts/roster.mjs`: the artist list, bands, the `BIAS` list, `EXCLUDE` and `EXTRA_VIDEOS`. `ROSTER` is the Artist Roulette wheel; `BIAS_EXTRA` adds the bias artists who are not on it. An act outside kworb's top-3000 list needs its Spotify artist id pinned with `spid`.
-- Acts with no kworb Spotify page at all (Esmée Denters, Hayden Panettiere, Diana Vickers, The Asteroids Galaxy Tour) get their songs from their official MVs on YouTube. Their stream count shows as `—` and their score is views / 2.
+- Acts with no kworb Spotify page at all (Esmée Denters, Diana Vickers, The Asteroids Galaxy Tour) get their songs from their official MVs on YouTube. Their stream count shows as `—` and their score is views / 2.
 - Adding artists can change the Top 100: every scored song competes for the same overall ranks.
 - `scripts/chart.mjs`: Spotify totals per artist from kworb.net (`/spotify/artist/<id>_songs.html`), YouTube views from kworb.net (`/youtube/artist/<slug>.html` and the all-time top videos list). Songs kworb has no MV for, with 300M+ streams, fall back to a YouTube search. Writes `data/data.json`.
 - `scripts/portraits.mjs`: picks a Wikimedia Commons photo for each artist. Writes `data/portraits.json`.
