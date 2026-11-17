@@ -37,8 +37,8 @@ const MESSAGES = {
 
 export class VideoPlayer {
   /** onEnd: the video played to the end. onFail: it cannot play here (both used by autoplay). */
-  constructor({ box, mountId, overlay, fallback, message, link, hint, onEnd, onFail }) {
-    Object.assign(this, { box, mountId, overlay, fallback, message, link, hint, onEnd, onFail });
+  constructor({ box, mountId, overlay, fallback, message, link, hint, onEnd, onFail, onPlay, onBlocked }) {
+    Object.assign(this, { box, mountId, overlay, fallback, message, link, hint, onEnd, onFail, onPlay, onBlocked });
     this.player = null;
     this.ready = false;
     this.failed = false;
@@ -49,10 +49,16 @@ export class VideoPlayer {
   }
 
   /** Load a video and try to start it. */
-  async show(videoId) {
+  async show(videoId, attempt) {
     const my = ++this.seq;
+    this.attempt = attempt;
+    try { this.player?.destroy(); } catch { /* already removed */ }
+    this.player = null;
+    this.ready = false;
     this.videoId = videoId;
+    this.ended = false;
     this.failed = false;
+    this.clearAutoPaused();
     clearTimeout(this.timer);
     this.box.classList.remove('failed');
     this.overlay.hidden = true;
@@ -60,46 +66,58 @@ export class VideoPlayer {
     this.hint.hidden = true;
     this.link.href = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
 
-    if (location.protocol === 'file:') return this.#fail('file');
-    try { await loadApi(); } catch { if (my === this.seq) this.#fail('api'); return; }
+    if (location.protocol === 'file:') return this.#fail('file', my);
+    try { await loadApi(); } catch { this.#fail('api', my); return; }
     if (my !== this.seq) return;
 
-    if (!this.player) {
-      const first = videoId;
-      this.player = new window.YT.Player(this.mountId, {
+    // Each iframe owns one attempt, including when the same video is picked twice.
+    // YouTube's error/blocked events carry no video identity on a reused iframe.
+    document.getElementById(this.mountId)?.remove();
+    const mount = document.createElement('div');
+    mount.id = this.mountId;
+    this.box.prepend(mount);
+    this.player = new window.YT.Player(mount, {
         width: '100%', height: '100%', videoId,
         playerVars: { autoplay: 1, playsinline: 1, rel: 0, origin: location.origin },
         events: {
-          onReady: () => {
+          onReady: (e) => {
+            if (!this.#valid(my)) return;
             this.ready = true;
-            if (this.videoId !== first) this.player.loadVideoById(this.videoId);
-            else this.player.playVideo();
-            this.#watch();
+            e.target.playVideo();
+            this.#watch(my);
           },
-          onStateChange: (e) => this.#state(e.data),
-          onError: (e) => this.#fail(e.data),
-          onAutoplayBlocked: () => this.showPlayButton(),
+          onStateChange: (e) => this.#state(e.data, my),
+          onError: (e) => this.#fail(e.data, my),
+          onAutoplayBlocked: () => {
+            if (!this.#valid(my)) return;
+            clearTimeout(this.timer);
+            this.showPlayButton();
+            this.onBlocked?.(attempt);
+          },
         },
       });
-    } else if (this.ready) {
-      this.player.loadVideoById(videoId);
-      this.#watch();
-    }
   }
 
   stop() {
     this.seq++;
+    this.videoId = null;
     clearTimeout(this.timer);
     this.overlay.hidden = true;
     try { if (this.ready) this.player.stopVideo(); } catch { /* player already gone */ }
   }
 
   // If nothing is playing a few seconds after loading, autoplay was refused quietly.
-  #watch() {
+  #valid(my) { return my === this.seq && this.videoId !== null && !this.failed; }
+
+  #watch(my) {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {
+      if (!this.#valid(my)) return;
       const s = this.#playerState();
-      if (s !== 1 && s !== 3) this.showPlayButton();
+      if (s !== 1 && s !== 3) {
+        this.showPlayButton();
+        this.onBlocked?.(this.attempt);
+      }
     }, 3000);
   }
 
@@ -107,37 +125,68 @@ export class VideoPlayer {
     try { return this.player.getPlayerState(); } catch { return -1; }
   }
 
-  #state(s) {
+  #state(s, my) {
+    if (!this.#valid(my)) return;
     if (s === 1) { // playing
       clearTimeout(this.timer);
       this.overlay.hidden = true;
       this.hint.hidden = true;
-    } else if (s === 0) this.onEnd?.(); // ended
+      this.onPlay?.(this.attempt);
+    } else if (s === 0 && !this.ended) {
+      clearTimeout(this.timer);
+      this.ended = true;
+      this.onEnd?.(this.attempt);
+    }
   }
 
   showPlayButton() {
-    if (this.failed || this.#playerState() === 1) return;
+    if (!this.videoId || this.failed || this.#playerState() === 1) return;
     this.overlay.hidden = false;
   }
 
   #tapToPlay() {
+    const my = this.seq;
+    if (!this.#valid(my)) return;
     try { this.player.playVideo(); } catch { /* ignore */ }
     // Some phones only accept a tap on the video itself: uncover it either way.
     setTimeout(() => {
+      if (!this.#valid(my)) return;
       this.overlay.hidden = true;
       if (!this.failed && this.#playerState() !== 1) this.hint.hidden = false;
     }, 600);
   }
 
-  #fail(code) {
+  showAutoPaused(resume) {
+    this.autoPaused = true;
+    this.message.textContent = "3 videos in a row wouldn't play here. Auto paused.";
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'btn btn-pink';
+    button.textContent = 'Resume';
+    button.addEventListener('click', resume);
+    this.message.append(' ', button);
+    this.message.setAttribute('role', 'status');
+    this.fallback.hidden = false;
+    this.box.classList.add('failed');
+  }
+
+  clearAutoPaused() {
+    if (!this.autoPaused) return;
+    this.autoPaused = false;
+    this.message.textContent = this.lastMessage || '';
+  }
+
+  #fail(code, my) {
+    if (!this.#valid(my)) return;
     this.failed = true;
     clearTimeout(this.timer);
     this.overlay.hidden = true;
     this.hint.hidden = true;
     this.box.classList.add('failed');
-    this.message.textContent = MESSAGES[code] || 'This video cannot be played here.';
+    this.lastMessage = MESSAGES[code] || 'This video cannot be played here.';
+    this.message.textContent = this.lastMessage;
     this.fallback.hidden = false;
     try { if (this.ready) this.player.stopVideo(); } catch { /* ignore */ }
-    this.onFail?.();
+    this.onFail?.(this.attempt);
   }
 }

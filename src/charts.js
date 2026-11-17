@@ -8,6 +8,7 @@ import * as fx from './fx.js';
 import { makeCard, songCard, playIn, collection, openBinder } from './card.js';
 import { artNode } from './art.js';
 import { PullMachine } from './pull-machine.js';
+import { createAutoAdvance } from './auto-advance.js';
 
 const $ = (id) => document.getElementById(id);
 const CANDY = ['#ff4fa3', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff'];
@@ -172,36 +173,53 @@ export class Charts {
     this.range = Number(store.get('chart.range', '100')) || 100;
     this.recent = [];
     this.active = false;
+    this.auto = createAutoAdvance({
+      enabled: store.get('chart.auto', 'off') === 'on',
+      isActive: () => this.active && !$('charts').hidden,
+      advance: ({ hidden }) => this.machine.pull({ short: true, immediate: hidden }),
+      onPause: (paused) => {
+        if (paused) this.player.showAutoPaused(() => this.auto.resume());
+        else this.player.clearAutoPaused();
+        this.#renderAuto();
+      },
+    });
     this.player = new VideoPlayer({
       box: $('stageBox'), mountId: 'stagePlayer', overlay: $('stageOverlay'), fallback: $('stageFallback'),
       message: $('stageMsg'), link: $('stageLink'), hint: $('stageHint'),
+      onEnd: (token) => this.auto.end(token),
+      onFail: (token) => this.auto.fail(token),
+      onPlay: (token) => this.auto.play(token),
+      onBlocked: (token) => this.auto.blocked(token),
     });
     this.crowd = new Crowd($('crowd'));
     this.machine = new PullMachine({
       ring: $('ring'), hit: $('ringBtn'), buttons: [$('pullBtn')], sound,
       renderSlot: (card, song) => this.#renderSlot(card, song),
       tierOf: (song) => { const tier = tierOf(overall(song)); return tier === 'legend' ? 'legendary' : tier; },
+      onPull: () => { this.auto.invalidate(); this.player.stop(); },
+      onCancel: () => this.auto.invalidate(),
       say: (text) => {
         this.crowd.hype = 1;
         $('pullStamp').hidden = true;
         $('quickBtn').setAttribute('aria-disabled', 'true');
         this.#say(text);
       },
-      onLand: (song, tier) => {
+      onLand: (song, tier, { short }) => {
         this.crowd.hype = 0;
         const stamp = $('pullStamp');
         stamp.textContent = `${TIER_LABEL[tier]} PULL!`;
         stamp.dataset.tier = tier === 'legendary' ? 'legend' : tier;
-        stamp.hidden = false;
+        stamp.hidden = short;
         this.#setAccent(song);
         this.#say(`#${song.rank}: ${song.title} by ${song.artist}!`);
       },
-      onReveal: (song) => {
+      onReveal: (song, { short }) => {
         $('quickBtn').setAttribute('aria-disabled', 'false');
-        this.reveal(song);
+        this.reveal(song, { short });
       },
     });
     this.#bind();
+    this.#renderAuto();
   }
 
   get busy() { return ['spinning', 'landing', 'revealing'].includes(this.machine.state); }
@@ -221,6 +239,7 @@ export class Charts {
     this.#renderControls();
     this.#renderList();
     this.#say(this.#intro());
+    $('chartAuto').disabled = false;
     return true;
   }
 
@@ -249,6 +268,12 @@ export class Charts {
 
   // ---------- rendering ----------
   #say(text) { $('chartsAnnounce').textContent = text; }
+
+  #renderAuto() {
+    $('chartAuto').checked = this.auto.enabled;
+    $('chartAutoPill').classList.toggle('is-on', this.auto.enabled);
+    $('chartAutoState').textContent = this.auto.paused ? 'paused' : this.auto.enabled ? 'on' : 'off';
+  }
 
   #intro() {
     const what = this.list === 'new' ? 'Easy 100' : 'Real 100';
@@ -331,7 +356,8 @@ export class Charts {
   }
 
   /** Show the holographic card for a song and play its video. */
-  reveal(song, { fromList = false } = {}) {
+  reveal(song, { fromList = false, short: shortPull = false } = {}) {
+    if (!this.active) return;
     this.song = song;
     if (fromList) {
       this.machine.cancel();
@@ -357,9 +383,9 @@ export class Charts {
     if (next) $('nextPull').textContent = `Next: #${next.rank} ${next.title}`;
 
     $('pull').hidden = false;
-    this.player.show(new URLSearchParams(location.search).get('forceVideo') || song.videoId);
+    this.player.show(new URLSearchParams(location.search).get('forceVideo') || song.videoId, this.auto.begin());
     this.#say(`Now playing #${song.rank}: ${song.title} by ${song.artist}.`);
-    $('pull').scrollIntoView({ block: 'start', behavior: fx.prefersReducedMotion() ? 'auto' : 'smooth' });
+    if (!shortPull && !document.hidden) $('pull').scrollIntoView({ block: 'start', behavior: fx.prefersReducedMotion() ? 'auto' : 'smooth' });
   }
 
   /** Switch list from outside (URL hash). Before the chart has loaded it only records the choice. */
@@ -403,6 +429,12 @@ export class Charts {
   }
 
   #bind() {
+    $('chartAuto').addEventListener('change', (e) => {
+      const on = e.target.checked;
+      this.store.set('chart.auto', on ? 'on' : 'off');
+      this.auto.setEnabled(on);
+      this.#renderAuto();
+    });
     $('quickBtn').addEventListener('click', () => this.quick());
     $('againPull').addEventListener('click', () => {
       $('stage').scrollIntoView({ block: 'center', behavior: fx.prefersReducedMotion() ? 'auto' : 'smooth' });

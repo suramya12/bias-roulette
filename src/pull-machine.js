@@ -7,9 +7,9 @@ const lift = ' translateZ(70px) translateY(-6px) scale(1.12)';
 /** Shared motion only; the caller owns selection, card faces and playback. */
 export class PullMachine {
   constructor({ ring, hit, buttons = [], slots = 14, radius, renderSlot, sound,
-    onLand, onReveal, tierOf, say }) {
+    onLand, onReveal, onPull, onCancel, tierOf, say }) {
     Object.assign(this, { ring, hit, buttons: Array.from(buttons), slotCount: slots,
-      radiusOf: radius, renderSlot, sound, onLand, onReveal, tierOf, say });
+      radiusOf: radius, renderSlot, sound, onLand, onReveal, onPull, onCancel, tierOf, say });
     this.angle = 0;
     this.slots = [];
     this.items = [];
@@ -40,6 +40,15 @@ export class PullMachine {
     this.observer = new ResizeObserver(this.resize);
     this.observer.observe(ring.parentElement);
     window.addEventListener('resize', this.resize);
+    this.visibility = () => {
+      const motion = this.motion;
+      if (!document.hidden || !motion?.short || this.state !== 'spinning') return;
+      cancelAnimationFrame(this.raf);
+      this.angle = motion.end;
+      this.#applyAngle();
+      this.#land(motion);
+    };
+    document.addEventListener?.('visibilitychange', this.visibility);
     this.#status();
   }
 
@@ -78,6 +87,7 @@ export class PullMachine {
     this.#invalidate();
     this.observer.disconnect();
     window.removeEventListener('resize', this.resize);
+    document.removeEventListener?.('visibilitychange', this.visibility);
     for (const el of new Set([this.hit, ...this.buttons])) {
       el.removeEventListener('click', this.press);
       el.removeEventListener('keydown', this.key);
@@ -86,7 +96,7 @@ export class PullMachine {
 
   #valid(token) { return !this.destroyed && this.active && token === this.generation; }
 
-  #invalidate() {
+  #invalidate(notify = true) {
     ++this.generation;
     const token = this.generation;
     const dropped = this.lifted;
@@ -110,6 +120,7 @@ export class PullMachine {
     }
     this._state = this.active && !this.destroyed ? 'idle' : 'inactive';
     this.#status();
+    if (notify) this.onCancel?.();
   }
 
   #status() {
@@ -202,11 +213,13 @@ export class PullMachine {
     this.raf = requestAnimationFrame(frame);
   }
 
-  pull() {
+  pull({ short = false, immediate = false } = {}) {
     if (this.destroyed || this.state !== 'idle' || !this.active || !this.items.length) return;
-    this.#invalidate();
+    this.#invalidate(false);
     const token = this.generation;
     this._state = 'spinning'; // Reserve the pull before calling side-owned selection.
+    this.onPull?.({ short });
+    if (!this.#valid(token)) return;
     const item = this.pick();
     if (!this.#valid(token) || this.state !== 'spinning') return;
     if (!item) { this.cancel(); return; }
@@ -215,13 +228,20 @@ export class PullMachine {
     this.winner = this.slots[k];
     this.#fill(this.winner, item);
     this.reduced = prefersReducedMotion();
-    const end = this.angle - ((this.reduced ? 0 : 3) * 360 + mod(this.angle + k * this.step, 360));
+    const end = this.angle - ((this.reduced ? 0 : short ? 1 : 3) * 360 + mod(this.angle + k * this.step, 360));
     this.#status();
     if (this.#valid(token)) this.say?.('Shuffling the deck…');
     if (!this.#valid(token)) return;
-    this.#animate({ start: this.angle, end, duration: this.reduced ? 350 : 3600,
-      at: performance.now(), pullAt: performance.now(), pullDuration: this.reduced ? 350 : 3600,
-      tick: Math.floor(this.angle / this.step), token, item });
+    if (immediate && short) {
+      this.angle = end;
+      this.#applyAngle();
+      this.#land({ token, item, short });
+      return;
+    }
+    const duration = this.reduced ? 350 : short ? 1200 : 3600;
+    this.#animate({ start: this.angle, end, duration,
+      at: performance.now(), pullAt: performance.now(), pullDuration: duration,
+      tick: Math.floor(this.angle / this.step), token, item, short });
   }
 
   slamStop() {
@@ -255,7 +275,7 @@ export class PullMachine {
     this.raf = requestAnimationFrame(frame);
   }
 
-  #land({ token, item }) {
+  #land({ token, item, short = false }) {
     if (!this.#valid(token) || this.state !== 'spinning') return;
     this.motion = null;
     this._state = 'landing';
@@ -265,19 +285,23 @@ export class PullMachine {
     this.lifted.el.classList.add('lifted');
     this.lifted.el.style.transform = this.lifted.base + lift;
     this.#status();
-    if (this.#valid(token)) this.onLand?.(item, tier);
+    if (this.#valid(token)) this.onLand?.(item, tier, { short });
     if (!this.#valid(token)) return;
-    this.#celebrate(tier);
+    if (!short) this.#celebrate(tier);
     if (!this.#valid(token)) return;
     this._state = 'revealing';
-    const timer = setTimeout(() => {
-      this.timers.delete(timer);
+    const reveal = () => {
       if (!this.#valid(token) || this.state !== 'revealing') return;
-      if (this.#valid(token)) this.onReveal?.(item);
+      if (this.#valid(token)) this.onReveal?.(item, { short });
       if (!this.#valid(token)) return;
       this._state = 'idle';
       this.#resize();
       this.#idle();
+    };
+    if (short) { reveal(); return; }
+    const timer = setTimeout(() => {
+      this.timers.delete(timer);
+      reveal();
     }, this.reduced ? 500 : 1300);
     this.timers.add(timer);
   }

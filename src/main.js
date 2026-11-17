@@ -8,6 +8,7 @@ import { VideoPlayer, loadApi } from './player.js';
 import * as fx from './fx.js';
 import { Charts, Crowd, toRgb, loadChartData } from './charts.js';
 import { makeCard, cardBack, idolCard, artPlan, rouletteSongCard, chartIndex, playIn, collection, openBinder, hasArt } from './card.js';
+import { createAutoAdvance } from './auto-advance.js';
 
 const $ = (id) => document.getElementById(id);
 const CANDY = ['#ff5fa2', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff', '#ffb38a'];
@@ -48,8 +49,10 @@ const wheel = new Wheel($('wheel'), {
 const player = new VideoPlayer({
   box: $('playerBox'), mountId: 'player', overlay: $('playOverlay'), fallback: $('playerFallback'),
   message: $('fallbackMsg'), link: $('watchLink'), hint: $('playHint'),
-  onEnd: () => autoNext(1200),
-  onFail: () => autoNext(4000), // a video that can't play here: show the message briefly, then move on
+  onEnd: (token) => rouletteAuto.end(token),
+  onFail: (token) => rouletteAuto.fail(token),
+  onPlay: (token) => rouletteAuto.play(token),
+  onBlocked: (token) => rouletteAuto.blocked(token),
 });
 // #top100/easy opens the Easy 100 list; the choice is remembered like any other.
 if (location.hash === '#top100/easy') store.set('chart.list', 'new');
@@ -163,6 +166,7 @@ function setBusy(on) {
 }
 
 function showPlay() {
+  rouletteAuto.invalidate();
   player.stop();
   $('result').hidden = true;
   $('play').hidden = false;
@@ -194,8 +198,8 @@ function showResult() {
   renderSteps();
   renderFinalists();
   announce(`Winner: ${song.title} by ${song.artist}, drawn for ${idol.name}.`);
-  player.show(forceVideo || song.videoId);
-  $('result').scrollIntoView({ block: 'start', behavior: fx.prefersReducedMotion() ? 'auto' : 'smooth' });
+  if (mode === 'roulette') player.show(forceVideo || song.videoId, rouletteAuto.begin());
+  if (mode === 'roulette' && !document.hidden) $('result').scrollIntoView({ block: 'start', behavior: fx.prefersReducedMotion() ? 'auto' : 'smooth' });
 }
 
 function celebrate(text, color) {
@@ -212,6 +216,7 @@ function celebrate(text, color) {
 // ---------- actions ----------
 async function spin() {
   if (busy || !game || game.phase === 'result') return;
+  rouletteAuto.invalidate();
   setBusy(true);
   sound.unlock();
   $('stamp').hidden = true;
@@ -259,6 +264,7 @@ async function spin() {
 
 function chooseForMe({ restart = false } = {}) {
   if (busy || !game) return;
+  rouletteAuto.invalidate();
   sound.unlock();
   if (restart) game.reset();
   game.chooseForMe();
@@ -269,32 +275,36 @@ function chooseForMe({ restart = false } = {}) {
 // ---------- autoplay ----------
 // On: when the MV ends, play the next round by itself. Same idol: keep the idol, draw another of their songs.
 const auto = { on: store.get('auto', 'off') === 'on', same: store.get('auto.same', 'off') === 'on' };
-let autoTimer = 0;
+const rouletteAuto = createAutoAdvance({
+  enabled: auto.on,
+  isActive: () => mode === 'roulette' && !!game,
+  advance: () => autoNext(),
+  onPause: (paused) => {
+    if (paused) player.showAutoPaused(() => rouletteAuto.resume());
+    else player.clearAutoPaused();
+    renderAuto();
+  },
+});
 
 function renderAuto() {
   $('autoOn').checked = auto.on;
   $('autoSame').checked = auto.same;
   $('autoSame').disabled = !auto.on;
   $('autoplay').classList.toggle('is-on', auto.on);
-  $('autoState').textContent = !auto.on ? 'off' : auto.same ? 'same idol' : 'on';
+  $('autoState').textContent = rouletteAuto.paused ? 'paused' : !auto.on ? 'off' : auto.same ? 'same idol' : 'on';
 }
 
-function autoNext(delay) {
-  clearTimeout(autoTimer);
-  const ready = () => auto.on && mode === 'roulette' && game?.phase === 'result';
-  if (!ready()) return;
-  autoTimer = setTimeout(() => {
-    if (!ready() || busy) return; // busy: a failed video can report while the last spin still ends
-    const { idol } = game;
-    if (auto.same && idol.songs.length > 1) {
-      // Another song of the same idol, never the one that just played.
-      const last = game.song.videoId;
-      for (let i = 0; i < 12 && game.song.videoId === last; i++) { game.anotherSong(); game.chooseForMe(); }
-      sound.fanfare();
-      showResult();
-    } else chooseForMe({ restart: true });
-    announce(`Autoplay: ${game.song.title} by ${game.song.artist}.`);
-  }, delay);
+function autoNext() {
+  if (mode !== 'roulette' || !game || busy) return;
+  const { idol } = game;
+  if (auto.same && idol?.songs.length > 1 && game.phase === 'result') {
+    // Another song of the same idol, never the one that just played.
+    const last = game.song.videoId;
+    for (let i = 0; i < 12 && game.song.videoId === last; i++) { game.anotherSong(); game.chooseForMe(); }
+    sound.fanfare();
+    showResult();
+  } else chooseForMe({ restart: true });
+  announce(`Autoplay: ${game.song.title} by ${game.song.artist}.`);
 }
 
 function startOver() {
@@ -349,6 +359,7 @@ function setMode(next) {
   syncUrl();
   updateBinder();
   if (isCharts) {
+    rouletteAuto.invalidate();
     player.stop();
     fx.setSkyColor(null);
     charts.activate().then(() => { if (mode === 'charts') setTicker(charts.tickerItems()); });
@@ -429,6 +440,8 @@ async function start() {
   renderOptions();
   applyHash();
   addEventListener('hashchange', () => applyHash({ navigated: true }));
+  addEventListener('pagehide', () => { rouletteAuto.invalidate(); player.stop(); charts.deactivate(); });
+  addEventListener('pageshow', (e) => { if (e.persisted && mode === 'charts') charts.activate(); });
   $('openBinder').addEventListener('click', openCollection);
   const genre = $('genre');
   document.addEventListener('click', (e) => { if (genre.open && !genre.contains(e.target)) genre.open = false; });
@@ -471,7 +484,7 @@ async function start() {
   $('anotherBtn').addEventListener('click', anotherSong);
   $('restartBtn').addEventListener('click', startOver);
   $('resetBtn').addEventListener('click', startOver);
-  $('autoOn').addEventListener('change', (e) => { auto.on = e.target.checked; store.set('auto', auto.on ? 'on' : 'off'); if (!auto.on) clearTimeout(autoTimer); renderAuto(); });
+  $('autoOn').addEventListener('change', (e) => { auto.on = e.target.checked; store.set('auto', auto.on ? 'on' : 'off'); rouletteAuto.setEnabled(auto.on); renderAuto(); });
   $('autoSame').addEventListener('change', (e) => { auto.same = e.target.checked; store.set('auto.same', auto.same ? 'on' : 'off'); renderAuto(); });
   const autoMenu = $('autoplay');
   document.addEventListener('click', (e) => { if (autoMenu.open && !autoMenu.contains(e.target)) autoMenu.open = false; });
