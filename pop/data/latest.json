@@ -1,0 +1,679 @@
+{
+ "asOf": "2026-11-17",
+ "Taylor Swift": {
+  "id": "mw3kSNIxjqo",
+  "title": "Taylor Swift - Patient Zero (Official Music Video)",
+  "published": "2026-09-29",
+  "channel": "Taylor Swift"
+ },
+ "The Weeknd": {
+  "id": "8zHWTsdnC7A",
+  "title": "The Weeknd - Baptized In Fear (Official Music Video)",
+  "published": "2025-06-06",
+  "channel": "TheWeekndVEVO"
+ },
+ "Bruno Mars": {
+  "id": "1l7wbZmdtys",
+  "title": "Bruno Mars - Dance With Me [Official Music Video]",
+  "published": "2026-10-01",
+  "channel": "Bruno Mars"
+ },
+ "Katy Perry": {
+  "id": "YzUs8ohSB3w",
+  "title": "Katy Perry - Watch It Burn (Official Music Video)",
+  "published": "2026-06-26",
+  "channel": "KatyPerryVEVO"
+ },
+ "Lady Gaga": {
+  "id": "XXIX2WnfbpE",
+  "title": "Lady Gaga, Doechii - RUNWAY (Official Music Video)",
+  "published": "2026-04-27",
+  "channel": "LadyGagaVEVO"
+ },
+ "Shawn Mendes": {
+  "id": "r7__5jmJ-tA",
+  "title": "Shawn Mendes - Heart of Gold (Official Music Video)",
+  "published": "2024-11-01",
+  "channel": "ShawnMendesVEVO"
+ },
+ "Selena Gomez": {
+  "id": "Qhs3rY80HNE",
+  "title": "Selena Gomez - In The Dark (Official Music Video)",
+  "published": "2025-10-23",
+  "channel": "SelenaGomezVEVO"
+ },
+ "Miley Cyrus": {
+  "id": "6rrSeNLcsTE",
+  "title": "Miley Cyrus - Dream As One (from Avatar: Fire and Ash - Official Video)",
+  "published": "2025-12-09",
+  "channel": "MileyCyrusVEVO"
+ },
+ "Eminem": {
+  "id": "ZaK9Wi5ho0o",
+  "title": "Eminem - Temporary (feat. Skylar Grey) [Official Music Video]",
+  "published": "2024-10-03",
+  "channel": "EminemVEVO"
+ },
+ "Travis Scott": {
+  "id": "oB7sWyhJSs8",
+  "title": "James Blake, Travis Scott, Ludwig Göransson - When I'm Home (from The Odyssey - Official Video)",
+  "published": "2026-07-30",
+  "channel": "TravisScottVEVO"
+ },
+ "Doja Cat": {
+  "id": "U-124RmcV7I",
+  "title": "Doja Cat - Stranger (Official Video)",
+  "published": "2025-09-30",
+  "channel": "dojacatVEVO"
+ },
+ "Olivia Rodrigo": {
+  "id": "gsZauX8gwxo",
+  "title": "Olivia Rodrigo - expectations (feat. Chappell Roan) (Official Music Video)",
+  "published": "2026-10-16",
+  "channel": "OliviaRodrigoVEVO"
+ },
+ "Harry Styles": {
+  "id": "M4qX5wzx-wY",
+  "title": "Harry Styles - Coming Up Roses (Official Video)",
+  "published": "2026-10-26",
+  "channel": "HarryStylesVEVO"
+ },
+ "ZAYN": {
+  "id": "LoElk8clGVg",
+  "title": "ZAYN - Die For Me (Official Video)",
+  "published": "2026-02-06",
+  "channel": "ZaynVEVO"
+ },
+ "Camila Cabello": {
+  "id": "gzdjYJKocKk",
+  "title": "Camila Cabello - GODSPEED (Official Music Video)",
+  "published": "2024-09-06",
+  "channel": "CamilaCabelloVEVO"
+ },
+ "Nick Jonas": {
+  "id": "V3cF_AuwZIc",
+  "title": "Nick Jonas - Spaceman (Official Video)",
+  "published": "2021-03-11",
+  "channel": "NickJonasVEVO"
+ },
+ "will.i.am": {
+  "id": "y242XIPPykg",
+  "title": "will.i.am, J Balvin - LET'S GO (Official Music Video)",
+  "published": "2023-10-20",
+  "channel": "williamVEVO"
+ },
+ "Halsey": {
+  "id": "_ObA_tbkTas",
+  "title": "Halsey - Drive (Official Music Video)",
+  "published": "2025-09-02",
+  "channel": "HalseyVEVO"
+ },
+ "Sam Smith": {
+  "id": "K0G7jODNtEo",
+  "title": "Sam Smith - My Guy (Official Video)",
+  "published": "2026-06-24",
+  "channel": "SamSmithVEVO"
+ },
+ "Lewis Capaldi": {
+  "id": "9Pud3BqPpq0",
+  "title": "Lewis Capaldi - Stay Love (Official Video)",
+  "published": "2026-05-28",
+  "channel": "LewisCapaldiVEVO"
+ },
+ "Charlie Puth": {
+  "id": "yAUedzRJMpw",
+  "title": "Charlie Puth - Sideways (feat. Coco Jones) [Official Video]",
+  "published": "2026-03-31",
+  "channel": "Charlie Puth"
+ },
+ "Nicki Minaj": {
+  "id": "QBGX9QirWaU",
+  "title": "Nicki Minaj - Red Ruby Da Sleeze (Official Video)",
+  "published": "2023-05-14",
+  "channel": "NickiMinajAtVEVO"
+ },
+ "Cardi B": {
+  "id": "I-5e_J3LWS8",
+  "title": "Cardi B - AH HA [Official Music Video]",
+  "published": "2026-08-28",
+  "channel": "Cardi B"
+ },
+ "Pitbull": {
+  "id": "DY9GNEDxeCw",
+  "title": "Pitbull - Quiero Saber (Official Video) ft. Prince Royce, Ludacris",
+  "published": "2018-12-14",
+  "channel": "PitbullVEVO"
+ },
+ "SZA": {
+  "id": "1Wdzodfx87s",
+  "title": "SZA - Drive (Official Video)",
+  "published": "2024-12-20",
+  "channel": "SZAVEVO"
+ },
+ "Benson Boone": {
+  "id": "ptlsli-QXXc",
+  "title": "Benson Boone - The Time Of My Life (Official Music Video)",
+  "published": "2026-06-25",
+  "channel": "Benson Boone"
+ },
+ "Hozier": {
+  "id": "Yj4H_-VOceM",
+  "title": "Hozier - Nobody's Soldier (Official Video)",
+  "published": "2024-08-19",
+  "channel": "HozierVEVO"
+ },
+ "Tate McRae": {
+  "id": "DPEodkHzH-s",
+  "title": "Tate McRae - Housewife (Official Video)",
+  "published": "2026-10-16",
+  "channel": "TateMcRaeVEVO"
+ },
+ "Demi Lovato": {
+  "id": "FpOsFNaim00",
+  "title": "Demi Lovato - Kiss (Official Music Video)",
+  "published": "2025-10-10",
+  "channel": "DemiLovatoVEVO"
+ },
+ "Lana Del Rey": {
+  "id": "C2e0H6MUWyU",
+  "title": "Lana Del Rey - Candy Necklace (Official Video) ft. Jon Batiste",
+  "published": "2023-05-10",
+  "channel": "LanaDelReyVEVO"
+ },
+ "Michael Jackson": {
+  "id": "YNzuiRuQNYY",
+  "title": "Michael Jackson - Human Nature (Official Video)",
+  "published": "2026-04-24",
+  "channel": "michaeljacksonVEVO"
+ },
+ "Mariah Carey": {
+  "id": "0E_nJRkWVfg",
+  "title": "Mariah Carey - Loverboy (4K Official Music Video) ft. Cameo",
+  "published": "2026-10-30",
+  "channel": "MariahCareyVEVO"
+ },
+ "Marshmello": {
+  "id": "5M5UiAxHGaQ",
+  "title": "Marshmello x Portugal. The Man - Phoenix (Official Music Video)",
+  "published": "2026-08-21",
+  "channel": "Marshmello"
+ },
+ "Alan Walker": {
+  "id": "h73KXh4RkjA",
+  "title": "Alan Walker & KIDDO - INDIAN SUMMER (Official Music Video)",
+  "published": "2026-10-30",
+  "channel": "Alan Walker"
+ },
+ "Juice WRLD": {
+  "id": "LW_BSEjgBss",
+  "title": "Juice WRLD, Marshmello - We Don't Get Along (Official Video)",
+  "published": "2026-03-06",
+  "channel": "Juice WRLD"
+ },
+ "Lil Nas X": {
+  "id": "clkCS0Fk8Hk",
+  "title": "Lil Nas X - World's Greatest! (Official Video)",
+  "published": "2026-10-01",
+  "channel": "LilNasXVEVO"
+ },
+ "James Arthur": {
+  "id": "IlzmHdvZGj8",
+  "title": "James Arthur - Waste My Tears (Official Video)",
+  "published": "2026-09-18",
+  "channel": "JamesAVEVO"
+ },
+ "Ellie Goulding": {
+  "id": "EOZUxpuO7Qw",
+  "title": "Ellie Goulding - Ravers (Official Video)",
+  "published": "2026-08-07",
+  "channel": "EllieGouldingVEVO"
+ },
+ "Zara Larsson": {
+  "id": "LB72Mbd88mU",
+  "title": "Zara Larsson - Blue Moon (Official Music Video)",
+  "published": "2026-10-15",
+  "channel": "ZaraLarssonMusicVEVO"
+ },
+ "Sean Paul": {
+  "id": "WASMvLC1g7A",
+  "title": "Sean Paul, Marcus I - Stepping Stone (Official Video)",
+  "published": "2025-10-17",
+  "channel": "SeanPaulVEVO"
+ },
+ "Akon": {
+  "id": "YGGVCMh4HBM",
+  "title": "Akon, RMR - Too Cold (Official Music Video)",
+  "published": "2025-09-19",
+  "channel": "AkonVEVO"
+ },
+ "Maroon 5": {
+  "id": "B4u1nXhh5ck",
+  "title": "Maroon 5 - Love is Like ft. Lil Wayne (Official Video)",
+  "published": "2025-08-15",
+  "channel": "Maroon5VEVO"
+ },
+ "OneRepublic": {
+  "id": "_CcXxtgQgIA",
+  "title": "OneRepublic - Invincible (from Kaiju No. 8)[Official Music Video]",
+  "published": "2025-04-18",
+  "channel": "OneRepublicVEVO"
+ },
+ "The Chainsmokers": {
+  "id": "8eOTsaz_Gb4",
+  "title": "The Chainsmokers - Smooth (Official Video)",
+  "published": "2025-09-19",
+  "channel": "ChainsmokersVEVO"
+ },
+ "Arctic Monkeys": {
+  "id": "KQsrIxyoJdE",
+  "title": "Arctic Monkeys - Sculptures Of Anything Goes (Official Video)",
+  "published": "2023-03-06",
+  "channel": "Official Arctic Monkeys"
+ },
+ "The Neighbourhood": {
+  "id": "mPxdf1KqRIQ",
+  "title": "The Neighbourhood - Why'd You Have To Leave? (Official Video)",
+  "published": "2026-11-10",
+  "channel": "The Neighbourhood"
+ },
+ "Guns N' Roses": {
+  "id": "qCHPBDN2Tp0",
+  "title": "Guns N' Roses - Perhaps (Official Music Video)",
+  "published": "2023-08-18",
+  "channel": "GunsNRosesVEVO"
+ },
+ "Clean Bandit": {
+  "id": "G6nUq12AmXY",
+  "title": "Clean Bandit x TÄRA - La Dolce Vita (Official Video)",
+  "published": "2026-10-23",
+  "channel": "Clean Bandit"
+ },
+ "Bon Jovi": {
+  "id": "x8PIQvu4SgY",
+  "title": "Bon Jovi - Red, White and Jersey (Official Music Video)",
+  "published": "2025-08-29",
+  "channel": "BonJoviVEVO"
+ },
+ "Luis Fonsi": {
+  "id": "RdYsxc10AGs",
+  "title": "Luis Fonsi - Me Despido (Official Video)",
+  "published": "2026-08-14",
+  "channel": "LuisFonsiVEVO"
+ },
+ "Daddy Yankee": {
+  "id": "_TKB43SBij8",
+  "title": "Daddy Yankee  + Bizarrap \"Pa’ Qué Llorar\" (Official Music Video) ",
+  "published": "2026-11-13",
+  "channel": "Daddy Yankee"
+ },
+ "J Balvin": {
+  "id": "Bv7WU_s8Mjs",
+  "title": "J Balvin, Ryan Castro - Pal Agua (Official Video)",
+  "published": "2026-03-27",
+  "channel": "jbalvinVEVO"
+ },
+ "Maluma": {
+  "id": "2-NkuLjtGNY",
+  "title": "Maluma, Shakira - AGUA (Official Video)",
+  "published": "2026-09-18",
+  "channel": "MalumaVEVO"
+ },
+ "KAROL G": {
+  "id": "aQXq3ndLkHs",
+  "title": "KAROL G, Bruno Mars - Still (Official Video)",
+  "published": "2026-09-02",
+  "channel": "KarolGVEVO"
+ },
+ "Rauw Alejandro": {
+  "id": "-o-38aZg6o0",
+  "title": "Rauw Alejandro - Dando Vueltas (Official Video)",
+  "published": "2026-04-23",
+  "channel": "Rauw Alejandro"
+ },
+ "Ricky Martin": {
+  "id": "jDuvY-AqEUE",
+  "title": "Ricky Martin, PEDRO SAMPAIO - pikito pikito (Official Video)",
+  "published": "2026-10-21",
+  "channel": "RickyMartinVEVO"
+ },
+ "Feid": {
+  "id": "e2dRcsc98m4",
+  "title": "Feid - A Xon De Que (Official Video)",
+  "published": "2026-09-18",
+  "channel": "FeidVEVO"
+ },
+ "Myke Towers": {
+  "id": "5j8fIDh1V0A",
+  "title": "Myke Towers - TE IMAGINO (Official Music Video)",
+  "published": "2026-10-22",
+  "channel": "Myke Towers"
+ },
+ "ROSALÍA": {
+  "id": "u7pr0p3ShXU",
+  "title": "ROSALÍA - Focu 'Ranni (Official Video)",
+  "published": "2026-04-20",
+  "channel": "RosaliaVEVO"
+ },
+ "Camilo": {
+  "id": "e7RKo2SyN8U",
+  "title": "Camilo - Luna (Official Video)",
+  "published": "2026-09-09",
+  "channel": "CamiloVEVO"
+ },
+ "Sebastián Yatra": {
+  "id": "oeW0EnqPteE",
+  "title": "Sebastián Yatra, Jay Kabalan - CUCARACHEO (Official Video)",
+  "published": "2026-03-04",
+  "channel": "SebastianYatraVEVO"
+ },
+ "Romeo Santos": {
+  "id": "PVVKKwYeEQs",
+  "title": "Romeo Santos, Prince Royce, Dalvin La Melodia - Menor (Official Video)",
+  "published": "2026-10-01",
+  "channel": "RomeoSantosVEVO"
+ },
+ "Farruko": {
+  "id": "g5TqQ4JwP8k",
+  "title": "Farruko - QUE TALENTO (Official Video)",
+  "published": "2026-10-09",
+  "channel": "FARRUKOVEVO"
+ },
+ "Wisin": {
+  "id": "DG7bydrEdnA",
+  "title": "Wisin, Tito El Bambino - Pa' La Girl (Official Video)",
+  "published": "2026-11-06",
+  "channel": "wisinofficalVEVO"
+ },
+ "Yandel": {
+  "id": "-oX-Rr15obY",
+  "title": "Yandel, Kapo - Rondando (Official Video) / Infinito",
+  "published": "2026-01-30",
+  "channel": "Yandel"
+ },
+ "Quevedo": {
+  "id": "7cHRcVDPnR0",
+  "title": "GÁLDAR & AL GOLPITO - Quevedo ft. Tonny Tun Tun, Nueva Línea (Official Video) | EL BAIFO",
+  "published": "2026-07-06",
+  "channel": "Quevedo"
+ },
+ "Prince Royce": {
+  "id": "peJm0--tRg4",
+  "title": "Prince Royce - Yesterday (Track 8 - Official Video)",
+  "published": "2025-05-28",
+  "channel": "PrinceRoyceVEVO"
+ },
+ "Marc Anthony": {
+  "id": "OYtHvS7n7ic",
+  "title": "Marc Anthony, NATHY PELUSO - Como en el Idilio (Official Video)",
+  "published": "2026-02-05",
+  "channel": "marcanthonyVEVO"
+ },
+ "P!nk": {
+  "id": "5DuZkK_trYY",
+  "title": "P!NK - All Out Of Fight (Official Video)",
+  "published": "2023-12-07",
+  "channel": "PinkVEVO"
+ },
+ "Janet Jackson": {
+  "id": "AtoyLKHmy1c",
+  "title": "Janet Jackson - Runaway (Official Music Video)",
+  "published": "2023-06-23",
+  "channel": "JanetJacksonVEVO"
+ },
+ "Cheryl": {
+  "id": "bWvZKtPOFg0",
+  "title": "Cheryl - Let You (Official Video)",
+  "published": "2019-05-30",
+  "channel": "CherylVEVO"
+ },
+ "Pixie Lott": {
+  "id": "S6Mio-AipX4",
+  "title": "Pixie Lott - Good Wife (Official Video)",
+  "published": "2026-04-17",
+  "channel": "PixieLottVEVO"
+ },
+ "Rita Ora": {
+  "id": "SKkZ4DQ24AA",
+  "title": "Rita Ora - Finish Line (Official Music Video)",
+  "published": "2022-06-08",
+  "channel": "RitaOraVEVO"
+ },
+ "Hilary Duff": {
+  "id": "TJnu8KEtCqY",
+  "title": "Hilary Duff - My Kind (Official Video)",
+  "published": "2015-07-15",
+  "channel": "HilaryDuffVEVO"
+ },
+ "Nelly Furtado": {
+  "id": "lHYEMWFuErM",
+  "title": "Nelly Furtado, Boi-1Da, Canada Soccer - ELECTRIC CIRCUS (Official Music Video)",
+  "published": "2026-05-26",
+  "channel": "NellyFurtadoVEVO"
+ },
+ "Thalía": {
+  "id": "t9cKXDVtdhI",
+  "title": "Thalia - Cariño Mío (Official Video)",
+  "published": "2026-06-26",
+  "channel": "ThaliaVEVO"
+ },
+ "Belinda": {
+  "id": "bn4tU5Y9V-A",
+  "title": "Belinda - En La Oscuridad (Official Music Video)",
+  "published": "2022-02-21",
+  "channel": "belindavevo"
+ },
+ "Greeicy": {
+  "id": "AJnIK0IHt2g",
+  "title": "Greeicy - Mal o Bien (Official Video)",
+  "published": "2026-05-22",
+  "channel": "GreeicyVEVO"
+ },
+ "Lali": {
+  "id": "q-L9ERmT9TQ",
+  "title": "Lali - TU NOVIA II (ENSAYO VÉLEZ 2025) (Official Video)",
+  "published": "2025-12-12",
+  "channel": "LaliMusicaVEVO"
+ },
+ "María Becerra": {
+  "id": "uqBh-gchUz8",
+  "title": "Maria Becerra - Tú Sin Yo (Official Video)",
+  "published": "2026-11-06",
+  "channel": "Maria Becerra"
+ },
+ "Nicki Nicole": {
+  "id": "b160awHiF68",
+  "title": "Nicki Nicole - SHEITE (Official Video)",
+  "published": "2024-11-20",
+  "channel": "nickinicoleVEVO"
+ },
+ "Leslie Grace": {
+  "id": "iFyLgl5GMjY",
+  "title": "Leslie Grace - CREER EN EL AMOR (Official Video)",
+  "published": "2026-05-01",
+  "channel": "lesliegraceVEVO"
+ },
+ "Bad Gyal": {
+  "id": "WXzl4QM638s",
+  "title": "Bad Gyal - Un Coro y Ya :) (Official Video)",
+  "published": "2026-03-05",
+  "channel": "BadGyalVEVO"
+ },
+ "Becky Hill": {
+  "id": "mlrevxjSyiI",
+  "title": "Becky Hill - Changes (Official Video)",
+  "published": "2026-09-10",
+  "channel": "BeckyHillVEVO"
+ },
+ "Tyla": {
+  "id": "yT_AfrHbAyA",
+  "title": "Tyla - THAT GIRL (Official Music Video)",
+  "published": "2026-10-16",
+  "channel": "TylaVEVO"
+ },
+ "Rina Sawayama": {
+  "id": "hP7ttJ4UAFc",
+  "title": "Rina Sawayama - Frankenstein (Official Video)",
+  "published": "2022-10-27",
+  "channel": "RinaSawayamaVEVO"
+ },
+ "Charli XCX": {
+  "id": "eO3zsYsDnbI",
+  "title": "Charli xcx - Camera (Official Video)",
+  "published": "2026-07-21",
+  "channel": "Charli xcx"
+ },
+ "Sade": {
+  "id": "IFMmnMjFiPk",
+  "title": "Sade - Young Lion (Official Music Video)",
+  "published": "2024-11-22",
+  "channel": "SadeVEVO"
+ },
+ "Fantasia": {
+  "id": "PWnvhvDLD90",
+  "title": "Fantasia - SUPERPOWER (I) (Official Music Video)",
+  "published": "2024-01-12",
+  "channel": "FantasiaVEVO"
+ },
+ "_none": [
+  "Ed Sheeran",
+  "Justin Bieber",
+  "Ariana Grande",
+  "Billie Eilish",
+  "Dua Lipa",
+  "Rihanna",
+  "Beyoncé",
+  "Sia",
+  "Post Malone",
+  "Drake",
+  "Kendrick Lamar",
+  "Niall Horan",
+  "Louis Tomlinson",
+  "Liam Payne",
+  "Normani",
+  "Joe Jonas",
+  "Fergie",
+  "Meghan Trainor",
+  "Jason Derulo",
+  "Khalid",
+  "Ava Max",
+  "Bebe Rexha",
+  "Jennifer Lopez",
+  "Lorde",
+  "Whitney Houston",
+  "Britney Spears",
+  "Freddie Mercury",
+  "Paul McCartney",
+  "John Lennon",
+  "Calvin Harris",
+  "David Guetta",
+  "Avicii",
+  "Tones And I",
+  "Lizzo",
+  "Mike Posner",
+  "Shaggy",
+  "Coldplay",
+  "Imagine Dragons",
+  "Linkin Park",
+  "Twenty One Pilots",
+  "Little Mix",
+  "Backstreet Boys",
+  "ABBA",
+  "Nirvana",
+  "Fleetwood Mac",
+  "Major Lazer",
+  "LMFAO",
+  "Bad Bunny",
+  "Ozuna",
+  "Becky G",
+  "Anuel AA",
+  "Enrique Iglesias",
+  "Nicky Jam",
+  "Peso Pluma",
+  "Natti Natasha",
+  "Don Omar",
+  "Anitta",
+  "Bizarrap",
+  "Manuel Turizo",
+  "Danny Ocean",
+  "Sech",
+  "TINI",
+  "Madonna",
+  "Christina Aguilera",
+  "Gwen Stefani",
+  "Nicole Scherzinger",
+  "Alicia Keys",
+  "Avril Lavigne",
+  "Kylie Minogue",
+  "Shania Twain",
+  "Selena Quintanilla",
+  "Celia Cruz",
+  "Gloria Estefan",
+  "Celine Dion",
+  "Megan Thee Stallion",
+  "Carrie Underwood",
+  "Kelly Clarkson",
+  "Vanessa Hudgens",
+  "Mette Lindberg",
+  "Cassie Ventura",
+  "Christina Perri",
+  "Gabriella Cilmi",
+  "Alizée",
+  "Andrea Corr",
+  "Esmée Denters",
+  "Jewel",
+  "Natalie Imbruglia",
+  "Duffy",
+  "Katie Melua",
+  "Diana Vickers",
+  "Vanessa Paradis",
+  "Norah Jones",
+  "Paulina Rubio",
+  "Natalia Lafourcade",
+  "Anahí",
+  "Fanny Lu",
+  "Kany García",
+  "Sofía Reyes",
+  "Aitana",
+  "Kali Uchis",
+  "Toni Braxton",
+  "Vanessa Carlton"
+ ],
+ "_current": [
+  "Adele",
+  "Sabrina Carpenter",
+  "Wiz Khalifa",
+  "Chappell Roan",
+  "Shakira",
+  "Victoria Justice",
+  "Paula Abdul",
+  "Hailee Steinfeld",
+  "Mandy Moore",
+  "Lola Índigo",
+  "Fifth Harmony"
+ ],
+ "_blocked": {},
+ "_duplicates": {
+  "Elton John": {
+   "id": "dVptrkqoUDc",
+   "title": "Elton John - Step Into Christmas (Official Video 2024)",
+   "published": "2024-12-18",
+   "channel": "EltonJohnVEVO",
+   "sameSongAs": "Step Into Christmas"
+  },
+  "Kygo": {
+   "id": "Ftl1AGIjbRA",
+   "title": "Kygo, Carter Faith - That's When You Know (Official Music Video)",
+   "published": "2026-04-21",
+   "channel": "KygoOfficialVEVO",
+   "sameSongAs": "That's When You Know"
+  },
+  "Mark Ronson": {
+   "id": "c4kqox5uIns",
+   "title": "Mark Ronson, RAYE - Suzanne (Official Video)(日本語字幕ver.)",
+   "published": "2025-07-25",
+   "channel": "MarkRonsonVEVO",
+   "sameSongAs": "Suzanne"
+  }
+ },
+ "_failed": []
+}
