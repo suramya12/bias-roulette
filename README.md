@@ -8,6 +8,7 @@ Spin a wheel of idols, a showdown picks one, spin a wheel of that idol's songs, 
 |---|---|---|
 | **K-pop** | the site root (this README) | Bias Roulette of idols, K-pop Top 100 (Real 100 / Easy 100) |
 | **Pop & Latin** | [`pop/`](pop/README.md) | Roulette of English and Latin artists (All / Favourites decks), Pop & Latin Top 100 |
+| **Anime** | [`anime/`](anime/README.md) | Openings, endings and animated MVs. Data pipeline done; page coming. |
 
 Both pages share one header row: the genre menu (K-pop / Pop & Latin), the Roulette and Top 100 tabs, and the Binder. Switching genre keeps you in the same mode. The two sides keep their own code, data, update scripts and binder. Nothing is shared but the URL, so either side can be rebuilt without touching the other.
 

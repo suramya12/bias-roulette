@@ -6,7 +6,9 @@
   "description": "K-pop roulette game with a built-in YouTube player. Static site, no dependencies.",
   "scripts": {
     "start": "node scripts/serve.mjs",
-    "test": "node --test \"tests/*.test.mjs\"",
+    "test": "node --test tests/ anime/test/",
+    "anime:resolve": "node anime/scripts/resolve.mjs",
+    "anime:health": "node anime/scripts/health.mjs",
     "resolve": "node scripts/resolve.mjs",
     "charts": "node scripts/charts.mjs",
     "portraits": "node scripts/portraits.mjs"
