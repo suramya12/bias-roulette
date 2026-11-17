@@ -24,10 +24,18 @@
     "strikes": []
   },
   "aIQVnR1e9aw": {
-    "strikes": []
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Sailor Moon Cosmos cast cover, a different recording from DALI's original"
+    }
   },
   "nEJqugJ5fio": {
-    "strikes": []
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Sailor Moon S used the Moon Lips recording instead of DALI's original"
+    }
   },
   "BaHR_ojYH0M": {
     "strikes": []
@@ -99,7 +107,11 @@
     "strikes": []
   },
   "eNvD-D6Gw6c": {
-    "strikes": []
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: ClariS self-cover of “Connect” re-recorded for season 03, per the official description"
+    }
   },
   "Q0Ff_a5SSlA": {
     "strikes": []
@@ -225,7 +237,11 @@
     "strikes": []
   },
   "PZ5jBl3yJ0s": {
-    "strikes": []
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Yamazaru's Naruto Shippuden opening “Wind”, a different song from Akeboshi's Naruto ending"
+    }
   },
   "rHB2vlTFEiA": {
     "strikes": []
@@ -434,6 +450,1196 @@
     "booted": {
       "at": "2026-11-17T19:28:22.809Z",
       "reason": "manual review: not the song itself (re-edit, crossover or live/behind-the-scenes)"
+    }
+  },
+  "NuwC8ZM-kjM": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: fan-made Sailor Moon Crystal opening, confirmed by the uploader's description"
+    }
+  },
+  "kksAIo25Y8A": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Sailor Moon SuperS used the Moon Lips recording instead of DALI's original"
+    }
+  },
+  "XoxsF8M2Uv0": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Cutie Honey Universe fan edit with substituted song and footage"
+    }
+  },
+  "bU0XA_yVUm0": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: opening for Cutie Honey Universe, whose theme is AŌP's “Ai ga Nakucha Tatakaenai”"
+    }
+  },
+  "w6LFkMniuTk": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: 2012 Space Battleship Yamato 2199 remake opening, a different recording and sequence"
+    }
+  },
+  "51PjegTadWU": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Space Battleship Yamato 2199 remake opening, a different recording and sequence"
+    }
+  },
+  "39mbBe7Nv7I": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Latin American dub opening with different vocals"
+    }
+  },
+  "OEpvwWMBQG0": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: movie opening footage instead of the original TV opening"
+    }
+  },
+  "jvWPuMpC5Lo": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live stage performance, labeled “EN VIVO”"
+    }
+  },
+  "HVWdnEklf00": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: 2021 Lupin Part 6 arrangement and sequence instead of the 1977 Part II opening"
+    }
+  },
+  "5-6jz8H5Sl4": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Galaxy Express 999 ending, “Aoi Chikyuu”, instead of the opening"
+    }
+  },
+  "B4LibgB8V1E": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Arabic dub opening instead of Hiroko Suzuki's original Japanese recording"
+    }
+  },
+  "yB2t5y7ujlg": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: UVERworld's “Touch Off”, the opening for The Promised Neverland"
+    }
+  },
+  "oXUZVj7I2H8": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Dragon Ball Z: Kakarot video-game cinematic instead of the anime opening"
+    }
+  },
+  "6_CVR9XFjU4": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: FLOW's cover over Dragon Ball Super footage"
+    }
+  },
+  "I1NQCKR5y-Y": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Kinnikuman pachislot game version and footage"
+    }
+  },
+  "CFM_zypYFHM": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: One Piece opening 10 uses TVXQ's rerecording instead of Hiroshi Kitadani's original"
+    }
+  },
+  "3st-6vfy_3Q": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: marching band arrangement"
+    }
+  },
+  "uXoRIj845JQ": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: music box cover"
+    }
+  },
+  "WJwhr6saQTM": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: 2023 Rurouni Kenshin opening re-edited to the 1996 song"
+    }
+  },
+  "ePz7-s5dOck": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Brotherhood opening footage edited to the 2003 Fullmetal Alchemist theme"
+    }
+  },
+  "8TIfCX3cD7g": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Season 3 opening “et cetera” by imase, a different song"
+    }
+  },
+  "WmhklOWcYO8": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Season 2 opening “Sawakaze”, a different song"
+    }
+  },
+  "uPpEEJ9s5-c": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: multilanguage edit instead of Maaya Sakamoto's original Japanese recording"
+    }
+  },
+  "vY8WNyS60r4": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: music box cover"
+    }
+  },
+  "eZuDklxsaRg": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Ado's cover of “unravel” instead of TK's original"
+    }
+  },
+  "S7V5QLkcOto": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: music box cover"
+    }
+  },
+  "PZLRfgk-s2c": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: compilation of several opening versions"
+    }
+  },
+  "2QM28u6c_HM": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Spider-Verse crossover edit with Jujutsu Kaisen music"
+    }
+  },
+  "EDtgTejmzrY": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: fan-made full-length edit of the short Chainsaw Man opening"
+    }
+  },
+  "uxVdL7O2A4U": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Beat Saber gameplay footage"
+    }
+  },
+  "q1Wx6LCUqSY": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Beat Saber gameplay footage"
+    }
+  },
+  "MJ70B_cwnPk": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: NHK Kōhaku live performance in place of the film recording"
+    }
+  },
+  "qYcU41ew_BM": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: film promotional trailer with the ending theme instead of the song video"
+    }
+  },
+  "TuFmHA7h1_8": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: fan-built LEGO recreation of the anime opening"
+    }
+  },
+  "wrrB8u00X64": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: note block cover"
+    }
+  },
+  "ihZLtVsXEHs": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: ZUTOMAYO concert recording from Eien Shinya Expo"
+    }
+  },
+  "1TYYOw-815A": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: BABYMONSTER's awards-show live performance instead of HUNTR/X's recording"
+    }
+  },
+  "HzJv6sef8HY": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Worlds esports show performance instead of the Arcane music video"
+    }
+  },
+  "kf7Dss2gCe0": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Halle Bailey's performance from the live-action remake instead of Jodi Benson's original"
+    }
+  },
+  "IwH9YvhPN7c": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Elton John's end-credits rendition instead of the Carmen Twillie and Lebo M. opening"
+    }
+  },
+  "0DLzyvT4eUo": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Jordan Fisher and Lin-Manuel Miranda end-credits version instead of Dwayne Johnson's rendition"
+    }
+  },
+  "OahAdg5EJ5c": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: DCappella cover instead of Dwayne Johnson's original"
+    }
+  },
+  "3VqbiF3EBvA": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: multilingual montage of the song"
+    }
+  },
+  "-QOSz9G1GnY": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Hollywood Bowl live performance"
+    }
+  },
+  "mLsUEJPXubc": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: standalone lyric video"
+    }
+  },
+  "TeMWueB8DaI": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: alternate reprise embedded in a different scene"
+    }
+  },
+  "UrCU-nFUFQ0": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: cast a cappella rendition instead of 4*TOWN's studio recording"
+    }
+  },
+  "QtCbNDLeQGo": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live-action dance tutorial with NAIN, Sharon and KINA"
+    }
+  },
+  "pVWZ1eZze3s": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live-action K-Tigers choreography video instead of the animated song clip"
+    }
+  },
+  "6uYK78T3r1A": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live-action dance tutorial with Leejung Lee and dancers"
+    }
+  },
+  "MF1oRnT2y8E": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live-action K-Tigers choreography video instead of the animated song clip"
+    }
+  },
+  "h1WmKthYWIo": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Weathering with You trailer using the song rather than the film's insert sequence"
+    }
+  },
+  "kwl7P9pulQE": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Ranking of Kings song paired with Jujutsu Kaisen opening footage"
+    }
+  },
+  "x-J7Jw_9Sbo": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: montage of multiple versions of the ending"
+    }
+  },
+  "PJEcdBgBlVc": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: fan re-edit using later Jujutsu Kaisen footage"
+    }
+  },
+  "UHTwKJK3A5g": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: song paired with Sonic footage"
+    }
+  },
+  "k9qYM7tt0m8": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: a cappella edit rather than the original mix"
+    }
+  },
+  "p0wTexmrnN8": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: song paired with Spider-Verse footage"
+    }
+  },
+  "2ncSbSAtR1w": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: fan-made full-length edit of the opening"
+    }
+  },
+  "0EDEc96mxo8": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: song paired with Soul Eater footage"
+    }
+  },
+  "Wps7LBiCKsI": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: osu! gameplay instead of the opening or official video"
+    }
+  },
+  "PZSplt-5-lM": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: acoustic cover by JunbugP"
+    }
+  },
+  "GXPGcYjDii0": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: song paired with Prince Vladimir footage"
+    }
+  },
+  "GJj6PTgoqls": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: osu! gameplay instead of the opening"
+    }
+  },
+  "0AWiFJSSrPI": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: different song “Orpheus” labeled as the ending"
+    }
+  },
+  "T935XOJ_1g4": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: cover by Marianne Topacio and CollaboDaisakusen"
+    }
+  },
+  "BkJQebSXbJk": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Shangri-La Frontier opening, a different show and song from Fafner"
+    }
+  },
+  "ZvWas0GQjaU": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Roselia's cover in place of Mami Kawada's original"
+    }
+  },
+  "rFreO_xbyCc": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: StepMania gameplay"
+    }
+  },
+  "X05eI15I7a4": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Naruto Shippuden: Bonds movie footage instead of the TV opening"
+    }
+  },
+  "GNhq738kPsE": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: League of Legends crossover edit"
+    }
+  },
+  "-_yRpblM3o4": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Beat Saber custom gameplay"
+    }
+  },
+  "CX4MGnf5DqI": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: B-flat instrumental play-along arrangement"
+    }
+  },
+  "pX3KytiJ0Js": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: storyboard comparison instead of the original credits sequence"
+    }
+  },
+  "kEEd7yZ15EI": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Russian-language ending rendition"
+    }
+  },
+  "J-j32A2tTlk": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: storyboard comparison instead of the original credits sequence"
+    }
+  },
+  "UD7cs2kmLMM": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: alternate arrangement instead of the original recording"
+    }
+  },
+  "gU_rY1QL-Iw": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Homestuck crossover footage"
+    }
+  },
+  "E40mm0uHzvU": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Fate/Grand Order edit instead of the Durarara!! ending"
+    }
+  },
+  "_CV8xh-7DUQ": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Pokémon Special crossover edit"
+    }
+  },
+  "dplwU6GJL_E": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: 2nd GIG opening footage, whose opening theme is “rise”"
+    }
+  },
+  "QAVQvg8NePY": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: The Matrix Reloaded footage over the anime song"
+    }
+  },
+  "mHapQNhGR4k": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Tron: Legacy footage over the anime song"
+    }
+  },
+  "6wR-3kZMSDY": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: music box cover"
+    }
+  },
+  "jcl1efE96w8": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: orchestral arrangement instead of Chiwa Saito's original"
+    }
+  },
+  "5mGqK576iJk": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: ending for the Magia Record spin-off, a different song"
+    }
+  },
+  "flDtBichPLc": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: alternate Quattro arrangement for the Beginnings film"
+    }
+  },
+  "7tKp53ZmEtQ": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Higurashi Gou opening, whose song is “I Believe What You Said”"
+    }
+  },
+  "f4_I-qWpJcQ": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Higurashi Kai opening, whose song is “Naraku no Hana”"
+    }
+  },
+  "BtvW-upweMI": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: cover by Shadels instead of SID's recording"
+    }
+  },
+  "aR-KAldshAE": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: 2020 cover by 2WEI and Edda Hayes instead of the 2014 Imagine Dragons recording"
+    }
+  },
+  "jZSPAp8kCl4": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: original “Points of Authority” music video instead of the Reanimation track"
+    }
+  },
+  "yoCD5wZEgo4": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: original Hybrid Theory recording instead of the Reanimation track"
+    }
+  },
+  "Eem1KuH6WRE": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: demo of the original “Points of Authority” instead of the Reanimation track"
+    }
+  },
+  "3E78T8h5EhA": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live-action recording-session video instead of the animated Spider-Verse video"
+    }
+  },
+  "Eacjb88L0nA": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Aurelius cover instead of MYTH & ROID's recording"
+    }
+  },
+  "gqa0kkRvAw4": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Kuroko's Basketball crossover edit"
+    }
+  },
+  "QcoWII7NE7M": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: cover by Ōkami Ken and NEO"
+    }
+  },
+  "xDtP52L0rMU": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: music box cover"
+    }
+  },
+  "kCzeEZNC18M": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Mabinogi game performance instead of the Durarara!! opening"
+    }
+  },
+  "j14u2hsmH8w": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: AI-upscaled edit identified as waifu2x"
+    }
+  },
+  "QhwT2jn9qHQ": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Sara Bareilles's Disney 100 rendition instead of Cliff Edwards's original"
+    }
+  },
+  "Zye-4GGANzw": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Lily James's live-action Cinderella recording instead of Ilene Woods's original"
+    }
+  },
+  "1QOOiOflJ1I": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Daveed Diggs's rendition from the live-action remake"
+    }
+  },
+  "Wbv_huklr5E": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Daveed Diggs's rendition from the live-action remake"
+    }
+  },
+  "YxrTRc0P_xs": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Melissa McCarthy's live-action remake rendition"
+    }
+  },
+  "axySrE0Kg6k": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Ariana Grande and John Legend's live-action remake rendition"
+    }
+  },
+  "1at7kKzBYxI": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Will Smith's live-action remake performance instead of Robin Williams's original"
+    }
+  },
+  "rg_zwK_sSEY": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live-action remake end credits sung by ZAYN and Zhavia Ward"
+    }
+  },
+  "eitDnP0_83k": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live-action remake performance by Mena Massoud and Naomi Scott"
+    }
+  },
+  "ysb_gxJ8LE4": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: different actors and footage from the 2019 remake"
+    }
+  },
+  "RNprQYHenNI": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Christina Aguilera's 2020 remake rendition instead of Lea Salonga's 1998 recording"
+    }
+  },
+  "96bIzeRDu7Y": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Disney Princess Remixed cast cover"
+    }
+  },
+  "5pPgbIk_AUw": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Coco Jones's cover visualizer"
+    }
+  },
+  "0fVcwXbAWtA": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: second reprise from a different scene instead of the original song sequence"
+    }
+  },
+  "1APv9t_LyOY": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Disney's Circle of Stars cover"
+    }
+  },
+  "jp-CVYGEsjg": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Panic! at the Disco rendition instead of the Idina Menzel and AURORA scene"
+    }
+  },
+  "3uXhyHzuGMY": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: documentary orchestration segment instead of the Frozen II song sequence"
+    }
+  },
+  "_ZtBv0hTm1w": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live ROCK IN JAPAN FESTIVAL performance"
+    }
+  },
+  "qd1OyC3OMEI": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live performance at Nippon Budokan"
+    }
+  },
+  "ng08QQvjV0U": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live arrangement with the Osaka Toin High School wind band"
+    }
+  },
+  "1jCuCpYB7Sg": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live Seoul tour duet with Lee Suhyun"
+    }
+  },
+  "KS-68n34dGU": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live SING YOUR WORLD performance"
+    }
+  },
+  "qVsUPOH8uT4": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live CDTV performance"
+    }
+  },
+  "mtak9YCRdRo": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live performance at Nippon Budokan"
+    }
+  },
+  "2Ux6BA8Jlr4": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live ROAD GAME tour performance"
+    }
+  },
+  "Al_9DytnKnY": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live concert recording of an alternate “Darken” arrangement"
+    }
+  },
+  "lns8dfhEwzM": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Touring Band 2000 live performance instead of the animated music video"
+    }
+  },
+  "TUVcZfQe-Kw": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live-action video for the DaBaby version instead of the animated original"
+    }
+  },
+  "57bNHupO3MU": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: American Music Awards live performance"
+    }
+  },
+  "_nVJl4-o2XA": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Catherine Laga'aia rendition from the live-action remake"
+    }
+  },
+  "ZNra8eK0K6k": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Alessia Cara end-credits rendition instead of Auliʻi Cravalho's film performance"
+    }
+  },
+  "QZFG80gUPHo": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: finale reprise instead of the song's original scene"
+    }
+  },
+  "4UL-nFU2bCc": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Hollywood Bowl performance instead of the animated film scene"
+    }
+  },
+  "mYRn7ACI_To": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: album audio upload alongside the band's separately published animated video"
+    }
+  },
+  "EFt3q8Zws3c": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: album audio upload alongside the band's separately published animated video"
+    }
+  },
+  "9AQHJxOZI0U": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: The Boondocks crossover edit"
+    }
+  },
+  "w69E4g9mnmw": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Demon Slayer footage paired with the Samurai Champloo song"
+    }
+  },
+  "6e92Bp60D04": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: music box cover"
+    }
+  },
+  "rusiAam1t-s": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: 2023 “with my friends” rerecording instead of Rica Matsumoto's 1997 original"
+    }
+  },
+  "h2Wj62JIJEU": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: 2023 “with my friends” rerecording and later opening footage"
+    }
+  },
+  "bntfG0SReYI": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: combined intro and ending edit"
+    }
+  },
+  "KD18FTr00BU": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Latin American dub version in place of the original Japanese song"
+    }
+  },
+  "OZB-n8ouFGc": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: music box cover"
+    }
+  },
+  "ompmJHS9gCk": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: music box cover"
+    }
+  },
+  "W4myVPCX-LI": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: fan-made opening edit set to the Berserk insert song"
+    }
+  },
+  "A0azOIk0Kvg": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: reunion reprise sung by Anthony Gonzalez and Ana Ofelia Murguía"
+    }
+  },
+  "E7VPdpEV1m0": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Miguel and Natalia Lafourcade end-credits rendition"
+    }
+  },
+  "0SWjfpkuIk8": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Dragon Ball Xenoverse video-game opening in place of the DBZ anime sequence"
+    }
+  },
+  "mgbGQidT0lk": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Dragon Ball Z Kai opening rescored with a different song"
+    }
+  },
+  "0OdExTY2D8M": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: episode 1000 remake footage in place of the original One Piece opening"
+    }
+  },
+  "A1BDQeRZv3Q": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live-action dance rehearsal instead of the opening or music video"
+    }
+  },
+  "l694YSCOWAw": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Naruto crossover edit set to the Ranking of Kings song"
+    }
+  },
+  "2-yHC4hlyKE": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Russian RaveDJ mashup"
+    }
+  },
+  "soQjR5_GHXI": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: 2020 Higurashi Gou footage instead of the original opening"
+    }
+  },
+  "nVSSi4O4EDQ": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: music box cover"
+    }
+  },
+  "gWGxBJR_dsw": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: DCappella cover instead of the Turning Red cast recording"
+    }
+  },
+  "l-64INXIolE": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: reprise from a different scene"
+    }
+  },
+  "IhZI-a1eiCg": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Catherine Laga'aia rendition from the live-action remake"
+    }
+  },
+  "tHx6YDwrwpw": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Vocaloid cover instead of Eir Aoi's recording"
+    }
+  },
+  "qYS2VD3VTv8": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: ending “ninelie” instead of the EGOIST opening"
+    }
+  },
+  "eU7oDItvtso": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Roberta's Blood Trail OVA and its IO Drive Mix instead of the original opening recording"
+    }
+  },
+  "odQ9UWn9RuI": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: 2015 Digimon Adventure tri. rerecording instead of the 1999 ending"
+    }
+  },
+  "Vj0XVqc3bvE": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live performance at Nippon Budokan"
+    }
+  },
+  "toiX8Wio6fQ": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: live Yakiyaki Yankee tour performance"
+    }
+  },
+  "co4YpHTqmfQ": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: different Linkin Park song “Lost in the Echo”"
+    }
+  },
+  "DKkh8Cm_n3Q": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:06:19.410Z",
+      "reason": "manual review: Roberta's Blood Trail OVA and its IO Drive Mix instead of the original opening"
+    }
+  },
+  "fCsGF4XN5MM": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:09:31.031Z",
+      "reason": "manual review: \"cuckool mix\" remix, not the TV opening"
+    }
+  },
+  "JEvyaPAx4Dc": {
+    "strikes": [],
+    "booted": {
+      "at": "2026-11-17T22:09:31.031Z",
+      "reason": "manual review: sign-language version, not the film scene"
     }
   }
 }

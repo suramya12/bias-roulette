@@ -1,4 +1,5 @@
 [
   { "id": "theme", "label": "Anime themes", "addon": false, "default": true, "seed": "themes.txt" },
-  { "id": "animated-mv", "label": "Animated MVs", "addon": true, "default": true, "seed": "animated-mv.txt" }
+  { "id": "animated-mv", "label": "Animated MVs", "addon": true, "default": true, "seed": "animated-mv.txt" },
+  { "id": "animated-film", "label": "Animated films", "addon": true, "default": true, "seed": "animated-film.txt" }
 ]
