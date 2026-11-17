@@ -1,37 +1,18 @@
 {
-  "generated": "2026-11-17T18:18:37.995Z",
+  "generated": "2026-11-17T19:28:40.706Z",
   "songs": [
     {
       "id": "yuko-matsutani|lum-no-love-song",
       "artist": "Yuko Matsutani",
       "title": "Lum no Love Song",
-      "aliases": [],
+      "aliases": [
+        "ラムのラブソング"
+      ],
       "kind": "theme",
       "show": "Urusei Yatsura",
       "use": "OP",
       "year": 1981,
       "videos": [
-        {
-          "id": "pEVhv4eB8Q8",
-          "kind": "creditless",
-          "channel": "【フジテレビ】アニメ公式チャンネル",
-          "channelId": "UCO8okJvgXmbmyJTkUMWvURg",
-          "title": "TVアニメ『うる星やつら』ノンクレジットOP 【MAISONdes「アイウエ feat. 美波, SAKURAmoti」】| 毎週木曜日24時55分からフジテレビ\"ノイタミナ\"ほかにて放送中！",
-          "source": "official",
-          "seconds": 98,
-          "views": 23396390,
-          "published": "2022-10-13",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:13.382Z"
-          },
-          "checked": "2026-11-17T18:10:13.382Z"
-        },
         {
           "id": "qxWOieHDcSY",
           "kind": "creditless",
@@ -49,30 +30,9 @@
             "height": 720,
             "label": "720p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:14.167Z"
+            "checked": "2026-11-17T19:28:39.385Z"
           },
-          "checked": "2026-11-17T18:10:14.167Z"
-        },
-        {
-          "id": "3QH4N6g0EYo",
-          "kind": "tv",
-          "channel": "FateMurillo7w7",
-          "channelId": "UCYYQbN9Gfp8TxhbXbjyem_g",
-          "title": "Urusei Yatsura (2022) - OP / Opening 1080p HD \"Aiue\" by SAKURAmoti feat. Minami",
-          "source": "fan",
-          "seconds": 98,
-          "views": 1035095,
-          "published": "2022-10-13",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:16.389Z"
-          },
-          "checked": "2026-11-17T18:10:16.389Z"
+          "checked": "2026-11-17T19:28:39.385Z"
         },
         {
           "id": "kgTUwmpWPXs",
@@ -91,39 +51,41 @@
             "height": 720,
             "label": "720p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:19.019Z"
+            "checked": "2026-11-17T19:28:39.385Z"
           },
-          "checked": "2026-11-17T18:10:19.019Z"
+          "checked": "2026-11-17T19:28:39.385Z"
         }
       ],
       "video": {
-        "id": "pEVhv4eB8Q8",
+        "id": "qxWOieHDcSY",
         "kind": "creditless",
-        "channel": "【フジテレビ】アニメ公式チャンネル",
-        "channelId": "UCO8okJvgXmbmyJTkUMWvURg",
-        "title": "TVアニメ『うる星やつら』ノンクレジットOP 【MAISONdes「アイウエ feat. 美波, SAKURAmoti」】| 毎週木曜日24時55分からフジテレビ\"ノイタミナ\"ほかにて放送中！",
-        "source": "official",
-        "seconds": 98,
-        "views": 23396390,
-        "published": "2022-10-13",
+        "channel": "Urusei FS",
+        "channelId": "UCOAAYjcItF9c-BgMqpgQlIA",
+        "title": "Urusei Yatsura OP 1 - Lum no Love Song [NCOP] Creditless",
+        "source": "fan",
+        "seconds": 91,
+        "views": 7316,
+        "published": "2022-02-01",
         "hd": true,
         "quality": {
           "hd": true,
-          "width": 1920,
-          "height": 1080,
-          "label": "1080p",
+          "width": 960,
+          "height": 720,
+          "label": "720p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:10:13.382Z"
+          "checked": "2026-11-17T19:28:39.385Z"
         },
-        "checked": "2026-11-17T18:10:13.382Z"
+        "checked": "2026-11-17T19:28:39.385Z"
       },
-      "flag": "fAkNs2rUW6o: SD source; BHwXG4JfRpM: SD source"
+      "flag": "3NealvmeeCk: fan age/views gate unknown or unmet"
     },
     {
       "id": "hiroki-takahashi|makafushigi-adventure",
       "artist": "Hiroki Takahashi",
       "title": "Makafushigi Adventure!",
-      "aliases": [],
+      "aliases": [
+        "摩訶不思議アドベンチャー"
+      ],
       "kind": "theme",
       "show": "Dragon Ball",
       "use": "OP",
@@ -146,30 +108,9 @@
             "height": 1080,
             "label": "1080p60",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:21.421Z"
+            "checked": "2026-11-17T19:28:39.447Z"
           },
-          "checked": "2026-11-17T18:10:21.421Z"
-        },
-        {
-          "id": "OFmJKjUSam4",
-          "kind": "tv",
-          "channel": "yugidmx5",
-          "channelId": "UCfpHM74FB-3EIJE1vu-PUMg",
-          "title": "Dragon Ball | Makafushigi Adventure! | Textless English Opening 2 (w. original inst.)",
-          "source": "fan",
-          "seconds": 109,
-          "views": 46855,
-          "published": "2023-06-06",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1440,
-            "label": "1440p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:23.905Z"
-          },
-          "checked": "2026-11-17T18:10:23.905Z"
+          "checked": "2026-11-17T19:28:39.447Z"
         },
         {
           "id": "ZLNswh2Oi8o",
@@ -188,30 +129,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:28.933Z"
+            "checked": "2026-11-17T19:28:39.447Z"
           },
-          "checked": "2026-11-17T18:10:28.933Z"
-        },
-        {
-          "id": "FJqGirLjQn4",
-          "kind": "tv",
-          "channel": "Lionel Suarez",
-          "channelId": "UCO0x5KaxUscG9zlnWJwZvWQ",
-          "title": "Dragon Ball - Makafushigi Adventure (Opening 1 HQ Audio)",
-          "source": "fan",
-          "seconds": 106,
-          "views": 9211222,
-          "published": "2011-03-15",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1280,
-            "height": 720,
-            "label": "720p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:26.482Z"
-          },
-          "checked": "2026-11-17T18:10:26.482Z"
+          "checked": "2026-11-17T19:28:39.447Z"
         }
       ],
       "video": {
@@ -231,17 +151,20 @@
           "height": 1080,
           "label": "1080p60",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:10:21.421Z"
+          "checked": "2026-11-17T19:28:39.447Z"
         },
-        "checked": "2026-11-17T18:10:21.421Z"
+        "checked": "2026-11-17T19:28:39.447Z"
       },
-      "flag": "Qu9m-vgSzJQ: fan age/views gate unknown or unmet; L7Yfq0Em8Ac: fan age/views gate unknown or unmet; G-s4hjcEJWU: fan age/views gate unknown or unmet; CRC6qDl3jgQ: fan age/views gate unknown or unmet; rrG05Ti-074: SD source; 1QMAxVsdY8U: fan age/views gate unknown or unmet; 2V0BmNqIwKU: fan age/views gate unknown or unmet; mkRm2QgZ_ds: fan age/views gate unknown or unmet; VQrhAPLQgFk: SD source; h50xenagK7M: fan age/views gate unknown or unmet"
+      "flag": "Qu9m-vgSzJQ: fan age/views gate unknown or unmet; L7Yfq0Em8Ac: fan age/views gate unknown or unmet; G-s4hjcEJWU: fan age/views gate unknown or unmet; mkRm2QgZ_ds: fan age/views gate unknown or unmet; VQrhAPLQgFk: SD source; cCEeh_BgJgA: fan age/views gate unknown or unmet; h50xenagK7M: fan age/views gate unknown or unmet"
     },
     {
       "id": "dali|moonlight-densetsu",
       "artist": "DALI",
       "title": "Moonlight Densetsu",
-      "aliases": [],
+      "aliases": [
+        "Moonlight Legend",
+        "ムーンライト伝説"
+      ],
       "kind": "theme",
       "show": "Sailor Moon",
       "use": "OP",
@@ -264,9 +187,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:31.372Z"
+            "checked": "2026-11-17T19:28:39.515Z"
           },
-          "checked": "2026-11-17T18:10:31.372Z"
+          "checked": "2026-11-17T19:28:39.515Z"
         },
         {
           "id": "nEJqugJ5fio",
@@ -285,20 +208,41 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:33.944Z"
+            "checked": "2026-11-17T19:28:39.515Z"
           },
-          "checked": "2026-11-17T18:10:33.944Z"
+          "checked": "2026-11-17T19:28:39.515Z"
         },
         {
-          "id": "BaHR_ojYH0M",
-          "kind": "creditless",
-          "channel": "Pancake Bob",
-          "channelId": "UCFh5IUXxuLATui793ndLVNw",
-          "title": "Sailor Moon S OP 1080p HD Creditless",
+          "id": "NuwC8ZM-kjM",
+          "kind": "tv",
+          "channel": "jayrickz",
+          "channelId": "UCgBKdPc5XsI2MJrAkh0kkbA",
+          "title": "Sailor Moon Crystal Season 3 OP (Moonlight Densetsu)",
+          "source": "fan",
+          "seconds": 80,
+          "views": 224073,
+          "published": "2016-03-27",
+          "hd": true,
+          "quality": {
+            "hd": true,
+            "width": 1920,
+            "height": 1080,
+            "label": "1080p",
+            "source": "watch-page-formats",
+            "checked": "2026-11-17T19:28:39.515Z"
+          },
+          "checked": "2026-11-17T19:28:39.515Z"
+        },
+        {
+          "id": "kksAIo25Y8A",
+          "kind": "tv",
+          "channel": "Sera Mun Doremi",
+          "channelId": "UC39hWhySSQjfeSrnSzVFaQA",
+          "title": "Sailor Moon Super S Opening 1 Full HD 1080p [Moonlight Densetsu]",
           "source": "fan",
           "seconds": 94,
-          "views": 1311,
-          "published": "2022-05-21",
+          "views": 119343,
+          "published": "2016-02-18",
           "hd": true,
           "quality": {
             "hd": true,
@@ -306,30 +250,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:36.455Z"
+            "checked": "2026-11-17T19:28:39.515Z"
           },
-          "checked": "2026-11-17T18:10:36.455Z"
-        },
-        {
-          "id": "SEAT_iFKh0o",
-          "kind": "creditless",
-          "channel": "Pancake Bob",
-          "channelId": "UCFh5IUXxuLATui793ndLVNw",
-          "title": "Sailor Moon R OP2 1080p HD Creditless",
-          "source": "fan",
-          "seconds": 94,
-          "views": 1202,
-          "published": "2022-05-21",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1440,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:38.868Z"
-          },
-          "checked": "2026-11-17T18:10:38.868Z"
+          "checked": "2026-11-17T19:28:39.515Z"
         }
       ],
       "video": {
@@ -349,43 +272,26 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:10:31.372Z"
+          "checked": "2026-11-17T19:28:39.515Z"
         },
-        "checked": "2026-11-17T18:10:31.372Z"
+        "checked": "2026-11-17T19:28:39.515Z"
       },
-      "flag": "XLHD7DjneKQ: SD source; oRRDNf_chVk: fan age/views gate unknown or unmet; bUnr-qmqKAA: SD source; MQ4I11ictOw: fan age/views gate unknown or unmet; ACfeH6Kgzfs: SD source; D786EyLf6dw: fan age/views gate unknown or unmet"
+      "flag": "XLHD7DjneKQ: SD source; oRRDNf_chVk: fan age/views gate unknown or unmet; gGt8jhP-fAc: SD source; D786EyLf6dw: fan age/views gate unknown or unmet"
     },
     {
       "id": "yoko-takahashi|zankoku-na-tenshi-no-thesis",
       "artist": "Yoko Takahashi",
       "title": "Zankoku na Tenshi no Thesis",
-      "aliases": [],
+      "aliases": [
+        "A Cruel Angel's Thesis",
+        "Cruel Angel's Thesis",
+        "残酷な天使のテーゼ"
+      ],
       "kind": "theme",
       "show": "Neon Genesis Evangelion",
       "use": "OP",
       "year": 1995,
       "videos": [
-        {
-          "id": "CnVAiV1QkYM",
-          "kind": "tv",
-          "channel": "Remastering By Criszato",
-          "channelId": "UCnwON85FaFoDB1OfQPvWb5w",
-          "title": "NEON GENESIS EVANGELION OPENING | 4K 60FPS",
-          "source": "fan",
-          "seconds": 109,
-          "views": 322730,
-          "published": "2021-10-23",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 2880,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:41.367Z"
-          },
-          "checked": "2026-11-17T18:10:41.367Z"
-        },
         {
           "id": "nU21rCWkuJw",
           "kind": "tv",
@@ -403,75 +309,33 @@
             "height": 1080,
             "label": "1080p60",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:44.050Z"
+            "checked": "2026-11-17T19:28:39.572Z"
           },
-          "checked": "2026-11-17T18:10:44.050Z"
-        },
-        {
-          "id": "mi1ENNZ0vso",
-          "kind": "tv",
-          "channel": "NoSekai react mashup",
-          "channelId": "UC2suQ01BnwTdh6smBuslH0A",
-          "title": "Neon Genesis Evangelion Opening 「Zankoku na Tenshi no Thesis」 - react mashup (新世紀エヴァンゲリオンOP)",
-          "source": "fan",
-          "seconds": 110,
-          "views": 1509387,
-          "published": "2023-07-24",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:46.457Z"
-          },
-          "checked": "2026-11-17T18:10:46.457Z"
-        },
-        {
-          "id": "HfwXVCQ1jnU",
-          "kind": "tv",
-          "channel": "Main",
-          "channelId": "UCpmovHgaf55p4b_vSnB0EFw",
-          "title": "Neon Genesis Evangelion [Opening / No Vocals] 60fps",
-          "source": "fan",
-          "seconds": 91,
-          "views": 239784,
-          "published": "2018-06-14",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:49.031Z"
-          },
-          "checked": "2026-11-17T18:10:49.031Z"
+          "checked": "2026-11-17T19:28:39.572Z"
         }
       ],
       "video": {
-        "id": "CnVAiV1QkYM",
+        "id": "nU21rCWkuJw",
         "kind": "tv",
-        "channel": "Remastering By Criszato",
-        "channelId": "UCnwON85FaFoDB1OfQPvWb5w",
-        "title": "NEON GENESIS EVANGELION OPENING | 4K 60FPS",
+        "channel": "Menelamdir",
+        "channelId": "UCKSekytdLHLIepk8aWs742w",
+        "title": "Neon Genesis Evangelion (A Cruel Angel's Thesis) Anime Intro Opening Theme BluRay (Epilepsy Warning)",
         "source": "fan",
-        "seconds": 109,
-        "views": 322730,
-        "published": "2021-10-23",
+        "seconds": 91,
+        "views": 20139758,
+        "published": "2017-08-10",
         "hd": true,
         "quality": {
           "hd": true,
-          "width": 2880,
-          "height": 2160,
-          "label": "2160p60",
+          "width": 1920,
+          "height": 1080,
+          "label": "1080p60",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:10:41.367Z"
+          "checked": "2026-11-17T19:28:39.572Z"
         },
-        "checked": "2026-11-17T18:10:41.367Z"
+        "checked": "2026-11-17T19:28:39.572Z"
       },
-      "flag": "WWWTWgyYYAk: fan age/views gate unknown or unmet"
+      "flag": null
     },
     {
       "id": "seatbelts|tank",
@@ -500,30 +364,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:51.492Z"
+            "checked": "2026-11-17T19:28:39.601Z"
           },
-          "checked": "2026-11-17T18:10:51.492Z"
-        },
-        {
-          "id": "Ve442ope5kA",
-          "kind": "creditless",
-          "channel": "TriaxFx",
-          "channelId": "UCGBEqfgTB0PZhKVp5XjIOzA",
-          "title": "「Creditless」Cowboy Bebop OP / Opening「UHD 60FPS」",
-          "source": "fan",
-          "seconds": 102,
-          "views": 51972,
-          "published": "2022-09-26",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:54.040Z"
-          },
-          "checked": "2026-11-17T18:10:54.040Z"
+          "checked": "2026-11-17T19:28:39.601Z"
         },
         {
           "id": "zjwGHDfQeRI",
@@ -542,9 +385,9 @@
             "height": 720,
             "label": "720p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:56.510Z"
+            "checked": "2026-11-17T19:28:39.601Z"
           },
-          "checked": "2026-11-17T18:10:56.510Z"
+          "checked": "2026-11-17T19:28:39.601Z"
         },
         {
           "id": "3vWWa1HScck",
@@ -563,9 +406,30 @@
             "height": 720,
             "label": "720p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:10:58.989Z"
+            "checked": "2026-11-17T19:28:39.601Z"
           },
-          "checked": "2026-11-17T18:10:58.989Z"
+          "checked": "2026-11-17T19:28:39.601Z"
+        },
+        {
+          "id": "0hfOyOBHIq4",
+          "kind": "tv",
+          "channel": "Anime Guy",
+          "channelId": "UCdGK4MOyB0RMwNn0_qDss3w",
+          "title": "Cowboy Bebop - Opening - Tank! (HD - 60 fps)",
+          "source": "fan",
+          "seconds": 90,
+          "views": 2391264,
+          "published": "2020-11-20",
+          "hd": true,
+          "quality": {
+            "hd": true,
+            "width": 1920,
+            "height": 1440,
+            "label": "1440p60",
+            "source": "watch-page-formats",
+            "checked": "2026-11-17T19:28:39.601Z"
+          },
+          "checked": "2026-11-17T19:28:39.601Z"
         }
       ],
       "video": {
@@ -585,9 +449,9 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:10:51.492Z"
+          "checked": "2026-11-17T19:28:39.601Z"
         },
-        "checked": "2026-11-17T18:10:51.492Z"
+        "checked": "2026-11-17T19:28:39.601Z"
       },
       "flag": "T6zDfxZ4NcE: SD source"
     },
@@ -618,72 +482,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:01.460Z"
+            "checked": "2026-11-17T19:28:39.643Z"
           },
-          "checked": "2026-11-17T18:11:01.460Z"
-        },
-        {
-          "id": "zppb-iR_9oc",
-          "kind": "creditless",
-          "channel": "Prez",
-          "channelId": "UC4_T8vNF3ORQJWlpZGnZu1g",
-          "title": "[4K | 60FPS] Serial Experiments Lain Opening Creditless",
-          "source": "fan",
-          "seconds": 133,
-          "views": 23138,
-          "published": "2022-06-04",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:04.286Z"
-          },
-          "checked": "2026-11-17T18:11:04.286Z"
-        },
-        {
-          "id": "MM8RufZr5lw",
-          "kind": "creditless",
-          "channel": "Degurechaff",
-          "channelId": "UCPC8QPYZwXW7a4nmdME9aVA",
-          "title": "Serial Experiments Lain Opening (HD/60fps/Creditless)",
-          "source": "fan",
-          "seconds": 102,
-          "views": 6206412,
-          "published": "2021-09-21",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:06.518Z"
-          },
-          "checked": "2026-11-17T18:11:06.518Z"
-        },
-        {
-          "id": "92NCYUPtXfA",
-          "kind": "tv",
-          "channel": "ThisIs MyName",
-          "channelId": "UCMhhSf_ugDpkYVOs8c6YFrA",
-          "title": "Serial Experiments Lain OP (opening theme) 1080p HD",
-          "source": "fan",
-          "seconds": 119,
-          "views": 64485,
-          "published": "2015-09-06",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1520,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:09.105Z"
-          },
-          "checked": "2026-11-17T18:11:09.105Z"
+          "checked": "2026-11-17T19:28:39.643Z"
         }
       ],
       "video": {
@@ -703,11 +504,11 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:11:01.460Z"
+          "checked": "2026-11-17T19:28:39.643Z"
         },
-        "checked": "2026-11-17T18:11:01.460Z"
+        "checked": "2026-11-17T19:28:39.643Z"
       },
-      "flag": "mv used for a theme; JlBLcLdTYr4: SD source"
+      "flag": "mv used for a theme"
     },
     {
       "id": "flow|go",
@@ -721,48 +522,6 @@
       "use": "OP",
       "year": 2004,
       "videos": [
-        {
-          "id": "97dkzVU4p-M",
-          "kind": "tv",
-          "channel": "Crunchyroll",
-          "channelId": "UC6pGDc4bFGD1_36IKv3FnYg",
-          "title": "Naruto Shippuden Opening 6 | Sign by FLOW",
-          "source": "official",
-          "seconds": 99,
-          "views": 20609041,
-          "published": "2018-11-21",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:11.655Z"
-          },
-          "checked": "2026-11-17T18:11:11.655Z"
-        },
-        {
-          "id": "MkN--nO5G1g",
-          "kind": "tv",
-          "channel": "Crunchyroll",
-          "channelId": "UC6pGDc4bFGD1_36IKv3FnYg",
-          "title": "Naruto Opening 5 | Rhapsody of Youth by Sambomaster",
-          "source": "official",
-          "seconds": 100,
-          "views": 10544215,
-          "published": "2018-11-09",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1280,
-            "height": 720,
-            "label": "720p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:14.103Z"
-          },
-          "checked": "2026-11-17T18:11:14.103Z"
-        },
         {
           "id": "GBE1VkrL8b0",
           "kind": "tv",
@@ -780,65 +539,67 @@
             "height": 720,
             "label": "720p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:16.562Z"
+            "checked": "2026-11-17T19:28:39.673Z"
           },
-          "checked": "2026-11-17T18:11:16.562Z"
-        },
-        {
-          "id": "frdz6P8uwv4",
-          "kind": "creditless",
-          "channel": "Anime Guy",
-          "channelId": "UCdGK4MOyB0RMwNn0_qDss3w",
-          "title": "Naruto Shippuden - Opening 3 (Creditless) (HD - 60 fps)",
-          "source": "fan",
-          "seconds": 90,
-          "views": 6982044,
-          "published": "2020-12-27",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 2560,
-            "height": 1440,
-            "label": "1440p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:19.112Z"
-          },
-          "checked": "2026-11-17T18:11:19.112Z"
+          "checked": "2026-11-17T19:28:39.673Z"
         }
       ],
       "video": {
-        "id": "97dkzVU4p-M",
+        "id": "GBE1VkrL8b0",
         "kind": "tv",
         "channel": "Crunchyroll",
         "channelId": "UC6pGDc4bFGD1_36IKv3FnYg",
-        "title": "Naruto Shippuden Opening 6 | Sign by FLOW",
+        "title": "Naruto - Opening 4 | GO!!!",
         "source": "official",
-        "seconds": 99,
-        "views": 20609041,
-        "published": "2018-11-21",
+        "seconds": 100,
+        "views": 2272730,
+        "published": "2018-11-08",
         "hd": true,
         "quality": {
           "hd": true,
-          "width": 1920,
-          "height": 1080,
-          "label": "1080p",
+          "width": 1280,
+          "height": 720,
+          "label": "720p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:11:11.655Z"
+          "checked": "2026-11-17T19:28:39.673Z"
         },
-        "checked": "2026-11-17T18:11:11.655Z"
+        "checked": "2026-11-17T19:28:39.673Z"
       },
-      "flag": "gtMW-QBWBlQ: fan age/views gate unknown or unmet; bchuU57eTjA: SD source; slq_YcCI5xk: fan age/views gate unknown or unmet"
+      "flag": "bchuU57eTjA: SD source"
     },
     {
       "id": "shoko-nakagawa|sorairo-days",
       "artist": "Shoko Nakagawa",
       "title": "Sorairo Days",
-      "aliases": [],
+      "aliases": [
+        "空色デイズ"
+      ],
       "kind": "theme",
       "show": "Gurren Lagann",
       "use": "OP",
       "year": 2007,
       "videos": [
+        {
+          "id": "93YiJx4Sj7k",
+          "kind": "tv",
+          "channel": "AnimotionTV",
+          "channelId": "UCFLAJHJvLlTofPFnh_YYelQ",
+          "title": "Tengen Toppa Gurren Lagann-Sorairo Days (Opening 1)",
+          "source": "fan",
+          "seconds": 91,
+          "views": 981145,
+          "published": "2011-02-13",
+          "hd": true,
+          "quality": {
+            "hd": true,
+            "width": 1200,
+            "height": 720,
+            "label": "720p",
+            "source": "watch-page-formats",
+            "checked": "2026-11-17T19:28:39.705Z"
+          },
+          "checked": "2026-11-17T19:28:39.705Z"
+        },
         {
           "id": "vVGa8I0Atcg",
           "kind": "mv",
@@ -856,96 +617,33 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:21.635Z"
+            "checked": "2026-11-17T19:28:39.705Z"
           },
-          "checked": "2026-11-17T18:11:21.635Z"
-        },
-        {
-          "id": "flRzHu94_bc",
-          "kind": "creditless",
-          "channel": "Mike The Anime Runner",
-          "channelId": "UCMCrhWVGfrCV3qLuaNqsYAg",
-          "title": "[Gurren Lagann] Opening 1 English by Sapphire HD creditless",
-          "source": "fan",
-          "seconds": 91,
-          "views": 184694,
-          "published": "2014-05-29",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:24.226Z"
-          },
-          "checked": "2026-11-17T18:11:24.226Z"
-        },
-        {
-          "id": "okQAIvSAUQw",
-          "kind": "creditless",
-          "channel": "nelson risso risso",
-          "channelId": "UCjQTegfLuQsPCP0YbzS6OYQ",
-          "title": "Gurren Lagann SP01 NCOP   02 BD 1920x1080 x 264 Flac",
-          "source": "fan",
-          "seconds": 91,
-          "views": 3368,
-          "published": "2018-05-19",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:26.616Z"
-          },
-          "checked": "2026-11-17T18:11:26.616Z"
-        },
-        {
-          "id": "h6wPbJlFBUw",
-          "kind": "creditless",
-          "channel": "Blu",
-          "channelId": "UCaU3v5mqOPPxrCRBA9Uv18Q",
-          "title": "Tengen Toppa Gurren Lagann OP Ver. 1 HD [Creditless]",
-          "source": "fan",
-          "seconds": 91,
-          "views": 209267,
-          "published": "2014-10-30",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1280,
-            "height": 720,
-            "label": "720p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:29.149Z"
-          },
-          "checked": "2026-11-17T18:11:29.149Z"
+          "checked": "2026-11-17T19:28:39.705Z"
         }
       ],
       "video": {
-        "id": "vVGa8I0Atcg",
-        "kind": "mv",
-        "channel": "Shoko Nakagawa OFFICIAL YouTube CHANNEL",
-        "channelId": "UCLW97wZQjnzStp4eMxRf3Kg",
-        "title": "中川翔子『空色デイズ』 ～ 天元突破グレンラガン special music video ～",
-        "source": "official",
-        "seconds": 262,
-        "views": 23245997,
-        "published": "2023-09-22",
+        "id": "93YiJx4Sj7k",
+        "kind": "tv",
+        "channel": "AnimotionTV",
+        "channelId": "UCFLAJHJvLlTofPFnh_YYelQ",
+        "title": "Tengen Toppa Gurren Lagann-Sorairo Days (Opening 1)",
+        "source": "fan",
+        "seconds": 91,
+        "views": 981145,
+        "published": "2011-02-13",
         "hd": true,
         "quality": {
           "hd": true,
-          "width": 1920,
-          "height": 1080,
-          "label": "1080p",
+          "width": 1200,
+          "height": 720,
+          "label": "720p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:11:21.635Z"
+          "checked": "2026-11-17T19:28:39.705Z"
         },
-        "checked": "2026-11-17T18:11:21.635Z"
+        "checked": "2026-11-17T19:28:39.705Z"
       },
-      "flag": "mv used for a theme; PKRUKalbx3s: fan MV for a theme; JrBvEFH7fU8: Topic channel; cawZ5WCg1yE: fan MV for a theme; jUQwZaArVqw: fan age/views gate unknown or unmet; tLvXOiAzVSo: SD source; galkY9ER-Mk: SD source; QuilwDDtgDs: fan age/views gate unknown or unmet"
+      "flag": "PKRUKalbx3s: fan MV for a theme; JrBvEFH7fU8: Topic channel; galkY9ER-Mk: SD source"
     },
     {
       "id": "yui|again",
@@ -957,69 +655,6 @@
       "use": "OP",
       "year": 2009,
       "videos": [
-        {
-          "id": "saTFiAV4exc",
-          "kind": "creditless",
-          "channel": "Bruh Clan",
-          "channelId": "UC3mZvZYxau7ngCxKSJy31jA",
-          "title": "Fullmetal Alchemist: Brotherhood All Openings 1-5 | Creditless | English / Romaji Subtitles",
-          "source": "fan",
-          "seconds": 497,
-          "views": 1228979,
-          "published": "2023-12-07",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:15:47.473Z"
-          },
-          "checked": "2026-11-17T18:15:47.473Z"
-        },
-        {
-          "id": "cMsDqVx777k",
-          "kind": "creditless",
-          "channel": "Animelab TV",
-          "channelId": "UCVI-ZP9OBj9GtylRUlGmwnA",
-          "title": "Fullmetal Alchemist Brotherhood - Opening 5 | FULL HD | 60FPS | Creditless |",
-          "source": "fan",
-          "seconds": 90,
-          "views": 581914,
-          "published": "2023-01-23",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:15:47.473Z"
-          },
-          "checked": "2026-11-17T18:15:47.473Z"
-        },
-        {
-          "id": "dmEM-lEreFg",
-          "kind": "creditless",
-          "channel": "Animelab TV",
-          "channelId": "UCVI-ZP9OBj9GtylRUlGmwnA",
-          "title": "Fullmetal Alchemist Brotherhood - Opening 1 | FULL HD | 60FPS | Creditless |",
-          "source": "fan",
-          "seconds": 91,
-          "views": 77430,
-          "published": "2023-01-23",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:15:47.473Z"
-          },
-          "checked": "2026-11-17T18:15:47.473Z"
-        },
         {
           "id": "zWqiVM4ma-k",
           "kind": "creditless",
@@ -1037,21 +672,21 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:15:47.473Z"
+            "checked": "2026-11-17T19:28:39.747Z"
           },
-          "checked": "2026-11-17T18:15:47.473Z"
+          "checked": "2026-11-17T19:28:39.747Z"
         }
       ],
       "video": {
-        "id": "saTFiAV4exc",
+        "id": "zWqiVM4ma-k",
         "kind": "creditless",
-        "channel": "Bruh Clan",
-        "channelId": "UC3mZvZYxau7ngCxKSJy31jA",
-        "title": "Fullmetal Alchemist: Brotherhood All Openings 1-5 | Creditless | English / Romaji Subtitles",
+        "channel": "CyberCodeFX",
+        "channelId": "UCZD1ypcRzv1xBTfVelwu1Bw",
+        "title": "Fullmetal Alchemist: Brotherhood | Opening 1 - Again | 4K | Creditless | HD",
         "source": "fan",
-        "seconds": 497,
-        "views": 1228979,
-        "published": "2023-12-07",
+        "seconds": 97,
+        "views": 607,
+        "published": "2021-12-05",
         "hd": true,
         "quality": {
           "hd": true,
@@ -1059,17 +694,19 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:15:47.473Z"
+          "checked": "2026-11-17T19:28:39.747Z"
         },
-        "checked": "2026-11-17T18:15:47.473Z"
+        "checked": "2026-11-17T19:28:39.747Z"
       },
-      "flag": "cMi-QhJthGM: fan age/views gate unknown or unmet; uOpl3bptbTU: fan age/views gate unknown or unmet; STacGwRRSz0: fan age/views gate unknown or unmet; a-Jr5JW-EMQ: fan age/views gate unknown or unmet"
+      "flag": "cMi-QhJthGM: fan age/views gate unknown or unmet; a-Jr5JW-EMQ: fan age/views gate unknown or unmet"
     },
     {
       "id": "claris|connect",
       "artist": "ClariS",
       "title": "Connect",
-      "aliases": [],
+      "aliases": [
+        "コネクト"
+      ],
       "kind": "theme",
       "show": "Puella Magi Madoka Magica",
       "use": "OP",
@@ -1092,72 +729,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:34.072Z"
+            "checked": "2026-11-17T19:28:39.782Z"
           },
-          "checked": "2026-11-17T18:11:34.072Z"
-        },
-        {
-          "id": "Q0Ff_a5SSlA",
-          "kind": "creditless",
-          "channel": "HomuAkemi",
-          "channelId": "UCTgbC1yI6P3OrJW8ppbRrgA",
-          "title": "Puella Magi Madoka Magica: Rebellion OP - ClariS - Colorful ⎪ Creditless",
-          "source": "fan",
-          "seconds": 95,
-          "views": 225202,
-          "published": "2023-03-05",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:36.761Z"
-          },
-          "checked": "2026-11-17T18:11:36.761Z"
-        },
-        {
-          "id": "pZDQjXX5nyM",
-          "kind": "creditless",
-          "channel": "HomuAkemi",
-          "channelId": "UCTgbC1yI6P3OrJW8ppbRrgA",
-          "title": "Puella Magi Madoka Magica: Begginings / Eternal OP - ClariS - Luminous ⎪ Creditless",
-          "source": "fan",
-          "seconds": 99,
-          "views": 205312,
-          "published": "2023-03-05",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:39.183Z"
-          },
-          "checked": "2026-11-17T18:11:39.183Z"
-        },
-        {
-          "id": "rNOTnm2M1a0",
-          "kind": "creditless",
-          "channel": "lesbian demon",
-          "channelId": "UCA7vr75KTeTRAT4PZguRoFw",
-          "title": "Puella Magi Madoka Magica : ED - Creditless (Magia)",
-          "source": "fan",
-          "seconds": 93,
-          "views": 180200,
-          "published": "2021-06-30",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:41.823Z"
-          },
-          "checked": "2026-11-17T18:11:41.823Z"
+          "checked": "2026-11-17T19:28:39.782Z"
         }
       ],
       "video": {
@@ -1177,17 +751,20 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:11:34.072Z"
+          "checked": "2026-11-17T19:28:39.782Z"
         },
-        "checked": "2026-11-17T18:11:34.072Z"
+        "checked": "2026-11-17T19:28:39.782Z"
       },
-      "flag": "mv used for a theme; A_sKoV8Cw2Y: Topic channel; gcLZSyimDAg: Topic channel; VifUij53XXU: fan age/views gate unknown or unmet; In1fAkROISM: fan age/views gate unknown or unmet"
+      "flag": "mv used for a theme; A_sKoV8Cw2Y: Topic channel"
     },
     {
       "id": "linked-horizon|guren-no-yumiya",
       "artist": "Linked Horizon",
       "title": "Guren no Yumiya",
-      "aliases": [],
+      "aliases": [
+        "Feuerroter Pfeil und Bogen",
+        "紅蓮の弓矢"
+      ],
       "kind": "theme",
       "show": "Attack on Titan",
       "use": "OP",
@@ -1210,30 +787,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:44.193Z"
+            "checked": "2026-11-17T19:28:39.812Z"
           },
-          "checked": "2026-11-17T18:11:44.193Z"
-        },
-        {
-          "id": "StLX4kITjWU",
-          "kind": "creditless",
-          "channel": "Anicrad",
-          "channelId": "UCY7Ku9z2i8gxyxQj-cMUuHQ",
-          "title": "Attack on Titan - Opening 1 | 4K | 60FPS | Creditless |",
-          "source": "fan",
-          "seconds": 105,
-          "views": 3272688,
-          "published": "2022-01-08",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:46.934Z"
-          },
-          "checked": "2026-11-17T18:11:46.934Z"
+          "checked": "2026-11-17T19:28:39.812Z"
         },
         {
           "id": "AW5_k_Cf4wM",
@@ -1252,30 +808,30 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:49.311Z"
+            "checked": "2026-11-17T19:28:39.812Z"
           },
-          "checked": "2026-11-17T18:11:49.311Z"
+          "checked": "2026-11-17T19:28:39.812Z"
         },
         {
-          "id": "mPCGyEzGd_Y",
-          "kind": "creditless",
-          "channel": "Creditless Anime Songs",
-          "channelId": "UC6NFkgaDZ7s0Ea8bOzuO44g",
-          "title": "Attack on Titan Opening 1 Creditless",
+          "id": "nXw1-cXabks",
+          "kind": "tv",
+          "channel": "Mikaela Hyakuya",
+          "channelId": "UC-kKVzRG-Wa23LSkUTKuiiQ",
+          "title": "Attack On Titan Opening 1 Guren No Yumiya (Tv Size)",
           "source": "fan",
           "seconds": 92,
-          "views": 299,
-          "published": "2020-05-10",
+          "views": 151943,
+          "published": "2016-02-06",
           "hd": true,
           "quality": {
             "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
+            "width": 1280,
+            "height": 720,
+            "label": "720p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:51.702Z"
+            "checked": "2026-11-17T19:28:39.812Z"
           },
-          "checked": "2026-11-17T18:11:51.702Z"
+          "checked": "2026-11-17T19:28:39.812Z"
         }
       ],
       "video": {
@@ -1295,11 +851,11 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:11:44.193Z"
+          "checked": "2026-11-17T19:28:39.812Z"
         },
-        "checked": "2026-11-17T18:11:44.193Z"
+        "checked": "2026-11-17T19:28:39.812Z"
       },
-      "flag": "PbWFpzi8C94: SD source; 5TRktZ698qE: fan age/views gate unknown or unmet; FtFW9BqcAEI: fan age/views gate unknown or unmet; 7uanzfZp-xM: fan age/views gate unknown or unmet; PxOwJP9Fa7M: fan age/views gate unknown or unmet; h5LyZNHnv9U: fan age/views gate unknown or unmet"
+      "flag": "5TRktZ698qE: fan age/views gate unknown or unmet; FtFW9BqcAEI: fan age/views gate unknown or unmet; h5LyZNHnv9U: fan age/views gate unknown or unmet"
     },
     {
       "id": "tk-from-ling-tosite-sigure|unravel",
@@ -1330,51 +886,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:16:15.017Z"
+            "checked": "2026-11-17T19:28:39.859Z"
           },
-          "checked": "2026-11-17T18:16:15.017Z"
-        },
-        {
-          "id": "qM8wxM_mcRw",
-          "kind": "tv",
-          "channel": "Crunchyroll",
-          "channelId": "UC6pGDc4bFGD1_36IKv3FnYg",
-          "title": "Tokyo Ghoul √A Opening 2 | Munou by österreich",
-          "source": "official",
-          "seconds": 90,
-          "views": 7852798,
-          "published": "2015-02-10",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:16:15.017Z"
-          },
-          "checked": "2026-11-17T18:16:15.017Z"
-        },
-        {
-          "id": "uF3_GS76fuM",
-          "kind": "tv",
-          "channel": "Autotune Everything",
-          "channelId": "UCl7wBjA4t6ibd-8KR-iu0fQ",
-          "title": "Donald Trump sings Unravel (Tokyo Ghoul OP)",
-          "source": "fan",
-          "seconds": 92,
-          "views": 6403200,
-          "published": "2021-01-18",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:16:15.017Z"
-          },
-          "checked": "2026-11-17T18:16:15.017Z"
+          "checked": "2026-11-17T19:28:39.859Z"
         }
       ],
       "video": {
@@ -1394,11 +908,11 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:16:15.017Z"
+          "checked": "2026-11-17T19:28:39.859Z"
         },
-        "checked": "2026-11-17T18:16:15.017Z"
+        "checked": "2026-11-17T19:28:39.859Z"
       },
-      "flag": "RrfyrqvQ_Wk: fan age/views gate unknown or unmet; gjD_x4222Q8: fan age/views gate unknown or unmet; FYsqLPz0akQ: fan age/views gate unknown or unmet; iPJz4IeEpmA: fan age/views gate unknown or unmet; DrETqog-EL4: fan age/views gate unknown or unmet"
+      "flag": "RrfyrqvQ_Wk: fan age/views gate unknown or unmet"
     },
     {
       "id": "bradio|flyers",
@@ -1410,69 +924,6 @@
       "use": "OP",
       "year": 2015,
       "videos": [
-        {
-          "id": "L90XoAtwMic",
-          "kind": "creditless",
-          "channel": "TriaxFx",
-          "channelId": "UCGBEqfgTB0PZhKVp5XjIOzA",
-          "title": "「Creditless」Death Parade OP / Opening「UHD 60FPS」",
-          "source": "fan",
-          "seconds": 92,
-          "views": 741186,
-          "published": "2022-08-29",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:11:59.245Z"
-          },
-          "checked": "2026-11-17T18:11:59.245Z"
-        },
-        {
-          "id": "Namf91Nx5NY",
-          "kind": "creditless",
-          "channel": "Hei _60FPS",
-          "channelId": "UCg-306mEvjj-d3cOLPYRLZQ",
-          "title": "Death Parade ED / Ending「4K 60FPS」(Creditless)",
-          "source": "fan",
-          "seconds": 86,
-          "views": 60061,
-          "published": "2023-09-26",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:01.764Z"
-          },
-          "checked": "2026-11-17T18:12:01.764Z"
-        },
-        {
-          "id": "Sp9wLQxO6xE",
-          "kind": "creditless",
-          "channel": "Hei _60FPS",
-          "channelId": "UCg-306mEvjj-d3cOLPYRLZQ",
-          "title": "Death Parade OP / Opening「4K 60FPS」(Creditless)",
-          "source": "fan",
-          "seconds": 96,
-          "views": 2656,
-          "published": "2023-09-25",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:04.214Z"
-          },
-          "checked": "2026-11-17T18:12:04.214Z"
-        },
         {
           "id": "5DQ5X8qKOHI",
           "kind": "creditless",
@@ -1490,33 +941,54 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:06.715Z"
+            "checked": "2026-11-17T19:28:39.889Z"
           },
-          "checked": "2026-11-17T18:12:06.715Z"
+          "checked": "2026-11-17T19:28:39.889Z"
+        },
+        {
+          "id": "UjjTMNDZi-A",
+          "kind": "tv",
+          "channel": "AD Anime",
+          "channelId": "UClzpOHnj_TalUguxtCJ-G_w",
+          "title": "Death Parade OP / Opening デス・パレード\"Flyers\" by BRADIO [HD 720p]",
+          "source": "fan",
+          "seconds": 78,
+          "views": 27951884,
+          "published": "2015-01-09",
+          "hd": true,
+          "quality": {
+            "hd": true,
+            "width": 1920,
+            "height": 1080,
+            "label": "1080p",
+            "source": "watch-page-formats",
+            "checked": "2026-11-17T19:28:39.889Z"
+          },
+          "checked": "2026-11-17T19:28:39.889Z"
         }
       ],
       "video": {
-        "id": "L90XoAtwMic",
+        "id": "5DQ5X8qKOHI",
         "kind": "creditless",
-        "channel": "TriaxFx",
-        "channelId": "UCGBEqfgTB0PZhKVp5XjIOzA",
-        "title": "「Creditless」Death Parade OP / Opening「UHD 60FPS」",
+        "channel": "イコラノPaburosu パブロス",
+        "channelId": "UCM_PAUdPNXfTCVMhCKXHKAQ",
+        "title": "Death Parade - Opening 1 - Flyers (Creditless)",
         "source": "fan",
-        "seconds": 92,
-        "views": 741186,
-        "published": "2022-08-29",
+        "seconds": 82,
+        "views": 133211,
+        "published": "2015-11-12",
         "hd": true,
         "quality": {
           "hd": true,
-          "width": 3840,
-          "height": 2160,
-          "label": "2160p60",
+          "width": 1920,
+          "height": 1080,
+          "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:11:59.245Z"
+          "checked": "2026-11-17T19:28:39.889Z"
         },
-        "checked": "2026-11-17T18:11:59.245Z"
+        "checked": "2026-11-17T19:28:39.889Z"
       },
-      "flag": "yqDAUWo6fCA: fan age/views gate unknown or unmet; 8f1eLMZvmFk: fan age/views gate unknown or unmet; RmyeBnIKQ38: fan age/views gate unknown or unmet; dc2tuG7MXqo: fan age/views gate unknown or unmet"
+      "flag": "yqDAUWo6fCA: fan age/views gate unknown or unmet; RmyeBnIKQ38: fan age/views gate unknown or unmet"
     },
     {
       "id": "mob-choir|99",
@@ -1527,114 +999,9 @@
       "show": "Mob Psycho 100",
       "use": "OP",
       "year": 2016,
-      "videos": [
-        {
-          "id": "viOzQNX9ea8",
-          "kind": "tv",
-          "channel": "Anicrad",
-          "channelId": "UCY7Ku9z2i8gxyxQj-cMUuHQ",
-          "title": "MOB PSYCHO 100 III - Opening | 4K | 60FPS",
-          "source": "fan",
-          "seconds": 103,
-          "views": 906452,
-          "published": "2022-08-07",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:16:35.085Z"
-          },
-          "checked": "2026-11-17T18:16:35.085Z"
-        },
-        {
-          "id": "AhtCn9IkOqI",
-          "kind": "tv",
-          "channel": "Anicrad",
-          "channelId": "UCY7Ku9z2i8gxyxQj-cMUuHQ",
-          "title": "MOB PSYCHO 100 I - Opening | 4K | 60FPS",
-          "source": "fan",
-          "seconds": 102,
-          "views": 277658,
-          "published": "2022-08-09",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:16:35.085Z"
-          },
-          "checked": "2026-11-17T18:16:35.085Z"
-        },
-        {
-          "id": "GIT4u3d4gu4",
-          "kind": "tv",
-          "channel": "TriaxFx",
-          "channelId": "UCGBEqfgTB0PZhKVp5XjIOzA",
-          "title": "Mob Psycho 100 OP / Opening 1「UHD 60FPS」",
-          "source": "fan",
-          "seconds": 102,
-          "views": 216597,
-          "published": "2022-06-13",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:16:35.085Z"
-          },
-          "checked": "2026-11-17T18:16:35.085Z"
-        },
-        {
-          "id": "6Ei8rYOlUP8",
-          "kind": "tv",
-          "channel": "TriaxFx",
-          "channelId": "UCGBEqfgTB0PZhKVp5XjIOzA",
-          "title": "Mob Psycho 100 OP / Opening 2「UHD 60FPS」",
-          "source": "fan",
-          "seconds": 102,
-          "views": 177117,
-          "published": "2022-06-15",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:16:35.085Z"
-          },
-          "checked": "2026-11-17T18:16:35.085Z"
-        }
-      ],
-      "video": {
-        "id": "viOzQNX9ea8",
-        "kind": "tv",
-        "channel": "Anicrad",
-        "channelId": "UCY7Ku9z2i8gxyxQj-cMUuHQ",
-        "title": "MOB PSYCHO 100 III - Opening | 4K | 60FPS",
-        "source": "fan",
-        "seconds": 103,
-        "views": 906452,
-        "published": "2022-08-07",
-        "hd": true,
-        "quality": {
-          "hd": true,
-          "width": 3840,
-          "height": 2160,
-          "label": "2160p60",
-          "source": "watch-page-formats",
-          "checked": "2026-11-17T18:16:35.085Z"
-        },
-        "checked": "2026-11-17T18:16:35.085Z"
-      },
-      "flag": "iBjzcgG7tOg: fan age/views gate unknown or unmet"
+      "videos": [],
+      "video": null,
+      "flag": "set aside: no eligible HD copy; iBjzcgG7tOg: fan age/views gate unknown or unmet"
     },
     {
       "id": "void-chords-feat-maru|the-other-side-of-the-wall",
@@ -1663,30 +1030,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:16:55.230Z"
+            "checked": "2026-11-17T19:28:39.948Z"
           },
-          "checked": "2026-11-17T18:16:55.230Z"
-        },
-        {
-          "id": "wgrswjUZLYc",
-          "kind": "mv",
-          "channel": "Void_Chords a.k.a. Ryo Takahashi",
-          "channelId": "UCkgsdh6IC-sD-bfbDCi7Bbg",
-          "title": "Void_Chords feat. Yui Mugino - LIES & TIES (Princess Principal Crown Handler Chapter1:OP) [Full MV]",
-          "source": "official",
-          "seconds": 278,
-          "views": 463212,
-          "published": "2021-03-19",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:16.898Z"
-          },
-          "checked": "2026-11-17T18:12:16.898Z"
+          "checked": "2026-11-17T19:28:39.948Z"
         },
         {
           "id": "VvCLT_ewzFg",
@@ -1705,30 +1051,9 @@
             "height": 720,
             "label": "720p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:16:55.230Z"
+            "checked": "2026-11-17T19:28:39.948Z"
           },
-          "checked": "2026-11-17T18:16:55.230Z"
-        },
-        {
-          "id": "KZBCdHYd63o",
-          "kind": "tv",
-          "channel": "Orchestr-a-",
-          "channelId": "UCmOzoFYK0PFbYxuU9SILbrQ",
-          "title": "Orchestr/a/ Plays: The Other Side of the Wall (Princess Principal OP)",
-          "source": "fan",
-          "seconds": 94,
-          "views": 567,
-          "published": "2023-03-26",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:16:55.230Z"
-          },
-          "checked": "2026-11-17T18:16:55.230Z"
+          "checked": "2026-11-17T19:28:39.948Z"
         }
       ],
       "video": {
@@ -1748,9 +1073,9 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:16:55.230Z"
+          "checked": "2026-11-17T19:28:39.948Z"
         },
-        "checked": "2026-11-17T18:16:55.230Z"
+        "checked": "2026-11-17T19:28:39.948Z"
       },
       "flag": "mv used for a theme; diVMnEqlzHM: fan age/views gate unknown or unmet"
     },
@@ -1764,27 +1089,6 @@
       "use": "OP",
       "year": 2019,
       "videos": [
-        {
-          "id": "q8qZPYv100M",
-          "kind": "tv",
-          "channel": "RetroCrush",
-          "channelId": "UCPZkYpT5XIUou8sV8zk-3jQ",
-          "title": "Boogiepop Phantom - Opening | \"Yuudachi\" by Shikao Suga",
-          "source": "official",
-          "seconds": 90,
-          "views": 264505,
-          "published": "2021-08-23",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1440,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:17:10.127Z"
-          },
-          "checked": "2026-11-17T18:17:10.127Z"
-        },
         {
           "id": "oBbWSxqJSOI",
           "kind": "tv",
@@ -1802,9 +1106,9 @@
             "height": 720,
             "label": "720p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:17:10.127Z"
+            "checked": "2026-11-17T19:28:39.981Z"
           },
-          "checked": "2026-11-17T18:17:10.127Z"
+          "checked": "2026-11-17T19:28:39.981Z"
         },
         {
           "id": "wehtohk3h5g",
@@ -1823,39 +1127,41 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:17:10.127Z"
+            "checked": "2026-11-17T19:28:39.981Z"
           },
-          "checked": "2026-11-17T18:17:10.127Z"
+          "checked": "2026-11-17T19:28:39.981Z"
         }
       ],
       "video": {
-        "id": "q8qZPYv100M",
+        "id": "oBbWSxqJSOI",
         "kind": "tv",
-        "channel": "RetroCrush",
-        "channelId": "UCPZkYpT5XIUou8sV8zk-3jQ",
-        "title": "Boogiepop Phantom - Opening | \"Yuudachi\" by Shikao Suga",
+        "channel": "Crunchyroll",
+        "channelId": "UC6pGDc4bFGD1_36IKv3FnYg",
+        "title": "Boogiepop and Others - Opening | shadowgraph",
         "source": "official",
-        "seconds": 90,
-        "views": 264505,
-        "published": "2021-08-23",
+        "seconds": 100,
+        "views": 1490728,
+        "published": "2019-01-04",
         "hd": true,
         "quality": {
           "hd": true,
-          "width": 1440,
-          "height": 1080,
-          "label": "1080p",
+          "width": 1280,
+          "height": 720,
+          "label": "720p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:17:10.127Z"
+          "checked": "2026-11-17T19:28:39.981Z"
         },
-        "checked": "2026-11-17T18:17:10.127Z"
+        "checked": "2026-11-17T19:28:39.981Z"
       },
-      "flag": "ja_Qe3DGJ_o: fan age/views gate unknown or unmet; Wt7fBc-UcU0: SD source"
+      "flag": "Wt7fBc-UcU0: SD source"
     },
     {
       "id": "eve|kaikai-kitan",
       "artist": "Eve",
       "title": "Kaikai Kitan",
-      "aliases": [],
+      "aliases": [
+        "廻廻奇譚"
+      ],
       "kind": "theme",
       "show": "Jujutsu Kaisen",
       "use": "OP",
@@ -1878,9 +1184,30 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:31.903Z"
+            "checked": "2026-11-17T19:28:40.015Z"
           },
-          "checked": "2026-11-17T18:12:31.903Z"
+          "checked": "2026-11-17T19:28:40.015Z"
+        },
+        {
+          "id": "1L7EHAYQ0pY",
+          "kind": "creditless",
+          "channel": "Bruh Clan",
+          "channelId": "UC3mZvZYxau7ngCxKSJy31jA",
+          "title": "Jujutsu Kaisen Opening 1 - Kaikai Kitan | Creditless | English / Romaji Subtitles",
+          "source": "fan",
+          "seconds": 114,
+          "views": 7959,
+          "published": "2023-08-12",
+          "hd": true,
+          "quality": {
+            "hd": true,
+            "width": 1920,
+            "height": 1080,
+            "label": "1080p",
+            "source": "watch-page-formats",
+            "checked": "2026-11-17T19:28:40.015Z"
+          },
+          "checked": "2026-11-17T19:28:40.015Z"
         },
         {
           "id": "1tk1pqwrOys",
@@ -1899,51 +1226,9 @@
             "height": 2160,
             "label": "2160p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:34.389Z"
+            "checked": "2026-11-17T19:28:40.015Z"
           },
-          "checked": "2026-11-17T18:12:34.389Z"
-        },
-        {
-          "id": "1dDvMEisEC8",
-          "kind": "creditless",
-          "channel": "Anicrad",
-          "channelId": "UCY7Ku9z2i8gxyxQj-cMUuHQ",
-          "title": "Jujutsu Kaisen - Opening 1 | 4K | 60FPS | Creditless |",
-          "source": "fan",
-          "seconds": 122,
-          "views": 2597466,
-          "published": "2023-07-03",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:36.960Z"
-          },
-          "checked": "2026-11-17T18:12:36.960Z"
-        },
-        {
-          "id": "yXWwzgMZYOg",
-          "kind": "creditless",
-          "channel": "KaizenK",
-          "channelId": "UChi9H_-PaOFwgxqvSEpm5Gg",
-          "title": "Jujutsu Kaisen Opening 2 (4k 60FPS)┃Creditless",
-          "source": "fan",
-          "seconds": 102,
-          "views": 914879,
-          "published": "2021-09-19",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:39.348Z"
-          },
-          "checked": "2026-11-17T18:12:39.348Z"
+          "checked": "2026-11-17T19:28:40.015Z"
         }
       ],
       "video": {
@@ -1963,9 +1248,9 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:12:31.903Z"
+          "checked": "2026-11-17T19:28:40.015Z"
         },
-        "checked": "2026-11-17T18:12:31.903Z"
+        "checked": "2026-11-17T19:28:40.015Z"
       },
       "flag": "F2cgJ1BButY: fan age/views gate unknown or unmet"
     },
@@ -1979,27 +1264,6 @@
       "use": "OP",
       "year": 2021,
       "videos": [
-        {
-          "id": "LKMw0hBDBUw",
-          "kind": "mv",
-          "channel": "ponycanyon",
-          "channelId": "UCk0IUODXaAFr5gEFlZDbzmw",
-          "title": "スカートとPUNPEE『ODDTAXI』Official Music Video（TVアニメ「オッドタクシー」オープニングテーマ）",
-          "source": "official",
-          "seconds": 250,
-          "views": 7480840,
-          "published": "2021-04-07",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:41.858Z"
-          },
-          "checked": "2026-11-17T18:12:41.858Z"
-        },
         {
           "id": "jX-Ry1VxeDQ",
           "kind": "creditless",
@@ -2017,63 +1281,42 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:44.486Z"
+            "checked": "2026-11-17T19:28:40.053Z"
           },
-          "checked": "2026-11-17T18:12:44.486Z"
+          "checked": "2026-11-17T19:28:40.053Z"
         },
         {
-          "id": "13JKg0LR8KM",
-          "kind": "tv",
-          "channel": "SupremeBlackKai",
-          "channelId": "UCeGjAENVY0ZQ1eXkGHs3WpA",
-          "title": "Odd Taxi OP",
-          "source": "fan",
-          "seconds": 90,
-          "views": 20655,
-          "published": "2021-04-06",
+          "id": "LKMw0hBDBUw",
+          "kind": "mv",
+          "channel": "ponycanyon",
+          "channelId": "UCk0IUODXaAFr5gEFlZDbzmw",
+          "title": "スカートとPUNPEE『ODDTAXI』Official Music Video（TVアニメ「オッドタクシー」オープニングテーマ）",
+          "source": "official",
+          "seconds": 250,
+          "views": 7480840,
+          "published": "2021-04-07",
           "hd": true,
           "quality": {
             "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p48",
+            "width": 1920,
+            "height": 1080,
+            "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:46.891Z"
+            "checked": "2026-11-17T19:28:40.053Z"
           },
-          "checked": "2026-11-17T18:12:46.891Z"
-        },
-        {
-          "id": "ugWfVEZ7qUk",
-          "kind": "tv",
-          "channel": "Hidari 左",
-          "channelId": "UCJx_LcLgMCCv-J_JdLMLG9g",
-          "title": "Odd Taxi | OP",
-          "source": "fan",
-          "seconds": 90,
-          "views": 79280,
-          "published": "2021-04-20",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1280,
-            "height": 720,
-            "label": "720p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:49.360Z"
-          },
-          "checked": "2026-11-17T18:12:49.360Z"
+          "checked": "2026-11-17T19:28:40.053Z"
         }
       ],
       "video": {
-        "id": "LKMw0hBDBUw",
-        "kind": "mv",
-        "channel": "ponycanyon",
-        "channelId": "UCk0IUODXaAFr5gEFlZDbzmw",
-        "title": "スカートとPUNPEE『ODDTAXI』Official Music Video（TVアニメ「オッドタクシー」オープニングテーマ）",
-        "source": "official",
-        "seconds": 250,
-        "views": 7480840,
-        "published": "2021-04-07",
+        "id": "jX-Ry1VxeDQ",
+        "kind": "creditless",
+        "channel": "オッドタクシーOfficial",
+        "channelId": "UC7vSI218btwcth8yKEGfe0g",
+        "title": "【#オッドタクシー】ノンクレジットOP「ODDTAXI」【スカートとPUNPEE】",
+        "source": "fan",
+        "seconds": 90,
+        "views": 1385328,
+        "published": "2021-04-20",
         "hd": true,
         "quality": {
           "hd": true,
@@ -2081,203 +1324,40 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:12:41.858Z"
+          "checked": "2026-11-17T19:28:40.053Z"
         },
-        "checked": "2026-11-17T18:12:41.858Z"
+        "checked": "2026-11-17T19:28:40.053Z"
       },
-      "flag": "mv used for a theme"
+      "flag": null
     },
     {
-      "id": "queendom|chitty-chitty-bang-bang",
+      "id": "queendom|chiki-chiki-banban",
       "artist": "QUEENDOM",
-      "title": "Chitty Chitty Bang Bang",
-      "aliases": [],
+      "title": "Chiki Chiki Banban",
+      "aliases": [
+        "Chitty Chitty Bang Bang",
+        "チキチキバンバン"
+      ],
       "kind": "theme",
       "show": "Ya Boy Kongming!",
       "use": "OP",
       "year": 2022,
-      "videos": [
-        {
-          "id": "rNshr-prHUs",
-          "kind": "creditless",
-          "channel": "Anicrad",
-          "channelId": "UCY7Ku9z2i8gxyxQj-cMUuHQ",
-          "title": "Ya Boy Kongming! - Opening | 4K | 60FPS | Creditless |",
-          "source": "fan",
-          "seconds": 103,
-          "views": 306673,
-          "published": "2022-09-10",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:51.873Z"
-          },
-          "checked": "2026-11-17T18:12:51.873Z"
-        },
-        {
-          "id": "v9I2mFLSqxY",
-          "kind": "tv",
-          "channel": "AzusaFx",
-          "channelId": "UC3Xf3-Nw3P8tD4b_QKDiYkg",
-          "title": "Ya Boy Kongming! - Opening | 8K | 60FPS |",
-          "source": "fan",
-          "seconds": 113,
-          "views": 225,
-          "published": "2022-06-20",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 7680,
-            "height": 4320,
-            "label": "4320p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:54.491Z"
-          },
-          "checked": "2026-11-17T18:12:54.491Z"
-        },
-        {
-          "id": "gNn9NxZH2Vo",
-          "kind": "tv",
-          "channel": "TriaxFx",
-          "channelId": "UCGBEqfgTB0PZhKVp5XjIOzA",
-          "title": "Ya Boy Kongming! OP / Opening「UHD 60FPS」",
-          "source": "fan",
-          "seconds": 102,
-          "views": 14806455,
-          "published": "2022-04-07",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:56.897Z"
-          },
-          "checked": "2026-11-17T18:12:56.897Z"
-        },
-        {
-          "id": "4GuNoJV-DxM",
-          "kind": "tv",
-          "channel": "AnicradFX",
-          "channelId": "UCW8AW88u9L99oz9J-QbDD1A",
-          "title": "Ya Boy Kongming! - Opening | 4K | 60FPS |",
-          "source": "fan",
-          "seconds": 103,
-          "views": 203842,
-          "published": "2022-04-08",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:12:59.508Z"
-          },
-          "checked": "2026-11-17T18:12:59.508Z"
-        }
-      ],
-      "video": {
-        "id": "rNshr-prHUs",
-        "kind": "creditless",
-        "channel": "Anicrad",
-        "channelId": "UCY7Ku9z2i8gxyxQj-cMUuHQ",
-        "title": "Ya Boy Kongming! - Opening | 4K | 60FPS | Creditless |",
-        "source": "fan",
-        "seconds": 103,
-        "views": 306673,
-        "published": "2022-09-10",
-        "hd": true,
-        "quality": {
-          "hd": true,
-          "width": 3840,
-          "height": 2160,
-          "label": "2160p60",
-          "source": "watch-page-formats",
-          "checked": "2026-11-17T18:12:51.873Z"
-        },
-        "checked": "2026-11-17T18:12:51.873Z"
-      },
-      "flag": "ktHDGRhYuuE: fan age/views gate unknown or unmet"
+      "videos": [],
+      "video": null,
+      "flag": "set aside: no eligible HD copy"
     },
     {
       "id": "yoasobi|idol",
       "artist": "YOASOBI",
       "title": "Idol",
-      "aliases": [],
+      "aliases": [
+        "アイドル"
+      ],
       "kind": "theme",
       "show": "Oshi no Ko",
       "use": "OP",
       "year": 2023,
       "videos": [
-        {
-          "id": "ZYlaUrj2Zkk",
-          "kind": "creditless",
-          "channel": "KaizenK",
-          "channelId": "UChi9H_-PaOFwgxqvSEpm5Gg",
-          "title": "Oshi no Ko Opening 1 (4k 60FPS)┃Creditless",
-          "source": "fan",
-          "seconds": 110,
-          "views": 6896282,
-          "published": "2023-05-19",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:01.926Z"
-          },
-          "checked": "2026-11-17T18:13:01.926Z"
-        },
-        {
-          "id": "DalQIefPSQk",
-          "kind": "creditless",
-          "channel": "KaizenK",
-          "channelId": "UChi9H_-PaOFwgxqvSEpm5Gg",
-          "title": "Oshi no Ko Opening 2 (4k 60FPS)┃Creditless",
-          "source": "fan",
-          "seconds": 102,
-          "views": 2693375,
-          "published": "2024-07-30",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:04.449Z"
-          },
-          "checked": "2026-11-17T18:13:04.449Z"
-        },
-        {
-          "id": "RDI1OgHl3BQ",
-          "kind": "creditless",
-          "channel": "AniverseFX",
-          "channelId": "UC_cIkQJ1GKuhQChPxDWdGDQ",
-          "title": "「Creditless」Oshi no Ko SEASON 3 OPENING -『TEST ME』by CHANMINA | 4K UHD",
-          "source": "fan",
-          "seconds": 121,
-          "views": 1397864,
-          "published": "2026-01-25",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:07.163Z"
-          },
-          "checked": "2026-11-17T18:13:07.163Z"
-        },
         {
           "id": "Q4TuZdZyOqI",
           "kind": "creditless",
@@ -2295,21 +1375,42 @@
             "height": 2160,
             "label": "2160p60",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:09.578Z"
+            "checked": "2026-11-17T19:28:40.106Z"
           },
-          "checked": "2026-11-17T18:13:09.578Z"
+          "checked": "2026-11-17T19:28:40.106Z"
+        },
+        {
+          "id": "X8TqiN2RNQQ",
+          "kind": "creditless",
+          "channel": "NeobraneUHD",
+          "channelId": "UCr7k5RGUlP1AUXBlhJdOnBQ",
+          "title": "Oshi No Ko - Opening 【Idol】 4K 60FPS Creditless | CC",
+          "source": "fan",
+          "seconds": 122,
+          "views": 2991,
+          "published": "2023-07-25",
+          "hd": true,
+          "quality": {
+            "hd": true,
+            "width": 3840,
+            "height": 2160,
+            "label": "2160p60",
+            "source": "watch-page-formats",
+            "checked": "2026-11-17T19:28:40.106Z"
+          },
+          "checked": "2026-11-17T19:28:40.106Z"
         }
       ],
       "video": {
-        "id": "ZYlaUrj2Zkk",
+        "id": "Q4TuZdZyOqI",
         "kind": "creditless",
-        "channel": "KaizenK",
-        "channelId": "UChi9H_-PaOFwgxqvSEpm5Gg",
-        "title": "Oshi no Ko Opening 1 (4k 60FPS)┃Creditless",
+        "channel": "Just Anime Things",
+        "channelId": "UC_o4mWar8igTM8Oef38W5ug",
+        "title": "Oshi No Ko Opening [4K] [Creditless] [60FPS] || Idol - by YOASOBI ||",
         "source": "fan",
-        "seconds": 110,
-        "views": 6896282,
-        "published": "2023-05-19",
+        "seconds": 90,
+        "views": 15392,
+        "published": "2023-08-06",
         "hd": true,
         "quality": {
           "hd": true,
@@ -2317,11 +1418,11 @@
           "height": 2160,
           "label": "2160p60",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:13:01.926Z"
+          "checked": "2026-11-17T19:28:40.106Z"
         },
-        "checked": "2026-11-17T18:13:01.926Z"
+        "checked": "2026-11-17T19:28:40.106Z"
       },
-      "flag": "IIqBGDwVEE4: fan age/views gate unknown or unmet"
+      "flag": null
     },
     {
       "id": "tm-network|get-wild",
@@ -2350,51 +1451,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:17:20.201Z"
+            "checked": "2026-11-17T19:28:40.138Z"
           },
-          "checked": "2026-11-17T18:17:20.201Z"
-        },
-        {
-          "id": "V-02Q6R7GZA",
-          "kind": "creditless",
-          "channel": "Light Anime Channel",
-          "channelId": "UC-tpmx-Qi3qg5oVq3jfpRCw",
-          "title": "City Hunter Season 2 Ending 1 Creditless (4K AI Upscaled & Enhanced)",
-          "source": "fan",
-          "seconds": 72,
-          "views": 972,
-          "published": "2023-11-12",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 2880,
-            "height": 2160,
-            "label": "2160p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:17:20.201Z"
-          },
-          "checked": "2026-11-17T18:17:20.201Z"
-        },
-        {
-          "id": "lKmsHnB5Bu4",
-          "kind": "creditless",
-          "channel": "Anthony El Khoury",
-          "channelId": "UCfpH7xo8bBNVaUsj1ULymlw",
-          "title": "City Hunter 2  Ending 2 ～ STILL LOVE HER (Creditless)",
-          "source": "fan",
-          "seconds": 69,
-          "views": 137352,
-          "published": "2022-10-31",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 960,
-            "height": 720,
-            "label": "720p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:17:20.201Z"
-          },
-          "checked": "2026-11-17T18:17:20.201Z"
+          "checked": "2026-11-17T19:28:40.138Z"
         }
       ],
       "video": {
@@ -2414,9 +1473,9 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:17:20.201Z"
+          "checked": "2026-11-17T19:28:40.138Z"
         },
-        "checked": "2026-11-17T18:17:20.201Z"
+        "checked": "2026-11-17T19:28:40.138Z"
       },
       "flag": "kJ-czeTKspk: SD source; Q0hk3FtTD3Y: fan age/views gate unknown or unmet"
     },
@@ -2430,27 +1489,6 @@
       "use": "ED",
       "year": 2002,
       "videos": [
-        {
-          "id": "fU4zb23tKLM",
-          "kind": "tv",
-          "channel": "Crunchyroll",
-          "channelId": "UC6pGDc4bFGD1_36IKv3FnYg",
-          "title": "Naruto Shippuden Ending 15 | U Can Do It",
-          "source": "official",
-          "seconds": 100,
-          "views": 14557880,
-          "published": "2018-11-30",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:16.948Z"
-          },
-          "checked": "2026-11-17T18:13:16.948Z"
-        },
         {
           "id": "PZ5jBl3yJ0s",
           "kind": "tv",
@@ -2468,20 +1506,41 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:19.555Z"
+            "checked": "2026-11-17T19:28:40.173Z"
           },
-          "checked": "2026-11-17T18:13:19.555Z"
+          "checked": "2026-11-17T19:28:40.173Z"
         },
         {
-          "id": "rHB2vlTFEiA",
+          "id": "wzoIZO8WbI8",
           "kind": "tv",
           "channel": "Crunchyroll",
           "channelId": "UC6pGDc4bFGD1_36IKv3FnYg",
-          "title": "Naruto Shippuden - Ending 6 | Broken youth",
+          "title": "Naruto - Ending 1 | Wind",
           "source": "official",
           "seconds": 100,
-          "views": 3499382,
-          "published": "2018-11-21",
+          "views": 14471182,
+          "published": "2018-11-05",
+          "hd": true,
+          "quality": {
+            "hd": true,
+            "width": 1280,
+            "height": 720,
+            "label": "720p",
+            "source": "watch-page-formats",
+            "checked": "2026-11-17T19:28:40.173Z"
+          },
+          "checked": "2026-11-17T19:28:40.173Z"
+        },
+        {
+          "id": "bdCzOWnEJYc",
+          "kind": "tv",
+          "channel": "vizmedia",
+          "channelId": "UCV1da9peoqEwqr45bpTJsbQ",
+          "title": "Naruto | Ending 1 - Wind | VIZ",
+          "source": "fan",
+          "seconds": 97,
+          "views": 1928200,
+          "published": "2021-02-13",
           "hd": true,
           "quality": {
             "hd": true,
@@ -2489,42 +1548,21 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:22.067Z"
+            "checked": "2026-11-17T19:28:40.173Z"
           },
-          "checked": "2026-11-17T18:13:22.067Z"
-        },
-        {
-          "id": "ocBWoIJul5M",
-          "kind": "tv",
-          "channel": "Crunchyroll",
-          "channelId": "UC6pGDc4bFGD1_36IKv3FnYg",
-          "title": "Naruto Shippuden - Ending 21 | Cascade",
-          "source": "official",
-          "seconds": 100,
-          "views": 2574997,
-          "published": "2018-12-06",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:24.507Z"
-          },
-          "checked": "2026-11-17T18:13:24.507Z"
+          "checked": "2026-11-17T19:28:40.173Z"
         }
       ],
       "video": {
-        "id": "fU4zb23tKLM",
+        "id": "PZ5jBl3yJ0s",
         "kind": "tv",
         "channel": "Crunchyroll",
         "channelId": "UC6pGDc4bFGD1_36IKv3FnYg",
-        "title": "Naruto Shippuden Ending 15 | U Can Do It",
+        "title": "Naruto Shippuden - Opening 17 | Wind",
         "source": "official",
         "seconds": 100,
-        "views": 14557880,
-        "published": "2018-11-30",
+        "views": 4670725,
+        "published": "2018-12-02",
         "hd": true,
         "quality": {
           "hd": true,
@@ -2532,11 +1570,11 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:13:16.948Z"
+          "checked": "2026-11-17T19:28:40.173Z"
         },
-        "checked": "2026-11-17T18:13:16.948Z"
+        "checked": "2026-11-17T19:28:40.173Z"
       },
-      "flag": "bQIe81c-T2k: SD source"
+      "flag": null
     },
     {
       "id": "maaya-sakamoto|gravity",
@@ -2565,51 +1603,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:27.135Z"
+            "checked": "2026-11-17T19:28:40.207Z"
           },
-          "checked": "2026-11-17T18:13:27.135Z"
-        },
-        {
-          "id": "xqO-7al-t5U",
-          "kind": "creditless",
-          "channel": "Rakuen",
-          "channelId": "UCBoYcfdFoOVu60hP6TxsICw",
-          "title": "Wolf's Rain - Textless/Creditless Ending Episode 26 (HD)",
-          "source": "fan",
-          "seconds": 108,
-          "views": 2089,
-          "published": "2021-03-13",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:29.502Z"
-          },
-          "checked": "2026-11-17T18:13:29.502Z"
-        },
-        {
-          "id": "UrY0Ke8mrXU",
-          "kind": "creditless",
-          "channel": "Rakuen",
-          "channelId": "UCBoYcfdFoOVu60hP6TxsICw",
-          "title": "Wolf's Rain - Creditless/Textless Ending 01 (HD)",
-          "source": "fan",
-          "seconds": 82,
-          "views": 1094,
-          "published": "2021-03-13",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:31.992Z"
-          },
-          "checked": "2026-11-17T18:13:31.992Z"
+          "checked": "2026-11-17T19:28:40.207Z"
         },
         {
           "id": "fg83rfIJW6Y",
@@ -2628,9 +1624,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:34.521Z"
+            "checked": "2026-11-17T19:28:40.207Z"
           },
-          "checked": "2026-11-17T18:13:34.521Z"
+          "checked": "2026-11-17T19:28:40.207Z"
         }
       ],
       "video": {
@@ -2650,17 +1646,19 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:13:27.135Z"
+          "checked": "2026-11-17T19:28:40.207Z"
         },
-        "checked": "2026-11-17T18:13:27.135Z"
+        "checked": "2026-11-17T19:28:40.207Z"
       },
-      "flag": "459ypzyb1H0: SD source; fMR_hvea0Sw: fan age/views gate unknown or unmet; CNt-1-v9EYQ: SD source; bmIFyBwdmwM: SD source; hEhrGLdrRuA: SD source"
+      "flag": "CNt-1-v9EYQ: SD source; bmIFyBwdmwM: SD source"
     },
     {
       "id": "minmi|shiki-no-uta",
       "artist": "MINMI",
       "title": "Shiki no Uta",
-      "aliases": [],
+      "aliases": [
+        "四季ノ唄"
+      ],
       "kind": "theme",
       "show": "Samurai Champloo",
       "use": "ED",
@@ -2683,9 +1681,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:37.005Z"
+            "checked": "2026-11-17T19:28:40.244Z"
           },
-          "checked": "2026-11-17T18:13:37.005Z"
+          "checked": "2026-11-17T19:28:40.244Z"
         },
         {
           "id": "cVh1OwdzLhg",
@@ -2704,9 +1702,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:39.608Z"
+            "checked": "2026-11-17T19:28:40.244Z"
           },
-          "checked": "2026-11-17T18:13:39.608Z"
+          "checked": "2026-11-17T19:28:40.244Z"
         },
         {
           "id": "rPE39E466tQ",
@@ -2725,9 +1723,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:41.971Z"
+            "checked": "2026-11-17T19:28:40.244Z"
           },
-          "checked": "2026-11-17T18:13:41.971Z"
+          "checked": "2026-11-17T19:28:40.244Z"
         },
         {
           "id": "QDuUax8chd0",
@@ -2746,9 +1744,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:44.608Z"
+            "checked": "2026-11-17T19:28:40.244Z"
           },
-          "checked": "2026-11-17T18:13:44.608Z"
+          "checked": "2026-11-17T19:28:40.244Z"
         }
       ],
       "video": {
@@ -2768,9 +1766,9 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:13:37.005Z"
+          "checked": "2026-11-17T19:28:40.244Z"
         },
-        "checked": "2026-11-17T18:13:37.005Z"
+        "checked": "2026-11-17T19:28:40.244Z"
       },
       "flag": null
     },
@@ -2784,48 +1782,6 @@
       "use": "ED",
       "year": 2013,
       "videos": [
-        {
-          "id": "lNVcsNsC7OQ",
-          "kind": "creditless",
-          "channel": "Prez",
-          "channelId": "UC4_T8vNF3ORQJWlpZGnZu1g",
-          "title": "[4K | 60FPS] Beyond the Boundary Ending Creditless",
-          "source": "fan",
-          "seconds": 145,
-          "views": 11521,
-          "published": "2021-09-21",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:46.999Z"
-          },
-          "checked": "2026-11-17T18:13:46.999Z"
-        },
-        {
-          "id": "cfAjeatrcKw",
-          "kind": "creditless",
-          "channel": "Euterp E",
-          "channelId": "UCuXRov42c8m0tkYtv4-dRPA",
-          "title": "Kyoukai no Kanata ED [60FPS][1080p][Creditless]",
-          "source": "fan",
-          "seconds": 80,
-          "views": 61718,
-          "published": "2014-11-16",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:49.461Z"
-          },
-          "checked": "2026-11-17T18:13:49.461Z"
-        },
         {
           "id": "kxWtU7Zhkuw",
           "kind": "creditless",
@@ -2843,60 +1799,62 @@
             "height": 720,
             "label": "720p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:52.088Z"
+            "checked": "2026-11-17T19:28:40.281Z"
           },
-          "checked": "2026-11-17T18:13:52.088Z"
+          "checked": "2026-11-17T19:28:40.281Z"
         },
         {
-          "id": "RT0FEFcT54g",
+          "id": "hPGebzPeuzE",
           "kind": "tv",
-          "channel": "SoraWind70",
-          "channelId": "UC4TpwQHbFzdhZLq5HKRo4TA",
-          "title": "Kyoukai no Kanata - Ending (English Sub - HD)",
+          "channel": "Dr. Onii-chan Tv",
+          "channelId": "UCS0Ic2U6VBxFg66X2fhokDg",
+          "title": "kyoukai no Kanata (Beyond the Boundary) Ending Song - Daisy - STEREO DIVE FOUNDATION.",
           "source": "fan",
-          "seconds": 90,
-          "views": 493394,
-          "published": "2014-02-14",
+          "seconds": 111,
+          "views": 26,
+          "published": "2020-09-22",
           "hd": true,
           "quality": {
             "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
+            "width": 1280,
+            "height": 720,
+            "label": "720p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:54.517Z"
+            "checked": "2026-11-17T19:28:40.281Z"
           },
-          "checked": "2026-11-17T18:13:54.517Z"
+          "checked": "2026-11-17T19:28:40.281Z"
         }
       ],
       "video": {
-        "id": "lNVcsNsC7OQ",
+        "id": "kxWtU7Zhkuw",
         "kind": "creditless",
-        "channel": "Prez",
-        "channelId": "UC4_T8vNF3ORQJWlpZGnZu1g",
-        "title": "[4K | 60FPS] Beyond the Boundary Ending Creditless",
+        "channel": "Shoyochi",
+        "channelId": "UCTZkQC7tBZZG2Mi_8bCUnVQ",
+        "title": "Kyoukai No Kanata (Beyond The Boundary) - Ending Song - Daisy [Creditless]",
         "source": "fan",
-        "seconds": 145,
-        "views": 11521,
-        "published": "2021-09-21",
+        "seconds": 79,
+        "views": 1247,
+        "published": "2020-12-12",
         "hd": true,
         "quality": {
           "hd": true,
-          "width": 3840,
-          "height": 2160,
-          "label": "2160p60",
+          "width": 1280,
+          "height": 720,
+          "label": "720p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:13:46.999Z"
+          "checked": "2026-11-17T19:28:40.281Z"
         },
-        "checked": "2026-11-17T18:13:46.999Z"
+        "checked": "2026-11-17T19:28:40.281Z"
       },
-      "flag": "Jobn7HTz-CM: fan age/views gate unknown or unmet"
+      "flag": null
     },
     {
       "id": "unison-square-garden|sugar-song-to-bitter-step",
       "artist": "UNISON SQUARE GARDEN",
       "title": "Sugar Song to Bitter Step",
-      "aliases": [],
+      "aliases": [
+        "シュガーソングとビターステップ"
+      ],
       "kind": "theme",
       "show": "Blood Blockade Battlefront",
       "use": "ED",
@@ -2919,9 +1877,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:57.071Z"
+            "checked": "2026-11-17T19:28:40.311Z"
           },
-          "checked": "2026-11-17T18:13:57.071Z"
+          "checked": "2026-11-17T19:28:40.311Z"
         },
         {
           "id": "j3SlUmr_T4g",
@@ -2940,51 +1898,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:13:59.691Z"
+            "checked": "2026-11-17T19:28:40.311Z"
           },
-          "checked": "2026-11-17T18:13:59.691Z"
-        },
-        {
-          "id": "_16vOCt-sYk",
-          "kind": "tv",
-          "channel": "Crunchyroll",
-          "channelId": "UC6pGDc4bFGD1_36IKv3FnYg",
-          "title": "Blood Blockade Battlefront & Beyond - Opening | Fake Town Baby",
-          "source": "official",
-          "seconds": 89,
-          "views": 5370034,
-          "published": "2018-02-19",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1072,
-            "label": "1080p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:02.260Z"
-          },
-          "checked": "2026-11-17T18:14:02.260Z"
-        },
-        {
-          "id": "3dZn6mmJTd8",
-          "kind": "creditless",
-          "channel": "Chiro",
-          "channelId": "UC5ocTK91bdcaMmCxtOOtZmA",
-          "title": "【MAD】New Danganronpa V3 x 『Kekkai Sensen』 Ending (Creditless 1080p)",
-          "source": "fan",
-          "seconds": 114,
-          "views": 171777,
-          "published": "2017-10-07",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:04.659Z"
-          },
-          "checked": "2026-11-17T18:14:04.659Z"
+          "checked": "2026-11-17T19:28:40.311Z"
         }
       ],
       "video": {
@@ -3004,9 +1920,9 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:13:57.071Z"
+          "checked": "2026-11-17T19:28:40.311Z"
         },
-        "checked": "2026-11-17T18:13:57.071Z"
+        "checked": "2026-11-17T19:28:40.311Z"
       },
       "flag": null
     },
@@ -3014,88 +1930,31 @@
       "id": "sayuri|heikousen",
       "artist": "Sayuri",
       "title": "Heikousen",
-      "aliases": [],
+      "aliases": [
+        "Parallel Line",
+        "平行線"
+      ],
       "kind": "theme",
       "show": "Scum's Wish",
       "use": "ED",
       "year": 2017,
-      "videos": [
-        {
-          "id": "O0aOjOdu6o0",
-          "kind": "tv",
-          "channel": "NBL",
-          "channelId": "UCikk_rKoCdQvIN7Epq-k7vQ",
-          "title": "Scum's Wish Ending Full 『Parallel Line』 VALORANT MONTAGE JETT",
-          "source": "fan",
-          "seconds": 91,
-          "views": 67,
-          "published": "2021-10-03",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:17:32.756Z"
-          },
-          "checked": "2026-11-17T18:17:32.756Z"
-        }
-      ],
-      "video": {
-        "id": "O0aOjOdu6o0",
-        "kind": "tv",
-        "channel": "NBL",
-        "channelId": "UCikk_rKoCdQvIN7Epq-k7vQ",
-        "title": "Scum's Wish Ending Full 『Parallel Line』 VALORANT MONTAGE JETT",
-        "source": "fan",
-        "seconds": 91,
-        "views": 67,
-        "published": "2021-10-03",
-        "hd": true,
-        "quality": {
-          "hd": true,
-          "width": 1920,
-          "height": 1080,
-          "label": "1080p",
-          "source": "watch-page-formats",
-          "checked": "2026-11-17T18:17:32.756Z"
-        },
-        "checked": "2026-11-17T18:17:32.756Z"
-      },
-      "flag": "jzqKi7gg5kc: fan age/views gate unknown or unmet"
+      "videos": [],
+      "video": null,
+      "flag": "set aside: no eligible HD copy; jzqKi7gg5kc: fan age/views gate unknown or unmet"
     },
     {
       "id": "gen-hoshino|kigeki",
       "artist": "Gen Hoshino",
       "title": "Kigeki",
-      "aliases": [],
+      "aliases": [
+        "Comedy",
+        "喜劇"
+      ],
       "kind": "theme",
       "show": "Spy x Family",
       "use": "ED",
       "year": 2022,
       "videos": [
-        {
-          "id": "4kNt62PptEQ",
-          "kind": "creditless",
-          "channel": "TOHO animation チャンネル",
-          "channelId": "UC14Yc2Qv92DMuyNRlHvpo2Q",
-          "title": "『SPY×FAMILY』第2クールエンディング主題歌アニメ映像（ノンクレジット）／“SPY x FAMILY” part2 Ending theme song animation",
-          "source": "official",
-          "seconds": 90,
-          "views": 16290831,
-          "published": "2022-10-01",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:09.535Z"
-          },
-          "checked": "2026-11-17T18:14:09.535Z"
-        },
         {
           "id": "nRKJBpFFsuI",
           "kind": "creditless",
@@ -3113,63 +1972,21 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:12.151Z"
+            "checked": "2026-11-17T19:28:40.362Z"
           },
-          "checked": "2026-11-17T18:14:12.151Z"
-        },
-        {
-          "id": "OoJBMjjIXY4",
-          "kind": "creditless",
-          "channel": "TriaxFx",
-          "channelId": "UCGBEqfgTB0PZhKVp5XjIOzA",
-          "title": "「Creditless」SPY x FAMILY ED / Ending 1「UHD 60FPS」",
-          "source": "fan",
-          "seconds": 102,
-          "views": 5705606,
-          "published": "2022-04-25",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:14.675Z"
-          },
-          "checked": "2026-11-17T18:14:14.675Z"
-        },
-        {
-          "id": "Hlw8dTz_iq0",
-          "kind": "creditless",
-          "channel": "TriaxFx",
-          "channelId": "UCGBEqfgTB0PZhKVp5XjIOzA",
-          "title": "「Creditless」SPY x FAMILY OP / Opening 2「UHD 60FPS」",
-          "source": "fan",
-          "seconds": 102,
-          "views": 4822846,
-          "published": "2022-09-28",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:17.217Z"
-          },
-          "checked": "2026-11-17T18:14:17.217Z"
+          "checked": "2026-11-17T19:28:40.362Z"
         }
       ],
       "video": {
-        "id": "4kNt62PptEQ",
+        "id": "nRKJBpFFsuI",
         "kind": "creditless",
         "channel": "TOHO animation チャンネル",
         "channelId": "UC14Yc2Qv92DMuyNRlHvpo2Q",
-        "title": "『SPY×FAMILY』第2クールエンディング主題歌アニメ映像（ノンクレジット）／“SPY x FAMILY” part2 Ending theme song animation",
+        "title": "星野源「喜劇」:『SPY×FAMILY』エンディング主題歌 アニメ映像（ノンクレジット）／“SPY × FAMILY” Ending theme song animation",
         "source": "official",
         "seconds": 90,
-        "views": 16290831,
-        "published": "2022-10-01",
+        "views": 15658586,
+        "published": "2022-04-23",
         "hd": true,
         "quality": {
           "hd": true,
@@ -3177,11 +1994,11 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:14:09.535Z"
+          "checked": "2026-11-17T19:28:40.362Z"
         },
-        "checked": "2026-11-17T18:14:09.535Z"
+        "checked": "2026-11-17T19:28:40.362Z"
       },
-      "flag": "LzGqlUlKegU: fan age/views gate unknown or unmet; DPKYlR9fw0Y: fan age/views gate unknown or unmet"
+      "flag": null
     },
     {
       "id": "milet|anytime-anywhere",
@@ -3210,30 +2027,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:19.714Z"
+            "checked": "2026-11-17T19:28:40.388Z"
           },
-          "checked": "2026-11-17T18:14:19.714Z"
-        },
-        {
-          "id": "FY4Bx2qtkRM",
-          "kind": "creditless",
-          "channel": "TOHO animation チャンネル",
-          "channelId": "UC14Yc2Qv92DMuyNRlHvpo2Q",
-          "title": "『葬送のフリーレン』第2期ノンクレジットエンディング映像／EDテーマ：「The Story of Us」milet／フリーレンED",
-          "source": "official",
-          "seconds": 96,
-          "views": 1793926,
-          "published": "2026-01-16",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:22.261Z"
-          },
-          "checked": "2026-11-17T18:14:22.261Z"
+          "checked": "2026-11-17T19:28:40.388Z"
         },
         {
           "id": "HAOQDCF0jQE",
@@ -3252,9 +2048,30 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:24.729Z"
+            "checked": "2026-11-17T19:28:40.388Z"
           },
-          "checked": "2026-11-17T18:14:24.729Z"
+          "checked": "2026-11-17T19:28:40.388Z"
+        },
+        {
+          "id": "Hcqm87gIPsI",
+          "kind": "creditless",
+          "channel": "Bruh Clan",
+          "channelId": "UC3mZvZYxau7ngCxKSJy31jA",
+          "title": "Frieren Beyond Journey's End Ending 1 - Anytime Anywhere | Creditless | English / Romaji Subtitles",
+          "source": "fan",
+          "seconds": 114,
+          "views": 191143,
+          "published": "2023-10-17",
+          "hd": true,
+          "quality": {
+            "hd": true,
+            "width": 3840,
+            "height": 2160,
+            "label": "2160p",
+            "source": "watch-page-formats",
+            "checked": "2026-11-17T19:28:40.388Z"
+          },
+          "checked": "2026-11-17T19:28:40.388Z"
         },
         {
           "id": "lv5R6C3hz54",
@@ -3273,9 +2090,9 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:27.196Z"
+            "checked": "2026-11-17T19:28:40.388Z"
           },
-          "checked": "2026-11-17T18:14:27.196Z"
+          "checked": "2026-11-17T19:28:40.388Z"
         }
       ],
       "video": {
@@ -3295,11 +2112,11 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:14:19.714Z"
+          "checked": "2026-11-17T19:28:40.388Z"
         },
-        "checked": "2026-11-17T18:14:19.714Z"
+        "checked": "2026-11-17T19:28:40.388Z"
       },
-      "flag": "ruZLNJmQRuA: fan age/views gate unknown or unmet; fgxf1cAwWAo: fan age/views gate unknown or unmet; uaXpMjb4wjo: fan age/views gate unknown or unmet"
+      "flag": "ruZLNJmQRuA: fan age/views gate unknown or unmet"
     },
     {
       "id": "aya-hirano|god-knows",
@@ -3318,132 +2135,31 @@
       "id": "ho-kago-tea-time|u-i",
       "artist": "Ho-kago Tea Time",
       "title": "U&I",
-      "aliases": [],
+      "aliases": [
+        "U and I"
+      ],
       "kind": "theme",
       "show": "K-On!!",
       "use": "IN",
       "year": 2010,
-      "videos": [
-        {
-          "id": "hUOsDhkf8F8",
-          "kind": "creditless",
-          "channel": "animuse",
-          "channelId": "UCOk0u9Hs_0eBCwA_acy-LRw",
-          "title": "K-ON! Ending 1 | Creditless | 4K",
-          "source": "fan",
-          "seconds": 90,
-          "views": 482699,
-          "published": "2021-07-29",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p60",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:17:45.453Z"
-          },
-          "checked": "2026-11-17T18:17:45.453Z"
-        },
-        {
-          "id": "XvNMNXEnbNQ",
-          "kind": "creditless",
-          "channel": "Dark4sun",
-          "channelId": "UCSSiv4a_ucLB7yijgT3ciqA",
-          "title": "Singing! K-On! Ending Creditless",
-          "source": "fan",
-          "seconds": 104,
-          "views": 132697,
-          "published": "2023-10-19",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:17:45.453Z"
-          },
-          "checked": "2026-11-17T18:17:45.453Z"
-        }
-      ],
-      "video": {
-        "id": "hUOsDhkf8F8",
-        "kind": "creditless",
-        "channel": "animuse",
-        "channelId": "UCOk0u9Hs_0eBCwA_acy-LRw",
-        "title": "K-ON! Ending 1 | Creditless | 4K",
-        "source": "fan",
-        "seconds": 90,
-        "views": 482699,
-        "published": "2021-07-29",
-        "hd": true,
-        "quality": {
-          "hd": true,
-          "width": 3840,
-          "height": 2160,
-          "label": "2160p60",
-          "source": "watch-page-formats",
-          "checked": "2026-11-17T18:17:45.453Z"
-        },
-        "checked": "2026-11-17T18:17:45.453Z"
-      },
-      "flag": null
+      "videos": [],
+      "video": null,
+      "flag": "set aside: no eligible HD copy"
     },
     {
       "id": "radwimps|sparkle",
       "artist": "RADWIMPS",
       "title": "Sparkle",
-      "aliases": [],
+      "aliases": [
+        "スパークル"
+      ],
       "kind": "theme",
       "show": "Your Name.",
       "use": "IN",
       "year": 2016,
-      "videos": [
-        {
-          "id": "a2GujJZfXpg",
-          "kind": "mv",
-          "channel": "RADWIMPS",
-          "channelId": "UCIVqvhyo8ttjYOmMJuhq_YQ",
-          "title": "スパークル [original ver.] -Your name. Music Video edition- 予告編 from new album「人間開花」初回盤DVD",
-          "source": "official",
-          "seconds": 182,
-          "views": 309453471,
-          "published": "2016-10-27",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:17:50.357Z"
-          },
-          "checked": "2026-11-17T18:17:50.357Z"
-        }
-      ],
-      "video": {
-        "id": "a2GujJZfXpg",
-        "kind": "mv",
-        "channel": "RADWIMPS",
-        "channelId": "UCIVqvhyo8ttjYOmMJuhq_YQ",
-        "title": "スパークル [original ver.] -Your name. Music Video edition- 予告編 from new album「人間開花」初回盤DVD",
-        "source": "official",
-        "seconds": 182,
-        "views": 309453471,
-        "published": "2016-10-27",
-        "hd": true,
-        "quality": {
-          "hd": true,
-          "width": 1920,
-          "height": 1080,
-          "label": "1080p",
-          "source": "watch-page-formats",
-          "checked": "2026-11-17T18:17:50.357Z"
-        },
-        "checked": "2026-11-17T18:17:50.357Z"
-      },
-      "flag": "mv used for a theme; MgNItWdfEIU: Topic channel; U52IJSyHa24: Topic channel"
+      "videos": [],
+      "video": null,
+      "flag": "set aside: no eligible HD copy"
     },
     {
       "id": "k-da|pop-stars",
@@ -3472,51 +2188,9 @@
             "height": 2160,
             "label": "2160p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:00.333Z"
+            "checked": "2026-11-17T19:28:40.491Z"
           },
-          "checked": "2026-11-17T18:18:00.333Z"
-        },
-        {
-          "id": "3VTkBuxU4yk",
-          "kind": "mv",
-          "channel": "League of Legends",
-          "channelId": "UC2t5bjwHdUX4vM2g8TRDq5g",
-          "title": "K/DA - MORE ft. Madison Beer, (G)I-DLE, Lexie Liu, Jaira Burns, Seraphine (Official Music Video)",
-          "source": "official",
-          "seconds": 231,
-          "views": 250729287,
-          "published": "2020-10-28",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:00.333Z"
-          },
-          "checked": "2026-11-17T18:18:00.333Z"
-        },
-        {
-          "id": "Mmw-PpWhKFg",
-          "kind": "mv",
-          "channel": "League of Legends",
-          "channelId": "UC2t5bjwHdUX4vM2g8TRDq5g",
-          "title": "K/DA - FIRESTARTER ft. MIYEON and SOYEON of i-dle, Sophie Powers, Mimi Webb (Official Music Video)",
-          "source": "official",
-          "seconds": 207,
-          "views": 54750293,
-          "published": "2026-10-18",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 1632,
-            "label": "2160p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:00.333Z"
-          },
-          "checked": "2026-11-17T18:18:00.333Z"
+          "checked": "2026-11-17T19:28:40.491Z"
         }
       ],
       "video": {
@@ -3536,9 +2210,9 @@
           "height": 2160,
           "label": "2160p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:18:00.333Z"
+          "checked": "2026-11-17T19:28:40.491Z"
         },
-        "checked": "2026-11-17T18:18:00.333Z"
+        "checked": "2026-11-17T19:28:40.491Z"
       },
       "flag": null
     },
@@ -3553,68 +2227,47 @@
       "year": 2018,
       "videos": [
         {
-          "id": "pFNG9xgSKW8",
+          "id": "fB8TyLTD7EE",
           "kind": "mv",
-          "channel": "TEC ILLUSION",
-          "channelId": "UC05fTaYVOecr8sek1Lbajaw",
-          "title": "RISE (ft. The Glitch Mob, Mako, and The Word Alive) - MV",
-          "source": "fan",
-          "seconds": 193,
-          "views": 1516,
-          "published": "2019-09-11",
+          "channel": "League of Legends",
+          "channelId": "UC2t5bjwHdUX4vM2g8TRDq5g",
+          "title": "RISE (ft. The Glitch Mob, Mako, and The Word Alive) | Worlds 2018 - League of Legends",
+          "source": "official",
+          "seconds": 210,
+          "views": 428170685,
+          "published": "2018-09-26",
           "hd": true,
           "quality": {
             "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
+            "width": 3840,
+            "height": 2160,
+            "label": "2160p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:03.034Z"
+            "checked": "2026-11-17T19:28:40.511Z"
           },
-          "checked": "2026-11-17T18:18:03.034Z"
-        },
-        {
-          "id": "0obZDkQ0dgw",
-          "kind": "mv",
-          "channel": "Дарина Степанова",
-          "channelId": "UCm-j4zfi-wHSZgwbS3_Rldg",
-          "title": "The Word Alive - Rise feat The Glitch Mob and Mako - (Constantine) MV",
-          "source": "fan",
-          "seconds": 186,
-          "views": 124,
-          "published": "2019-12-24",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:44.806Z"
-          },
-          "checked": "2026-11-17T18:14:44.806Z"
+          "checked": "2026-11-17T19:28:40.511Z"
         }
       ],
       "video": {
-        "id": "pFNG9xgSKW8",
+        "id": "fB8TyLTD7EE",
         "kind": "mv",
-        "channel": "TEC ILLUSION",
-        "channelId": "UC05fTaYVOecr8sek1Lbajaw",
-        "title": "RISE (ft. The Glitch Mob, Mako, and The Word Alive) - MV",
-        "source": "fan",
-        "seconds": 193,
-        "views": 1516,
-        "published": "2019-09-11",
+        "channel": "League of Legends",
+        "channelId": "UC2t5bjwHdUX4vM2g8TRDq5g",
+        "title": "RISE (ft. The Glitch Mob, Mako, and The Word Alive) | Worlds 2018 - League of Legends",
+        "source": "official",
+        "seconds": 210,
+        "views": 428170685,
+        "published": "2018-09-26",
         "hd": true,
         "quality": {
           "hd": true,
-          "width": 1920,
-          "height": 1080,
-          "label": "1080p",
+          "width": 3840,
+          "height": 2160,
+          "label": "2160p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:18:03.034Z"
+          "checked": "2026-11-17T19:28:40.511Z"
         },
-        "checked": "2026-11-17T18:18:03.034Z"
+        "checked": "2026-11-17T19:28:40.511Z"
       },
       "flag": null
     },
@@ -3628,27 +2281,6 @@
       "use": "MV",
       "year": 2004,
       "videos": [
-        {
-          "id": "kXYiU_JCYtU",
-          "kind": "mv",
-          "channel": "Linkin Park",
-          "channelId": "UCZU9T1ceaOgwfLRq7OKFU4Q",
-          "title": "Numb (Official Music Video) [4K UPGRADE] – Linkin Park",
-          "source": "official",
-          "seconds": 187,
-          "views": 2832727557,
-          "published": "2007-03-05",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:47.237Z"
-          },
-          "checked": "2026-11-17T18:14:47.237Z"
-        },
         {
           "id": "v2H4l9RpkwM",
           "kind": "mv",
@@ -3666,63 +2298,21 @@
             "height": 2160,
             "label": "2160p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:49.960Z"
+            "checked": "2026-11-17T19:28:40.530Z"
           },
-          "checked": "2026-11-17T18:14:49.960Z"
-        },
-        {
-          "id": "YLHpvjrFpe0",
-          "kind": "mv",
-          "channel": "Linkin Park",
-          "channelId": "UCZU9T1ceaOgwfLRq7OKFU4Q",
-          "title": "From The Inside (Official Music Video) [4K UPGRADE] – Linkin Park",
-          "source": "official",
-          "seconds": 177,
-          "views": 218217133,
-          "published": "2009-10-23",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:52.329Z"
-          },
-          "checked": "2026-11-17T18:14:52.329Z"
-        },
-        {
-          "id": "eVTXPUF4Oz4",
-          "kind": "mv",
-          "channel": "Linkin Park",
-          "channelId": "UCZU9T1ceaOgwfLRq7OKFU4Q",
-          "title": "In The End [Official HD Music Video] - Linkin Park",
-          "source": "official",
-          "seconds": 218,
-          "views": 2383435599,
-          "published": "2009-10-26",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1068,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:54.812Z"
-          },
-          "checked": "2026-11-17T18:14:54.812Z"
+          "checked": "2026-11-17T19:28:40.530Z"
         }
       ],
       "video": {
-        "id": "kXYiU_JCYtU",
+        "id": "v2H4l9RpkwM",
         "kind": "mv",
         "channel": "Linkin Park",
         "channelId": "UCZU9T1ceaOgwfLRq7OKFU4Q",
-        "title": "Numb (Official Music Video) [4K UPGRADE] – Linkin Park",
+        "title": "Breaking the Habit (Official Music Video) [HD UPGRADE] – Linkin Park",
         "source": "official",
-        "seconds": 187,
-        "views": 2832727557,
-        "published": "2007-03-05",
+        "seconds": 198,
+        "views": 441672149,
+        "published": "2009-10-23",
         "hd": true,
         "quality": {
           "hd": true,
@@ -3730,11 +2320,11 @@
           "height": 2160,
           "label": "2160p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:14:47.237Z"
+          "checked": "2026-11-17T19:28:40.530Z"
         },
-        "checked": "2026-11-17T18:14:47.237Z"
+        "checked": "2026-11-17T19:28:40.530Z"
       },
-      "flag": "RwTwd5tAq1U: Topic channel; TuGAP7L9UDk: SD source"
+      "flag": "RwTwd5tAq1U: Topic channel; 1bQL_-duId4: fan copy of an animated MV"
     },
     {
       "id": "daft-punk|something-about-us",
@@ -3745,114 +2335,9 @@
       "source": "Interstella 5555",
       "use": "MV",
       "year": 2003,
-      "videos": [
-        {
-          "id": "K0HSD_i2DvA",
-          "kind": "mv",
-          "channel": "Daft Punk",
-          "channelId": "UC_kRDKYrUlrbtrSiyu5Tflg",
-          "title": "Daft Punk - Around The World (Official Music Video Remastered)",
-          "source": "official",
-          "seconds": 242,
-          "views": 141347905,
-          "published": "2021-10-01",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1440,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:14:57.527Z"
-          },
-          "checked": "2026-11-17T18:14:57.527Z"
-        },
-        {
-          "id": "em0MknB6wFo",
-          "kind": "mv",
-          "channel": "Daft Punk",
-          "channelId": "UC_kRDKYrUlrbtrSiyu5Tflg",
-          "title": "Daft Punk - Something About Us (Official Audio)",
-          "source": "official",
-          "seconds": 233,
-          "views": 30866175,
-          "published": "2015-06-11",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:07.830Z"
-          },
-          "checked": "2026-11-17T18:18:07.830Z"
-        },
-        {
-          "id": "UsXubuXq1lM",
-          "kind": "mv",
-          "channel": "Daft Punk",
-          "channelId": "UC_kRDKYrUlrbtrSiyu5Tflg",
-          "title": "Daft Punk - Human After All (Official Music Video)",
-          "source": "official",
-          "seconds": 157,
-          "views": 3600042,
-          "published": "2026-02-22",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:07.830Z"
-          },
-          "checked": "2026-11-17T18:18:07.830Z"
-        },
-        {
-          "id": "a5uQMwRMHcs",
-          "kind": "mv",
-          "channel": "DaftPunkVEVO",
-          "channelId": "UCKHFvArwRwQU2VbRjMpaVGw",
-          "title": "Daft Punk - Instant Crush (Official Video) ft. Julian Casablancas",
-          "source": "fan",
-          "seconds": 340,
-          "views": 915442697,
-          "published": "2013-12-06",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:07.830Z"
-          },
-          "checked": "2026-11-17T18:18:07.830Z"
-        }
-      ],
-      "video": {
-        "id": "K0HSD_i2DvA",
-        "kind": "mv",
-        "channel": "Daft Punk",
-        "channelId": "UC_kRDKYrUlrbtrSiyu5Tflg",
-        "title": "Daft Punk - Around The World (Official Music Video Remastered)",
-        "source": "official",
-        "seconds": 242,
-        "views": 141347905,
-        "published": "2021-10-01",
-        "hd": true,
-        "quality": {
-          "hd": true,
-          "width": 1440,
-          "height": 1080,
-          "label": "1080p",
-          "source": "watch-page-formats",
-          "checked": "2026-11-17T18:14:57.527Z"
-        },
-        "checked": "2026-11-17T18:14:57.527Z"
-      },
-      "flag": "sOS9aOIXPEk: SD source; HhZaHf8RP6g: SD source; IagiM9ZVflU: fan age/views gate unknown or unmet"
+      "videos": [],
+      "video": null,
+      "flag": "set aside: no eligible HD copy; sOS9aOIXPEk: SD source"
     },
     {
       "id": "porter-robinson-madeon|shelter",
@@ -3864,27 +2349,6 @@
       "use": "MV",
       "year": 2016,
       "videos": [
-        {
-          "id": "CzJbz9qSsd0",
-          "kind": "mv",
-          "channel": "Porter Robinson",
-          "channelId": "UCKKKYE55BVswHgKihx5YXew",
-          "title": "Porter Robinson - Cheerleader (Official Music Video)",
-          "source": "official",
-          "seconds": 253,
-          "views": 7782663,
-          "published": "2024-03-20",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1318,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:15:07.432Z"
-          },
-          "checked": "2026-11-17T18:15:07.432Z"
-        },
         {
           "id": "fzQ6gRAEoy0",
           "kind": "mv",
@@ -3902,75 +2366,33 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:20.438Z"
+            "checked": "2026-11-17T19:28:40.582Z"
           },
-          "checked": "2026-11-17T18:18:20.438Z"
-        },
-        {
-          "id": "-C-2AqRD8io",
-          "kind": "mv",
-          "channel": "Porter Robinson",
-          "channelId": "UCKKKYE55BVswHgKihx5YXew",
-          "title": "Porter Robinson - Something Comforting (Official Music Video)",
-          "source": "official",
-          "seconds": 268,
-          "views": 12362185,
-          "published": "2020-03-25",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:20.438Z"
-          },
-          "checked": "2026-11-17T18:18:20.438Z"
-        },
-        {
-          "id": "HQnC1UHBvWA",
-          "kind": "mv",
-          "channel": "Madeon",
-          "channelId": "UCqMDNf3Pn5L7pcNkuSEeO3w",
-          "title": "Porter Robinson & Madeon - Shelter (Official Audio)",
-          "source": "fan",
-          "seconds": 218,
-          "views": 64382979,
-          "published": "2016-08-11",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:20.438Z"
-          },
-          "checked": "2026-11-17T18:18:20.438Z"
+          "checked": "2026-11-17T19:28:40.582Z"
         }
       ],
       "video": {
-        "id": "CzJbz9qSsd0",
+        "id": "fzQ6gRAEoy0",
         "kind": "mv",
         "channel": "Porter Robinson",
         "channelId": "UCKKKYE55BVswHgKihx5YXew",
-        "title": "Porter Robinson - Cheerleader (Official Music Video)",
+        "title": "Porter Robinson & Madeon - Shelter (Official Video) (Short Film with A-1 Pictures & Crunchyroll)",
         "source": "official",
-        "seconds": 253,
-        "views": 7782663,
-        "published": "2024-03-20",
+        "seconds": 366,
+        "views": 92903768,
+        "published": "2016-10-18",
         "hd": true,
         "quality": {
           "hd": true,
           "width": 1920,
-          "height": 1318,
+          "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:15:07.432Z"
+          "checked": "2026-11-17T19:28:40.582Z"
         },
-        "checked": "2026-11-17T18:15:07.432Z"
+        "checked": "2026-11-17T19:28:40.582Z"
       },
-      "flag": "Qt2pEKVnPOo: fan age/views gate unknown or unmet"
+      "flag": "9m2w1eHg84w: fan copy of an animated MV; Qt2pEKVnPOo: fan copy of an animated MV"
     },
     {
       "id": "gorillaz|clint-eastwood",
@@ -3982,27 +2404,6 @@
       "use": "MV",
       "year": 2001,
       "videos": [
-        {
-          "id": "HyHNuVaZJ-k",
-          "kind": "mv",
-          "channel": "Gorillaz",
-          "channelId": "UCfIXdjDQH9Fau7y99_Orpjw",
-          "title": "Gorillaz - Feel Good Inc. (Official Video)",
-          "source": "official",
-          "seconds": 255,
-          "views": 1208694891,
-          "published": "2016-06-28",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:30.438Z"
-          },
-          "checked": "2026-11-17T18:18:30.438Z"
-        },
         {
           "id": "1V_xRb0x9aw",
           "kind": "mv",
@@ -4020,62 +2421,20 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:30.438Z"
+            "checked": "2026-11-17T19:28:40.611Z"
           },
-          "checked": "2026-11-17T18:18:30.438Z"
-        },
-        {
-          "id": "cLnkQAeMbIM",
-          "kind": "mv",
-          "channel": "Gorillaz",
-          "channelId": "UCfIXdjDQH9Fau7y99_Orpjw",
-          "title": "Gorillaz - Dirty Harry (Official Video)",
-          "source": "official",
-          "seconds": 295,
-          "views": 219132039,
-          "published": "2010-09-07",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:30.438Z"
-          },
-          "checked": "2026-11-17T18:18:30.438Z"
-        },
-        {
-          "id": "21RyR2_ylME",
-          "kind": "mv",
-          "channel": "Gorillaz",
-          "channelId": "UCfIXdjDQH9Fau7y99_Orpjw",
-          "title": "Gorillaz - Clint Eastwood (Commentary Edition)",
-          "source": "official",
-          "seconds": 278,
-          "views": 1772540,
-          "published": "2022-04-08",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:18:30.438Z"
-          },
-          "checked": "2026-11-17T18:18:30.438Z"
+          "checked": "2026-11-17T19:28:40.611Z"
         }
       ],
       "video": {
-        "id": "HyHNuVaZJ-k",
+        "id": "1V_xRb0x9aw",
         "kind": "mv",
         "channel": "Gorillaz",
         "channelId": "UCfIXdjDQH9Fau7y99_Orpjw",
-        "title": "Gorillaz - Feel Good Inc. (Official Video)",
+        "title": "Gorillaz - Clint Eastwood (Official Video)",
         "source": "official",
-        "seconds": 255,
-        "views": 1208694891,
+        "seconds": 267,
+        "views": 1123105380,
         "published": "2016-06-28",
         "hd": true,
         "quality": {
@@ -4084,11 +2443,11 @@
           "height": 1080,
           "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:18:30.438Z"
+          "checked": "2026-11-17T19:28:40.611Z"
         },
-        "checked": "2026-11-17T18:18:30.438Z"
+        "checked": "2026-11-17T19:28:40.611Z"
       },
-      "flag": "5Z_rT4zAVdE: SD source"
+      "flag": "4L3Yg8uNeFc: Topic channel; 5Z_rT4zAVdE: fan copy of an animated MV; XcVd0tyl6JM: fan copy of an animated MV"
     },
     {
       "id": "siames|the-wolf",
@@ -4100,48 +2459,6 @@
       "use": "MV",
       "year": 2017,
       "videos": [
-        {
-          "id": "IaLJbIxQ6hY",
-          "kind": "mv",
-          "channel": "SIAMES",
-          "channelId": "UCVRWkwOQIpxPOhQ9V-gL2UA",
-          "title": "SIAMÉS \"Alone In The Darkness\" [Official Animated Music Video]",
-          "source": "official",
-          "seconds": 220,
-          "views": 4244657,
-          "published": "2024-07-25",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:15:27.347Z"
-          },
-          "checked": "2026-11-17T18:15:27.347Z"
-        },
-        {
-          "id": "Z9ZlS7i2Xvc",
-          "kind": "mv",
-          "channel": "SIAMES",
-          "channelId": "UCVRWkwOQIpxPOhQ9V-gL2UA",
-          "title": "SIAMÉS \"My Way\" Single Version [Official Animated Music Video]",
-          "source": "official",
-          "seconds": 201,
-          "views": 5466652,
-          "published": "2024-02-10",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 2560,
-            "height": 1440,
-            "label": "1440p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:15:30.054Z"
-          },
-          "checked": "2026-11-17T18:15:30.054Z"
-        },
         {
           "id": "lX44CAz-JhU",
           "kind": "mv",
@@ -4159,20 +2476,20 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:15:32.408Z"
+            "checked": "2026-11-17T19:28:40.646Z"
           },
-          "checked": "2026-11-17T18:15:32.408Z"
+          "checked": "2026-11-17T19:28:40.646Z"
         },
         {
-          "id": "EKLWC93nvAU",
+          "id": "mYRn7ACI_To",
           "kind": "mv",
           "channel": "SIAMES",
           "channelId": "UCVRWkwOQIpxPOhQ9V-gL2UA",
-          "title": "SIAMÉS \"Mr. FEAR\" [Official Animated Music Video]",
+          "title": "SIAMÉS \"The Wolf\"",
           "source": "official",
-          "seconds": 274,
-          "views": 63252254,
-          "published": "2018-10-31",
+          "seconds": 187,
+          "views": 1627836,
+          "published": "2017-05-21",
           "hd": true,
           "quality": {
             "hd": true,
@@ -4180,65 +2497,46 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:15:34.903Z"
+            "checked": "2026-11-17T19:28:40.646Z"
           },
-          "checked": "2026-11-17T18:15:34.903Z"
+          "checked": "2026-11-17T19:28:40.646Z"
         }
       ],
       "video": {
-        "id": "IaLJbIxQ6hY",
+        "id": "lX44CAz-JhU",
         "kind": "mv",
         "channel": "SIAMES",
         "channelId": "UCVRWkwOQIpxPOhQ9V-gL2UA",
-        "title": "SIAMÉS \"Alone In The Darkness\" [Official Animated Music Video]",
+        "title": "SIAMÉS \"The Wolf\" [Official Animated Music Video]",
         "source": "official",
-        "seconds": 220,
-        "views": 4244657,
-        "published": "2024-07-25",
+        "seconds": 191,
+        "views": 248738959,
+        "published": "2017-04-21",
         "hd": true,
         "quality": {
           "hd": true,
-          "width": 3840,
-          "height": 2160,
-          "label": "2160p",
+          "width": 1920,
+          "height": 1080,
+          "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:15:27.347Z"
+          "checked": "2026-11-17T19:28:40.646Z"
         },
-        "checked": "2026-11-17T18:15:27.347Z"
+        "checked": "2026-11-17T19:28:40.646Z"
       },
-      "flag": "8SE4Bi-kibk: not a music video"
+      "flag": "8SE4Bi-kibk: not a music video; _aoP792lEoU: fan copy of an animated MV"
     },
     {
       "id": "eve|dramaturgy",
       "artist": "Eve",
       "title": "Dramaturgy",
-      "aliases": [],
+      "aliases": [
+        "ドラマツルギー"
+      ],
       "kind": "animated-mv",
       "source": "Dramaturgy (animated music video)",
       "use": "MV",
       "year": 2017,
       "videos": [
-        {
-          "id": "Gw96jPDtoDQ",
-          "kind": "mv",
-          "channel": "Eve",
-          "channelId": "UCUXfRsEIJ9xO1DT7TbEWksw",
-          "title": "虎狼来 (Kororon) - Eve Music Video",
-          "source": "official",
-          "seconds": 236,
-          "views": 20218633,
-          "published": "2023-08-27",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 3840,
-            "height": 2160,
-            "label": "2160p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:15:37.409Z"
-          },
-          "checked": "2026-11-17T18:15:37.409Z"
-        },
         {
           "id": "jJzw1h5CR-I",
           "kind": "mv",
@@ -4256,75 +2554,33 @@
             "height": 1080,
             "label": "1080p",
             "source": "watch-page-formats",
-            "checked": "2026-11-17T18:15:39.888Z"
+            "checked": "2026-11-17T19:28:40.678Z"
           },
-          "checked": "2026-11-17T18:15:39.888Z"
-        },
-        {
-          "id": "CLdeykXCZX4",
-          "kind": "mv",
-          "channel": "Eve",
-          "channelId": "UCUXfRsEIJ9xO1DT7TbEWksw",
-          "title": "ラストダンス - Eve MV",
-          "source": "official",
-          "seconds": 240,
-          "views": 99377510,
-          "published": "2018-12-14",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:15:42.528Z"
-          },
-          "checked": "2026-11-17T18:15:42.528Z"
-        },
-        {
-          "id": "UfTpKaKXbG4",
-          "kind": "mv",
-          "channel": "Eve",
-          "channelId": "UCUXfRsEIJ9xO1DT7TbEWksw",
-          "title": "Underdog - Eve Music Video",
-          "source": "official",
-          "seconds": 244,
-          "views": 16273439,
-          "published": "2025-11-28",
-          "hd": true,
-          "quality": {
-            "hd": true,
-            "width": 1920,
-            "height": 1080,
-            "label": "1080p",
-            "source": "watch-page-formats",
-            "checked": "2026-11-17T18:15:44.944Z"
-          },
-          "checked": "2026-11-17T18:15:44.944Z"
+          "checked": "2026-11-17T19:28:40.678Z"
         }
       ],
       "video": {
-        "id": "Gw96jPDtoDQ",
+        "id": "jJzw1h5CR-I",
         "kind": "mv",
         "channel": "Eve",
         "channelId": "UCUXfRsEIJ9xO1DT7TbEWksw",
-        "title": "虎狼来 (Kororon) - Eve Music Video",
+        "title": "ドラマツルギー - Eve  MV",
         "source": "official",
-        "seconds": 236,
-        "views": 20218633,
-        "published": "2023-08-27",
+        "seconds": 246,
+        "views": 226238185,
+        "published": "2017-10-11",
         "hd": true,
         "quality": {
           "hd": true,
-          "width": 3840,
-          "height": 2160,
-          "label": "2160p",
+          "width": 1920,
+          "height": 1080,
+          "label": "1080p",
           "source": "watch-page-formats",
-          "checked": "2026-11-17T18:15:37.409Z"
+          "checked": "2026-11-17T19:28:40.678Z"
         },
-        "checked": "2026-11-17T18:15:37.409Z"
+        "checked": "2026-11-17T19:28:40.678Z"
       },
-      "flag": "sHO-cVXWWY0: Topic channel"
+      "flag": "sHO-cVXWWY0: Topic channel; jtWYu0y_8SM: fan copy of an animated MV"
     }
   ]
 }
