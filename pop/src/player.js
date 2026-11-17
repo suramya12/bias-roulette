@@ -1,64 +1,89 @@
-// YouTube IFrame player with a "Watch on YouTube" fallback for videos that can't be embedded.
+// Each attempt owns its iframe and callbacks, so late YouTube events cannot affect its replacement.
 let apiReady;
 function loadApi() {
-  apiReady ??= new Promise((resolve, reject) => {
-    if (window.YT?.Player) return resolve(window.YT);
-    const prev = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = () => { prev?.(); resolve(window.YT); };
-    const s = document.createElement('script');
-    s.src = 'https://www.youtube.com/iframe_api';
-    s.onerror = reject;
-    document.head.append(s);
-  });
+  if (!apiReady) {
+    apiReady = new Promise((resolve, reject) => {
+      if (window.YT?.Player) return resolve(window.YT);
+      const prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => { prev?.(); resolve(window.YT); };
+      const script = document.createElement('script');
+      script.src = 'https://www.youtube.com/iframe_api';
+      script.onerror = reject;
+      document.head.append(script);
+    }).catch((error) => { apiReady = null; throw error; });
+  }
   return apiReady;
 }
 
-/** onEnd: the video played to the end. onFail: it can't be embedded (both used by autoplay). */
-export function createPlayer(host, { onEnd, onFail } = {}) {
-  // wantPlay is false after stop() or cue(): a player that is still loading must not start on its own.
-  let player = null, current = null, wantPlay = false;
-  const fallback = (id) => {
-    host.replaceChildren();
-    const f = document.createElement('div');
-    f.className = 'fallback';
-    f.style.backgroundImage = `linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)), url(https://i.ytimg.com/vi/${id}/hqdefault.jpg)`;
-    const a = document.createElement('a');
-    a.href = `https://www.youtube.com/watch?v=${id}`;
-    a.target = '_blank';
-    a.rel = 'noopener';
-    a.textContent = '▶ Watch on YouTube';
-    f.append(a);
-    host.append(f);
+export function createPlayer(host, { onEnd, onFail, onPlay, onBlocked } = {}) {
+  let player = null, generation = 0, pauseMessage = null;
+  function clearAutoPaused() { pauseMessage?.remove(); pauseMessage = null; }
+  function stop() {
+    generation++;
+    try { player?.destroy?.(); } catch {}
     player = null;
-    onFail?.();
-  };
-  async function load(id, autoplay) {
-    current = id;
-    wantPlay = autoplay;
+  }
+  async function load(id, token, autoplay) {
+    stop(); clearAutoPaused();
+    const mine = generation;
+    let failed = false;
+    const valid = () => mine === generation;
+    const fail = () => {
+      if (!valid() || failed) return;
+      failed = true;
+      try { player?.destroy?.(); } catch {}
+      player = null;
+      host.replaceChildren();
+      const f = document.createElement('div');
+      f.className = 'fallback';
+      f.style.backgroundImage = `linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)), url(https://i.ytimg.com/vi/${id}/hqdefault.jpg)`;
+      const a = document.createElement('a');
+      a.href = `https://www.youtube.com/watch?v=${id}`;
+      a.target = '_blank'; a.rel = 'noopener'; a.textContent = '▶ Watch on YouTube';
+      f.append(a); host.append(f);
+      onFail?.(token);
+    };
     try {
       const YT = await loadApi();
-      if (current !== id) return;
-      if (player?.loadVideoById) return wantPlay ? player.loadVideoById(id) : player.cueVideoById(id);
+      if (!valid()) return;
       host.replaceChildren();
-      const mount = document.createElement('div');
-      host.append(mount);
+      const mount = document.createElement('div'); host.append(mount);
       player = new YT.Player(mount, {
         videoId: id,
         playerVars: { autoplay: 0, playsinline: 1, rel: 0, modestbranding: 1 },
         events: {
-          onReady: (e) => wantPlay && e.target.playVideo(),
-          onStateChange: (e) => e.data === 0 && onEnd?.(),
-          onError: (e) => [2, 5, 100, 101, 150].includes(e.data) && fallback(current),
+          onReady: (e) => { if (valid() && !failed && autoplay) e.target.playVideo(); },
+          onStateChange: (e) => {
+            if (!valid() || failed) return;
+            if (e.data === 0) onEnd?.(token);
+            if (e.data === 1) { host.querySelector('.tap-to-play')?.remove(); onPlay?.(token); }
+          },
+          onError: (e) => { if ([2, 5, 100, 101, 150, 153].includes(e.data)) fail(); },
+          onAutoplayBlocked: (e) => {
+            if (!valid() || failed) return;
+            host.querySelector('.tap-to-play')?.remove();
+            const button = document.createElement('button');
+            button.className = 'tap-to-play'; button.type = 'button'; button.textContent = 'Tap to play';
+            button.addEventListener('click', () => { if (valid()) e.target.playVideo(); });
+            host.append(button); onBlocked?.(token);
+          },
         },
       });
-    } catch {
-      fallback(id);
-    }
+    } catch { fail(); }
   }
   return {
-    play: (id) => load(id, true),
-    /** Load the video without starting it (used when its section is hidden). */
-    cue: (id) => load(id, false),
-    stop() { wantPlay = false; try { player?.pauseVideo?.(); } catch {} },
+    play: (id, token) => load(id, token, true),
+    cue: (id, token) => load(id, token, false),
+    stop,
+    showAutoPaused(resume) {
+      clearAutoPaused();
+      pauseMessage = document.createElement('p'); pauseMessage.className = 'auto-paused';
+      pauseMessage.setAttribute('role', 'status');
+      pauseMessage.append("3 videos in a row wouldn't play here. Auto paused. ");
+      const button = document.createElement('button'); button.type = 'button'; button.textContent = 'Resume';
+      button.addEventListener('click', resume); pauseMessage.append(button);
+      host.after(pauseMessage);
+    },
+    clearAutoPaused,
   };
 }

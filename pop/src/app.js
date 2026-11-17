@@ -5,6 +5,7 @@ import { createRoulette } from './roulette.js';
 import { startCrowd } from './stage.js';
 import { PullMachine } from '../../src/pull-machine.js';
 import { Sound } from '../../src/sound.js';
+import { createAutoAdvance } from '../../src/auto-advance.js';
 
 const $ = (s) => document.querySelector(s);
 
@@ -91,11 +92,33 @@ $('#nAll').textContent = mainPool.length;
 $('#nFavs').textContent = biasPool.length;
 
 // ---------- Mode 2: Top 100 ----------
-const tPlayer = createPlayer($('#tPlayer'));
-stops.top100 = () => { machine.deactivate(); tPlayer.stop(); };
+const tPlayer = createPlayer($('#tPlayer'), {
+  onEnd: (token) => topAuto.end(token), onFail: (token) => topAuto.fail(token),
+  onPlay: (token) => topAuto.play(token), onBlocked: (token) => topAuto.blocked(token),
+});
+let chartAutoOn = false;
+try { chartAutoOn = localStorage.getItem('encore.chartAuto') === 'on'; } catch {}
+const topAuto = createAutoAdvance({
+  enabled: chartAutoOn, isActive: () => !$('#top100').closest('[hidden]'),
+  advance: () => machine.pull({ short: true, immediate: document.hidden }),
+  onPause: (paused) => {
+    $('#chartAuto').nextElementSibling.textContent = paused ? 'paused' : topAuto.enabled ? 'on' : 'off';
+    if (paused) tPlayer.showAutoPaused(() => topAuto.resume()); else tPlayer.clearAutoPaused();
+  },
+});
+const chartAutoInput = $('#chartAuto');
+chartAutoInput.checked = chartAutoOn;
+chartAutoInput.nextElementSibling.textContent = chartAutoOn ? 'on' : 'off';
+chartAutoInput.addEventListener('change', () => {
+  try { localStorage.setItem('encore.chartAuto', chartAutoInput.checked ? 'on' : 'off'); } catch {}
+  chartAutoInput.nextElementSibling.textContent = chartAutoInput.checked ? 'on' : 'off';
+  topAuto.setEnabled(chartAutoInput.checked);
+});
+stops.top100 = () => { topAuto.invalidate(); machine.deactivate(); tPlayer.stop(); };
 function showBig(slot, card, extra = [], valid = () => true) {
   slot.replaceChildren(card, ...extra);
-  requestAnimationFrame(() => { if (valid()) reveal(card); });
+  if (document.hidden) { if (valid()) reveal(card); }
+  else requestAnimationFrame(() => { if (valid()) reveal(card); });
 }
 const shown = new Set();
 const ringSize = () => (innerWidth < 520 ? 10 : 12);
@@ -121,12 +144,14 @@ const machine = new PullMachine({
     slot.replaceChildren(songCard(song, { size: 'mini', faceDown: true }));
   },
   sound, tierOf: (song) => G.songRarity(song.o).id,
+  onPull: () => { topAuto.invalidate(); tPlayer.stop(); tPlayer.clearAutoPaused(); },
+  onCancel: () => { topAuto.invalidate(); tPlayer.stop(); },
   say: (text) => { $('#topAnnounce').textContent = text; },
   onLand: (song, tier) => { $('#topAnnounce').textContent = `#${song.o} ${song.t} ? ${tier}!`; },
-  onReveal: (song) => {
+  onReveal: (song, { short } = {}) => {
     const token = machine.generation;
     const isNew = win('song', song.id);
-    playTop(song, true, isNew, () => machine.generation === token && machine.active);
+    playTop(song, !short, isNew, () => machine.generation === token && machine.active, short);
   },
 });
 machine.setPool(TOP, () => {
@@ -134,7 +159,7 @@ machine.setPool(TOP, () => {
   if (song) shown.add(song.id);
   return song;
 });
-function playTop(song, pulled, isNew, valid) {
+function playTop(song, pulled, isNew, valid, short = false) {
   const card = songCard(song, { size: 'big' });
   const extra = [];
   if (pulled) {
@@ -145,10 +170,10 @@ function playTop(song, pulled, isNew, valid) {
   }
   $('#tResult').hidden = false;
   showBig($('#tCard'), card, extra, valid);
-  tPlayer.play(song.id);
+  tPlayer.play(song.id, topAuto.begin());
   $('#tNow').replaceChildren('Now playing: ', Object.assign(document.createElement('b'), { textContent: song.t }), ` · ${song.by} · #${song.o}`);
   document.querySelectorAll('.chart li').forEach((li) => li.classList.toggle('playing', li.dataset.id === song.id));
-  $('#tResult').scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'nearest' });
+  if (!short && !document.hidden) $('#tResult').scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'nearest' });
 }
 
 function renderChart() {
@@ -237,4 +262,6 @@ function modeFromHash() {
   setMode('roulette', saved);
 }
 addEventListener('hashchange', modeFromHash);
+addEventListener('pagehide', () => { for (const stop of Object.values(stops)) stop(); });
+addEventListener('pageshow', (e) => { if (e.persisted) modeFromHash(); });
 modeFromHash();

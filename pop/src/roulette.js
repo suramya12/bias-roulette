@@ -7,6 +7,7 @@ import * as G from './game.js';
 import { reveal, creditLine, reduced } from './cards.js';
 import { createWheel } from './wheel.js';
 import { createPlayer } from './player.js';
+import { createAutoAdvance } from '../../src/auto-advance.js';
 
 const wait = (ms) => new Promise((r) => setTimeout(r, reduced.matches ? Math.min(ms, 60) : ms));
 
@@ -14,10 +15,11 @@ const wait = (ms) => new Promise((r) => setTimeout(r, reduced.matches ? Math.min
 // plays by itself. same: keep the artist and draw another of their songs.
 const AUTO_KEY = 'encore.autoplay';
 const auto = { on: false, same: false };
+const controllers = [];
 try { Object.assign(auto, JSON.parse(localStorage.getItem(AUTO_KEY))); } catch {}
 
 function renderAuto() {
-  document.querySelectorAll('.autoplay').forEach((d) => {
+  document.querySelectorAll('#roulette .autoplay').forEach((d) => {
     const [on, same] = d.querySelectorAll('input');
     on.checked = auto.on;
     same.checked = auto.same;
@@ -32,10 +34,19 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
   const $ = (s) => section.querySelector(s);
   const wheel = createWheel($('.wheel-canvas'), fills);
   const player = createPlayer($('.player'), {
-    onEnd: () => autoNext(1200),
-    onFail: () => autoNext(4000), // can't play here: show the YouTube link briefly, then move on
+    onEnd: (token) => autoplay.end(token),
+    onFail: (token) => autoplay.fail(token),
+    onPlay: (token) => autoplay.play(token),
+    onBlocked: (token) => autoplay.blocked(token),
   });
-  let autoTimer = 0;
+  let roundGeneration = 0;
+  const autoplay = createAutoAdvance({
+    enabled: auto.on, isActive: () => !section.closest('[hidden]'),
+    advance: () => autoNext(),
+    onPause: (paused) => paused ? player.showAutoPaused(() => autoplay.resume()) : player.clearAutoPaused(),
+  });
+  controllers.push(autoplay);
+  function invalidate(stopPlayback = true) { roundGeneration++; autoplay.invalidate(); if (stopPlayback) player.stop(); }
   // stage: 'artist' | 'song' | 'done'. items: what the current stage spins over. duel: its rules.
   let stage = 'artist', items = [], duel = null, chosen = null, busy = false, slots = [];
 
@@ -95,7 +106,7 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
 
   function showBig(card, extra = []) {
     $('.big-slot').replaceChildren(card, ...extra);
-    requestAnimationFrame(() => reveal(card));
+    if (document.hidden) reveal(card); else requestAnimationFrame(() => reveal(card));
   }
 
   async function finishArtist() {
@@ -118,7 +129,8 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     const isNew = win('song', song.id);
     $('.player-slot').hidden = false;
     // The user may have switched tabs during the spin: never start sound in a hidden section.
-    if (section.closest('[hidden]')) player.cue(song.id); else player.play(song.id);
+    const token = autoplay.begin();
+    if (section.closest('[hidden]')) player.cue(song.id, token); else player.play(song.id, token);
     $('.now').replaceChildren('Now playing: ', Object.assign(document.createElement('b'), { textContent: song.t }), ` · ${song.by} · #${song.o}`);
     hint(isNew ? 'New card collected! Spin again?' : 'Already in your binder. Spin again?');
     stage = 'done';
@@ -127,16 +139,19 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     $('.another').hidden = G.wheelSongs(chosen, songsById, Infinity).length < 2; // one song: nothing to redo
     $('.another').textContent = `Another ${chosen.name} song`;
     steps('mv');
-    $('.result').scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'nearest' });
+    if (!document.hidden) $('.result').scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'nearest' });
   }
 
   /** One spin of the current stage. */
   async function step(fast = false) {
+    const generation = roundGeneration;
     const ev = duel.spin();
-    await wheel.spin(ev.segment, (t) => { $('.readout').textContent = t; }, fast);
+    if (!document.hidden) await wheel.spin(ev.segment, (t) => { $('.readout').textContent = t; }, fast);
+    if (generation !== roundGeneration) return;
     const name = label(items[ev.index]);
     if (ev.kind === 'draw') {
       await addFinalist(ev, fast);
+      if (generation !== roundGeneration) return;
       if (duel.phase === 'duel') {
         drawWheel();
         slots.forEach((s, f) => { s.p.textContent = pips(f); });
@@ -147,7 +162,8 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     slots.forEach((s, f) => { s.card.classList.toggle('lit', f === ev.finalist); s.p.textContent = pips(f); });
     if (!ev.won) { hint(`${name}: ${ev.hits} of ${ev.target}. Spin again.`); return; }
     slots.forEach((s, f) => s.card.classList.toggle('lose', f !== ev.finalist));
-    await wait(fast ? 300 : 600);
+    if (!document.hidden) await wait(fast ? 300 : 600);
+    if (generation !== roundGeneration) return;
     if (stage === 'artist') await finishArtist(); else await finishSong();
   }
 
@@ -159,15 +175,18 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
   }
 
   $('.spin').addEventListener('click', () => run(async () => {
+    invalidate(false);
     if (stage === 'done') { newGame(true); return; }
     hint('Spinning…');
     await step();
   }));
   // Plays every remaining spin quickly, keeping whatever has been drawn so far.
   $('.auto').addEventListener('click', () => run(async () => {
-    while (stage !== 'done') await step(true);
+    invalidate(false);
+    const generation = roundGeneration;
+    while (stage !== 'done' && generation === roundGeneration) await step(true);
   }));
-  $('.restart').addEventListener('click', () => !busy && newGame());
+  $('.restart').addEventListener('click', () => { if (!busy) { invalidate(); newGame(); } });
 
   /** Same artist, new song: redo the song draw and showdown. skipId leaves that song off the wheel. */
   function againSameArtist(skipId) {
@@ -182,30 +201,29 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
   // The current MV keeps playing until a new song wins.
   $('.another').addEventListener('click', () => {
     if (busy || !chosen) return;
+    invalidate(false);
     againSameArtist();
     $('.wheel-zone').scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'nearest' });
   });
 
   /** After the MV ends: play the next round quickly, like Choose for me. Only in the deck on screen. */
-  function autoNext(delay) {
-    clearTimeout(autoTimer);
-    const ready = () => auto.on && stage === 'done' && !section.closest('[hidden]');
-    if (!ready()) return; // busy is checked by run(): a failed video can report while the last spin still ends
-    autoTimer = setTimeout(() => run(async () => {
-      if (!ready()) return;
-      if (auto.same && G.wheelSongs(chosen, songsById, Infinity).length > 1) {
+  function autoNext() {
+    if (section.closest('[hidden]')) return;
+    run(async () => {
+      const generation = roundGeneration;
+      if (stage === 'done' && auto.same && chosen && G.wheelSongs(chosen, songsById, Infinity).length > 1) {
         againSameArtist(items[duel.winner].id); // never the song that just played
         if (duel.phase === 'done') { await finishSong(); return; } // one song left: nothing to spin
-      } else newGame(true);
-      while (stage !== 'done') await step(true);
-    }), delay);
+      } else if (stage === 'done') newGame(true);
+      while (stage !== 'done' && generation === roundGeneration) await step(true);
+    });
   }
 
   const menu = $('.autoplay');
   menu.querySelectorAll('input').forEach((input) => input.addEventListener('change', () => {
     auto[input.dataset.auto] = input.checked;
     try { localStorage.setItem(AUTO_KEY, JSON.stringify(auto)); } catch {}
-    if (!auto.on) clearTimeout(autoTimer);
+    if (input.dataset.auto === 'on') controllers.forEach((controller) => controller.setEnabled(auto.on));
     renderAuto();
   }));
   document.addEventListener('click', (e) => { if (menu.open && !menu.contains(e.target)) menu.open = false; });
@@ -214,5 +232,5 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
   });
   renderAuto();
   newGame();
-  return { stop: () => player.stop() };
+  return { stop: () => { invalidate(); if (busy) newGame(); } };
 }
