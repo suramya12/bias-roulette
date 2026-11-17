@@ -1,19 +1,5 @@
 // Each attempt owns its iframe and callbacks, so late YouTube events cannot affect its replacement.
-let apiReady;
-function loadApi() {
-  if (!apiReady) {
-    apiReady = new Promise((resolve, reject) => {
-      if (window.YT?.Player) return resolve(window.YT);
-      const prev = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = () => { prev?.(); resolve(window.YT); };
-      const script = document.createElement('script');
-      script.src = 'https://www.youtube.com/iframe_api';
-      script.onerror = reject;
-      document.head.append(script);
-    }).catch((error) => { apiReady = null; throw error; });
-  }
-  return apiReady;
-}
+import { loadApi } from '../../src/youtube-api.js';
 
 export function createPlayer(host, { onEnd, onFail, onPlay, onBlocked } = {}) {
   let player = null, generation = 0, pauseMessage = null;
@@ -43,9 +29,10 @@ export function createPlayer(host, { onEnd, onFail, onPlay, onBlocked } = {}) {
       f.append(a); host.append(f);
       onFail?.(token, { code });
     };
+    let YT;
+    try { YT = await loadApi(); } catch { fail('api'); return; }
+    if (!valid()) return;
     try {
-      const YT = await loadApi();
-      if (!valid()) return;
       host.replaceChildren();
       const mount = document.createElement('div'); host.append(mount);
       player = new YT.Player(mount, {

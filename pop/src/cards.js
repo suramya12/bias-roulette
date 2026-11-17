@@ -41,6 +41,17 @@ const fmtStat = (st, v = st.v) => (st.n ? String(Math.round(v)) : st.v ? G.fmt(v
 /** Wikimedia thumbs come at 960px; mini cards only need 330px. Originals are left alone. */
 const smaller = (url) => url.replace(/\/960px-/, '/330px-');
 
+export function setCardImage(art, model, size) {
+  if (!art || !model.img || art.querySelector('img')) return;
+  const img = el('img', model.yt ? 'yt' : '');
+  img.alt = model.kind === 'artist' ? `Photo of ${model.title}` : `${model.title} music video still`;
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  img.referrerPolicy = 'no-referrer';
+  img.src = size === 'mini' ? smaller(model.img) : model.img;
+  art.prepend(img);
+}
+
 /** Build a card element. size: 'big' | 'mini'. */
 export function makeCard(m, { size = 'big', faceDown = false, locked = false } = {}) {
   const card = el('div', `card ${m.tier.id} ${size}${faceDown ? ' face-down' : ''}`);
@@ -58,15 +69,7 @@ export function makeCard(m, { size = 'big', faceDown = false, locked = false } =
   const frame = el('div', 'frame');
   const panel = el('div', 'panel');
   const art = el('div', 'art');
-  if (m.img) {
-    const img = el('img', m.yt ? 'yt' : '');
-    img.alt = m.kind === 'artist' ? `Photo of ${m.title}` : `${m.title} music video still`;
-    img.loading = 'lazy';
-    img.decoding = 'async';
-    img.referrerPolicy = 'no-referrer';
-    img.src = size === 'mini' ? smaller(m.img) : m.img;
-    art.append(img);
-  }
+  setCardImage(art, m, size);
   art.append(el('div', 'gem', m.gem), el('div', 'tier', m.tier.label));
   panel.append(art, el('div', 'name', m.title), el('div', 'by', m.by));
   const chips = el('div', 'chips');
