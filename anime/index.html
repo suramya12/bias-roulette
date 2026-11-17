@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Bias Roulette · Anime</title>
+  <meta name="description" content="Pull an anime opening, ending, insert song or animated music video.">
+  <meta name="theme-color" content="#07061a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>
+    // Match the Pop stage's display scaling.
+    (function () {
+      function fit() {
+        var z = Math.min(innerWidth / 1200, innerHeight / 720, 3);
+        z = z > 1.05 ? Math.round(z * 100) / 100 : 1;
+        var s = document.documentElement.style;
+        s.zoom = z === 1 ? '' : String(z);
+        s.setProperty('--z', String(z));
+      }
+      fit();
+      addEventListener('resize', fit);
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='3' width='20' height='26' rx='4' fill='%23ff2d55'/%3E%3C/svg%3E">
+</head>
+<body>
+  <div class="stage-bg" aria-hidden="true">
+    <div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div><div class="beam b4"></div>
+  </div>
+  <header class="top">
+    <h1 class="sr-only">Bias Roulette: Anime</h1>
+    <details class="genre" id="genre">
+      <summary aria-label="Music: Anime. Switch music">Anime <span aria-hidden="true">▾</span></summary>
+      <div class="genre-menu">
+        <a href="../#top100">K-pop</a>
+        <a href="../pop/#top100">Pop &amp; Latin</a>
+        <a aria-current="page" href="./">Anime</a>
+      </div>
+    </details>
+  </header>
+  <main>
+    <section aria-label="Surprise me">
+      <p class="sub">Openings, endings &amp; animated MVs</p>
+      <div class="ring-stage">
+        <div class="ring" id="ring" aria-hidden="true"></div>
+        <button class="ring-hit" id="ringBtn" type="button" aria-label="Pull a song" disabled></button>
+        <div class="floor" aria-hidden="true"></div>
+      </div>
+      <div class="row-btns center">
+        <button class="pull" id="pull" type="button" disabled>Pull</button>
+        <label class="ghost switch chart-auto"><input id="auto" type="checkbox"> Auto <span class="auto-state" id="autoState">off</span></label>
+        <button class="ghost" id="sound" type="button" aria-pressed="true">Sound on</button>
+      </div>
+      <div class="filters" aria-label="Song filters">
+        <div class="use-chips" role="group" aria-label="Anime themes">
+          <button class="filter-chip" type="button" data-use="OP" aria-pressed="true">OP</button>
+          <button class="filter-chip" type="button" data-use="ED" aria-pressed="true">ED</button>
+          <button class="filter-chip" type="button" data-use="IN" aria-pressed="true">Insert</button>
+        </div>
+        <div id="addons"></div>
+        <span class="song-count" id="songCount" role="status"></span>
+      </div>
+      <p class="sub page-status" id="pageStatus" role="status">Loading…</p>
+      <p class="sr-only" id="announce" role="status" aria-live="polite"></p>
+      <div class="result" id="result" hidden>
+        <div class="big-slot" id="songCard"></div>
+        <div class="player-slot">
+          <div class="player" id="player"></div>
+          <h2 class="now-title" id="nowTitle"></h2>
+          <p class="now-meta" id="nowMeta"></p>
+          <div class="copy-row">
+            <span id="copyLabel"></span>
+            <button class="ghost" id="swap" type="button" title="Switching restarts the video" hidden></button>
+          </div>
+          <p class="play-status" id="playStatus" role="status" hidden></p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="fx" aria-hidden="true"></div>
+  <noscript><p class="noscript">This game needs JavaScript.</p></noscript>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

@@ -1,8 +1,10 @@
-# Bias Roulette: Anime (data first, page coming)
+# Bias Roulette: Anime
 
 The third side: anime openings, endings and insert songs, plus animated music videos (KPop Demon Hunters, K/DA, Linkin Park…) behind an on/off switch. The unit is always the song, never the show. The design is in [`DESIGN.md`](DESIGN.md); build briefs are in [`briefs/`](briefs/).
 
-This folder has the data pipeline so far. The page itself comes next.
+## The page
+
+Open `/anime/` after `npm start`. Pull a song from the ring; use OP, ED and Insert chips or the small **+ Animated MVs** switch to filter. **Auto** chains songs, and **⇄ Version** switches copies from the start. Failed copies fall through to a backup; after three failed songs in a row, Auto pauses with **Resume**. The browser remembers filters, Auto, sound, preferred copies and local copy strikes.
 
 ## Add songs
 

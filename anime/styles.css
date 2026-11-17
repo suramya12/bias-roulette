@@ -1,0 +1,55 @@
+/* Keep the approved Pop layout, type, ring geometry and responsive breakpoints. */
+@import url('../pop/styles.css');
+
+:root { --accent: #ff2d55; --pink: var(--accent); --cyan: var(--accent); }
+.sub { font-size: 13px; }
+.genre-menu a[aria-current="page"] { color: var(--accent); }
+.beam { background-image: linear-gradient(to bottom, rgba(255, 45, 85, .4), transparent 75%); }
+.floor {
+  background: radial-gradient(50% 50% at 50% 50%, rgba(255, 45, 85, .35), rgba(255, 45, 85, .15) 50%, transparent 70%);
+}
+.pull { color: #fff; background: var(--accent); box-shadow: 0 6px 26px rgba(255, 45, 85, .45); }
+.pull:disabled { opacity: .45; cursor: default; transform: none; box-shadow: none; }
+.switch input:checked { background: var(--accent); }
+.chart-auto:has(input:checked) .auto-state { background: var(--accent); color: #fff; }
+.player .fallback a { background: var(--accent); }
+.auto-paused button { border: 1px solid var(--line); border-radius: 8px; background: transparent; padding: 6px 10px; }
+
+/* The small filters fit together in the 351px content area of a 375px phone. */
+.filters { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin: 12px 0 0; }
+.use-chips, #addons { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+.filter-chip { border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px; background: transparent; color: var(--muted); font-size: 12px; }
+.filter-chip[aria-pressed="true"] { border-color: var(--accent); color: #fff; }
+.filter-chip[aria-disabled="true"] { cursor: default; }
+.addon { gap: 5px; padding: 3px 0; font-size: 11px; color: var(--muted); }
+.addon span { font-weight: 400; }
+.addon input { width: 24px; height: 14px; }
+.addon input::after { width: 10px; height: 10px; top: 2px; left: 2px; }
+.addon input:checked::after { transform: translateX(10px); }
+.song-count { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.page-status { margin-top: 10px; }
+
+/* Full-bleed stills and broadcast labels; rarity stays on the shared ring slots. */
+.ring .slot { --c: var(--incoming); }
+.card { overflow: hidden; border-radius: 12px; background: var(--bg); box-shadow: 0 8px 26px rgba(0, 0, 0, .55); }
+.card > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, .9)); }
+.slot-label, .card-year { position: absolute; top: 6%; z-index: 1; font-size: clamp(9px, 5cqw, 16px); line-height: 1.2; }
+.slot-label { left: 6%; border: 1px solid var(--accent); border-radius: 3px; padding: 2px 4px; letter-spacing: .12em; text-transform: uppercase; }
+.card.playing .slot-label { background: var(--accent); color: #fff; }
+.card-year { right: 6%; text-shadow: 0 1px 4px #000; }
+.card-caption { position: absolute; bottom: 6%; left: 6%; right: 6%; z-index: 1; }
+.card-title { margin: 0; font: 800 8.4cqw/1.05 var(--display); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; text-overflow: ellipsis; }
+.ring .card-title { font-size: 10cqw; }
+.card-source { margin-top: 4px; color: var(--muted); font-size: clamp(9px, 4.6cqw, 16px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.now-title { margin: 10px 2px 0; font: 800 26px/1.2 var(--display); overflow-wrap: anywhere; }
+.now-meta { margin: 6px 2px 0; color: var(--muted); font-size: 13px; }
+.copy-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; margin: 10px 2px 0; color: var(--muted); font-size: 12px; }
+.copy-row .ghost { padding: 5px 9px; font-size: 12px; }
+.copy-row .ghost:disabled { opacity: .45; cursor: default; }
+.play-status { margin: 10px 2px 0; color: var(--muted); font-size: 13px; }
+
+/* Phones: the ring already showed the card; after a pull the video takes over. */
+@media (max-width: 700px) {
+  .result .big-slot { display: none; }
+}
