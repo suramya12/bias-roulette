@@ -1,5 +1,4 @@
 /* Keep the approved Pop layout, type, ring geometry and responsive breakpoints. */
-@import url('../pop/styles.css');
 
 :root { --accent: #ff2d55; --pink: var(--accent); --cyan: var(--accent); }
 .sub { font-size: 13px; }
@@ -15,18 +14,18 @@
 .player .fallback a { background: var(--accent); }
 .auto-paused button { border: 1px solid var(--line); border-radius: 8px; background: transparent; padding: 6px 10px; }
 
-/* The small filters fit together in the 351px content area of a 375px phone. */
-.filters { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin: 12px 0 0; }
-.use-chips, #addons { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+/* Leave room for the extended hit areas when filter rows wrap. */
+.filters { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 18px 10px; margin: 12px 0 0; }
+.use-chips, #addons { display: flex; align-items: center; flex-wrap: wrap; gap: 18px 9px; }
 .filter-chip { border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px; background: transparent; color: var(--muted); font-size: 12px; }
 .filter-chip[aria-pressed="true"] { border-color: var(--accent); color: #fff; }
 .filter-chip[aria-disabled="true"] { cursor: default; }
-.addon { gap: 5px; padding: 3px 0; font-size: 11px; color: var(--muted); }
+.addon { gap: 5px; padding: 3px 0; font-size: 12px; color: var(--muted); }
 .addon span { font-weight: 400; }
 .addon input { width: 24px; height: 14px; }
 .addon input::after { width: 10px; height: 10px; top: 2px; left: 2px; }
 .addon input:checked::after { transform: translateX(10px); }
-.song-count { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.song-count { font-size: 12px; color: var(--muted); white-space: nowrap; }
 .page-status { margin-top: 10px; }
 
 /* Full-bleed stills and broadcast labels; rarity stays on the shared ring slots. */
@@ -34,14 +33,14 @@
 .card { overflow: hidden; border-radius: 12px; background: var(--bg); box-shadow: 0 8px 26px rgba(0, 0, 0, .55); }
 .card > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, .9)); }
-.slot-label, .card-year { position: absolute; top: 6%; z-index: 1; font-size: clamp(9px, 5cqw, 16px); line-height: 1.2; }
+.slot-label, .card-year { position: absolute; top: 6%; z-index: 1; font-size: clamp(12px, 5cqw, 16px); line-height: 1.2; }
 .slot-label { left: 6%; border: 1px solid var(--accent); border-radius: 3px; padding: 2px 4px; letter-spacing: .12em; text-transform: uppercase; }
 .card.playing .slot-label { background: var(--accent); color: #fff; }
 .card-year { right: 6%; text-shadow: 0 1px 4px #000; }
 .card-caption { position: absolute; bottom: 6%; left: 6%; right: 6%; z-index: 1; }
-.card-title { margin: 0; font: 800 8.4cqw/1.05 var(--display); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; text-overflow: ellipsis; }
-.ring .card-title { font-size: 10cqw; }
-.card-source { margin-top: 4px; color: var(--muted); font-size: clamp(9px, 4.6cqw, 16px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-title { margin: 0; font: 800 max(12px, 8.4cqw)/1.05 var(--display); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; text-overflow: ellipsis; }
+.ring .card-title { font-size: max(12px, 10cqw); }
+.card-source { margin-top: 4px; color: var(--muted); font-size: clamp(12px, 4.6cqw, 16px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .now-title { margin: 10px 2px 0; font: 800 26px/1.2 var(--display); overflow-wrap: anywhere; }
 .now-meta { margin: 6px 2px 0; color: var(--muted); font-size: 13px; }
 .copy-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; margin: 10px 2px 0; color: var(--muted); font-size: 12px; }

@@ -6,10 +6,20 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Bias Roulette · Anime</title>
   <meta name="description" content="Pull an anime opening, ending, insert song or animated music video.">
+  <meta property="og:title" content="Bias Roulette · Anime">
+  <meta property="og:description" content="Pull an anime opening, ending, insert song or animated music video.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://suramya12.github.io/bias-roulette/anime/">
+  <meta property="og:image" content="https://suramya12.github.io/bias-roulette/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bias Roulette · Anime">
+  <meta name="twitter:description" content="Pull an anime opening, ending, insert song or animated music video.">
+  <meta name="twitter:image" content="https://suramya12.github.io/bias-roulette/og.png">
   <meta name="theme-color" content="#07061a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
   <script>
     // Match the Pop stage's display scaling.
     (function () {
@@ -24,8 +34,9 @@
       addEventListener('resize', fit);
     })();
   </script>
+  <link rel="stylesheet" href="../pop/styles.css">
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='3' width='20' height='26' rx='4' fill='%23ff2d55'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 </head>
 <body>
   <div class="stage-bg" aria-hidden="true">
@@ -36,15 +47,16 @@
     <details class="genre" id="genre">
       <summary aria-label="Music: Anime. Switch music">Anime <span aria-hidden="true">▾</span></summary>
       <div class="genre-menu">
-        <a href="../#top100">K-pop</a>
+        <a href="../kpop/#top100">K-pop</a>
         <a href="../pop/#top100">Pop &amp; Latin</a>
         <a aria-current="page" href="./">Anime</a>
       </div>
     </details>
+    <a class="home-link" href="../">Bias Roulette</a>
   </header>
   <main>
     <section aria-label="Surprise me">
-      <p class="sub">Openings, endings &amp; animated MVs</p>
+      <p class="sub">Openings, endings, MVs &amp; film songs</p>
       <div class="ring-stage">
         <div class="ring" id="ring" aria-hidden="true"></div>
         <button class="ring-hit" id="ringBtn" type="button" aria-label="Pull a song" disabled></button>
