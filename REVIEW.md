@@ -1,6 +1,6 @@
 # Video matches
 
-1132 songs matched, 28 flagged for a look, 18 dropped (see DROPPED.md).
+1152 songs matched, 28 flagged for a look, 18 dropped (see DROPPED.md).
 
 To fix a match: open `data/overrides.json`, add a line `"ARTIST | SONG": "youtube link or ID"` (use `null` to drop the song),
 then run `npm run resolve`. Overrides are never overwritten by a re-run.
@@ -38,7 +38,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | Wanna One | Burn It Up | [Wanna One (워너원) - 활활 (Burn It Up) MV (Extended Ver.)](https://youtu.be/XwGqz8BhHho) | STONE MUSIC ✔ | alternate version |
 | Wonder Girls | Nobody | [Wonder Girls "NOBODY (Kor. Ver)" M/V](https://youtu.be/QZBn1e9pr2Q) | wondergirls ✔ | alternate version |
 
-## All matches (1132)
+## All matches (1152)
 
 | Artist | Song | Matched video | Channel (✔ = verified) | Flags |
 |---|---|---|---|---|
@@ -164,6 +164,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | BIGBANG | BAD BOY | [BIGBANG - BAD BOY M/V](https://youtu.be/1qnV55LUFVM) | BIGBANG ✔ |  |
 | BIGBANG | BAE BAE | [BIGBANG - BAE BAE M/V](https://youtu.be/TKD03uPVD-Q) | BIGBANG ✔ |  |
 | BIGBANG | BANG BANG BANG | [BIGBANG - 뱅뱅뱅 (BANG BANG BANG) M/V](https://youtu.be/2ips2mM7Zqw) | BIGBANG ✔ |  |
+| BIGBANG | BiiiG | [BIGBANG - ‘BiiiG’ M/V](https://youtu.be/L8ZnXgbyUuc) | BIGBANG | manual override |
 | BIGBANG | BLUE | [BIGBANG - BLUE M/V](https://youtu.be/2GRP1rkE4O0) | BIGBANG ✔ |  |
 | BIGBANG | FANTASTIC BABY | [BIGBANG - FANTASTIC BABY M/V](https://youtu.be/AAbokV76tkU) | BIGBANG ✔ |  |
 | BIGBANG | FXXK IT | [BIGBANG - ‘에라 모르겠다(FXXK IT)’ M/V](https://youtu.be/iIPH8LFYFRk) | BIGBANG ✔ |  |
@@ -240,10 +241,12 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | BTS | Yet To Come | [BTS (방탄소년단) 'Yet To Come (The Most Beautiful Moment)' Official MV](https://youtu.be/kXpOEzNZ8hQ) | HYBE LABELS ✔ |  |
 | CHA EUN-WOO | SATURDAY PREACHER | [CHA EUN-WOO 차은우 - 'SATURDAY PREACHER' M/V](https://youtu.be/jdP8ZXSflqg) | fantagio 판타지오 ✔ |  |
 | CHA EUN-WOO | STAY | [CHA EUN-WOO 차은우 - 'STAY' M/V](https://youtu.be/srH63CP-7ZA) | fantagio 판타지오 ✔ |  |
+| CHAERYEONG ITZY | Lovesick | [CHAERYEONG “Lovesick” M/V](https://youtu.be/8L3eSq5FLP0) | JYP Entertainment | manual override |
 | CHAERYEONG ITZY | Mine | [ITZY CHAERYEONG "Mine" M/V @ITZY](https://youtu.be/HnXCezrJEdM) | JYP Entertainment ✔ |  |
 | CHAEYOUNG | SHOOT (Firecracker) | [CHAEYOUNG “SHOOT (Firecracker)” M/V](https://youtu.be/tl2luF-JRlU) | JYP Entertainment ✔ |  |
 | CHANYEOL | Black Out | [CHANYEOL 찬열 'Black Out' MV](https://youtu.be/YI_AM-mFCNk) | SMTOWN ✔ |  |
 | CHANYEOL | Tomorrow | [[STATION] CHANYEOL 찬열 'Tomorrow' MV](https://youtu.be/FgEpPwzt89Y) | SM STATION ✔ |  |
+| CHEN | Arcadia | [첸 (CHEN) 'Arcadia' MV](https://youtu.be/1ttnNaRE8i4) | INB100 | manual override |
 | CHEN | Beautiful goodbye | [CHEN 첸 '사월이 지나면 우리 헤어져요 (Beautiful goodbye)' MV](https://youtu.be/JrOrlhjIYVk) | SMTOWN ✔ |  |
 | CHEN | Empty | [첸 (CHEN) ‘빈 집 (Empty)’ MV](https://youtu.be/f60zirK_9io) | INB100 ✔ |  |
 | CHEN | Last Scene | [CHEN 첸 '사라지고 있어 (Last Scene)' MV](https://youtu.be/tUEraaV5inc) | SMTOWN ✔ |  |
@@ -263,6 +266,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | CHUNG HA | Why Don't You Know | [청하 (CHUNG HA) - Why Don’t You Know (Feat. 넉살 (Nucksal)) MV](https://youtu.be/EHgeGRU3wDI) | STONE MUSIC ✔ |  |
 | CL | +5 STAR+ | [CL +5 STAR+ Official Video](https://youtu.be/JeGhUESd_1o) | CL Official Channel ✔ |  |
 | CL | +HWA+ | [CL +H₩A+ Official Video](https://youtu.be/_6_DE4SIq44) | CL Official Channel | manual override |
+| CL | Chuck | [CL - Chuck (Official Video)](https://youtu.be/o0AkME8JD14) | CL | manual override |
 | CL | HELLO BITCHES | [CL - ‘HELLO BITCHES’ DANCE PERFORMANCE VIDEO](https://youtu.be/5L-4ZrOk1Tc) | CL Official Channel ✔ | alternate version |
 | CL | LIFTED | [CL - 'LIFTED' M/V](https://youtu.be/Mr29X77OA5g) | CL Official Channel ✔ |  |
 | CL | Lover Like Me | [CL - Lover Like Me (Official Video)](https://youtu.be/qoqA-th1ZPE) | CL Official Channel ✔ |  |
@@ -313,6 +317,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | ENHYPEN | Fever | [ENHYPEN (엔하이픈) 'FEVER' Official MV](https://youtu.be/X7d6Dt17yHk) | HYBE LABELS ✔ |  |
 | ENHYPEN | Future Perfect (Pass the MIC) | [ENHYPEN (엔하이픈) 'Future Perfect (Pass the MIC)' Official MV](https://youtu.be/QMlNLo74mOw) | HYBE LABELS ✔ |  |
 | ENHYPEN | Given-Taken | [ENHYPEN (엔하이픈) 'Given-Taken' Official MV](https://youtu.be/nQ6wLuYvGd4) | HYBE LABELS ✔ |  |
+| ENHYPEN | I Want You | [#ENHYPEN (#엔하이픈) 'I Want You' Official MV](https://youtu.be/tngDB-qo2A0) | HYBE LABELS | manual override |
 | ENHYPEN | No Doubt | [ENHYPEN (엔하이픈) 'No Doubt' Official MV](https://youtu.be/rDolt3jJRsM) | HYBE LABELS ✔ |  |
 | ENHYPEN | Sweet Venom | [ENHYPEN (엔하이픈) 'Sweet Venom' Official MV](https://youtu.be/qedonJosQ3g) | HYBE LABELS ✔ |  |
 | ENHYPEN | Tamed-Dashed | [ENHYPEN (엔하이픈) 'Tamed-Dashed' Official MV](https://youtu.be/6IRsW_TkyVA) | HYBE LABELS ✔ |  |
@@ -428,6 +433,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | HyunA | I'm Not Cool | [HyunA - 'I'm Not Cool' MV ](https://youtu.be/_yXEnhyOTQo) | HyunA ✔ |  |
 | HyunA | Ice Cream | [HYUNA - 'Ice Cream' (Official Music Video)](https://youtu.be/QlWZluzBNxM) | 4Minute 포미닛(Official YouTube Channel) ✔ |  |
 | HyunA | Lip & Hip | [HyunA(현아) - 'Lip & Hip' Official Music Video](https://youtu.be/qWi-yviL-oI) | HyunA ✔ |  |
+| HyunA | Mrs. Nail | [현아 (HyunA) - 못 (Mrs. Nail) (Official MV)](https://youtu.be/4no_auZ_WtY) | HyunA | manual override |
 | HyunA | Nabillera | [현아 (HyunA) - '나빌레라 (Nabillera)' MV](https://youtu.be/2e-Q7GfCGbA) | HyunA ✔ |  |
 | HyunA | Q&A | [현아 (HyunA) - Q&A (Official MV)](https://youtu.be/9GFnnPg50qs) | HyunA ✔ |  |
 | HyunA | Red | [[MV] HyunA(현아) _ Red(빨개요)](https://youtu.be/wg4mV6CapGg) | 1theK (원더케이) ✔ |  |
@@ -488,6 +494,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | IVE | HEYA | [IVE 아이브 '해야 (HEYA)' MV](https://youtu.be/07EzMbVH3QE) | STARSHIP and IVE |  |
 | IVE | I AM | [IVE 아이브 'I AM' MV](https://youtu.be/6ZUIwj3FgUY) | STARSHIP and IVE |  |
 | IVE | Kitsch | [IVE 아이브 'Kitsch' MV](https://youtu.be/pG6iaOMV46I) | STARSHIP and IVE |  |
+| IVE | Looks Can Kill | [IVE 아이브 'Looks Can Kill' MV](https://youtu.be/rsNhWkC4neE) | STARSHIP | manual override |
 | IVE | LOVE DIVE | [IVE 아이브 'LOVE DIVE' MV](https://youtu.be/Y8JFxS1HlDo) | STARSHIP and IVE |  |
 | IVE | Off The Record | [IVE 아이브 'Off The Record' MV](https://youtu.be/_ApV7Lm87cg) | STARSHIP and IVE |  |
 | IVE | REBEL HEART | [IVE 아이브 'REBEL HEART' MV](https://youtu.be/g36q0ZLvygQ) | STARSHIP and IVE |  |
@@ -511,6 +518,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | Jackson Wang | LMLY | [Jackson Wang - LMLY (Official Music Video)](https://youtu.be/QIMihDOXMpY) | Jackson Wang ✔ |  |
 | Jackson Wang | Made Me a Man | [Jackson Wang - Made Me a Man (Official Music Video)](https://youtu.be/vz-_ZtUh8P4) | Jackson Wang ✔ |  |
 | Jackson Wang | Pretty Please | [Jackson Wang & Galantis - Pretty Please (Official Music Video)](https://youtu.be/2EjxIQXBhlc) | Jackson Wang ✔ |  |
+| Jackson Wang | Thank You | [Jackson Wang - Thank You (Official Music Video)](https://youtu.be/KzM1arYmO4w) | Jackson Wang | manual override |
 | JAEHYUN | Forever Only | [[STATION : NCT LAB] JAEHYUN 재현 'Forever Only' MV](https://youtu.be/WOuGFam9Lg8) | SMTOWN ✔ |  |
 | JAEHYUN | Horizon | [[NCT LAB] JAEHYUN 재현 'Horizon' MV](https://youtu.be/Y6_vy82Vo70) | SMTOWN ✔ |  |
 | JAEHYUN | Smoke | [JAEHYUN 재현 'Smoke' MV](https://youtu.be/lJGCD3H9xcg) | SMTOWN ✔ |  |
@@ -528,6 +536,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | Jay Park | Yacht | [JAY PARK - YACHT Ft. VIC MENSA (Official MV)](https://youtu.be/Jcpw_vVlaz4) | JAY PARK ✔ |  |
 | Jay Park | Your/My | [박재범 (Jay Park) - ‘Your/My’ Official Music Video](https://youtu.be/M2TAONsxJi4) | JAY PARK ✔ |  |
 | JENNIE | ExtraL | [JENNIE, Doechii - ExtraL (Official Video)](https://youtu.be/eWAdpUyzCkI) | JENNIE ✔ |  |
+| JENNIE | FALLEN ANGEL | [JENNIE - FALLEN ANGEL (Official Video)](https://youtu.be/s466YCiHfKw) | JennieRubyJaneVEVO | manual override |
 | JENNIE | Handlebars | [JENNIE & Dua Lipa - Handlebars (Official Video)](https://youtu.be/seARsMwjbEU) | JENNIE ✔ |  |
 | JENNIE | like JENNIE | [JENNIE - like JENNIE (Official Video)](https://youtu.be/JSFG-IE8n_c) | JENNIE ✔ |  |
 | JENNIE | Love Hangover | [JENNIE & Dominic Fike - Love Hangover (Official Video)](https://youtu.be/23urWKmHS6o) | JENNIE ✔ |  |
@@ -599,6 +608,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | Kim Heechul & Min Kyunghoon | Sweet Dream | [[STATION] 희철 X 민경훈 '나비잠 (Sweet Dream)' MV](https://youtu.be/5JbVVlqrreE) | SMTOWN ✔ |  |
 | KIM HEECHUL | Old Movie | [KIM HEECHUL 김희철 ‘옛날 사람 (Old Movie)’ MV](https://youtu.be/4-tH10H6gAk) | SMTOWN ✔ |  |
 | KIM HYUN JOONG | Break Down | [김현중(Kim Hyun Joong) - Break Down (feat. Double K)](https://youtu.be/cflHBQmVitc) | STONE MUSIC ✔ | no MV marker in title |
+| KIM HYUN JOONG | Chicken & Beer | [KIMHYUNJOONG(김현중) - 치킨이야(Chicken & Beer) [Official Music Video]](https://youtu.be/WnYyIAlWsx8) | KIM HYUN JOONG.official | manual override |
 | KIM HYUN JOONG | Kiss Kiss | [김현중(Kim Hyun Joong) - Kiss Kiss](https://youtu.be/uwaVA2ZS1kk) | STONE MUSIC ✔ | no MV marker in title |
 | KIM HYUN JOONG | Lucky Guy | [김현중 'Lucky Guy' M/V (Full ver.) (Kim Hyun Joong - Lucky Guy)](https://youtu.be/ZTSCdtjcch0) | KIM HYUN JOONG.official ✔ | alternate version |
 | KIM HYUN JOONG | Unbreakable | [김현중 (Kim Hyun Joong) - Unbreakable (Feat. 박재범 Jay Park) MV](https://youtu.be/mPXaR2s7Y90) | STONE MUSIC ✔ |  |
@@ -642,6 +652,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | LISA | Moonlit Floor | [LISA - MOONLIT FLOOR (Official Performance Video)](https://youtu.be/pxGM_TOgHuM) | LLOUD Official ✔ | alternate version |
 | LISA | New Woman | [LISA - NEW WOMAN feat. Rosalía (Official Music Video)](https://youtu.be/UxXY_hR_wzo) | LLOUD Official ✔ |  |
 | LISA | Rockstar | [LISA - ROCKSTAR (Official Music Video)](https://youtu.be/hbcGx4MGUMg) | LLOUD Official ✔ |  |
+| LISA | Tarantino | [LISA - Tarantino (Official Music Video)](https://youtu.be/-5ZXrO_lYSA) | LISAOfficialVEVO | manual override |
 | LISA | When I'm With You | [LISA - WHEN I'M WITH YOU feat. Tyla (Official Music Video)](https://youtu.be/wM--5vGraQQ) | LLOUD Official ✔ |  |
 | LOONA | Butterfly | [[MV] 이달의 소녀 (LOONA) "Butterfly"](https://youtu.be/XEOCbFJjRw0) | loonatheworld ✔ |  |
 | LOONA | favOriTe | [[MV] 이달의 소녀 (LOONA) "favOriTe"](https://youtu.be/AFJPFfnzZ7w) | loonatheworld ✔ |  |
@@ -671,6 +682,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | MAMAMOO | You're the Best | [마마무 (MAMAMOO) - 넌 is 뭔들 (You're the best) MV](https://youtu.be/QbhmTM1cRro) | STONE MUSIC ✔ |  |
 | MAMAMOO+ | dangdang | [[MV] MAMAMOO+ '댕댕 (dangdang)'](https://youtu.be/Df8u26GfBSw) | MAMAMOO ✔ |  |
 | MAMAMOO+ | GGBB | [[MV] MAMAMOO+ 'GGBB'](https://youtu.be/I4HWnYSiRtE) | MAMAMOO ✔ |  |
+| MAX CHANGMIN | All Of My Life | [MAX CHANGMIN 최강창민 'All Of My Life' MV](https://youtu.be/7XMkfsmNeNg) | SMTOWN | manual override |
 | MAX CHANGMIN | Chocolate | [MAX CHANGMIN 최강창민 'Chocolate' MV](https://youtu.be/-sKqPjhSiq0) | SMTOWN ✔ |  |
 | MAX CHANGMIN | Devil | [MAX CHANGMIN 최강창민 'Devil' MV](https://youtu.be/XVwi2VF7_R4) | SMTOWN ✔ |  |
 | MAX CHANGMIN | Fever | [MAX CHANGMIN 최강창민 'Fever' Stage Video](https://youtu.be/JO-jX9fn97Q) | TVXQ! | manual override |
@@ -712,6 +724,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | MONSTA X | Shine Forever | [[MV] 몬스타엑스(MONSTA X) - SHINE FOREVER](https://youtu.be/iewWMqeMpqU) | STARSHIP and MONSTA X |  |
 | MONSTA X | Shoot Out | [MONSTA X 몬스타엑스  'Shoot Out' MV](https://youtu.be/MS10Zz49FHE) | STARSHIP and MONSTA X |  |
 | MONSTA X | Trespass | [[MV] MONSTA X(몬스타엑스) _ Trespass(무단침입)](https://youtu.be/WLeFYKDtw1I) | 1theK (원더케이) ✔ |  |
+| MONSTA X | YOU CAN'T HOLD MY HEART | [Monsta X - YOU CAN'T HOLD MY HEART (Official Video)](https://youtu.be/AWV3pIesd0Y) | MONSTAXVEVO | manual override |
 | MOON BYUL | Eclipse | [[MV] MOONBYUL (문별) - Eclipse (달이 태양을 가릴 때)](https://youtu.be/oCTqcTe1lIA) | MAMAMOO ✔ |  |
 | MOON BYUL | LUNATIC | [[MV] 문별 (Moon Byul) - LUNATIC](https://youtu.be/l-fZh5Maq0k) | MAMAMOO ✔ |  |
 | MOON BYUL | SELFISH | [[MV] Moon Byul(문별) _ SELFISH (Feat. SEULGI(슬기) Of Red Velvet)](https://youtu.be/QG8bUKBT9FI) | 1theK (원더케이) ✔ |  |
@@ -739,6 +752,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | NCT 127 | Walk | [NCT 127 엔시티 127 '삐그덕 (Walk)' MV](https://youtu.be/MA_B8RU9BsQ) | SMTOWN ✔ |  |
 | NCT DOJAEJUNG | Perfume | [NCT DOJAEJUNG 엔시티 도재정 'Perfume' MV](https://youtu.be/7nRiE4sLLxE) | SMTOWN ✔ |  |
 | NCT DREAM | Beatbox | [NCT DREAM 엔시티 드림 'Beatbox' MV](https://youtu.be/bagFQCTHXy8) | SMTOWN ✔ |  |
+| NCT DREAM | Boogie Woogie | [NCT DREAM 엔시티 드림 'Boogie Woogie' MV](https://youtu.be/wG7pnZttup8) | SMTOWN | manual override |
 | NCT DREAM | BOOM | [NCT DREAM 엔시티 드림 'BOOM' MV](https://youtu.be/X-iJZ0gfKPo) | SMTOWN ✔ |  |
 | NCT DREAM | Candy | [NCT DREAM 엔시티 드림 'Candy' MV](https://youtu.be/zuoSn3ObMz4) | SMTOWN ✔ |  |
 | NCT DREAM | Chewing Gum | [NCT DREAM 엔시티 드림 'Chewing Gum' MV](https://youtu.be/fwmvF5ffmhg) | SMTOWN ✔ |  |
@@ -812,6 +826,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | PARK JIHOON | NITRO | [박지훈(PARK JIHOON) 'NITRO' Official M/V](https://youtu.be/kDq-qLHoCk4) | PARK JIHOON Official ✔ |  |
 | PARK JIHOON | Serious | [박지훈(PARK JIHOON) 'Serious' M/V](https://youtu.be/RoiDkI6R8jA) | PARK JIHOON Official ✔ |  |
 | PARK JIHOON | Wing | [박지훈(PARK JIHOON) 'Wing' M/V](https://youtu.be/_Gn-bfrembY) | PARK JIHOON Official ✔ |  |
+| Red Velvet - IRENE & SEULGI | Cheetah | [Red Velvet - IRENE & SEULGI 'Cheetah' MV](https://youtu.be/Ts8HTHBRxvw) | SMTOWN | manual override |
 | Red Velvet - IRENE & SEULGI | Monster | [Red Velvet - IRENE & SEULGI 'Monster' MV](https://youtu.be/Ujb-gvqsoi0) | SMTOWN ✔ |  |
 | Red Velvet - IRENE & SEULGI | Naughty | [Red Velvet - IRENE & SEULGI Episode 1 "놀이 (Naughty)"](https://youtu.be/wCWoUUWwdqg) | Red Velvet ✔ | no MV marker in title |
 | Red Velvet - IRENE & SEULGI | TILT | [Red Velvet - IRENE & SEULGI 'TILT' MV](https://youtu.be/wlTvVgI5FEI) | SMTOWN ✔ |  |
@@ -843,6 +858,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | ROSÉ & Bruno Mars | APT. | [ROSÉ & Bruno Mars - APT. (Official Music Video)](https://youtu.be/ekr2nIex040) | ROSÉ and Bruno Mars ✔ |  |
 | ROSÉ | Gone | [ROSÉ - 'Gone' M/V](https://youtu.be/K9_VFxzCuQ0) | BLACKPINK ✔ |  |
 | ROSÉ | Messy | [ROSÉ - Messy (From F1® The Movie) [Official Music Video]](https://youtu.be/ia2Ph61bYzc) | ROSÉ ✔ |  |
+| ROSÉ | new trick | [ROSÉ - new trick (OFFICIAL MUSIC VIDEO)](https://youtu.be/Lufa9QAFFeY) | ROSÉ | manual override |
 | ROSÉ | number one girl | [ROSÉ - number one girl (official music video)](https://youtu.be/pZ1NdE69VTs) | ROSÉ ✔ |  |
 | ROSÉ | On The Ground | [ROSÉ - 'On The Ground' M/V](https://youtu.be/CKZvWhCqx1s) | BLACKPINK ✔ |  |
 | ROSÉ | toxic till the end | [ROSÉ - toxic till the end (OFFICIAL MUSIC VIDEO)](https://youtu.be/eA0lHNZ1KCA) | ROSÉ ✔ |  |
@@ -1000,6 +1016,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | TAEMIN | MOVE | [TAEMIN 태민 'MOVE' #1 MV](https://youtu.be/rcEyUNeZqmY) | SMTOWN ✔ |  |
 | TAEMIN | Press Your Number | [TAEMIN 태민 'Press Your Number' MV](https://youtu.be/XsOGiTSZ_cg) | SMTOWN ✔ |  |
 | TAEMIN | Sexy In The Air | [태민 (TAEMIN) - 'Sexy In The Air' MV](https://youtu.be/ZDWNWKSP7UM) | BPM Entertainment |  |
+| TAEMIN | Veil | [태민 (TAEMIN) - 'Veil' MV](https://youtu.be/jZ5IoxGW48o) | BPM Entertainment | manual override |
 | TAEMIN | WANT | [TAEMIN 태민 'WANT' MV](https://youtu.be/-OfOkiVFmhM) | SMTOWN ✔ |  |
 | TAEYEON | 11:11 | [TAEYEON 태연 '11:11' MV](https://youtu.be/ulr0muQKjk0) | SMTOWN ✔ |  |
 | TAEYEON | Fine | [TAEYEON 태연 'Fine' MV](https://youtu.be/NHXUM-6a3dU) | SMTOWN ✔ |  |
@@ -1064,6 +1081,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | TWICE | What is Love? | [TWICE "What is Love?" M/V](https://youtu.be/i0p1bmr0EmE) | JYP Entertainment ✔ |  |
 | TWICE | Yes or Yes | [TWICE "YES or YES" M/V](https://youtu.be/mAKsZ26SabQ) | JYP Entertainment ✔ |  |
 | TXT | 0X1=LOVESONG | [TXT (투모로우바이투게더) '0X1=LOVESONG (I Know I Love You) feat. Seori' Official MV](https://youtu.be/d5bbqKYu51w) | HYBE LABELS ✔ |  |
+| TXT | Angel Bite | [TXT (투모로우바이투게더) ‘Angel Bite’ Official MV](https://youtu.be/Cf3daiQ4lBU) | HYBE LABELS | manual override |
 | TXT | Beautiful Strangers | [TXT (투모로우바이투게더) 'Beautiful Strangers' Official MV](https://youtu.be/IcwHopeT5gY) | HYBE LABELS ✔ |  |
 | TXT | Blue Hour | [TXT (투모로우바이투게더) '5시 53분의 하늘에서 발견한 너와 나' Official MV](https://youtu.be/Vd9QkWsd5p4) | HYBE LABELS | manual override |
 | TXT | Can't You See Me? | [TXT (투모로우바이투게더) '세계가 불타버린 밤, 우린... (Can't You See Me?)' Official MV](https://youtu.be/cMFHUTJ13Ys) | HYBE LABELS ✔ |  |
@@ -1110,6 +1128,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | WayV | Turn Back Time | [WayV 威神V 'Turn Back Time (超时空 回)' MV](https://youtu.be/eUCVRF6hjSQ) | SMTOWN ✔ |  |
 | WENDY | Like Water | [WENDY 웬디 'Like Water' MV](https://youtu.be/-Ih5UArd4zk) | SMTOWN ✔ |  |
 | WENDY | Wish You Hell | [WENDY 웬디 'Wish You Hell' MV](https://youtu.be/yIQgSDpwFEo) | SMTOWN ✔ |  |
+| WHEE IN | coco water | [휘인(Whee In) - coco water MV](https://youtu.be/IKISOlTAYLY) | THEL1VE | manual override |
 | WHEE IN | Easy | [[MV] Whee In(휘인) _ EASY (Feat. Sik-K)](https://youtu.be/KNWLQI5_JLc) | 1theK (원더케이) ✔ |  |
 | WHEE IN | Good bye | [[MV] Whee In(휘인) _ Good bye(헤어지자) (Prod. Jung Key(정키))](https://youtu.be/vRnAQgNNpm4) | 1theK (원더케이) ✔ |  |
 | WHEE IN | In The Mood | [COUPLE REACTS TO 휘인(Whee In) - In The Mood MV](https://youtu.be/6YfWrMpR7c0) | Kess and Han Reacts ✔ |  |
@@ -1139,6 +1158,7 @@ then run `npm run resolve`. Overrides are never overwritten by a re-run.
 | Wonder Girls | Why So Lonely | [Wonder Girls "Why So Lonely" M/V](https://youtu.be/PYGODWJgR-c) | JYP Entertainment ✔ |  |
 | WONWOO X MINGYU | Bittersweet | [[SPECIAL VIDEO] WONWOO X MINGYU - Bittersweet (feat. LeeHi)](https://youtu.be/FwwAt2-r8-Q) | SEVENTEEN ✔ |  |
 | XIUMIN | Brand New | [XIUMIN 시우민 'Brand New' MV](https://youtu.be/pU8Gu5aOWZ0) | SMTOWN ✔ |  |
+| XIUMIN | Overdrop | [시우민 (XIUMIN) 'Overdrop' MV](https://youtu.be/s4rG7VoGmiE) | INB100 | manual override |
 | XIUMIN | WHEE! | [시우민 (XIUMIN) 'WHEE!' MV](https://youtu.be/vHOhyiEShUM) | INB100 ✔ |  |
 | YEJI ITZY | Air | [YEJI "Air" M/V](https://youtu.be/TamDOXponnM) | JYP Entertainment ✔ |  |
 | YEJI ITZY | Crown On My Head | [ITZY YEJI "Crown On My Head" M/V @ITZY](https://youtu.be/OSRMoNKftyk) | JYP Entertainment ✔ |  |
