@@ -10,11 +10,32 @@ import { createPlayer } from './player.js';
 
 const wait = (ms) => new Promise((r) => setTimeout(r, reduced.matches ? Math.min(ms, 60) : ms));
 
+// Autoplay, shared by both decks and kept in the browser. on: when the MV ends, the next round
+// plays by itself. same: keep the artist and draw another of their songs.
+const AUTO_KEY = 'encore.autoplay';
+const auto = { on: false, same: false };
+try { Object.assign(auto, JSON.parse(localStorage.getItem(AUTO_KEY))); } catch {}
+
+function renderAuto() {
+  document.querySelectorAll('.autoplay').forEach((d) => {
+    const [on, same] = d.querySelectorAll('input');
+    on.checked = auto.on;
+    same.checked = auto.same;
+    same.disabled = !auto.on;
+    d.classList.toggle('is-on', auto.on);
+    d.querySelector('.auto-state').textContent = !auto.on ? 'off' : auto.same ? 'same artist' : 'on';
+  });
+}
+
 export function createRoulette(section, { pool, songsById, portraits, win, artistCard, songCard, fills, noun = 'artist' }) {
   section.append(document.querySelector('#rouletteTpl').content.cloneNode(true));
   const $ = (s) => section.querySelector(s);
   const wheel = createWheel($('.wheel-canvas'), fills);
-  const player = createPlayer($('.player'));
+  const player = createPlayer($('.player'), {
+    onEnd: () => autoNext(1200),
+    onFail: () => autoNext(4000), // can't play here: show the YouTube link briefly, then move on
+  });
+  let autoTimer = 0;
   // stage: 'artist' | 'song' | 'done'. items: what the current stage spins over. duel: its rules.
   let stage = 'artist', items = [], duel = null, chosen = null, busy = false, slots = [];
 
@@ -147,17 +168,51 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     while (stage !== 'done') await step(true);
   }));
   $('.restart').addEventListener('click', () => !busy && newGame());
-  // Same artist, new song: redo the song draw and showdown. The current MV keeps playing until a new song wins.
-  $('.another').addEventListener('click', () => {
-    if (busy || !chosen) return;
+
+  /** Same artist, new song: redo the song draw and showdown. skipId leaves that song off the wheel. */
+  function againSameArtist(skipId) {
     $('.spin').textContent = 'SPIN';
     $('.auto').hidden = false;
     $('.another').hidden = true;
     steps('song');
-    startStage('song', G.wheelSongs(chosen, songsById, Infinity));
+    const songs = G.wheelSongs(chosen, songsById, Infinity);
+    startStage('song', skipId ? songs.filter((s) => s.id !== skipId) : songs);
     hint(`Still ${chosen.name}. ${$('.hint').textContent}`);
+  }
+  // The current MV keeps playing until a new song wins.
+  $('.another').addEventListener('click', () => {
+    if (busy || !chosen) return;
+    againSameArtist();
     $('.wheel-zone').scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'nearest' });
   });
+
+  /** After the MV ends: play the next round quickly, like Choose for me. Only in the deck on screen. */
+  function autoNext(delay) {
+    clearTimeout(autoTimer);
+    const ready = () => auto.on && stage === 'done' && !section.closest('[hidden]');
+    if (!ready()) return; // busy is checked by run(): a failed video can report while the last spin still ends
+    autoTimer = setTimeout(() => run(async () => {
+      if (!ready()) return;
+      if (auto.same && G.wheelSongs(chosen, songsById, Infinity).length > 1) {
+        againSameArtist(items[duel.winner].id); // never the song that just played
+        if (duel.phase === 'done') { await finishSong(); return; } // one song left: nothing to spin
+      } else newGame(true);
+      while (stage !== 'done') await step(true);
+    }), delay);
+  }
+
+  const menu = $('.autoplay');
+  menu.querySelectorAll('input').forEach((input) => input.addEventListener('change', () => {
+    auto[input.dataset.auto] = input.checked;
+    try { localStorage.setItem(AUTO_KEY, JSON.stringify(auto)); } catch {}
+    if (!auto.on) clearTimeout(autoTimer);
+    renderAuto();
+  }));
+  document.addEventListener('click', (e) => { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+  menu.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); }
+  });
+  renderAuto();
   newGame();
   return { stop: () => player.stop() };
 }

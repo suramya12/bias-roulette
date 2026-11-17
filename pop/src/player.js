@@ -13,7 +13,8 @@ function loadApi() {
   return apiReady;
 }
 
-export function createPlayer(host) {
+/** onEnd: the video played to the end. onFail: it can't be embedded (both used by autoplay). */
+export function createPlayer(host, { onEnd, onFail } = {}) {
   // wantPlay is false after stop() or cue(): a player that is still loading must not start on its own.
   let player = null, current = null, wantPlay = false;
   const fallback = (id) => {
@@ -29,6 +30,7 @@ export function createPlayer(host) {
     f.append(a);
     host.append(f);
     player = null;
+    onFail?.();
   };
   async function load(id, autoplay) {
     current = id;
@@ -45,6 +47,7 @@ export function createPlayer(host) {
         playerVars: { autoplay: 0, playsinline: 1, rel: 0, modestbranding: 1 },
         events: {
           onReady: (e) => wantPlay && e.target.playVideo(),
+          onStateChange: (e) => e.data === 0 && onEnd?.(),
           onError: (e) => [2, 5, 100, 101, 150].includes(e.data) && fallback(current),
         },
       });
