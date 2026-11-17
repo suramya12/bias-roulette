@@ -83,8 +83,8 @@ function setup(options = {}) {
     renderSlot: (el, item) => { el.item = item; fills.push(item); },
     sound: Object.fromEntries(['unlock', 'tick', 'clack', 'chime', 'fanfare'].map((k) => [k, (...args) => events.push([k, ...args])])),
     tierOf: (s) => s.tier,
-    onLand: (item, tier) => events.push(['land', item, tier]),
-    onReveal: (item) => events.push(['reveal', item]),
+    onLand: (item, tier, meta) => events.push(['land', item, tier, meta]),
+    onReveal: (item, meta) => events.push(['reveal', item, meta]),
     ...options,
   });
   machine.setPool(items, () => { ++picks; return items[7]; });
@@ -134,6 +134,78 @@ test('slam-stop keeps the committed winner and endpoint, lands only once after 4
   time(2050);
   assert.equal(s.events.filter(([k]) => k === 'land').length, 1);
   assert.equal(s.events.filter(([k]) => k === 'reveal').length, 1);
+});
+
+test('short pull turns once plus offset in 1200ms; lands, lifts and reveals without celebrations or hold', () => {
+  const s = setup({ tier: 'legendary' });
+  s.machine.pull({ short: true });
+  assert.equal(s.machine.motion.end, -540);
+  assert.equal(s.machine.motion.duration, 1200);
+  frame(600);
+  assert.equal(s.machine.angle, -540 * (1 - 0.5 ** 4));
+  assert.ok(s.events.some(([k]) => k === 'tick'));
+  frame(1000);
+  assert.equal(s.machine.winner.el.classList.contains('incoming'), true);
+  frame(1199);
+  assert.equal(s.events.some(([k]) => k === 'land'), false);
+  frame(1200); time(9999);
+  assert.equal(s.machine.state, 'idle');
+  assert.deepEqual(s.events.filter(([k]) => ['land', 'reveal'].includes(k)).map(([k]) => k), ['land', 'reveal']);
+  assert.deepEqual(s.events.find(([k]) => k === 'land')[3], { short: true });
+  assert.deepEqual(s.events.find(([k]) => k === 'reveal')[2], { short: true });
+  assert.ok(s.machine.lifted.el.classList.contains('lifted'));
+  assert.equal(s.events.some(([k]) => ['clack', 'chime', 'fanfare'].includes(k)), false);
+  assert.equal(layer.children.length, 0);
+  assert.equal(vibrations.length, 0);
+  assert.equal(s.picks(), 1);
+});
+
+test('cancel mid-short-pull suppresses stale landing, reveal and celebration', () => {
+  const s = setup();
+  s.machine.pull({ short: true }); frame(500);
+  const stale = [...rafs.values()][0];
+  s.machine.cancel(); stale(1200); frame(1200); time(10000);
+  assert.equal(s.events.some(([k]) => ['land', 'reveal', 'fanfare'].includes(k)), false);
+});
+
+test('reduced short pull lasts 350ms with no hold or celebrations', () => {
+  reduced = true;
+  const s = setup(); s.machine.pull({ short: true });
+  assert.equal(s.machine.motion.end, -180);
+  frame(349);
+  assert.equal(s.events.some(([k]) => k === 'reveal'), false);
+  frame(350);
+  assert.equal(s.events.filter(([k]) => k === 'reveal').length, 1);
+  assert.equal(s.events.some(([k]) => ['fanfare', 'chime'].includes(k)), false);
+});
+
+test('hidden short pull selects and reveals synchronously without animation frames', () => {
+  const s = setup(); s.machine.pull({ short: true, immediate: true });
+  assert.equal(s.machine.motion, null);
+  assert.equal(s.picks(), 1);
+  assert.deepEqual(s.events.filter(([k]) => ['land', 'reveal'].includes(k)).map(([k]) => k), ['land', 'reveal']);
+});
+
+test('hiding a running short pull finishes it once instead of waiting for a hidden rAF', () => {
+  const s = setup(); s.machine.pull({ short: true }); frame(400);
+  const stale = [...rafs.values()][0];
+  document.hidden = true; s.machine.visibility(); document.hidden = false;
+  stale(1200); time(10000);
+  assert.equal(s.events.filter(([k]) => k === 'reveal').length, 1);
+  assert.equal(s.machine.motion, null);
+});
+
+test('manual controls and Stop preserve ceremony while lifecycle hooks cancel pending advances', () => {
+  const hooks = [];
+  const s = setup({ onPull: (meta) => hooks.push(meta), onCancel: () => hooks.push('cancel') });
+  hooks.length = 0;
+  s.hit.fire('click');
+  assert.deepEqual(hooks, [{ short: false }]);
+  s.button.fire('click'); frame(450); time(1750);
+  assert.equal(s.events.some(([k]) => k === 'fanfare'), true);
+  assert.deepEqual(s.events.find(([k]) => k === 'reveal')[2], { short: false });
+  s.machine.cancel();
+  assert.deepEqual(hooks, [{ short: false }, 'cancel']);
 });
 
 for (const action of ['cancel', 'deactivate', 'setPool', 'destroy']) {
