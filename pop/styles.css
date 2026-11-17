@@ -106,6 +106,10 @@ main { max-width: 1160px; margin: 0 auto; padding: 16px 16px 120px; }
 .autoplay > summary::-webkit-details-marker { display: none; }
 .auto-state { padding: 2px 8px; border-radius: 999px; background: var(--line); color: var(--muted); font-size: 12px; }
 .autoplay.is-on .auto-state { background: linear-gradient(135deg, var(--gold), #ff9d00); color: #2a1a00; }
+.chart-auto { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.chart-auto:has(input:checked) .auto-state { background: linear-gradient(135deg, var(--gold), #ff9d00); color: #2a1a00; }
+.tap-to-play { position: absolute; inset: 0; z-index: 2; width: 100%; background: rgba(0,0,0,.7); color: white; border: 0; font: 700 24px var(--display); cursor: pointer; }
+.auto-paused { color: var(--ink); }
 .auto-menu {
   position: absolute; right: 0; bottom: calc(100% + 8px); z-index: 20; display: grid; gap: 2px;
   width: min(300px, calc(100vw - 32px)); padding: 6px; background: #1a1240;
