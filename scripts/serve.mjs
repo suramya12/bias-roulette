@@ -10,13 +10,18 @@ import path from 'node:path';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const port = Number(process.env.PORT) || 5173;
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8',
-  '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.ico': 'image/x-icon' };
-// The K-pop side at the root, and the Pop & Latin side in pop/ (same layout).
-const PUBLIC = ['index.html', 'styles.css', 'src/', 'data/', 'pop/index.html', 'pop/styles.css', 'pop/src/', 'pop/data/'];
+  '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.ico': 'image/x-icon', '.webp': 'image/webp' };
+// Publish page assets only; update scripts and review files stay private.
+const PUBLIC = ['index.html', 'landing.css', 'landing.js', 'favicon.svg', 'og.png', 'kpop/index.html', 'styles.css', 'src/', 'data/', 'art/', 'landing-art/',
+  'pop/index.html', 'pop/styles.css', 'pop/src/', 'pop/data/',
+  'anime/index.html', 'anime/styles.css', 'anime/src/', 'anime/data/'];
 
 createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
-  if (url.pathname.replace(/^\/+/, '') === 'pop') { res.writeHead(301, { Location: '/pop/' + url.search }); return res.end(); }
+  const side = url.pathname.replace(/^\/+/, '');
+  if (['kpop', 'pop', 'anime'].includes(side)) {
+    res.writeHead(301, { Location: '/' + side + '/' + url.search }); return res.end();
+  }
   let rel = decodeURIComponent(url.pathname).replace(/^\/+/, '') || 'index.html';
   if (rel.endsWith('/')) rel += 'index.html';
   const file = path.resolve(root, rel);
