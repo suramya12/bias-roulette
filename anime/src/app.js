@@ -3,6 +3,7 @@ import { PullMachine } from '../../src/pull-machine.js';
 import { Sound } from '../../src/sound.js';
 import { createAutoAdvance } from '../../src/auto-advance.js';
 import { createPlayer } from '../../pop/src/player.js';
+import { isVideoId, videoThumbnail } from '../../src/validation.js';
 
 const $ = (selector) => document.querySelector(selector);
 const get = (key, fallback = null) => {
@@ -26,8 +27,10 @@ async function boot() {
   const addons = Object.fromEntries(kinds.filter((kind) => kind.addon).map((kind) => [kind.id,
     get(`anime.addon.${kind.id}`, kind.default ? 'on' : 'off') === 'on']));
   const savedStrikes = read('anime.strikes', {});
-  const localStrikes = Object.fromEntries(Object.entries(savedStrikes && typeof savedStrikes === 'object' ? savedStrikes : {})
-    .filter(([, count]) => Number.isFinite(count) && count >= 0));
+  const localStrikes = Object.create(null);
+  for (const [id, count] of Object.entries(savedStrikes && typeof savedStrikes === 'object' ? savedStrikes : {})) {
+    if (Number.isFinite(count) && count >= 0) localStrikes[id] = count;
+  }
   const history = [];
   let pool = [], attempt = null, playingId = null;
 
@@ -53,8 +56,10 @@ async function boot() {
     el.className = 'card'; el.dataset.song = song.id;
     el.classList.toggle('playing', song.id === playingId);
     const image = Object.assign(document.createElement('img'), {
-      src: `https://i.ytimg.com/vi/${song.videos[0].id}/mqdefault.jpg`, alt: '', draggable: false,
+      alt: '', draggable: false,
     });
+    const src = videoThumbnail(song.videos[0]?.id, 'mqdefault');
+    if (src) image.src = src;
     const label = Object.assign(document.createElement('span'), { className: 'slot-label', textContent: song.use });
     const year = Object.assign(document.createElement('span'), { className: 'card-year', textContent: song.year });
     const caption = Object.assign(document.createElement('div'), { className: 'card-caption' });
@@ -102,8 +107,10 @@ async function boot() {
         status("YouTube couldn't verify this page (error 153). Reload from the site's web address.");
         return;
       }
-      localStrikes[token.video.id] = (localStrikes[token.video.id] || 0) + 1;
-      put('anime.strikes', JSON.stringify(localStrikes));
+      if (typeof token.video.id === 'string') {
+        localStrikes[token.video.id] = (localStrikes[token.video.id] || 0) + 1;
+        put('anime.strikes', JSON.stringify(localStrikes));
+      }
       const next = attempt.queue.find((video) => !attempt.tried.has(video.id));
       if (next) { loadCopy(next); return; }
       status("Can't play here. Watch on YouTube or pull another song.");
@@ -159,7 +166,7 @@ async function boot() {
   // Test hook, like K-pop: ?forceVideo=ID puts that video first in every queue ('_k7gZaDjTTM' is embed-blocked).
   function withForced(queue) {
     const id = new URLSearchParams(location.search).get('forceVideo');
-    return id ? [{ id, kind: 'tv', source: 'fan' }, ...queue] : queue;
+    return isVideoId(id) ? [{ id, kind: 'tv', source: 'fan' }, ...queue] : queue;
   }
   function loadCopy(video) {
     const token = { attempt, video };

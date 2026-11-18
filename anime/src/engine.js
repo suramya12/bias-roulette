@@ -57,7 +57,7 @@ export function tierOf(song) {
 
 export function copyQueue(song, { preferredId, localStrikes = {} } = {}) {
   const copies = song.videos || [];
-  const healthy = copies.filter((video) => !(localStrikes[video.id] >= 3));
+  const healthy = copies.filter((video) => typeof video.id !== 'string' || !(localStrikes[video.id] >= 3));
   const queue = [...(healthy.length ? healthy : copies)];
   const preferred = queue.findIndex((video) => video.id === preferredId);
   if (preferred > 0) queue.unshift(...queue.splice(preferred, 1));
