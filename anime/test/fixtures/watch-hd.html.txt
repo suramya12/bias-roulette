@@ -1,0 +1,1 @@
+<!doctype html><script>var ytInitialPlayerResponse = {"playabilityStatus":{"status":"OK","playableInEmbed":true},"videoDetails":{"viewCount":"1234567"},"microformat":{"playerMicroformatRenderer":{"publishDate":"2020-02-29"}},"streamingData":{"formats":[{"qualityLabel":"720p","width":1280,"height":720},{"qualityLabel":"1080p","width":1920,"height":1080}]}};</script>
