@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; script-src 'self' https://www.youtube.com/iframe_api https://www.youtube.com/s/player/; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; img-src 'self' https://i.ytimg.com https://upload.wikimedia.org https://thumb.wikimedia.org; font-src https://fonts.gstatic.com; connect-src 'self'; frame-src https://www.youtube.com; media-src 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <!-- YouTube needs a Referer from the embedding page (player error 153 without it). -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -20,23 +21,8 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
-  <script>
-    // Big screens: zoom the whole page so it fills the display (laid out for about 1200x720).
-    // --z lets the CSS undo the zoom on viewport units, which would otherwise grow with it.
-    (function () {
-      function fit() {
-        var z = Math.min(innerWidth / 1200, innerHeight / 720, 3);
-        z = z > 1.05 ? Math.round(z * 100) / 100 : 1;
-        var s = document.documentElement.style;
-        s.zoom = z === 1 ? '' : String(z);
-        s.setProperty('--z', String(z));
-      }
-      fit();
-      addEventListener('resize', fit);
-    })();
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="../src/display-scale.js"></script>
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body class="night">
@@ -114,7 +100,7 @@
           <button class="play-overlay" id="playOverlay" type="button" hidden><span class="play-disc" aria-hidden="true">▶</span><span>Tap to play</span></button>
           <div class="player-fallback" id="playerFallback" hidden>
             <p id="fallbackMsg">This video can't be played here.</p>
-            <a class="btn btn-pink" id="watchLink" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+            <a class="btn btn-pink" id="watchLink" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a>
           </div>
         </div>
         <div class="now">
@@ -187,7 +173,7 @@
               <button class="play-overlay" id="stageOverlay" type="button" hidden><span class="play-disc" aria-hidden="true">▶</span><span>Tap to play</span></button>
               <div class="player-fallback" id="stageFallback" hidden>
                 <p id="stageMsg">This video can't be played here.</p>
-                <a class="btn btn-pink" id="stageLink" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+                <a class="btn btn-pink" id="stageLink" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a>
               </div>
             </div>
             <p class="hint" id="stageHint" hidden>Not playing? Tap the video itself.</p>
@@ -213,7 +199,7 @@
     </footer>
 
     <footer class="credits">
-      <p>Fan project, not affiliated with any artist or label. Stream and view counts: <a href="https://kworb.net/" target="_blank" rel="noopener">kworb.net</a>. Videos play from YouTube. Idol photos: Wikimedia Commons, each under its own licence.</p>
+      <p>Fan project, not affiliated with any artist or label. Stream and view counts: <a href="https://kworb.net/" target="_blank" rel="noopener noreferrer">kworb.net</a>. Videos play from YouTube. Idol photos: Wikimedia Commons, each under its own licence.</p>
       <details id="credits">
         <summary>Photo credits</summary>
         <ul id="creditList"></ul>
