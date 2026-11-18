@@ -3,6 +3,8 @@
 //   node scripts/chart.mjs [--fresh]
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { safeFetch } from '../../scripts/safe-fetch.mjs';
+import { escapeRegExp, requestHash } from '../../scripts/safe-text.mjs';
 import { getText, decode, fold, key, cleanTitle, num, writeJSON, readJSON, sleep, CACHE } from './lib.mjs';
 import { ROSTER, ALL, BIAS, BANDS, EXCLUDE, EXTRA_VIDEOS, BAD_VIDEOS } from './roster.mjs';
 
@@ -161,7 +163,7 @@ for (const a of acts.filter((x) => x.spotify && !x.songs.length)) {
     const bare = v.title.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/\s*[([][^)\]]*[)\]]/g, ' ').replace(FEAT, ' ');
     const q = bare.match(/(?:^|\s)['"]([^'"]{1,80})['"](?=$|[\s,|.!-])/);
     const part = q ? q[1] : bare.split(/\s*[-–—|:]\s+|\s+[-–—]|[-–—]\s+/).find((p) => key(p) === k);
-    const named = (part || k).replace(new RegExp(`^\\s*${a.name}\\s*[-–—:|]\\s*`, 'i'), ''); // "Artist-Song" with no spaces
+    const named = (part || k).replace(new RegExp(`^\\s*${escapeRegExp(a.name)}\\s*[-–—:|]\\s*`, 'i'), ''); // "Artist-Song" with no spaces
     groups.set(k, { k, title: cleanTitle(named), s: 0, yt: true });
   }
   a.songs = [...groups.values()].slice(0, 8);
@@ -213,12 +215,15 @@ for (const a of acts) for (const g of a.songs) {
 // YouTube view count, like the YouTube-only songs above.
 const latest = await readJSON('data/latest.json').catch(() => ({}));
 async function ytViews(id) {
-  const file = `${CACHE}/yt-views-${id}.txt`;
+  const url = `https://www.youtube.com/watch?v=${id}`;
+  const file = `${CACHE}/${requestHash(url)}.txt`;
   if (existsSync(file)) return Number(await readFile(file, 'utf8'));
   for (let attempt = 0; attempt < 3; attempt++) {
     await sleep(300 * (attempt + 1));
     try {
-      const r = await fetch(`https://www.youtube.com/watch?v=${id}`, { headers: { 'User-Agent': 'Mozilla/5.0', 'Accept-Language': 'en' } });
+      const r = await safeFetch(url, {
+        hosts: ['www.youtube.com'], headers: { 'User-Agent': 'Mozilla/5.0', 'Accept-Language': 'en' },
+      });
       const n = num(((await r.text()).match(/"viewCount":"(\d+)"/) || [])[1] || 0);
       if (n) { await mkdir(CACHE, { recursive: true }); await writeFile(file, String(n)); return n; }
     } catch { /* try again */ }

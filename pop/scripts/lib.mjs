@@ -4,11 +4,13 @@ import { existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { safeFetch } from '../../scripts/safe-fetch.mjs';
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 export const CACHE = join(ROOT, '.cache');
 export const FRESH = process.argv.includes('--fresh');
 const UA = 'music-card-game-data-builder/1.0 (static hobby site; contact via repository)';
+const hosts = ['kworb.net', 'www.youtube.com', 'en.wikipedia.org'];
 
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -24,7 +26,7 @@ export async function getText(url, { delay = 250, json = false } = {}) {
     await sleep(delay);
     let res;
     try {
-      res = await fetch(url, { headers: { 'user-agent': UA, 'api-user-agent': UA } });
+      res = await safeFetch(url, { hosts, headers: { 'user-agent': UA, 'api-user-agent': UA } });
     } catch (e) {
       await sleep(wait);
       continue;
