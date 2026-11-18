@@ -1,6 +1,7 @@
 // Pure data helpers shared by the app, the tests and the resolver script.
 
 export const songKey = (artist, title) => `${artist} | ${title}`;
+const DEFAULT_ACCENT = '#b693ff';
 
 /** Every song on an idol's wheel: group songs, shared sets, then solo songs. No duplicates. */
 export function idolSongs(roster, idol) {
@@ -51,7 +52,8 @@ export function buildCatalog(roster, videos) {
       skipped.push(idol.name);
       continue;
     }
-    idols.push({ name: idol.name, label: group.label, color: group.color, groupId: group.id, songs });
+    const color = typeof group.color === 'string' && /^#[0-9a-fA-F]{6}$/.test(group.color) ? group.color : DEFAULT_ACCENT;
+    idols.push({ name: idol.name, label: group.label, color, groupId: group.id, songs });
   }
   return { idols, skipped };
 }

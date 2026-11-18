@@ -1,3 +1,5 @@
+import { IMAGE_HOSTS, isCardArtPath, safeUrl } from './validation.js';
+
 // Cover art for every card, painted in the browser. Nothing is downloaded: each cover is
 // composed from its own seed (the card's key), so every card is different and the same
 // card always looks the same.
@@ -1000,6 +1002,8 @@ const queue = [];
 const images = new Map();
 /** Load a cross-origin image for pixel access. Resolves null if it fails. */
 export function loadImage(src) {
+  src = safeUrl(src, IMAGE_HOSTS);
+  if (!src) return Promise.resolve(null);
   if (!images.has(src)) {
     if (images.size >= 40) images.delete(images.keys().next().value); // drop the oldest source photo
     images.set(src, new Promise((done) => {
@@ -1061,10 +1065,11 @@ const seen = typeof IntersectionObserver === 'function'
  * the slot holds now and it is reused or swapped. sizes: the CSS width hint for the srcset.
  */
 export function artNode(current, spec, size, cls, sizes) {
-  if (spec.photo?.kind === 'custom') {
+  if (spec.photo?.kind === 'custom' && isCardArtPath(spec.photo.src)) {
     const img = current?.tagName === 'IMG' ? current : document.createElement('img');
     if (img !== current) { img.className = cls; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async'; current?.replaceWith(img); }
-    const full = spec.photo.src, small = full.replace(/\/([^/]+)$/, '/s/$1');
+    const full = new URL(`../${spec.photo.src}`, import.meta.url).href;
+    const small = full.replace(/\/([^/]+)$/, '/s/$1');
     if (img.dataset.art === full) return img;
     img.dataset.art = full;
     img.classList.remove('painted');
@@ -1077,7 +1082,7 @@ export function artNode(current, spec, size, cls, sizes) {
   }
   const canvas = current?.tagName === 'CANVAS' ? current : document.createElement('canvas');
   if (canvas !== current) { canvas.className = cls; current?.replaceWith(canvas); }
-  showArt(canvas, spec, size);
+  showArt(canvas, spec.photo?.kind === 'custom' ? { ...spec, photo: null } : spec, size);
   return canvas;
 }
 

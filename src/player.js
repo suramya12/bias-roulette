@@ -7,6 +7,7 @@
 // a big play button if playback has not started, and a "Watch on YouTube" link on errors.
 
 import { loadApi } from './youtube-api.js';
+import { isVideoId } from './validation.js';
 export { loadApi };
 
 const MESSAGES = {
@@ -40,7 +41,7 @@ export class VideoPlayer {
     try { this.player?.destroy(); } catch { /* already removed */ }
     this.player = null;
     this.ready = false;
-    this.videoId = videoId;
+    this.videoId = isVideoId(videoId) ? videoId : null;
     this.ended = false;
     this.failed = false;
     this.clearAutoPaused();
@@ -49,7 +50,12 @@ export class VideoPlayer {
     this.overlay.hidden = true;
     this.fallback.hidden = true;
     this.hint.hidden = true;
-    this.link.href = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
+    this.link.hidden = this.videoId === null;
+    if (!this.videoId) {
+      this.link.removeAttribute('href');
+      return this.#fail(2, my);
+    }
+    this.link.href = `https://www.youtube.com/watch?v=${videoId}`;
 
     if (location.protocol === 'file:') return this.#fail('file', my);
     try { await loadApi(); } catch { this.#fail('api', my); return; }
@@ -162,7 +168,7 @@ export class VideoPlayer {
   }
 
   #fail(code, my) {
-    if (!this.#valid(my)) return;
+    if (my !== this.seq || this.failed) return;
     this.failed = true;
     clearTimeout(this.timer);
     this.overlay.hidden = true;

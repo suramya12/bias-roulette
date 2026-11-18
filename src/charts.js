@@ -9,6 +9,7 @@ import { makeCard, songCard, playIn, collection, openBinder } from './card.js';
 import { artNode } from './art.js';
 import { PullMachine } from './pull-machine.js';
 import { createAutoAdvance } from './auto-advance.js';
+import { isVideoId, videoThumbnail } from './validation.js';
 
 const $ = (id) => document.getElementById(id);
 const CANDY = ['#ff4fa3', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff'];
@@ -22,7 +23,11 @@ export const loadChartData = () => (chartFetch ??= fetch(new URL('../data/charts
   })
   .catch((e) => { chartFetch = null; throw e; }));
 
-const thumb = (id, size = 'mqdefault') => `https://i.ytimg.com/vi/${encodeURIComponent(id)}/${size}.jpg`;
+export function chartRange(value) {
+  if (value === 10 || value === '10') return 10;
+  if (value === 50 || value === '50') return 50;
+  return 100;
+}
 export const short = (n) => (n >= 1e9 ? `${(n / 1e9).toFixed(n >= 1e10 ? 1 : 2)}B` : `${Math.round(n / 1e6)}M`);
 export const tierOf = (rank) => (!rank || rank > 100 ? 'common' : rank <= 10 ? 'legend' : rank <= 30 ? 'epic' : 'rare');
 const overall = (s) => s.overall ?? s.rank;
@@ -174,7 +179,7 @@ export class Charts {
     this.store = store;
     this.data = null;
     this.list = store.get('chart.list', 'pro') === 'new' ? 'new' : 'pro';
-    this.range = Number(store.get('chart.range', '100')) || 100;
+    this.range = chartRange(store.get('chart.range', '100'));
     this.recent = [];
     this.active = false;
     this.auto = createAutoAdvance({
@@ -310,9 +315,12 @@ export class Charts {
   #renderList() {
     const top = this.songs[0]?.score || 1;
     const rows = this.songs.map((s) => {
+      const img = el('img', { class: 'row-thumb', alt: '', loading: 'lazy', width: '64', height: '36' });
+      const src = videoThumbnail(s.videoId, 'mqdefault');
+      if (src) img.src = src;
       const btn = el('button', { class: 'row', type: 'button', 'aria-label': `Play number ${s.rank}: ${s.title} by ${s.artist}` },
         el('span', { class: `row-rank ${tierOf(overall(s))}`, text: String(s.rank) }),
-        el('img', { class: 'row-thumb', src: thumb(s.videoId), alt: '', loading: 'lazy', width: '64', height: '36' }),
+        img,
         el('span', { class: 'row-text' },
           el('b', { text: s.title }),
           el('span', { text: s.vibe ? `${s.artist} · ${s.vibe}` : s.artist })),
@@ -397,7 +405,8 @@ export class Charts {
     if (next) $('nextPull').textContent = `Next: #${next.rank} ${next.title}`;
 
     $('pull').hidden = false;
-    this.player.show(new URLSearchParams(location.search).get('forceVideo') || song.videoId, this.auto.begin());
+    const forced = new URLSearchParams(location.search).get('forceVideo');
+    this.player.show(isVideoId(forced) ? forced : song.videoId, this.auto.begin());
     this.#say(`Now playing #${song.rank}: ${song.title} by ${song.artist}.`);
     if (!shortPull && !document.hidden) $('pull').scrollIntoView({ block: 'start', behavior: fx.prefersReducedMotion() ? 'auto' : 'smooth' });
   }

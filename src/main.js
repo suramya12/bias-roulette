@@ -9,6 +9,7 @@ import * as fx from './fx.js';
 import { Charts, Crowd, toRgb, loadChartData } from './charts.js';
 import { makeCard, cardBack, idolCard, artPlan, rouletteSongCard, chartIndex, playIn, collection, openBinder, hasArt } from './card.js';
 import { createAutoAdvance } from './auto-advance.js';
+import { CREDIT_HOSTS, isVideoId, safeUrl } from './validation.js';
 
 const $ = (id) => document.getElementById(id);
 const CANDY = ['#ff5fa2', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff', '#ffb38a'];
@@ -199,7 +200,7 @@ function showResult() {
   renderSteps();
   renderFinalists();
   announce(`Winner: ${song.title} by ${song.artist}, drawn for ${idol.name}.`);
-  if (mode === 'roulette') player.show(forceVideo || song.videoId, rouletteAuto.begin());
+  if (mode === 'roulette') player.show(isVideoId(forceVideo) ? forceVideo : song.videoId, rouletteAuto.begin());
   if (mode === 'roulette' && !document.hidden) $('result').scrollIntoView({ block: 'start', behavior: fx.prefersReducedMotion() ? 'auto' : 'smooth' });
 }
 
@@ -422,8 +423,10 @@ async function buildCredits() {
     return;
   }
   box.replaceChildren(...Object.entries(all).sort(([a], [b]) => a.localeCompare(b)).map(([name, p]) => {
-    const link = el('a', { href: p.file || p.page || '#', target: '_blank', rel: 'noopener', text: [p.author, p.license].filter(Boolean).join(', ') || 'Wikimedia Commons' });
-    return el('li', {}, `${name}: `, link, ' (cropped)');
+    const href = safeUrl(p?.file || p?.page, CREDIT_HOSTS);
+    const text = [p?.author, p?.license].filter(Boolean).join(', ') || 'Wikimedia Commons';
+    const credit = href ? el('a', { href, target: '_blank', rel: 'noopener noreferrer', text }) : text;
+    return el('li', {}, `${name}: `, credit, ' (cropped)');
   }));
 }
 

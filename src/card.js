@@ -4,9 +4,13 @@
 // viewer's collection in localStorage.
 
 import { artNode } from './art.js';
+import { CREDIT_HOSTS, IMAGE_HOSTS, isCardArtPath, safeUrl, videoThumbnail } from './validation.js';
 const CARD_SIZES = { mini: '104px', mid: '150px', big: 'min(300px, 76vw)' }; // widest each card size gets, for srcset
 
-const thumb = (id, size = 'hqdefault') => `https://i.ytimg.com/vi/${encodeURIComponent(id)}/${size}.jpg`;
+function mvPhoto(id, size) {
+  const src = videoThumbnail(id, size);
+  return src ? { kind: 'mv', src } : null;
+}
 export const short = (n) => (n >= 1e9 ? `${(n / 1e9).toFixed(n >= 1e10 ? 1 : 2)}B` : n >= 1e6 ? `${Math.round(n / 1e6)}M` : String(n));
 export const norm = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^\p{L}\p{N}]+/gu, '');
 const ALIAS = { gidle: 'idle', txt: 'tomorrowxtogether' };
@@ -35,10 +39,10 @@ try {
   if (r.ok) custom = await r.json();
 } catch { /* no file, or not in a browser: painted covers only */ }
 function customArt(kind, key) {
-  const path = custom[kind]?.[key];
-  return path ? { kind: 'custom', src: new URL(`../${path}`, import.meta.url).href } : null;
+  const src = custom?.[kind]?.[key];
+  return isCardArtPath(src) ? { kind: 'custom', src } : null;
 }
-export const hasArt = (kind, key) => Boolean(custom[kind]?.[key]);
+export const hasArt = (kind, key) => isCardArtPath(custom?.[kind]?.[key]);
 
 export const TIERS = { legend: 'Legendary', epic: 'Epic', rare: 'Rare', common: 'Common' };
 export const tierOf = (rank) => (!rank || rank > 100 ? 'common' : rank <= 10 ? 'legend' : rank <= 30 ? 'epic' : 'rare');
@@ -71,7 +75,7 @@ export function songCard(s) {
     art: {
       seed: `song|${s.artist}|${s.title}`, kind: 'song', title: s.title, act: s.artist, color: colorOf(s.artist), tier: tierOf(overall(s)),
       words: `${s.title} ${s.vibe || ''} ${ART_WORDS[s.artist] || ''}`,
-      photo: customArt('song', `${s.artist} | ${s.title}`) || { kind: 'mv', src: thumb(s.videoId) },
+      photo: customArt('song', `${s.artist} | ${s.title}`) || mvPhoto(s.videoId),
     },
     tier: tierOf(overall(s)), gem: overall(s), gemLabel: 'Rank',
     left: { value: short(s.streams), label: 'Streams', icon: '♫' },
@@ -119,13 +123,20 @@ export function artPlan(idols, portraits) {
   const plan = new Map(), used = new Set();
   for (const i of idols) {
     const p = portraits?.[i.name];
-    if (p && !used.has(p.src)) { used.add(p.src); plan.set(i.name, { photo: { kind: 'portrait', src: p.src, focus: [0.5, 0.3] }, credit: { text: `Photo: ${p.author}, ${p.license}`, href: p.file } }); }
+    const src = safeUrl(p?.src, IMAGE_HOSTS);
+    if (!src || used.has(src)) continue;
+    used.add(src);
+    plan.set(i.name, {
+      photo: { kind: 'portrait', src, focus: [0.5, 0.3] },
+      credit: { text: `Photo: ${p.author}, ${p.license}`, href: p.file },
+    });
   }
   const take = (i, songs) => {
     for (const s of songs) {
-      if (!s.videoId || used.has(s.videoId)) continue;
+      const photo = mvPhoto(s.videoId, 'hq2');
+      if (!photo || used.has(s.videoId)) continue;
       used.add(s.videoId);
-      plan.set(i.name, { photo: { kind: 'mv', src: thumb(s.videoId, 'hq2') }, credit: null }); // a mid-video frame, so it differs from the song card
+      plan.set(i.name, { photo, credit: null }); // a mid-video frame, so it differs from the song card
       return true;
     }
     return false;
@@ -184,7 +195,7 @@ export function rouletteSongCard(song, index) {
   if (c) return songCard(c);
   return {
     kind: 'song', key: `${song.artist} | ${song.title}`, name: song.title, type: 'Song', act: song.artist, color: colorOf(song.artist),
-    art: { seed: `song|${song.artist}|${song.title}`, kind: 'song', title: song.title, act: song.artist, color: colorOf(song.artist), tier: 'common', words: song.title, photo: customArt('song', `${song.artist} | ${song.title}`) || (song.videoId ? { kind: 'mv', src: thumb(song.videoId) } : null) },
+    art: { seed: `song|${song.artist}|${song.title}`, kind: 'song', title: song.title, act: song.artist, color: colorOf(song.artist), tier: 'common', words: song.title, photo: customArt('song', `${song.artist} | ${song.title}`) || mvPhoto(song.videoId) },
     credit: null, tier: 'common', gem: '–', gemLabel: 'Rank',
     left: { value: '–', label: 'Streams', icon: '♫' }, right: { value: '–', label: 'Views', icon: '▶' },
     keywords: [], flavor: 'A deep cut: outside the all-time Top 100.',
@@ -231,9 +242,10 @@ export function makeCard(d, { size = 'big', isNew = false } = {}) {
     d.tier === 'legend' ? el('div', 'tcg-flare', `★ ${TIERS.legend} ★`) : null,
     isNew ? el('span', 'tcg-new', 'NEW!') : null);
   if (size === 'big' && d.credit) {
-    const a = el('a', 'tcg-credit', d.credit.text);
-    a.href = d.credit.href; a.target = '_blank'; a.rel = 'noopener';
-    wrap.append(a);
+    const href = safeUrl(d.credit.href, CREDIT_HOSTS);
+    const credit = el(href ? 'a' : 'span', 'tcg-credit', d.credit.text);
+    if (href) { credit.href = href; credit.target = '_blank'; credit.rel = 'noopener noreferrer'; }
+    wrap.append(credit);
   }
   wrap.dataset.tier = d.tier;
   wrap.setAttribute('role', 'img');
@@ -301,14 +313,29 @@ function countUp(node, duration, delay) {
 
 // ---------- collection ----------
 const STORE = 'bias-roulette.collection';
-let collectionSnapshot = {};
-let unsavedCards = {};
+let collectionSnapshot = Object.create(null);
+let unsavedCards = Object.create(null);
+const isCountMap = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
+
+function normalizeCollection(saved) {
+  const result = Object.create(null);
+  if (!isCountMap(saved)) return result;
+  for (const [kind, cards] of Object.entries(saved)) {
+    if (!isCountMap(cards)) continue;
+    const bucket = result[kind] = Object.create(null);
+    for (const [key, count] of Object.entries(cards)) {
+      if (Number.isInteger(count) && count >= 0) bucket[key] = count;
+    }
+  }
+  return result;
+}
+
 function readAll() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORE));
-    collectionSnapshot = saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {};
+    collectionSnapshot = normalizeCollection(saved);
     for (const [kind, cards] of Object.entries(unsavedCards)) {
-      const box = (collectionSnapshot[kind] ||= {});
+      const box = (collectionSnapshot[kind] ||= Object.create(null));
       for (const [key, count] of Object.entries(cards)) box[key] = (box[key] || 0) + count;
     }
   } catch { /* keep the last readable collection and any in-memory changes */ }
@@ -319,18 +346,18 @@ export const collection = {
   /** Returns true the first time a card is collected. */
   add(kind, key) {
     const all = readAll();
-    const box = (all[kind] ||= {});
+    const box = (all[kind] ||= Object.create(null));
     const isNew = !box[key];
     box[key] = (box[key] || 0) + 1;
-    const pending = (unsavedCards[kind] ||= {});
+    const pending = (unsavedCards[kind] ||= Object.create(null));
     pending[key] = (pending[key] || 0) + 1;
     try {
       localStorage.setItem(STORE, JSON.stringify(all));
-      unsavedCards = {};
+      unsavedCards = Object.create(null);
     } catch { /* keep this addition for the current visit */ }
     return isNew;
   },
-  count(kind, keys) { const box = readAll()[kind] || {}; return keys.filter((k) => box[k]).length; },
+  count(kind, keys) { const box = readAll()[kind]; return keys.filter((k) => box?.[k]).length; },
   times(kind, key) { return readAll()[kind]?.[key] || 0; },
 };
 
