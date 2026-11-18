@@ -13,6 +13,9 @@ import { existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
+import { safeFetch } from './safe-fetch.mjs';
+
+const hosts = ['www.youtube.com'];
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CACHE = path.join(root, '.cache', 'latest');
@@ -47,7 +50,7 @@ async function get(url, { text = true } = {}) {
   for (let attempt = 0, wait = 2000; attempt < 6; attempt++, wait *= 2) {
     await gate();
     let res;
-    try { res = await fetch(url, { headers: HEADERS }); } catch { await sleep(wait); continue; }
+    try { res = await safeFetch(url, { hosts, headers: HEADERS }); } catch { await sleep(wait); continue; }
     if (res.status === 404) { await writeFile(file, '__404__'); return null; }
     if (res.status === 429 || res.status >= 500) { await sleep(wait); continue; }
     if (!res.ok) return null;
@@ -69,7 +72,7 @@ async function channelOf(videoId) {
   for (let attempt = 0, wait = 2000; attempt < 4; attempt++, wait *= 2) {
     await gate();
     try {
-      const r = await fetch(`https://www.youtube.com/watch?v=${videoId}`, { headers: HEADERS });
+      const r = await safeFetch(`https://www.youtube.com/watch?v=${videoId}`, { hosts, headers: HEADERS });
       if (r.status === 429 || r.status >= 500) { await sleep(wait); continue; }
       const html = await r.text();
       id = (html.match(/"channelId":"(UC[\w-]{22})"/) || [])[1] || null;
@@ -103,13 +106,13 @@ async function feedOf(channelId) {
 /** 'ok' | 'blocked' | 'unknown': can this video play in an embedded player? */
 async function embedStatus(id) {
   try {
-    const r = await fetch(`https://www.youtube.com/embed/${id}`, { headers: { Referer: 'https://example.com/', 'Accept-Language': 'en' } });
+    const r = await safeFetch(`https://www.youtube.com/embed/${id}`, { hosts, headers: { Referer: 'https://example.com/', 'Accept-Language': 'en' } });
     const html = await r.text();
     const m = html.match(/previewPlayabilityStatus\\":{\\"status\\":\\"([A-Z_]+)\\"(?:,\\"playableInEmbed\\":(true|false))?/);
     if (m) return m[1] === 'OK' && m[2] !== 'false' ? 'ok' : 'blocked';
   } catch { /* fall through */ }
   try {
-    const r = await fetch(`https://www.youtube.com/oembed?format=json&url=${encodeURIComponent('https://www.youtube.com/watch?v=' + id)}`);
+    const r = await safeFetch(`https://www.youtube.com/oembed?format=json&url=${encodeURIComponent('https://www.youtube.com/watch?v=' + id)}`, { hosts });
     if (r.status === 401 || r.status === 403 || r.status === 404) return 'blocked';
   } catch { /* ignore */ }
   return 'unknown';

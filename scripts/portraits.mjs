@@ -11,6 +11,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { safeFetch } from './safe-fetch.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const cacheDir = path.join(root, '.cache', 'wiki');
@@ -33,7 +34,9 @@ async function getJson(url, key) {
   if (!fresh) { try { return JSON.parse(await readFile(f, 'utf8')); } catch { /* not cached */ } }
   for (let attempt = 0; ; attempt++) {
     await new Promise((r) => setTimeout(r, 1100)); // stay well under Wikimedia's rate limits
-    const res = await fetch(url, { headers: { 'User-Agent': UA } });
+    const res = await safeFetch(url, {
+      hosts: ['en.wikipedia.org', 'commons.wikimedia.org'], headers: { 'User-Agent': UA },
+    });
     if (res.status === 429 && attempt < 5) { await new Promise((r) => setTimeout(r, 8000 * (attempt + 1))); continue; }
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();

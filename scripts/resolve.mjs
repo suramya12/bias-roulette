@@ -9,11 +9,16 @@
 // Needs yt-dlp (pip install yt-dlp). Manual fixes live in data/overrides.json
 // and always win; this script never writes to that file.
 
-import { spawn } from 'node:child_process';
+import { execFile } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { allSongs } from '../src/catalog.js';
+import { isVideoId } from '../src/validation.js';
+import { MAX_BYTES, TIMEOUT_MS, safeFetch } from './safe-fetch.mjs';
+import { escapeMarkdown as esc } from './safe-text.mjs';
+
+const hosts = ['www.youtube.com'];
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const P = (f) => path.join(root, f);
@@ -94,17 +99,14 @@ function judge(song, c, index) {
 // ---------- network ----------
 function ytSearch(query, n = 8) {
   return new Promise((resolve) => {
-    const p = spawn('python', ['-m', 'yt_dlp', `ytsearch${n}:${query}`, '--flat-playlist', '-J', '--no-warnings'], {
+    execFile('python', ['-m', 'yt_dlp', `ytsearch${n}:${query}`, '--flat-playlist', '-J', '--no-warnings'], {
       env: { ...process.env, PYTHONIOENCODING: 'utf-8', PYTHONUTF8: '1' },
-    });
-    const chunks = [];
-    let err = '';
-    p.stdout.on('data', (d) => chunks.push(d));
-    p.stderr.on('data', (d) => (err += d));
-    p.on('error', (e) => resolve({ error: String(e) }));
-    p.on('close', () => {
-      try { resolve({ entries: JSON.parse(Buffer.concat(chunks).toString('utf8')).entries || [] }); }
-      catch { resolve({ error: err.trim().split('\n').pop() || 'yt-dlp returned no data' }); }
+      timeout: TIMEOUT_MS,
+      maxBuffer: MAX_BYTES,
+    }, (error, stdout, stderr) => {
+      if (error?.killed || error?.code === 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER') return resolve({ error: error.message });
+      try { resolve({ entries: JSON.parse(stdout).entries || [] }); }
+      catch { resolve({ error: stderr.trim().split('\n').pop() || error?.message || 'yt-dlp returned no data' }); }
     });
   });
 }
@@ -112,13 +114,13 @@ function ytSearch(query, n = 8) {
 /** 'ok' | 'blocked' | 'unknown' — can this video play in an embedded player? */
 async function embedStatus(id) {
   try {
-    const r = await fetch(`https://www.youtube.com/embed/${id}`, { headers: { Referer: 'https://example.com/', 'Accept-Language': 'en' } });
+    const r = await safeFetch(`https://www.youtube.com/embed/${id}`, { hosts, headers: { Referer: 'https://example.com/', 'Accept-Language': 'en' } });
     const html = await r.text();
     const m = html.match(/previewPlayabilityStatus\\":\{\\"status\\":\\"([A-Z_]+)\\"(?:,\\"playableInEmbed\\":(true|false))?/);
     if (m) return m[1] === 'OK' && m[2] !== 'false' ? 'ok' : 'blocked';
   } catch { /* fall through */ }
   try {
-    const r = await fetch(`https://www.youtube.com/oembed?format=json&url=${encodeURIComponent('https://www.youtube.com/watch?v=' + id)}`);
+    const r = await safeFetch(`https://www.youtube.com/oembed?format=json&url=${encodeURIComponent('https://www.youtube.com/watch?v=' + id)}`, { hosts });
     if (r.status === 401 || r.status === 403 || r.status === 404) return 'blocked';
   } catch { /* ignore */ }
   return 'unknown';
@@ -126,7 +128,7 @@ async function embedStatus(id) {
 
 async function oembed(id) {
   try {
-    const r = await fetch(`https://www.youtube.com/oembed?format=json&url=${encodeURIComponent('https://www.youtube.com/watch?v=' + id)}`);
+    const r = await safeFetch(`https://www.youtube.com/oembed?format=json&url=${encodeURIComponent('https://www.youtube.com/watch?v=' + id)}`, { hosts });
     if (r.ok) { const j = await r.json(); return { title: j.title, channel: j.author_name }; }
   } catch { /* ignore */ }
   return {};
@@ -237,11 +239,12 @@ for (const [id, keys] of byId) {
 await save();
 
 // ---------- reports ----------
-const esc = (s) => String(s).replace(/\|/g, '\\|');
 const row = (key) => {
   const v = videos[key];
   const [artist, ...t] = key.split(' | ');
-  return `| ${esc(artist)} | ${esc(t.join(' | '))} | [${esc(v.title)}](https://youtu.be/${v.id}) | ${esc(v.channel)}${v.verified ? ' ✔' : ''} | ${v.flags.join('; ') || (v.source === 'override' ? 'manual override' : '')} |`;
+  const title = esc(v.title);
+  const video = isVideoId(v.id) ? `[${title}](https://youtu.be/${v.id})` : title;
+  return `| ${esc(artist)} | ${esc(t.join(' | '))} | ${video} | ${esc(v.channel)}${v.verified ? ' ✔' : ''} | ${esc(v.flags.join('; ')) || (v.source === 'override' ? 'manual override' : '')} |`;
 };
 const head = '| Artist | Song | Matched video | Channel (✔ = verified) | Flags |\n|---|---|---|---|---|';
 const keys = Object.keys(videos).sort((a, b) => a.localeCompare(b));

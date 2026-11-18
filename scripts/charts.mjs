@@ -10,6 +10,8 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { safeFetch } from './safe-fetch.mjs';
+import { requestHash } from './safe-text.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const cacheDir = path.join(root, '.cache', 'kworb');
@@ -183,10 +185,10 @@ export const NEWBIE = {
 };
 
 // ---------- fetching ----------
-async function page(url, file) {
-  const f = path.join(cacheDir, file);
+async function page(url) {
+  const f = path.join(cacheDir, requestHash(url) + '.html');
   if (!fresh) { try { return await readFile(f, 'utf8'); } catch { /* not cached */ } }
-  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (chart builder)' } });
+  const res = await safeFetch(url, { hosts: ['kworb.net'], headers: { 'User-Agent': 'Mozilla/5.0 (chart builder)' } });
   if (!res.ok) throw new Error(`${res.status} ${url}`);
   const html = await res.text();
   await writeFile(f, html);
@@ -263,7 +265,7 @@ async function main() {
   // Spotify: group each act's versions of a song under its base title.
   const songsByAct = new Map();
   for (const [act, id] of ACTS) {
-    const html = await page(`https://kworb.net/spotify/artist/${id}_songs.html`, `sp_${id}.html`);
+    const html = await page(`https://kworb.net/spotify/artist/${id}_songs.html`);
     const songs = new Map();
     for (const t of trackRows(html)) {
       if (SKIP_VERSION.test(t.title) && !KEEP_VERSION.test(t.title)) continue;
@@ -279,13 +281,13 @@ async function main() {
   }
 
   // YouTube: Korean top videos + Sony's KPop Demon Hunters page + extras.
-  const videos = videoRows(await page('https://kworb.net/youtube/topvideos_korean.html', 'yt_korean.html'));
-  for (const v of videoRows(await page('https://kworb.net/youtube/artist/kpopdemonhunters.html', 'yt_kdh.html'))) {
+  const videos = videoRows(await page('https://kworb.net/youtube/topvideos_korean.html'));
+  for (const v of videoRows(await page('https://kworb.net/youtube/artist/kpopdemonhunters.html'))) {
     const song = Object.keys(KDH_ACTS).find((k) => norm(v.title).includes(norm(k)));
     if (song && isOfficial(v.title)) videos.push({ ...v, act: KDH_ACTS[song] });
   }
   for (const [act, id] of EXTRA_VIDEOS) {
-    const html = await page(`https://kworb.net/youtube/video/${id}.html`, `yt_${id}.html`);
+    const html = await page(`https://kworb.net/youtube/video/${id}.html`);
     const title = decode(html.match(/<title>YouTube Stats of ([^<]*)/)?.[1] || id);
     const views = num(html.match(/Total views[^0-9]*([\d,]+)/)?.[1] || 0);
     videos.push({ id, title, views, act });
@@ -338,7 +340,7 @@ async function main() {
       if (entries.has(key) || (s.streams < 250e6 && !picks.has(key.toLowerCase()))) continue;
       const id = knownId(act, s.title);
       if (!id) continue;
-      const html = await page(`https://kworb.net/youtube/video/${id}.html`, `yt_${id}.html`).catch(() => '');
+      const html = await page(`https://kworb.net/youtube/video/${id}.html`).catch(() => '');
       const views = num(html.match(/Total views[^0-9]*([\d,]+)/)?.[1] || 0);
       if (views) entries.set(key, { artist: act, title: s.title, videoId: id, views, streams: s.streams });
     }
