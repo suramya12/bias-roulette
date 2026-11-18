@@ -23,3 +23,17 @@ test('collection retains unsaved wins and merges them with later stored data', (
   collection.add('song', 'single');
   assert.equal(collection.has('song', 'single'), true);
 });
+
+test('collection loads own integer counts and rebuilds malformed buckets', async () => {
+  const { collection } = await import('../src/card.js?malformed-storage');
+  let saved = '{"idol":"broken","song":{"valid":3,"zero":0,"negative":-1,"decimal":1.5,"string":"3","infinite":1e309,"__proto__":2},"other":[1]}';
+  globalThis.localStorage = {
+    getItem() { return saved; },
+    setItem(key, value) { saved = value; },
+  };
+  assert.equal(collection.times('song', 'valid'), 3);
+  assert.equal(collection.has('song', 'toString'), false);
+  assert.equal(collection.times('song', '__proto__'), 2);
+  assert.equal(collection.add('idol', 'fresh'), true);
+  assert.deepEqual(JSON.parse(saved), JSON.parse('{"song":{"valid":3,"zero":0,"__proto__":2},"idol":{"fresh":1}}'));
+});
