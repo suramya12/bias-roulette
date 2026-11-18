@@ -18,7 +18,7 @@ Pick a side on the home page or switch from the genre menu. K-pop and Pop & Lati
 npm start
 ```
 
-Open the address it prints. It also prints a `http://192.168...` address for your phone on the same Wi-Fi. Don't open `index.html` straight from disk: YouTube refuses players without a web address (player error 153).
+Open the address it prints. To play on a phone on the same Wi-Fi, run `npm run lan` in place of `npm start` and open the phone address it prints. YouTube needs the page served over HTTP or HTTPS.
 
 ```bash
 npm test

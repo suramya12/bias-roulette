@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self'; connect-src 'self'; manifest-src 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="description" content="Spin for K-pop, Pop &amp; Latin, or Anime, and discover music videos.">
   <meta name="theme-color" content="#07060d">
   <meta property="og:title" content="Bias Roulette">
@@ -12,15 +14,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Bias Roulette">
   <meta name="twitter:description" content="Spin for K-pop, Pop &amp; Latin, or Anime, and discover music videos.">
-  <script>
-    function redirectToKpop() {
-      if (/^#(?:roulette|top100|binder)(?:\/|$)/.test(location.hash) || new URLSearchParams(location.search).has('forceVideo')) {
-        location.replace(new URL('kpop/' + location.search + location.hash, location.href));
-      }
-    }
-    redirectToKpop();
-    addEventListener('hashchange', redirectToKpop);
-  </script>
+  <script src="src/landing-redirect.js"></script>
   <title>Bias Roulette</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preload" as="image" href="landing-art/kpop-bg.webp">

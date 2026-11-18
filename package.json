@@ -6,6 +6,7 @@
   "description": "K-pop roulette game with a built-in YouTube player. Static site, no dependencies.",
   "scripts": {
     "start": "node scripts/serve.mjs",
+    "lan": "node scripts/serve.mjs --lan",
     "test": "node --test tests/ anime/test/",
     "anime:resolve": "node anime/scripts/resolve.mjs && echo Run npm run landing to refresh data/landing.json",
     "landing": "node scripts/landing-manifest.mjs",
