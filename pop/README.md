@@ -22,7 +22,7 @@ From the repository root (it serves both sides):
 npm start
 ```
 
-Open http://localhost:5173/pop/. The server also prints a `Network:` address you can open on a phone on the same Wi-Fi.
+Open http://localhost:5173/pop/. For a phone on the same Wi-Fi, run `npm run lan` and open the phone address it prints.
 
 Run the tests and data scripts from inside `pop/`:
 

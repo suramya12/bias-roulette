@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "node scripts/serve.mjs",
+    "lan": "node scripts/serve.mjs --lan",
     "test": "node --test",
     "data": "node scripts/chart.mjs && node scripts/portraits.mjs"
   }
