@@ -2,6 +2,8 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { resolve as resolvePath, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { escapeMarkdown as cell } from '../../scripts/safe-text.mjs';
+import { isVideoId } from '../../src/validation.js';
 import {
   parseSeedLine, extractInitialData, extractPlayerResponse, videosFromSearch,
   playability, classify, score, watchMetadata, copySource, copyGate, orderCopies, sameSong, COPY_POLICY,
@@ -190,11 +192,10 @@ export async function resolveSeed(seed, { channels, overrides, loadPage, checked
   return { videos, video, flag: flags.join('; ') || null, complete: errors.length === 0 };
 }
 
-const cell = value => String(value ?? '').replace(/\|/g, '\\|').replace(/[\r\n]+/g, ' ');
 const songName = song => cell(`${song.artist} — ${song.title}`);
 
 export function reviewMarkdown(catalog) {
-  const lines = ['# Anime resolver review', '', `Generated: ${catalog.generated}`, '', '## Flagged', '',
+  const lines = ['# Anime resolver review', '', `Generated: ${cell(catalog.generated)}`, '', '## Flagged', '',
     '| Song | Reason |', '| --- | --- |'];
   const flagged = catalog.songs.filter(song => song.flag);
   for (const song of flagged) lines.push(`| ${songName(song)} | ${cell(song.flag)} |`);
@@ -206,7 +207,8 @@ export function reviewMarkdown(catalog) {
   lines.push('', '## All songs', '', '| Song | Video | Channel | Kind | Seconds |', '| --- | --- | --- | --- | --- |');
   for (const song of catalog.songs) {
     const video = song.video;
-    lines.push(`| ${songName(song)} | ${video ? `[${video.id}](${watchURL(video.id)})` : '—'} | ${cell(video?.channel ?? '—')} | ${video?.kind ?? '—'} | ${video?.seconds ?? '—'} |`);
+    const link = isVideoId(video?.id) ? `[${cell(video.id)}](${watchURL(video.id)})` : cell(video?.id ?? '—');
+    lines.push(`| ${songName(song)} | ${link} | ${cell(video?.channel ?? '—')} | ${cell(video?.kind ?? '—')} | ${cell(video?.seconds ?? '—')} |`);
   }
   return `${lines.join('\n')}\n`;
 }
