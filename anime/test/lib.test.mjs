@@ -6,7 +6,7 @@ import {
   classify, score, trustLevel, knownNames,
 } from '../scripts/lib.mjs';
 
-const fixture = name => readFile(new URL(`fixtures/${name}.html`, import.meta.url), 'utf8');
+const fixture = name => readFile(new URL(`fixtures/${name}.html.txt`, import.meta.url), 'utf8');
 const seed = parseSeedLine('TK from Ling tosite sigure | unravel | Tokyo Ghoul | OP | 2014 | aka Unravel; Unravel');
 const video = { id: 'abcdefghijk', title: 'unravel opening', channel: 'Crunchyroll', channelId: 'trusted', seconds: 90, views: 10 };
 const channels = { trusted: { trusted: 'Reviewed channel' }, blocked: {}, knownNames };
@@ -131,7 +131,7 @@ test('score prefers creditless then TV then MV, then trust and views for equival
 
 test('all three pruned fixtures remain under 60 KB', async () => {
   for (const name of ['search-unravel', 'watch-ok', 'watch-blocked']) {
-    assert.ok((await stat(new URL(`fixtures/${name}.html`, import.meta.url))).size < 60_000);
+    assert.ok((await stat(new URL(`fixtures/${name}.html.txt`, import.meta.url))).size < 60_000);
   }
 });
 

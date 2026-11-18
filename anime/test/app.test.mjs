@@ -41,12 +41,12 @@ class Element {
 let serial = 0, now, timers, frames, instances, refs, store, root, globalEvents;
 const video = (id, kind = 'tv') => ({ id, kind, source: 'official' });
 const song = (id, use, show, videos) => ({ id, title: `Title ${id}`, artist: 'Artist', kind: 'theme', use, show, year: 2004, videos });
-const fixture = [song('a', 'OP', 'Naruto', [video('a1', 'creditless'), video('a2'), video('a3', 'mv')]),
-  song('b', 'OP', 'One Piece', [video('b1'), video('b2')]), song('ed', 'ED', 'Bleach', [video('ed1')]),
-  song('in', 'IN', 'Naruto', [video('in1')]), { ...song('mv', 'MV', undefined, [video('mv1', 'mv')]), source: 'Animated film', kind: 'animated-mv' }];
+const fixture = [song('a', 'OP', 'Naruto', [video('a1000000000', 'creditless'), video('a2000000000'), video('a3000000000', 'mv')]),
+  song('b', 'OP', 'One Piece', [video('b1000000000'), video('b2000000000')]), song('ed', 'ED', 'Bleach', [video('ed100000000')]),
+  song('in', 'IN', 'Naruto', [video('in100000000')]), { ...song('mv', 'MV', undefined, [video('mv100000000', 'mv')]), source: 'Animated film', kind: 'animated-mv' }];
 const kinds = [{ id: 'theme', addon: false, default: true }, { id: 'animated-mv', label: 'Animated MVs', addon: true, default: true }];
 
-async function setup(saved = {}, { songs = fixture, failFetch = false, blockedStorage = false } = {}) {
+async function setup(saved = {}, { songs = fixture, failFetch = false, blockedStorage = false, search = '?lite=1' } = {}) {
   now = 0; timers = new Map(); frames = new Map(); instances = []; store = new Map(Object.entries(saved));
   root = new Element(); globalEvents = new Element(); refs = {};
   for (const id of ['genre', 'ring', 'ringBtn', 'pull', 'auto', 'autoState', 'sound', 'addons', 'songCount', 'pageStatus',
@@ -69,7 +69,7 @@ async function setup(saved = {}, { songs = fixture, failFetch = false, blockedSt
       playVideo() { this.plays++; }
     } } };
   Object.assign(globalThis, {
-    innerWidth: 375, matchMedia: media, location: { search: '?lite=1' },
+    innerWidth: 375, matchMedia: media, location: { search },
     addEventListener: (...args) => globalEvents.addEventListener(...args),
     ResizeObserver: class { observe() {} disconnect() {} },
     getComputedStyle: () => ({ getPropertyValue: () => '#ff2d55' }),
@@ -105,35 +105,43 @@ async function failAll() {
 test('page boots at phone width, renders cards/metadata, pulls and swaps immediately with stale events ignored', async () => {
   await setup(); assert.equal(refs.songCount.textContent, '5 songs'); assert.equal(instances.length, 0);
   assert.equal(refs.ring.children.length, 10); assert.equal(refs.pull.disabled, false);
-  await pull(); assert.equal(latest().id, 'a1');
+  await pull(); assert.equal(latest().id, 'a1000000000');
   assert.equal(refs.nowTitle.textContent, 'Title a — Artist'); assert.equal(refs.nowMeta.textContent, 'Naruto · Opening · 2004');
   assert.equal(refs.copyLabel.textContent, 'Creditless · official'); assert.equal(refs.swap.textContent, 'Version 1/3 ⇄');
   const old = latest(); emit(old, 'onReady'); assert.equal(old.plays, 1);
-  refs.swap.fire('click'); await settle(); assert.equal(latest().id, 'a2'); assert.equal(old.destroyed, true);
-  assert.equal(store.get('anime.copy.a'), 'a2');
+  refs.swap.fire('click'); await settle(); assert.equal(latest().id, 'a2000000000'); assert.equal(old.destroyed, true);
+  assert.equal(store.get('anime.copy.a'), 'a2000000000');
   for (const name of ['onStateChange', 'onError', 'onAutoplayBlocked']) emit(old, name, 101);
   assert.equal(store.has('anime.strikes'), false);
-  refs.swap.fire('click'); await settle(); assert.equal(latest().id, 'a3');
-  refs.swap.fire('click'); await settle(); assert.equal(latest().id, 'a1');
+  refs.swap.fire('click'); await settle(); assert.equal(latest().id, 'a3000000000');
+  refs.swap.fire('click'); await settle(); assert.equal(latest().id, 'a1000000000');
 });
 
 test('preferred copies and local strikes restore; successful backups do not count as failed songs', async () => {
-  await setup({ 'anime.copy.a': 'a3', 'anime.strikes': JSON.stringify({ a1: 3 }), 'anime.auto': 'on' });
-  await pull(); assert.equal(latest().id, 'a3'); assert.equal(refs.swap.textContent, 'Version 1/2 ⇄');
+  await setup({ 'anime.copy.a': 'a3000000000', 'anime.strikes': JSON.stringify({ a1000000000: 3 }), 'anime.auto': 'on' });
+  await pull(); assert.equal(latest().id, 'a3000000000'); assert.equal(refs.swap.textContent, 'Version 1/2 ⇄');
   const old = latest(); emit(old, 'onError', 150); emit(old, 'onError', 150); await settle();
-  assert.equal(latest().id, 'a2'); assert.deepEqual(JSON.parse(store.get('anime.strikes')), { a1: 3, a3: 1 });
+  assert.equal(latest().id, 'a2000000000'); assert.deepEqual(JSON.parse(store.get('anime.strikes')), { a1000000000: 3, a3000000000: 1 });
   emit(latest(), 'onStateChange', 1); assert.equal(refs.autoState.textContent, 'on');
   assert.equal([...timers.values()].some((t) => t.delay === 4000), false);
 });
 
+test('ignores an invalid forced ID and skips an unplayable catalog copy', async () => {
+  const songs = [{ ...fixture[0], videos: [video({ toString: null }), ...fixture[0].videos] }];
+  await setup({}, { songs, search: '?lite=1&forceVideo=too-short' });
+  await pull();
+  assert.equal(instances.length, 1);
+  assert.equal(latest().id, 'a1000000000');
+});
+
 test('all copies fail once each; Auto counts songs, waits four seconds and pauses on the third with Resume', async () => {
   await setup({ 'anime.auto': 'on' }); await pull();
-  await failAll(); assert.deepEqual(JSON.parse(store.get('anime.strikes')), { a1: 1, a2: 1, a3: 1 });
-  assert.equal(root.querySelector('.fallback').children[0].href, 'https://www.youtube.com/watch?v=a3');
+  await failAll(); assert.deepEqual(JSON.parse(store.get('anime.strikes')), { a1000000000: 1, a2000000000: 1, a3000000000: 1 });
+  assert.equal(root.querySelector('.fallback').children[0].href, 'https://www.youtube.com/watch?v=a3000000000');
   assert.equal([...timers.values()].filter((t) => t.delay === 4000).length, 1);
-  await time(3999); assert.equal(latest().id, 'a3');
-  await time(1); frame(); await settle(); assert.equal(latest().id, 'b1');
-  await failAll(); await time(4000); frame(); await settle(); assert.equal(latest().id, 'ed1');
+  await time(3999); assert.equal(latest().id, 'a3000000000');
+  await time(1); frame(); await settle(); assert.equal(latest().id, 'b1000000000');
+  await failAll(); await time(4000); frame(); await settle(); assert.equal(latest().id, 'ed100000000');
   await failAll(); assert.equal(refs.autoState.textContent, 'paused');
   const message = root.querySelector('.auto-paused'); assert.ok(message);
   assert.equal([...timers.values()].some((t) => t.delay === 4000), false);
@@ -154,10 +162,10 @@ test('error 153 and autoplay blocking never strike or schedule a skip', async ()
 test('ended Auto advances immediately in a hidden tab; manual swaps cancel pending end timers', async () => {
   await setup({ 'anime.auto': 'on' }); await pull();
   emit(latest(), 'onStateChange', 0); const stale = [...timers.values()].find((t) => t.delay === 1200).fn;
-  refs.swap.fire('click'); await settle(); stale(); await settle(); assert.equal(latest().id, 'a2');
+  refs.swap.fire('click'); await settle(); stale(); await settle(); assert.equal(latest().id, 'a2000000000');
   emit(latest(), 'onStateChange', 1); emit(latest(), 'onStateChange', 0); emit(latest(), 'onStateChange', 0);
   document.hidden = true; await time(1200);
-  assert.equal(latest().id, 'b1'); assert.equal(refs.ring.dataset.pullState, 'idle');
+  assert.equal(latest().id, 'b1000000000'); assert.equal(refs.ring.dataset.pullState, 'idle');
   assert.equal(frames.size, 0); assert.equal(refs.swap.textContent, 'Version 1/2 ⇄');
 });
 
@@ -168,7 +176,7 @@ test('filters retain one theme use, persist add-ons and cancel playback; single 
   assert.equal(old.destroyed, true); emit(old, 'onError', 101); assert.equal(store.has('anime.strikes'), false);
   const addon = refs.addons.children[0].children[0]; addon.checked = false; addon.fire('change');
   assert.equal(store.get('anime.addon.animated-mv'), 'off'); assert.equal(refs.songCount.textContent, '1 song');
-  await pull(); assert.equal(latest().id, 'in1'); assert.equal(refs.swap.hidden, true);
+  await pull(); assert.equal(latest().id, 'in100000000'); assert.equal(refs.swap.hidden, true);
   assert.equal(refs.nowMeta.textContent, 'Naruto · Insert song · 2004');
 });
 

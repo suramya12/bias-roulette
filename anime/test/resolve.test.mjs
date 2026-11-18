@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { parseSeedLine } from '../scripts/lib.mjs';
 import { parseArgs, queriesFor, resolveSeed, runResolver, createPageLoader, reviewMarkdown, summary } from '../scripts/resolve.mjs';
 
-const fixture = name => readFile(new URL(`fixtures/${name}.html`, import.meta.url), 'utf8');
+const fixture = name => readFile(new URL(`fixtures/${name}.html.txt`, import.meta.url), 'utf8');
 const checked = '2026-11-17T00:00:00.000Z';
 const seed = parseSeedLine('TK from Ling tosite sigure | unravel | Tokyo Ghoul | OP | 2014');
 const channels = { trusted: { reviewed: 'Reviewed' }, blocked: {}, knownNames: ['Crunchyroll'] };

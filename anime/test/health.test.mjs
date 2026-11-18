@@ -30,7 +30,7 @@ const copy = n => ({ ...candidate(n), kind: 'tv', source: 'official', hd: true,
 const quiet = () => {};
 
 test('synthetic fixture reads progressive HD, exact views and publishDate; adaptive dimensions also work', async () => {
-  const html = await readFile(new URL('fixtures/watch-hd.html', import.meta.url), 'utf8');
+  const html = await readFile(new URL('fixtures/watch-hd.html.txt', import.meta.url), 'utf8');
   const m = watchMetadata(html, checked);
   assert.equal(m.hd, true); assert.equal(m.quality.height, 1080);
   assert.equal(m.quality.label, '1080p'); assert.equal(m.quality.checked, checked);
