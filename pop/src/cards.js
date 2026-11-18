@@ -1,6 +1,7 @@
 // Collectible card DOM: frame by rarity, art, gem, stat stones, chips, flavour.
 // Foil and glare follow the pointer; reveal flips the card in and counts the numbers up.
 import * as G from './game.js';
+import { CREDIT_HOSTS, IMAGE_HOSTS, safeUrl, videoThumbnail } from '../../src/validation.js';
 
 export const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -11,14 +12,12 @@ const el = (tag, cls, text) => {
   return e;
 };
 
-const thumb = (id) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-
 /** Card model for a song. */
 export function songModel(s) {
   const tier = G.songRarity(s.o);
   return {
     kind: 'song', id: s.id, tier, title: s.t, by: s.by, gem: '#' + s.o,
-    img: thumb(s.id), yt: true,
+    img: videoThumbnail(s.id), yt: true,
     stats: [{ v: s.s, label: 'Streams' }, { v: s.v, label: 'MV views' }],
     chips: G.songKeywords(s, s.t), flavour: G.songFlavour(s),
   };
@@ -42,13 +41,14 @@ const fmtStat = (st, v = st.v) => (st.n ? String(Math.round(v)) : st.v ? G.fmt(v
 const smaller = (url) => url.replace(/\/960px-/, '/330px-');
 
 export function setCardImage(art, model, size) {
-  if (!art || !model.img || art.querySelector('img')) return;
+  const src = safeUrl(model.img, IMAGE_HOSTS);
+  if (!art || !src || art.querySelector('img')) return;
   const img = el('img', model.yt ? 'yt' : '');
   img.alt = model.kind === 'artist' ? `Photo of ${model.title}` : `${model.title} music video still`;
   img.loading = 'lazy';
   img.decoding = 'async';
   img.referrerPolicy = 'no-referrer';
-  img.src = size === 'mini' ? smaller(model.img) : model.img;
+  img.src = size === 'mini' ? smaller(src) : src;
   art.prepend(img);
 }
 
@@ -56,7 +56,7 @@ export function setCardImage(art, model, size) {
 export function makeCard(m, { size = 'big', faceDown = false, locked = false } = {}) {
   const card = el('div', `card ${m.tier.id} ${size}${faceDown ? ' face-down' : ''}`);
   card.dataset.kind = m.kind;
-  card.dataset.id = m.id;
+  if (typeof m.id === 'string') card.dataset.id = m.id;
   const inner = el('div', 'card-inner');
   // A locked card (uncollected, in the Binder) is never revealed: only build its back, load no art.
   if (faceDown && locked) {
@@ -158,11 +158,17 @@ function sparks(card) {
 export function creditLine(portrait) {
   const p = el('p', 'credit');
   if (!portrait) return p;
-  const a = el('a', '', portrait.mv ? portrait.author : `Photo: ${portrait.author}`);
-  a.href = portrait.page;
-  a.target = '_blank';
-  a.rel = 'noopener';
-  p.append(a);
+  const href = safeUrl(portrait.page, CREDIT_HOSTS);
+  const text = portrait.mv ? portrait.author : `Photo: ${portrait.author}`;
+  if (href) {
+    const a = el('a', '', text);
+    a.href = href;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    p.append(a);
+  } else {
+    p.append(text);
+  }
   if (!portrait.mv) p.append(` · ${portrait.license} · Wikimedia Commons · cropped`);
   return p;
 }

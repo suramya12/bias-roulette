@@ -6,6 +6,7 @@ import { startCrowd } from './stage.js';
 import { PullMachine } from '../../src/pull-machine.js';
 import { Sound } from '../../src/sound.js';
 import { createAutoAdvance } from '../../src/auto-advance.js';
+import { CREDIT_HOSTS, IMAGE_HOSTS, safeUrl, videoThumbnail } from '../../src/validation.js';
 
 const $ = (s) => document.querySelector(s);
 try { localStorage.setItem('bias-roulette.lastSide', 'pop'); } catch { /* private mode */ }
@@ -38,7 +39,7 @@ async function boot() {
 }
 
 function init(data) {
-  const portraits = {};
+  const portraits = Object.create(null);
   const artists = data.artists.filter((a) => a.songs.length);
   const songsOf = (a) => G.wheelSongs(a, songsById, 99);
   const TOP = G.top100(data.songs);
@@ -221,11 +222,12 @@ function init(data) {
     for (const s of TOP) {
       const li = document.createElement('li');
       li.className = G.songRarity(s.o).id;
-      li.dataset.id = s.id;
+      if (typeof s.id === 'string') li.dataset.id = s.id;
       li.innerHTML = `<button class="row"><span class="rk"></span><img alt="" loading="lazy" referrerpolicy="no-referrer"><span class="tt"><b></b><span></span></span><span class="nums"><b></b><br></span></button>`;
       li.querySelector('button').setAttribute('aria-label', `Play number ${s.o}: ${s.t} by ${s.by}`);
       li.querySelector('.rk').textContent = s.o;
-      li.querySelector('img').src = `https://i.ytimg.com/vi/${s.id}/mqdefault.jpg`;
+      const src = videoThumbnail(s.id, 'mqdefault');
+      if (src) li.querySelector('img').src = src;
       li.querySelector('.tt b').textContent = s.t;
       li.querySelector('.tt span').textContent = s.by;
       li.querySelector('.nums b').textContent = G.fmt(G.score(s)) + ' pts';
@@ -277,23 +279,25 @@ function init(data) {
     const frag = document.createDocumentFragment();
     for (const [name, p] of Object.entries(portraits).sort(([a], [b]) => a.localeCompare(b))) {
       const li = document.createElement('li');
-      const a = Object.assign(document.createElement('a'), {
-        href: p.page, target: '_blank', rel: 'noopener',
-        textContent: p.mv ? 'still from an official music video' : `${p.author}, ${p.license}`,
-      });
-      li.append(`${name}: `, a, p.mv ? '' : ' (cropped)');
+      if (!p) continue;
+      const href = safeUrl(p.page, CREDIT_HOSTS);
+      const text = p.mv ? 'still from an official music video' : `${p.author}, ${p.license}`;
+      const credit = href ? Object.assign(document.createElement('a'), {
+        href, target: '_blank', rel: 'noopener noreferrer', textContent: text,
+      }) : text;
+      li.append(`${name}: `, credit, p.mv ? '' : ' (cropped)');
       frag.append(li);
     }
     $('#creditList').replaceChildren(frag);
   }
   $('#credits').addEventListener('toggle', renderCredits);
   portraitsReady.then((index) => {
-    if (!index) return;
+    if (!index || typeof index !== 'object' || Array.isArray(index)) return;
     Object.assign(portraits, index);
     document.querySelectorAll('.card[data-kind="artist"]').forEach((card) => {
       const portrait = portraits[card.dataset.id];
       if (!portrait) return;
-      setCardImage(card.querySelector('.art'), { kind: 'artist', title: card.dataset.id, img: portrait.img, yt: portrait.mv },
+      setCardImage(card.querySelector('.art'), { kind: 'artist', title: card.dataset.id, img: safeUrl(portrait.img, IMAGE_HOSTS), yt: portrait.mv },
         card.classList.contains('mini') ? 'mini' : 'big');
       if (card.nextElementSibling?.matches('.credit')) card.nextElementSibling.replaceWith(creditLine(portrait));
     });

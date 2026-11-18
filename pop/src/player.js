@@ -1,5 +1,6 @@
 // Each attempt owns its iframe and callbacks, so late YouTube events cannot affect its replacement.
 import { loadApi } from '../../src/youtube-api.js';
+import { isVideoId, videoThumbnail } from '../../src/validation.js';
 
 export function createPlayer(host, { onEnd, onFail, onPlay, onBlocked } = {}) {
   let player = null, generation = 0, pauseMessage = null;
@@ -13,6 +14,7 @@ export function createPlayer(host, { onEnd, onFail, onPlay, onBlocked } = {}) {
     stop(); clearAutoPaused();
     const mine = generation;
     let failed = false;
+    const playable = isVideoId(id);
     const valid = () => mine === generation;
     const fail = (code) => {
       if (!valid() || failed) return;
@@ -22,13 +24,19 @@ export function createPlayer(host, { onEnd, onFail, onPlay, onBlocked } = {}) {
       host.replaceChildren();
       const f = document.createElement('div');
       f.className = 'fallback';
-      f.style.backgroundImage = `linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)), url(https://i.ytimg.com/vi/${id}/hqdefault.jpg)`;
-      const a = document.createElement('a');
-      a.href = `https://www.youtube.com/watch?v=${id}`;
-      a.target = '_blank'; a.rel = 'noopener'; a.textContent = '▶ Watch on YouTube';
-      f.append(a); host.append(f);
+      if (playable) {
+        f.style.backgroundImage = `linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)), url(${videoThumbnail(id)})`;
+        const a = document.createElement('a');
+        a.href = `https://www.youtube.com/watch?v=${id}`;
+        a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = '▶ Watch on YouTube';
+        f.append(a);
+      } else {
+        f.textContent = 'This video link looks broken.';
+      }
+      host.append(f);
       onFail?.(token, { code });
     };
+    if (!playable) return Promise.resolve().then(() => fail(2));
     let YT;
     try { YT = await loadApi(); } catch { fail('api'); return; }
     if (!valid()) return;

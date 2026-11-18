@@ -14,9 +14,17 @@ const wait = (ms) => new Promise((r) => setTimeout(r, reduced.matches ? Math.min
 // Autoplay, shared by both decks and kept in the browser. on: when the MV ends, the next round
 // plays by itself. same: keep the artist and draw another of their songs.
 const AUTO_KEY = 'encore.autoplay';
-const auto = { on: false, same: false };
+export function normalizeAutoplay(value) {
+  const saved = value ?? {};
+  return {
+    on: Object.hasOwn(saved, 'on') && saved.on === true,
+    same: Object.hasOwn(saved, 'same') && saved.same === true,
+  };
+}
+let savedAuto;
+try { savedAuto = JSON.parse(localStorage.getItem(AUTO_KEY)); } catch {}
+const auto = normalizeAutoplay(savedAuto);
 const controllers = [];
-try { Object.assign(auto, JSON.parse(localStorage.getItem(AUTO_KEY))); } catch {}
 
 function renderAuto() {
   document.querySelectorAll('#roulette .autoplay').forEach((d) => {

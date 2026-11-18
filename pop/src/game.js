@@ -95,7 +95,7 @@ const ARTIST_FLAVOUR = [
   'The voice you know in two seconds.',
   'Fans in every time zone.',
 ];
-export const songFlavour = (s) => SONG_FLAVOUR[hash(s.id) % SONG_FLAVOUR.length];
+export const songFlavour = (s) => SONG_FLAVOUR[hash(typeof s.id === 'string' ? s.id : s.t) % SONG_FLAVOUR.length];
 export const artistFlavour = (a) => ARTIST_FLAVOUR[hash(a.name) % ARTIST_FLAVOUR.length];
 
 /** Seeded RNG (mulberry32) so tests are repeatable; the app passes Math.random. */
