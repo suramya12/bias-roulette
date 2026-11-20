@@ -16,12 +16,18 @@ async function json(url) {
   const file = join(cache, createHash('sha256').update(url).digest('hex') + '.json');
   try { return JSON.parse(await readFile(file, 'utf8')); } catch (e) { if (e.code !== 'ENOENT') throw e; }
   for (let attempt = 0; attempt < 4; attempt++) {
-    const wait = 1500 - (Date.now() - last); if (wait > 0) await new Promise(r => setTimeout(r, wait));
+    const wait = 8000 - (Date.now() - last); if (wait > 0) await new Promise(r => setTimeout(r, wait));
+    let retryDelay = [2000, 4000, 8000][attempt];
     try {
       last = Date.now(); const res = await safeFetch(url, { hosts: ['en.wikipedia.org'], headers: { 'User-Agent': 'BiasRouletteData/1.0 (static music game)' } });
+      if (res.status === 429) {
+        const retryAfter = res.headers.get('retry-after')?.trim();
+        const serverDelay = /^\d+$/.test(retryAfter ?? '') ? Number(retryAfter) * 1000 : Date.parse(retryAfter) - Date.now();
+        retryDelay = Math.max(60000, serverDelay || 0);
+      }
       if (res.status === 404) return null; if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const body = await res.text(), parsed = JSON.parse(body); await writeFile(file, body); return parsed;
-    } catch (e) { if (attempt === 3) throw e; console.warn(`retry ${e.message}`); await new Promise(r => setTimeout(r, [2000, 4000, 8000][attempt])); }
+    } catch (e) { if (attempt === 3) throw e; console.warn(`retry ${e.message}`); await new Promise(r => setTimeout(r, retryDelay)); }
   }
 }
 const files = new Map(), missing = [];

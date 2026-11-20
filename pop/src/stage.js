@@ -4,7 +4,7 @@ import { isLite } from '../../src/fx.js'; // shared lite mode for slow devices
 
 const COLORS = ['#ff4fa3', '#3de8ff', '#ffd76a', '#8b5cff', '#ffffff', '#ff7a3d'];
 
-export function startCrowd(canvas) {
+export function startCrowd(canvas, colors = COLORS) {
   const ctx = canvas.getContext('2d');
   let w = 0, h = 0, fans = [], raf = 0;
   const resize = () => {
@@ -18,7 +18,7 @@ export function startCrowd(canvas) {
       return {
         x: Math.random() * w, depth,
         y: h * (0.35 + depth * 0.65),
-        c: COLORS[(Math.random() * COLORS.length) | 0],
+        c: colors[(Math.random() * colors.length) | 0],
         ph: Math.random() * Math.PI * 2, sp: 1.6 + Math.random() * 1.6,
         len: 10 + depth * 18, phone: Math.random() < 0.25,
       };

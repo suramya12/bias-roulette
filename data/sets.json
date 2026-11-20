@@ -533,6 +533,62 @@
       ]
     },
     {
+      "id": "anime-2000s-shonen",
+      "side": "anime",
+      "name": "2000s Shonen Peak",
+      "blurb": "The Big Three and golden-era battle openings.",
+      "items": [
+        {
+          "side": "anime",
+          "id": "RiQrbSuLrsU"
+        },
+        {
+          "side": "anime",
+          "id": "iqCu1cnJTjU"
+        },
+        {
+          "side": "anime",
+          "id": "73jx8_D-35k"
+        },
+        {
+          "side": "anime",
+          "id": "zWqiVM4ma-k"
+        },
+        {
+          "side": "anime",
+          "id": "G8CFuZ9MseQ"
+        }
+      ]
+    },
+    {
+      "id": "anime-god-tier-eds",
+      "side": "anime",
+      "name": "God-Tier Endings",
+      "blurb": "Never-skip ending themes that hit harder than the OP.",
+      "items": [
+        {
+          "side": "anime",
+          "id": "AWEm4tA2hMc"
+        },
+        {
+          "side": "anime",
+          "id": "5snpK8At5AM"
+        },
+        {
+          "side": "anime",
+          "id": "zG-Izk2dvy0"
+        },
+        {
+          "side": "anime",
+          "id": "mQAfG3DgG7M"
+        },
+        {
+          "side": "anime",
+          "id": "rZZzlY8vUf8"
+        }
+      ]
+    },
+    {
       "id": "anime-dark-shonen",
       "side": "anime",
       "name": "Modern Dark Shonen",
@@ -565,6 +621,222 @@
       ]
     },
     {
+      "id": "anime-sports-hype",
+      "side": "anime",
+      "name": "Sports & Adrenaline",
+      "blurb": "Match-point rallies, drift racing, and pure hype.",
+      "items": [
+        {
+          "side": "anime",
+          "id": "SF7r61u_cQg"
+        },
+        {
+          "side": "anime",
+          "id": "kDfqdmrRRSA"
+        },
+        {
+          "side": "anime",
+          "id": "5u3RGhznctE"
+        },
+        {
+          "side": "anime",
+          "id": "5Iv3Fi8eb7w"
+        },
+        {
+          "side": "anime",
+          "id": "DDNHHQlzxwc"
+        }
+      ]
+    },
+    {
+      "id": "anime-romance-sol",
+      "side": "anime",
+      "name": "Heart & Slice of Life",
+      "blurb": "School-band jams, confessions, and cozy nostalgia.",
+      "items": [
+        {
+          "side": "anime",
+          "id": "dlSbEP4V-gI"
+        },
+        {
+          "side": "anime",
+          "id": "fWRPihlt2ho"
+        },
+        {
+          "side": "anime",
+          "id": "12-Am8NVTfg"
+        },
+        {
+          "side": "anime",
+          "id": "MvRqOXfRApk"
+        },
+        {
+          "side": "anime",
+          "id": "ZW2WDW7yumw"
+        }
+      ]
+    },
+    {
+      "id": "anime-isekai-scifi",
+      "side": "anime",
+      "name": "Isekai & Sci-Fi",
+      "blurb": "Another-world portals, time loops, and synth drops.",
+      "items": [
+        {
+          "side": "anime",
+          "id": "Y4kfe8R1Iqs"
+        },
+        {
+          "side": "anime",
+          "id": "mG-cSP19QQE"
+        },
+        {
+          "side": "anime",
+          "id": "uU5SoIjlk3s"
+        },
+        {
+          "side": "anime",
+          "id": "fpG3BPNQepY"
+        },
+        {
+          "side": "anime",
+          "id": "93YiJx4Sj7k"
+        }
+      ]
+    },
+    {
+      "id": "bolly-pritam-party-pain",
+      "side": "bollywood",
+      "name": "Pritam Party & Pain",
+      "blurb": "The 2007-2022 Pritam soundtrack to every road trip.",
+      "items": [
+        {
+          "side": "bollywood",
+          "id": "II2EO3Nw4m0"
+        },
+        {
+          "side": "bollywood",
+          "id": "284Ov7ysmfA"
+        },
+        {
+          "side": "bollywood",
+          "id": "Cb6wuzOurPc"
+        },
+        {
+          "side": "bollywood",
+          "id": "0WtRNGubWGA"
+        },
+        {
+          "side": "bollywood",
+          "id": "BddP6PYo2gs"
+        },
+        {
+          "side": "bollywood",
+          "id": "PaDaoNnOQaM"
+        }
+      ]
+    },
+    {
+      "id": "bolly-big-fat-sangeet",
+      "side": "bollywood",
+      "name": "Big Fat Sangeet",
+      "blurb": "Guaranteed wedding-floor bangers across generations.",
+      "items": [
+        {
+          "side": "bollywood",
+          "id": "IBvg3WeqP1U"
+        },
+        {
+          "side": "bollywood",
+          "id": "k4yXQkG2s1E"
+        },
+        {
+          "side": "bollywood",
+          "id": "wDIrpvH8MzE"
+        },
+        {
+          "side": "bollywood",
+          "id": "udra3Mfw2oo"
+        },
+        {
+          "side": "bollywood",
+          "id": "_KhQT-LGb-4"
+        }
+      ]
+    },
+    {
+      "id": "bridge-billion-view-club",
+      "side": "bridge",
+      "name": "Billion-View Club",
+      "blurb": "Planetary juggernauts past one billion YouTube views.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "ekr2nIex040"
+        },
+        {
+          "side": "kpop",
+          "id": "gdZLi9oWNZg"
+        },
+        {
+          "side": "kpop",
+          "id": "IHNzOHi8sJs"
+        },
+        {
+          "side": "pop",
+          "id": "kJQP7kiw5Fk"
+        },
+        {
+          "side": "pop",
+          "id": "pRpeEdMmmQ0"
+        },
+        {
+          "side": "bollywood",
+          "id": "k4yXQkG2s1E"
+        },
+        {
+          "side": "bollywood",
+          "id": "_KhQT-LGb-4"
+        }
+      ]
+    },
+    {
+      "id": "bridge-endless-summer",
+      "side": "bridge",
+      "name": "Endless Summer",
+      "blurb": "Windows down, sun up, pure warm-weather dopamine.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "WyiIGEHQP8o"
+        },
+        {
+          "side": "kpop",
+          "id": "9txzvu6eQuw"
+        },
+        {
+          "side": "kpop",
+          "id": "IajeQM00yfE"
+        },
+        {
+          "side": "pop",
+          "id": "eVli-tstM5E"
+        },
+        {
+          "side": "pop",
+          "id": "CFPLIaMpGrY"
+        },
+        {
+          "side": "pop",
+          "id": "TUVcZfQe-Kw"
+        },
+        {
+          "side": "bollywood",
+          "id": "0WtRNGubWGA"
+        }
+      ]
+    },
+    {
       "id": "bridge-dark-concepts",
       "side": "bridge",
       "name": "Dark Concepts",
@@ -593,6 +865,38 @@
         {
           "side": "anime",
           "id": "5yb2N3pnztU"
+        }
+      ]
+    },
+    {
+      "id": "bridge-2016-capsule",
+      "side": "bridge",
+      "name": "2016 Time Capsule",
+      "blurb": "What the whole world was replaying back in 2016.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "hmE9f-TEutc"
+        },
+        {
+          "side": "kpop",
+          "id": "J-wFp43XOrA"
+        },
+        {
+          "side": "kpop",
+          "id": "c7rCyll5AeY"
+        },
+        {
+          "side": "bollywood",
+          "id": "k4yXQkG2s1E"
+        },
+        {
+          "side": "bollywood",
+          "id": "284Ov7ysmfA"
+        },
+        {
+          "side": "pop",
+          "id": "34Na4j8AVgA"
         }
       ]
     }

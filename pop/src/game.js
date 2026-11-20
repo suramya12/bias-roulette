@@ -18,7 +18,11 @@ export function artistRarity(power) {
   return TIERS[3];
 }
 
-export const score = (s) => (s.s + s.v) / 2;
+/** Average of the streams and views that exist; a missing stat is skipped, never NaN. */
+export function score(s) {
+  const have = [s?.s, s?.v].filter((n) => Number.isFinite(n) && n > 0);
+  return have.length ? have.reduce((a, b) => a + b, 0) / have.length : 0;
+}
 
 /** 1234567890 -> "1.23B". */
 export function fmt(n) {

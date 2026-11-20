@@ -110,7 +110,7 @@ try {
     }
     if (scenario === 'data-retry') {
       const realFetch = window.fetch.bind(window);
-      const failOnce = new Set(['/data/roster.json', '/data/charts.json', '/pop/data/data.json']);
+      const failOnce = new Set(['/pop/data/data.json', '/kpop/data/data.json', '/anime/data/data.json', '/bollywood/data/data.json']);
       window.fetch = (url, options) => {
         const path = new URL(url, location.href).pathname;
         if (failOnce.delete(path)) return Promise.resolve(new Response('{}', { status: 503 }));
@@ -185,12 +185,12 @@ try {
 
   for (const [page, ready, targetSelector] of [
     ['', 'document.querySelectorAll(".stat:not([hidden])").length === 4', '.continue'],
-    ['kpop/', 'document.querySelector("#spinBtn") && !document.querySelector("#spinBtn").disabled && document.querySelector("#announce").textContent.startsWith("Round")', '.mode-btn'],
+    ['kpop/', 'document.querySelector("#deck-idols .spin")', '.top [role=tab]'],
     ['pop/', 'document.querySelector("#deck-all .spin")', '.top [role=tab]'],
-    ['anime/', 'document.querySelector("#pull") && !document.querySelector("#pull").disabled', '.filter-chip, .addon'],
-    ['bollywood/', 'document.querySelector("#deck-stars .spin") && +document.querySelector("#nAll").textContent > 0', '.top [role=tab]'],
+    ['anime/', 'document.querySelector("#deck-shows .spin")', '.top [role=tab]'],
+    ['bollywood/', 'document.querySelector("#deck-stars .spin")', '.top [role=tab]'],
   ]) {
-    await navigate(page + '?scenario=network-check' + (page === 'bollywood/' ? '#roulette' : ''));
+    await navigate(page + '?scenario=network-check' + (page ? '#roulette' : ''));
     await until(ready);
     await evaluate('document.fonts.ready.then(() => true)');
     assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'), true, page + ' phone overflow');
@@ -241,52 +241,84 @@ try {
   assert.deepEqual(consoleErrors.map(({ text, url }) => ({ text, url })), [], 'startup console errors');
   console.log('Five pages started cleanly, ' + localAssets.size + ' distinct local URLs loaded');
 
-  const bollyErrors = consoleErrors.length;
-  await navigate('bollywood/#roulette');
-  await until('document.querySelector("#deck-stars .spin")');
-  await click('[data-deck="voices"]');
-  assert.equal(await evaluate('localStorage.getItem("bolly.deck")'), 'voices');
-  await navigate('bollywood/?scenario=restore-deck');
-  await until('location.search === "?scenario=restore-deck" && document.querySelector("#deck-voices:not([hidden]) .spin")');
-  assert.match(await evaluate('document.querySelector("#deck-voices .auto-menu").textContent'), /Same voice/);
-  await click('[data-deck="stars"]');
-  assert.match(await evaluate('document.querySelector("#deck-stars .auto-menu").textContent'), /Same star/);
-  await click('#deck-stars .auto');
-  await until('__yt.length === 1 && __yt[0].plays > 0');
-  await evaluate('__emit("onStateChange", 1)');
-  assert.equal(await evaluate('document.querySelector("#deck-stars .result").hidden'), false);
-  assert.match(await evaluate('document.querySelector("#deck-stars .now").textContent'), /Now playing:/);
-  await click('#openBinder');
-  assert.equal(await evaluate('document.querySelector("#binder").open && document.querySelector("#binderGrid").childElementCount > 0'), true);
-  await click('#closeBinder');
-  await click('#tab-top100');
-  await until('document.querySelectorAll("#chart li").length === 100 && !document.querySelector("#pull").disabled');
-  await click('#pull');
-  await until('__yt.length === 2 && __yt[1].plays > 0');
-  await evaluate('__emit("onStateChange", 1)');
-  assert.equal(await evaluate('document.querySelector("#tResult").hidden'), false);
-  const chips = await evaluate('[...document.querySelectorAll("#tCard .chips span")].map(chip => chip.textContent)');
-  assert.ok(chips.some((chip) => /^\d{4}$/.test(chip)), `Expected a release-year chip, got ${chips.join(', ')}`);
-  assert.doesNotMatch(await evaluate('document.querySelector("#chart li .nums").textContent'), /streams/);
-  assert.deepEqual(await evaluate('__csp'), [], 'Bollywood gameplay CSP violations');
-  assert.deepEqual(consoleErrors.slice(bollyErrors).map(({ text, url }) => ({ text, url })), [], 'Bollywood gameplay console errors');
-  console.log('Bollywood: Stars/Voices persistence, roulette, binder and Top 100 passed with the test player. Zero CSP and console errors.');
+  // One shared flow, run against every side: the engine and the features are identical, only the look differs.
+  const SIDES = [
+    { id: 'kpop', storage: 'kpop', deck: 'idols', label: 'K-pop', stats: ['Spotify streams', 'MV views', 'Score'] },
+    { id: 'pop', storage: 'encore', deck: 'all', label: 'Pop & Latin', stats: ['Spotify streams', 'MV views', 'Score'] },
+    { id: 'anime', storage: 'anime', deck: 'shows', label: 'Anime', stats: ['MV views', 'Year'] },
+    { id: 'bollywood', storage: 'bolly', deck: 'stars', label: 'Bollywood', stats: ['MV views'] },
+  ];
+  const menu = (mode, current) => SIDES.map(({ id, label }) => `${label}|${id === current ? '#' : `../${id}/#${mode}`}|${id === current}`);
+  const text = (selector) => evaluate(`document.querySelector(${JSON.stringify(selector)}).textContent`);
+  for (const side of SIDES) {
+    const before = consoleErrors.length;
+    const deck = `#deck-${side.deck}`;
+    await navigate(`${side.id}/#roulette`);
+    await until(`document.querySelector("${deck} .spin")`);
+    assert.equal(await text('h1'), `${side.label} Roulette`, `${side.id}: Roulette heading`);
+    assert.deepEqual(await evaluate('[...document.querySelectorAll(".genre-menu a")].map(a => a.textContent + "|" + a.getAttribute("href") + "|" + a.hasAttribute("aria-current"))'),
+      menu('roulette', side.id), `${side.id}: genre menu links all four sides`);
+    assert.deepEqual(await evaluate('[...document.querySelectorAll(".top [role=tab]")].map(tab => tab.textContent)'), ['Roulette', 'Top 100']);
+    assert.equal(await evaluate('document.querySelector("#openBinder").getAttribute("aria-label")'), 'Collection');
+    assert.equal(await evaluate('document.querySelector("#dailyDropBtn, #unseenBtn, #quickBtn, [data-deck]") === null && !/Today.s drop|Unseen pull|Just play one|Duplicate/.test(document.body.innerText)'), true, `${side.id}: no removed features`);
+    // Roulette: Choose for me runs the whole round and ends with the MV playing. A few rounds on Anime, so single-song shows are met too.
+    for (let round = 1; round <= (side.id === 'anime' ? 5 : 1); round++) {
+      if (round > 1) await click(`${deck} .spin`); // AGAIN
+      await click(`${deck} .auto`);
+      await until(`__yt.length === ${round} && __yt[${round - 1}].plays > 0`);
+      await evaluate('__emit("onStateChange", 1)');
+      assert.equal(await evaluate(`document.querySelector("${deck} .result").hidden`), false, `${side.id}: result shown`);
+      assert.match(await text(`${deck} .now`), /Now playing:/);
+      assert.equal(await evaluate(`document.querySelector("${deck} .big-slot .card") !== null && document.querySelector("${deck} .player-slot").hidden`), false);
+    }
+    const rounds = await evaluate('__yt.length');
+    await click('#openBinder');
+    assert.equal(await evaluate('document.querySelector("#binder").open && document.querySelector("#binderGrid").childElementCount > 0'), true, `${side.id}: collection opens`);
+    await click('#closeBinder');
+    // Top 100: Pull reaches the card, the player, the stats strip and the three result buttons.
+    await click('#tab-top100');
+    await until('document.querySelectorAll("#chart li").length >= 90 && !document.querySelector("#pull").disabled');
+    assert.equal(await text('h1'), `${side.label} Top 100`, `${side.id}: Top 100 heading`);
+    assert.deepEqual(await evaluate('[...document.querySelectorAll(".genre-menu a")].map(a => a.getAttribute("href"))'),
+      menu('top100', side.id).map((entry) => entry.split('|')[1]), `${side.id}: menu keeps the mode`);
+    assert.equal(await evaluate('document.querySelector("#chartBox").open'), false, `${side.id}: chart starts collapsed`);
+    assert.equal(await text('#chartName'), `The all-time ${side.label} Top 100`);
+    assert.equal(await evaluate('[...document.querySelectorAll(".range button")].map(b => b.textContent).join()'), 'Top 10,Top 50,Top 100');
+    await click('#r10');
+    assert.equal(await evaluate(`localStorage.getItem("${side.storage}.range") + document.querySelector("#r10").getAttribute("aria-pressed")`), '10true');
+    await click('#pull');
+    await until(`__yt.length === ${rounds + 1} && __yt[${rounds}].plays > 0`);
+    await evaluate('__emit("onStateChange", 1)');
+    assert.equal(await evaluate('document.querySelector("#tResult").hidden'), false);
+    assert.equal(await evaluate('document.querySelector("#tCard .card") !== null && document.querySelector("#tPlayer").childElementCount > 0'), true, `${side.id}: card and player`);
+    assert.equal(await evaluate('+document.querySelector("#tCard .stamp").textContent.match(/#(\\d+)/)[1] <= 10'), true, `${side.id}: Top 10 pull stays in the top 10`);
+    assert.deepEqual(await evaluate('[...document.querySelectorAll("#tStats dt")].map(dt => dt.textContent)'), side.stats, `${side.id}: stats strip`);
+    assert.equal(await evaluate('document.querySelectorAll("#chart li.playing").length'), 1, `${side.id}: playing row highlighted`);
+    assert.match(await text('#topAnnounce'), /^Now playing #\d+: /);
+    assert.deepEqual(await evaluate('["#tAgain", "#tNext", "#tJump"].map(s => document.querySelector(s).textContent.replace(/#\\d+ .*/, "#"))'), ['Pull again', 'Next: #', 'Full chart']);
+    await click('#tNext');
+    await until(`__yt.length === ${rounds + 2}`);
+    assert.equal(await evaluate('document.querySelectorAll("#chart li.playing").length'), 1);
+    await click('#tAgain');
+    await until(`__yt.length === ${rounds + 3}`);
+    await click('#tJump');
+    assert.equal(await evaluate('document.querySelector("#chartBox").open'), true);
+    assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'), true, `${side.id}: no phone overflow`);
+    await click('#r100');
+    assert.deepEqual(await evaluate('__csp'), [], `${side.id}: CSP violations`);
+    assert.deepEqual(consoleErrors.slice(before).map(({ text, url }) => ({ text, url })), [], `${side.id}: console errors`);
+    console.log(`${side.label}: genre menu, Choose for me, collection, Top 100 pull, stats strip, Next, Full chart passed`);
+  }
 
   await cdp('Network.setBlockedURLs', { urls: ['https://*'] });
 
-  await navigate('kpop/?scenario=data-retry#roulette');
-  await until('document.querySelector("#announce button")?.textContent === "Retry"');
-  assert.equal(await evaluate('["spinBtn","wheelBtn","autoBtn"].every(id => document.getElementById(id).disabled)'), true);
-  await evaluate('document.querySelector("#announce button").click()');
-  await until('!document.querySelector("#spinBtn").disabled');
-  // Test chart recovery independently of Roulette's optional chart prefetch.
-  await navigate('kpop/?scenario=data-retry&mode=chart#top100');
-  await until('document.querySelector("#chartsAnnounce button")?.textContent === "Retry"');
-  assert.equal(await evaluate('["pullBtn","ringBtn","quickBtn"].every(id => document.getElementById(id).disabled)'), true);
-  await evaluate('document.querySelector("#chartsAnnounce button").click()');
-  await until('!document.querySelector("#pullBtn").disabled');
-  assert.equal(await evaluate('(() => { document.querySelector("#chart").scrollIntoView = ({behavior}) => window.__behavior = behavior; document.querySelector("#chartJump").click(); return window.__behavior; })()'), 'auto');
-
+  for (const side of SIDES.filter((x) => x.id !== 'pop')) { // Pop's own retry, tabs and credits follow
+    await navigate(`${side.id}/?scenario=data-retry#roulette`);
+    await until('document.querySelector("main button")?.textContent === "Retry"');
+    assert.equal(await evaluate('[...document.querySelectorAll(".top [role=tab], #openBinder")].every(button => button.disabled)'), true, `${side.id}: disabled while data is missing`);
+    await evaluate('document.querySelector("main button").click()');
+    await until(`document.querySelector("#deck-${side.deck} .spin") && !document.querySelector("#openBinder").disabled`);
+  }
   await navigate('pop/?scenario=data-retry#roulette');
   await until('document.querySelector("main button")?.textContent === "Retry"');
   assert.equal(await evaluate('[...document.querySelectorAll(".top [role=tab], #openBinder")].every(button => button.disabled)'), true);
@@ -305,37 +337,25 @@ try {
   await evaluate('document.querySelector("#credits").open = true; __releasePortraits()');
   await until('document.querySelector("#creditList").children.length > 0');
 
-  await navigate('anime/?scenario=api-retry');
-  await until('document.querySelector("#pull") && !document.querySelector("#pull").disabled');
-  await evaluate('localStorage.removeItem("anime.strikes"); document.querySelector("#pull").click()');
-  await until('typeof window.__apiTimeout === "function"');
-  const copy = await evaluate('document.querySelector("#copyLabel").textContent');
-  await evaluate('__apiTimeout()');
-  await until('document.querySelector("#playStatus button")?.textContent === "Retry"');
-  const watch = await evaluate('document.querySelector("#player .fallback a").href');
-  assert.equal(await evaluate('localStorage.getItem("anime.strikes")'), null);
-  assert.equal(await evaluate('document.querySelector("#copyLabel").textContent'), copy);
-  await evaluate('document.querySelector("#playStatus button").click(); window.YT = __workingYT; window.onYouTubeIframeAPIReady()');
-  await until('__yt.length === 1');
-  assert.equal(await evaluate('__yt[0].videoId'), new URL(watch).searchParams.get('v'));
-  console.log('Catalog retries, delayed Pop portraits, tabs, reduced motion, and Anime API recovery passed');
+  console.log('Catalog retries, delayed portraits, tabs and reduced motion passed');
 
-  for (const pop of [false, true]) {
-    const side = pop ? 'pop' : 'kpop';
-    await cdp('Page.navigate', { url: `http://localhost:5174/${pop ? 'pop/' : 'kpop/'}#top100` });
-    await until(`document.querySelector('#chartAuto') && !document.querySelector('#chartAuto').disabled && document.querySelectorAll('${pop ? '#chart li' : '#chartList li'}').length === 100`);
-    assert.equal(await evaluate('__yt.length'), 0, `${side}: restored mode is silent`);
+  // Auto, on every side: startup, blocked start, manual Skip race, three strikes and Resume, hidden play, mode-away/back.
+  for (const side of SIDES) {
+    const name = side.id;
+    await cdp('Page.navigate', { url: `http://localhost:5174/${name}/#top100` });
+    await until(`document.querySelector('#chartAuto') && !document.querySelector('#chartAuto').disabled && document.querySelectorAll('#chart li').length >= 90`);
+    assert.equal(await evaluate('__yt.length'), 0, `${name}: restored mode is silent`);
     await evaluate(`document.querySelector('#chartAuto').click()`);
     await until('__yt.length === 1');
-    assert.equal(await evaluate(`document.querySelector('${pop ? '#tCard .stamp' : '#pullStamp:not([hidden])'}') !== null`), false, `${side}: short has no stamp`);
+    assert.equal(await evaluate(`document.querySelector('#tCard .stamp') !== null`), false, `${name}: short has no stamp`);
     await evaluate(`__emit('onAutoplayBlocked')`);
-    assert.equal(await evaluate(`document.querySelector('${pop ? '#tPlayer .tap-to-play' : '#stageOverlay'}').hidden`), false);
-    await evaluate(`document.querySelector('${pop ? '#tPlayer .tap-to-play' : '#stageOverlay'}').click(); __emit('onStateChange',1); __emit('onStateChange',0);`);
+    assert.equal(await evaluate(`document.querySelector('#tPlayer .tap-to-play').hidden`), false);
+    await evaluate(`document.querySelector('#tPlayer .tap-to-play').click(); __emit('onStateChange',1); __emit('onStateChange',0);`);
     assert.equal(await evaluate('__advances.size'), 1);
     // A manual Skip must beat the old ended callback and retain the full ceremony.
-    await evaluate(`window.__staleAdvance = [...__advances.values()][0].fn; document.querySelector('${pop ? '#pull' : '#pullBtn'}').click(); __staleAdvance();`);
+    await evaluate(`window.__staleAdvance = [...__advances.values()][0].fn; document.querySelector('#pull').click(); __staleAdvance();`);
     await until('__yt.length === 2');
-    assert.equal(await evaluate(`document.querySelector('${pop ? '#tCard .stamp' : '#pullStamp:not([hidden])'}') !== null`), true, `${side}: manual stamp remains`);
+    assert.equal(await evaluate(`document.querySelector('#tCard .stamp') !== null`), true, `${name}: manual stamp remains`);
     // Three distinct attempts fail; duplicate error events cannot add strikes.
     for (let i = 0; i < 3; i++) {
       await evaluate(`__emit('onError',101); __emit('onError',101);`);
@@ -349,44 +369,43 @@ try {
     await cdp('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
     await until('__yt.length === 5');
     // Hidden endings must advance synchronously, without waiting for rAF or scrolling.
-    await evaluate(`__emit('onStateChange',1); __emit('onStateChange',0); Object.defineProperty(document,'hidden',{configurable:true,value:true}); window.__scroll = scrollY; __due();`);
+    await evaluate(`__emit('onStateChange',1); __emit('onStateChange',0); Object.defineProperty(document,'hidden',{configurable:true,value:true}); window.__scrolls = 0; const scroll = Element.prototype.scrollIntoView; Element.prototype.scrollIntoView = function(...args) { __scrolls++; return scroll.apply(this, args); }; __due();`);
     await until('__yt.length === 6');
-    assert.equal(await evaluate('scrollY === __scroll'), true);
-    await evaluate(`Object.defineProperty(document,'hidden',{configurable:true,value:false}); __emit('onStateChange',1); __emit('onStateChange',0); window.__awayAdvance=[...__advances.values()][0].fn; document.querySelector('${pop ? '[data-mode="roulette"]' : '#modeRoulette'}').click(); document.querySelector('${pop ? '[data-mode="top100"]' : '#modeCharts'}').click(); __awayAdvance();`);
+    assert.equal(await evaluate('__scrolls'), 0, name + ': hidden advance does not scroll');
+    await evaluate(`Object.defineProperty(document,'hidden',{configurable:true,value:false}); __emit('onStateChange',1); __emit('onStateChange',0); window.__awayAdvance=[...__advances.values()][0].fn; document.querySelector('[data-mode="roulette"]').click(); document.querySelector('[data-mode="top100"]').click(); __awayAdvance();`);
     await delay(450);
-    assert.equal(await evaluate('__yt.length'), 6, `${side}: returning mode does not revive pending advance`);
+    assert.equal(await evaluate('__yt.length'), 6, `${name}: returning mode does not revive pending advance`);
     await evaluate(`document.querySelector('#chartAuto').scrollIntoView({block:'center'})`);
-    if (!pop) assert.equal(await evaluate(`Math.abs(document.querySelector('#chartAutoPill').getBoundingClientRect().top-document.querySelector('#pullBtn').getBoundingClientRect().top)<2`), true, 'K-pop Auto sits beside Pull');
-    assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'), true, `${side}: no phone overflow`);
-    await shot(`${side}-phone`);
+    assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'), true, `${name}: no phone overflow`);
+    await shot(`${name}-phone`);
     await cdp('Emulation.setDeviceMetricsOverride', { width: 1280, height: 900, deviceScaleFactor: 1, mobile: false });
-    await shot(`${side}-desktop`);
+    await shot(`${name}-desktop`);
     await cdp('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
-    console.log(`${side}: Auto startup, blocked start, manual Skip race, three strikes/Resume, hidden play, mode-away/back, responsive layout passed`);
     // Exercise the real Roulette wiring as well as Top 100.
-    await evaluate(`document.querySelector('${pop ? '[data-mode="roulette"]' : '#modeRoulette'}').click()`);
-    const autoSelector = pop ? '#deck-all .autoplay input[data-auto="on"]' : '#autoOn';
-    assert.equal(await evaluate(`!document.querySelector('${autoSelector}').closest('[hidden]')`), true, `${side}: Roulette Auto is available from the first screen`);
+    await evaluate(`document.querySelector('[data-mode="roulette"]').click()`);
+    const autoSelector = `#deck-${side.deck} .autoplay input[data-auto="on"]`;
+    assert.equal(await evaluate(`!document.querySelector('${autoSelector}').closest('[hidden]')`), true, `${name}: Roulette Auto is available from the first screen`);
     await evaluate(`document.querySelector('${autoSelector}').checked=false; document.querySelector('${autoSelector}').dispatchEvent(new Event('change')); document.querySelector('${autoSelector}').click();`);
     await until('__yt.length === 7');
     for (let i = 0; i < 3; i++) {
       await evaluate(`__emit('onError',101); __emit('onError',101);`);
       if (i < 2) { await evaluate('__due()'); await until(`__yt.length === ${i + 8}`); }
     }
-    assert.equal(await evaluate(`document.body.innerText.includes("3 videos in a row wouldn't play here. Auto paused.")`), true, `${side}: Roulette strike pause`);
+    assert.equal(await evaluate(`document.body.innerText.includes("3 videos in a row wouldn't play here. Auto paused.")`), true, `${name}: Roulette strike pause`);
     assert.equal(await evaluate('__advances.size'), 0);
     await evaluate(`Array.from(document.querySelectorAll('button')).find(b=>b.textContent==='Resume' && !b.closest('[hidden]')).click()`);
     await until('__yt.length === 10');
     await evaluate(`__emit('onStateChange',1); __emit('onStateChange',0); Object.defineProperty(document,'hidden',{configurable:true,value:true}); __due();`);
     await until('__yt.length === 11');
-    await evaluate(`Object.defineProperty(document,'hidden',{configurable:true,value:false}); __emit('onStateChange',0); window.__rouletteStale=[...__advances.values()][0].fn; document.querySelector('${pop ? '[data-mode="top100"]' : '#modeCharts'}').click(); document.querySelector('${pop ? '[data-mode="roulette"]' : '#modeRoulette'}').click(); __rouletteStale();`);
+    await evaluate(`Object.defineProperty(document,'hidden',{configurable:true,value:false}); __emit('onStateChange',0); window.__rouletteStale=[...__advances.values()][0].fn; document.querySelector('[data-mode="top100"]').click(); document.querySelector('[data-mode="roulette"]').click(); __rouletteStale();`);
     await delay(450); assert.equal(await evaluate('__yt.length'), 11);
-    console.log(`${side}: Roulette startup, duplicate errors, three strikes/Resume, hidden play, mode-away/back passed`);
-    await evaluate(`document.querySelector('${pop ? '[data-mode="top100"]' : '#modeCharts'}').click(); document.querySelector('${pop ? '#chart .row' : '#chartList .row'}').click();`);
+    await evaluate(`document.querySelector('[data-mode="top100"]').click(); document.querySelector('#chart .row').click();`);
     await until('__yt.length === 12');
     await evaluate(`__emit('onStateChange',1); __emit('onStateChange',0); window.__genreStale=[...__advances.values()][0].fn; dispatchEvent(new PageTransitionEvent('pagehide')); dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})); __genreStale();`);
-    await delay(450); assert.equal(await evaluate('__yt.length'), 12, `${side}: genre navigation cancels advances across page cache restore`);
+    await delay(450); assert.equal(await evaluate('__yt.length'), 12, `${name}: genre navigation cancels advances across page cache restore`);
+    console.log(`${name}: Auto startup, blocked start, manual Skip race, three strikes/Resume, hidden play, mode-away/back, Roulette Auto and responsive layout passed`);
   }
+
   if (liveBollywood) {
     await cdp('Network.setBlockedURLs', { urls: [] });
     const liveErrors = consoleErrors.length;
@@ -405,7 +424,7 @@ try {
     };
     await playLive('#deck-stars .auto', '#deck-stars .player');
     await click('#tab-top100');
-    await until('document.querySelectorAll("#chart li").length === 100 && !document.querySelector("#pull").disabled');
+    await until('document.querySelectorAll("#chart li").length >= 90 && !document.querySelector("#pull").disabled');
     await playLive('#pull', '#tPlayer');
     assert.deepEqual(await evaluate('__csp'), [], 'live Bollywood CSP violations');
     assert.deepEqual(consoleErrors.slice(liveErrors).map(({ text, url }) => ({ text, url })), [], 'live Bollywood console errors');

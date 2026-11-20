@@ -106,3 +106,10 @@ test('Duel: small pools draw everything, one item wins at once', () => {
   assert.equal(d.phase, 'duel');
   assert.equal(new G.Duel(1).winner, 0);
 });
+
+test('score averages the stats that exist and never returns NaN', () => {
+  assert.equal(G.score({ s: 4, v: 2 }), 3);
+  assert.equal(G.score({ v: 2 }), 2);
+  assert.equal(G.score({ s: 6, v: 0 }), 6);
+  assert.equal(G.score({}), 0);
+});

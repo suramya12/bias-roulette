@@ -51,7 +51,7 @@ function searchVideos(data) {
 }
 const groups = new Map();
 for (const row of rows) { const key = `${fold(row.song)}|${fold(row.film)}`; if (!groups.has(key)) groups.set(key, []); groups.get(key).push(row); }
-const allow = /^(?:T-Series|YRF|Yash Raj Films|Saregama Music|Saregama India|Saregama GenY|Saregama Hum Bhojpuri|Saregama Music Tamil|Sony Music India|Zee Music Company|Tips Official|Tips Music|Eros Now Music|Shemaroo Filmi Gaane|Venus|Venus Movies|Ultra Bollywood|Rajshri|Goldmines Gaane Sune Ansune|Red Chillies Entertainment|Dharma Productions|Excel Entertainment|Junglee Music|Ultra Classic|Shemaroo Romantic Songs|Universal Music India|Rajshri Music|Tips Films|Eros Now|Saregama Classics)$/i;
+const allow = /^(?:T-Series|YRF|Yash Raj Films|Saregama Music|Saregama India|Saregama GenY|Saregama Hum Bhojpuri|Saregama Music Tamil|Sony Music India|Zee Music Company|Tips Official|Tips Music|Eros Now Music|Shemaroo Filmi Gaane|Venus|Venus Movies|Ultra Bollywood|Rajshri|Goldmines Gaane Sune Ansune|Red Chillies Entertainment|Dharma Productions|Excel Entertainment|Junglee Music|Ultra Classic|Shemaroo Romantic Songs|Universal Music India|Rajshri Music|Tips Films|Eros Now|Saregama Classics|Aditya Music|Lahari Music|Sony Music South|Think Music India|Saregama Tamil|Saregama Telugu|T-Series Telugu|T-Series Tamil|Mango Music|Sun TV|Divo Music|Sony Music Kannada|Zee Music South|Speed Records)$/i;
 const reject = /\b(?:audio|lyrical|lyrics?|jukebox|teaser|trailer|unplugged|covers?|8d|slowed|reverb|lo[ -]?fi|mashup|karaoke|instrumental|status|shorts|making|live|concert|revival|remix|remake)\b|\b(?:lp|original) recording\b|behind[ -]the[ -]scenes/i;
 let last = 0;
 async function page(url) {
@@ -119,8 +119,8 @@ async function emit() {
   const artists = [...artistMap.values()].filter(a => a.songs.length >= 3); const removed = [...artistMap.values()].filter(a => a.songs.length < 3);
   const byId = new Map(songs.map(s => [s.id, s])); const totals = artists.map(a => a.songs.reduce((n, id) => n + byId.get(id).v, 0)); const max = Math.max(1, ...totals);
   artists.forEach((a, i) => { a.power = Math.max(1, Math.min(10, Math.ceil(10 * Math.log1p(totals[i]) / Math.log1p(max)))); });
-  await writeFile(join(root, 'data/data.json'), JSON.stringify({ updated: new Date().toISOString().slice(0, 10), artists, songs }));
+  await writeFile(join(process.env.BOLLY_OUT || root, 'data/data.json'), JSON.stringify({ updated: new Date().toISOString().slice(0, 10), artists, songs }));
   const line = x => `- ${cell(x.seed.song)} | ${cell(x.seed.film)}: ${cell(x.reason)}`;
   const report = [`# Bollywood resolution review`, ``, `Processed ${output.length + dropped.length} / ${groups.size}; resolved ${output.length}; flagged ${flagged.length}; dropped ${dropped.length}.`, `Artists: stars ${artists.filter(a => a.deck === 'stars').length}; voices ${artists.filter(a => a.deck === 'voices').length}; dropped ${removed.length}.`, `Unknown channels: ${unknown.size} unique channel/name pairs.`, '', '## Resolved', ...output.map(x => `- ${cell(x.song.t)} | ${cell(x.song.film)}: ${cell(x.song.id)} | ${cell(x.channel)} | ${cell(x.title)}`), '', '## Flagged', ...flagged.map(line), '', '## Dropped songs', ...dropped.map(line), '', '## Dropped artists (fewer than 3 resolved songs)', ...removed.map(a => `- ${cell(a.name)} (${cell(a.deck)}): ${a.songs.length}`), '', '## Unknown channels', ...[...unknown].sort((a, b) => b[1] - a[1]).map(([name, count]) => `- ${cell(name)}: ${count}`), ''];
-  await writeFile(join(root, 'REVIEW.md'), report.join('\n'));
+  await writeFile(join(process.env.BOLLY_OUT || root, 'REVIEW.md'), report.join('\n'));
 }

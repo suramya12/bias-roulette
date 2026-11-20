@@ -27,14 +27,14 @@ test('player handles blocked playback, duplicate errors, and stale attempt callb
     onEnd: (t) => calls.push(['end', t]), onFail: (t) => calls.push(['fail', t]),
     onPlay: (t) => calls.push(['play', t]), onBlocked: (t) => calls.push(['blocked', t]),
   });
-  await player.play('one', 1);
+  await player.play('AAAAAAAAAAA', 1);
   const first = instances[0];
   first.events.onAutoplayBlocked({ target: first });
   host.querySelector('.tap-to-play').listeners.click();
   assert.equal(first.plays, 1);
   first.events.onStateChange({ data: 1 });
   first.events.onError({ data: 101 }); first.events.onError({ data: 101 });
-  await player.play('two', 2);
+  await player.play('BBBBBBBBBBB', 2);
   first.events.onReady({ target: first }); first.events.onStateChange({ data: 0 });
   first.events.onAutoplayBlocked({ target: first }); first.events.onError({ data: 101 });
   instances[1].events.onStateChange({ data: 1 });

@@ -2,20 +2,22 @@ import * as G from './game.js';
 import { makeCard, reveal, songModel, artistModel, reduced, setCardImage, creditLine } from './cards.js';
 import { createPlayer } from './player.js';
 import { createRoulette, configureAutoplay } from './roulette.js';
+import { renderShell } from './shell.js';
 import { startCrowd } from './stage.js';
 import { PullMachine } from '../../src/pull-machine.js';
 import { Sound } from '../../src/sound.js';
 import { createAutoAdvance } from '../../src/auto-advance.js';
-import { cryptoInt } from '../../src/game.js';
 import { CREDIT_HOSTS, IMAGE_HOSTS, isVideoId, safeUrl, videoThumbnail } from '../../src/validation.js';
 import * as passport from '../../src/passport.js';
 import { showToast } from '../../src/toast.js';
 
 const $ = (s) => document.querySelector(s);
+const RANGES = [10, 50, 100];
 let config;
 export async function start(options) {
   config = options;
   try { localStorage.setItem('bias-roulette.lastSide', config.side); } catch {}
+  renderShell(config);
   configureAutoplay(config.storage + '.autoplay');
   await boot();
 }
@@ -27,8 +29,8 @@ async function loadJson(path) {
 }
 
 let portraitsReady;
-const actions = [...document.querySelectorAll('.top .toggle button'), $('#openBinder'), ...document.querySelectorAll('[data-deck]')];
 async function boot() {
+  const actions = [...document.querySelectorAll('.top .toggle button'), $('#openBinder')];
   portraitsReady = loadJson('data/portraits.json').catch(() => null);
   actions.forEach((button) => { button.disabled = true; });
   let data;
@@ -69,7 +71,6 @@ function init(data) {
       s: (Array.isArray(col?.s) ? col.s : []).filter((id) => songsById.has(id)),
     };
   }
-  const artistsByName = new Map(artists.map((a) => [a.name, a]));
   function reportPassport() {
     const owned = (col.a?.length || 0) + (col.s?.length || 0);
     const total = artists.length + binderSongs.length;
@@ -84,19 +85,8 @@ function init(data) {
     const r = G.collect(col, kind, id);
     col = r.col;
     try { localStorage.setItem(KEY, JSON.stringify(col)); } catch {}
-    let tier = 'common';
-    if (kind === 'artist') {
-      const artist = artistsByName.get(id);
-      if (artist) tier = G.artistRarity(artist.power).id;
-    } else {
-      const song = songsById.get(id);
-      if (song) tier = G.songRarity(song.o).id;
-    }
-    const dust = passport.collected(config.side, { isNew: r.isNew, tier });
-    if (dust) showToast(`Duplicate · +${dust} ✦`);
     updateCount();
     reportPassport();
-    renderPassportButtons();
     return r.isNew;
   }
   const updateCount = () => ($('#binderCount').textContent = (col.a?.length || 0) + (col.s?.length || 0));
@@ -124,12 +114,10 @@ function init(data) {
   };
   const songCard = (s, o) => makeCard(config.songModel ? config.songModel(s, o) : songModel(s), o);
 
-  // ---------- modes: #roulette (deck all), #roulette/favs, #top100 ----------
+  // ---------- modes: #roulette, #top100 ----------
   const modes = { roulette: $('#roulette'), top100: $('#top100') };
   const modeTabs = [...document.querySelectorAll('.top .toggle button')];
   const stops = {};
-  const DECK_NOTE = config.deckNotes;
-  let deck = config.decks[0];
   let chartRendered = false;
   let playingTopId = null;
   function ensureChart() {
@@ -145,29 +133,24 @@ function init(data) {
       else setTimeout(ensureChart, 1);
     });
   }
-  function setMode(m, d = deck, { deferChart = false } = {}) {
-    deck = d;
+  function setMode(m, { deferChart = false } = {}) {
     for (const [k, sec] of Object.entries(modes)) sec.hidden = k !== m;
     for (const tab of modeTabs) {
       const selected = tab.dataset.mode === m;
       tab.setAttribute('aria-selected', String(selected));
       tab.tabIndex = selected ? 0 : -1;
     }
-    for (const b of document.querySelectorAll('[data-deck]')) b.setAttribute('aria-checked', b.dataset.deck === d);
-    for (const k of config.decks) $(`#deck-${k}`).hidden = k !== d;
-    $('#deckNote').textContent = DECK_NOTE[d];
+    $('#titleAccent').textContent = m === 'top100' ? 'Top 100' : 'Roulette';
     if (m === 'top100') {
       if (!deferChart) ensureChart();
       machine.activate();
     }
-    const live = m === 'roulette' ? d : m;
-    for (const [k, stop] of Object.entries(stops)) if (k !== live) stop();
-    history.replaceState(null, '', m === 'top100' ? '#top100' : d === config.decks[1] ? '#roulette/' + d : '#roulette');
+    for (const [k, stop] of Object.entries(stops)) if (k !== m) stop();
+    history.replaceState(null, '', '#' + m);
     // The genre switch lands on the same mode on sides with Roulette and Top 100.
     for (const link of document.querySelectorAll('[data-mode-link]')) {
       link.href = `../${link.dataset.modeLink}/#${m}`;
     }
-    try { localStorage.setItem(config.storage + '.deck', d); } catch {}
   }
   modeTabs.forEach((tab, index) => {
     tab.addEventListener('click', () => setMode(tab.dataset.mode));
@@ -186,17 +169,14 @@ function init(data) {
       target.focus();
     });
   });
-  for (const b of document.querySelectorAll('[data-deck]')) b.addEventListener('click', () => setMode('roulette', b.dataset.deck));
   $('#genre').addEventListener('keydown', (e) => e.key === 'Escape' && ($('#genre').open = false));
   document.addEventListener('click', (e) => !e.target.closest('#genre') && ($('#genre').open = false));
 
-  // ---------- Mode 1: Roulette, two decks ----------
-  const shared = { songsById, portraits, win, artistCard, songCard };
-  config.decks.forEach((key, index) => {
-    const pool = config.pool(artists, key);
-    stops[key] = createRoulette($(`#deck-${key}`), { ...shared, pool, fills: config.fills?.[index], noun: config.nouns?.[index] }).stop;
-    $(`#n${index === 0 ? 'All' : 'Favs'}`).textContent = pool.length;
-  });
+  // ---------- Mode 1: Roulette ----------
+  stops.roulette = createRoulette($(`#deck-${config.deck}`), {
+    songsById, portraits, win, artistCard, songCard,
+    pool: config.pool(artists), fills: config.fills, noun: config.noun,
+  }).stop;
 
   // ---------- Mode 2: Top 100 ----------
   const tPlayer = createPlayer($('#tPlayer'), {
@@ -227,6 +207,7 @@ function init(data) {
     if (document.hidden) { if (valid()) reveal(card); }
     else requestAnimationFrame(() => { if (valid()) reveal(card); });
   }
+  const say = (text) => { $('#topAnnounce').textContent = text; };
   const shown = new Set();
   const ringSize = () => (innerWidth < 520 ? 10 : 12);
   let soundOn = true;
@@ -243,23 +224,19 @@ function init(data) {
     soundLabel();
   });
   soundLabel();
-  let pendingDrop = false;
-  let forcedSong = null;
-  function renderPassportButtons() {
-    const busy = ['spinning', 'landing', 'revealing'].includes(machine?.state);
-    const dropBtn = $('#dailyDropBtn');
-    const dropLabel = $('#dailyDropLabel');
-    const unseenBtn = $('#unseenBtn');
-    if (dropBtn && dropLabel) {
-      const claimed = passport.isClaimedToday(config.side);
-      dropLabel.textContent = claimed ? `Claimed · new drop in ${passport.hoursUntilMidnight()} h` : "Today's drop";
-      dropBtn.disabled = claimed || busy || !TOP.length;
-    }
-    if (unseenBtn) {
-      const unowned = TOP.some((s) => !col.s.includes(s.id));
-      unseenBtn.disabled = busy || !unowned || passport.summary().dust < passport.UNSEEN_COST;
-    }
-  }
+
+  // "Pull from": the top 10, 50 or 100, remembered per side.
+  let range = 100;
+  try { const saved = Number(localStorage.getItem(config.storage + '.range')); if (RANGES.includes(saved)) range = saved; } catch {}
+  const pool = () => TOP.slice(0, range);
+  const intro = () => `Top ${range}: pull a card to play its video.`;
+  const renderRange = () => { for (const n of RANGES) $(`#r${n}`).setAttribute('aria-pressed', String(range === n)); };
+  let quiet = false; // a range change must not cancel Auto or stop the video that is playing
+  const pick = () => {
+    const song = G.dealRing(pool(), 1, shown)[0];
+    if (song) shown.add(song.id);
+    return song;
+  };
   const machine = new PullMachine({
     ring: $('#ring'), hit: $('#ringBtn'), buttons: [$('#pull')], slots: ringSize,
     radius: (width, n) => Math.round((width / 2) / Math.tan(Math.PI / n) + 18),
@@ -268,50 +245,52 @@ function init(data) {
       slot.replaceChildren(songCard(song, { size: 'mini', faceDown: true }));
     },
     sound, tierOf: (song) => G.songRarity(song.o).id,
-    onPull: () => { topAuto.invalidate(); tPlayer.stop(); tPlayer.clearAutoPaused(); renderPassportButtons(); },
-    onCancel: () => { pendingDrop = false; forcedSong = null; topAuto.invalidate(); tPlayer.stop(); renderPassportButtons(); },
-    say: (text) => { $('#topAnnounce').textContent = text; },
-    onLand: (song, tier) => { $('#topAnnounce').textContent = `#${song.o} ${song.t} ? ${tier}!`; },
+    onPull: () => { topAuto.invalidate(); tPlayer.stop(); tPlayer.clearAutoPaused(); },
+    onCancel: () => { if (quiet) return; topAuto.invalidate(); tPlayer.stop(); },
+    say,
+    onLand: (song) => { say(`#${song.o} ${song.t} by ${song.by}!`); },
     onReveal: (song, { short } = {}) => {
       const token = machine.generation;
       const isNew = win('song', song.id);
-      if (pendingDrop) {
-        pendingDrop = false;
-        const res = passport.claim(config.side);
-        if (res.tour) showToast('World tour complete · +50 ✦');
-      }
-      renderPassportButtons();
       playTop(song, !short, isNew, () => machine.generation === token && machine.active, short);
     },
   });
-  machine.setPool(TOP, () => {
-    if (forcedSong) {
-      const forced = forcedSong;
-      forcedSong = null;
-      return forced;
-    }
-    const song = G.dealRing(TOP, 1, shown)[0];
-    if (song) shown.add(song.id);
-    return song;
+  machine.setPool(pool(), pick);
+  renderRange();
+  say(intro());
+  for (const n of RANGES) $(`#r${n}`).addEventListener('click', () => {
+    if (['spinning', 'landing', 'revealing'].includes(machine.state) || range === n) return;
+    range = n;
+    try { localStorage.setItem(config.storage + '.range', String(n)); } catch {}
+    shown.clear();
+    quiet = true;
+    try { machine.setPool(pool(), pick); } finally { quiet = false; }
+    renderRange();
+    say(intro());
   });
-  $('#dailyDropBtn')?.addEventListener('click', () => {
-    if (passport.isClaimedToday(config.side) || !TOP.length) return;
-    if (modes.top100.hidden) setMode('top100');
-    const pickId = passport.dailyPick(config.side, TOP.map((s) => s.id));
-    const song = TOP.find((s) => s.id === pickId) || TOP[0];
-    if (!song) return;
-    pendingDrop = true;
-    forcedSong = song;
-    machine.pull();
-  });
-  $('#unseenBtn')?.addEventListener('click', () => {
-    const unowned = TOP.filter((s) => !col.s.includes(s.id));
-    if (!unowned.length || !passport.spend(passport.UNSEEN_COST)) return;
-    forcedSong = unowned[cryptoInt(unowned.length)];
-    renderPassportButtons();
-    machine.pull();
-  });
+
+  /** Stats strip under the player: whatever config.statStrip(song) returns, nothing otherwise. */
+  function renderStrip(song) {
+    const items = (config.statStrip?.(song) ?? []).filter((x) => x && x.value != null && x.value !== '');
+    const strip = $('#tStats');
+    strip.hidden = !items.length;
+    strip.replaceChildren(...items.map(({ label, value }) => {
+      const cell = document.createElement('div');
+      const dt = document.createElement('dt');
+      const dd = document.createElement('dd');
+      dt.textContent = label;
+      dd.textContent = value;
+      cell.append(dt, dd);
+      return cell;
+    }));
+  }
+  const nextOf = (song) => {
+    const i = TOP.findIndex((s) => s.id === song.id);
+    return i < 0 || TOP.length < 2 ? null : TOP[(i + 1) % TOP.length];
+  };
+  let current = null;
   function playTop(song, pulled, isNew, valid, short = false) {
+    current = song;
     const card = songCard(song, { size: 'big', chart: true });
     const extra = [];
     if (pulled) {
@@ -322,42 +301,62 @@ function init(data) {
     }
     $('#tResult').hidden = false;
     showBig($('#tCard'), card, extra, valid);
+    renderStrip(song);
+    const next = nextOf(song);
+    $('#tNext').hidden = !next;
+    if (next) $('#tNext').textContent = `Next: #${next.o} ${next.t}`;
     tPlayer.play(song.id, topAuto.begin());
     playingTopId = song.id;
-    $('#tNow').replaceChildren('Now playing: ', Object.assign(document.createElement('b'), { textContent: song.t }), ` · ${song.by} · #${song.o}`);
-    document.querySelectorAll('.chart li').forEach((li) => li.classList.toggle('playing', li.dataset.id === song.id));
+    say(`Now playing #${song.o}: ${song.t} by ${song.by}.`);
+    document.querySelectorAll('#chart li').forEach((li) => li.classList.toggle('playing', li.dataset.id === song.id));
     if (!short && !document.hidden) $('#tResult').scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'nearest' });
   }
+  /** Play a chart song in the result block (a row tap or "Next"). */
+  function playFromChart(song) {
+    machine.cancel();
+    const token = machine.generation;
+    playTop(song, false, undefined, () => machine.generation === token && machine.active);
+  }
+  $('#tAgain').addEventListener('click', () => {
+    $('.ring-stage').scrollIntoView({ block: 'center', behavior: reduced.matches ? 'auto' : 'smooth' });
+    if (machine.state === 'spinning') machine.slamStop(); else machine.pull();
+  });
+  $('#tNext').addEventListener('click', () => { const next = current && nextOf(current); if (next) playFromChart(next); });
+  $('#tJump').addEventListener('click', () => {
+    $('#chartBox').open = true;
+    $('#chartBox').scrollIntoView({ block: 'start', behavior: reduced.matches ? 'auto' : 'smooth' });
+  });
 
   function renderChart() {
+    const scoreOf = (s) => (config.score ? config.score(s) : G.score(s));
+    const topScore = Math.max(1, ...TOP.map(scoreOf));
     const frag = document.createDocumentFragment();
     for (const s of TOP) {
       const li = document.createElement('li');
-      li.className = G.songRarity(s.o).id + (s.id === playingTopId ? ' playing' : '');
+      const tier = G.songRarity(s.o).id;
+      li.className = s.id === playingTopId ? 'playing' : '';
       if (typeof s.id === 'string') li.dataset.id = s.id;
-      li.innerHTML = `<button class="row"><span class="rk"></span><img alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"><span class="tt"><b></b><span></span></span><span class="nums"><b></b><br></span></button>`;
+      li.innerHTML = `<button class="row" type="button"><span class="row-rank"></span><img class="row-thumb" alt="" width="64" height="36" loading="lazy" decoding="async" referrerpolicy="no-referrer"><span class="row-text"><b></b><span></span></span><span class="row-score"><span class="bar"></span><small></small></span></button>`;
       li.querySelector('button').setAttribute('aria-label', `Play number ${s.o}: ${s.t} by ${s.by}`);
-      li.querySelector('.rk').textContent = s.o;
+      const rank = li.querySelector('.row-rank');
+      rank.textContent = s.o;
+      rank.classList.add(tier);
       const src = videoThumbnail(s.id, 'mqdefault');
       if (src) li.querySelector('img').src = src;
-      li.querySelector('.tt b').textContent = s.t;
-      li.querySelector('.tt span').textContent = s.by;
-      li.querySelector('.nums b').textContent = config.chartScore ? config.chartScore(s) : G.fmt(G.score(s)) + ' pts';
-      const stats = config.chartStats ? config.chartStats(s) : `${s.s ? G.fmt(s.s) : '—'} streams · ${G.fmt(s.v)} views`;
-      if (stats) li.querySelector('.nums').append(stats);
-      else li.querySelector('.nums br').remove();
-      li.querySelector('button').addEventListener('click', () => {
-        machine.cancel();
-        const token = machine.generation;
-        playTop(s, false, undefined, () => machine.generation === token && machine.active);
-      });
+      li.querySelector('.row-text b').textContent = s.t;
+      li.querySelector('.row-text span').textContent = s.by;
+      const bar = li.querySelector('.bar');
+      bar.classList.add(tier);
+      bar.style.setProperty('--w', `${Math.min(100, (scoreOf(s) / topScore) * 100).toFixed(1)}%`);
+      li.querySelector('small').textContent = config.chartScore ? config.chartScore(s) : (scoreOf(s) ? G.fmt(scoreOf(s)) + ' pts' : '');
+      li.querySelector('button').addEventListener('click', () => playFromChart(s));
       frag.append(li);
     }
     $('#chart').replaceChildren(frag);
-    $('#updated').textContent = `data from ${data.updated}`;
+    $('#chartMethod').textContent = config.chartMethod + (data.updated ? ` Data from ${data.updated}.` : '');
   }
 
-  // ---------- binder ----------
+  // ---------- collection ----------
   const binder = $('#binder');
   let binderTab = 'a';
   const binderSongs = (() => {
@@ -424,19 +423,13 @@ function init(data) {
   });
 
   // ---------- boot ----------
-  startCrowd($('#crowd'));
+  if ($('#crowd')) startCrowd($('#crowd'), config.crowdColors);
   updateCount();
   reportPassport();
-  renderPassportButtons();
-  /** #top100, #roulette, #roulette/favs; old #top and #bias links still work. No hash: last deck used. */
+  /** #top100 or #roulette (also the old #top link). No hash: Roulette. */
   function modeFromHash(initial = false) {
     const h = location.hash.slice(1);
-    let saved = config.decks[0];
-    try { if (localStorage.getItem(config.storage + '.deck') === config.decks[1]) saved = config.decks[1]; } catch {}
-    if (h === 'top100' || h === 'top') return setMode('top100', config.rememberDeckInChart ? saved : deck, { deferChart: initial });
-    if (h === 'roulette/' + config.decks[1] || (config.side === 'pop' && h === 'bias')) return setMode('roulette', config.decks[1], { deferChart: initial });
-    if (h === 'roulette') return setMode('roulette', config.decks[0], { deferChart: initial });
-    setMode('roulette', saved, { deferChart: initial });
+    setMode(h === 'top100' || h === 'top' ? 'top100' : 'roulette', { deferChart: initial });
   }
   addEventListener('hashchange', () => modeFromHash(false));
   addEventListener('pagehide', () => { for (const stop of Object.values(stops)) stop(); });
@@ -444,5 +437,3 @@ function init(data) {
   modeFromHash(true);
   scheduleChart();
 }
-
-

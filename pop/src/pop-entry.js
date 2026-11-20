@@ -1,10 +1,15 @@
 import { start } from './app.js';
+import * as G from './game.js';
+
 start({
-  side: 'pop', storage: 'encore', decks: ['all', 'favs'],
-  deckNotes: {
-    all: 'The biggest English and Latin pop acts. Spin for an artist, then for one of their songs.',
-    favs: 'A curated 100, from Beyonc? to Tate McRae. Spin for an artist, then for one of their songs.',
-  },
-  pool: (artists, key) => key === 'all' ? artists.filter((a) => a.main) : artists.filter((a) => a.bias).sort((a, b) => a.bias - b.bias),
-  fills: [undefined, [ ['#ff6fb5', '#b3135f'], ['#ffd76a', '#c27b00'], ['#c18cff', '#6a2fd1'], ['#ff8fa0', '#b8304a'], ['#ffb3e1', '#c2367e'], ['#f7c873', '#9a6200'] ]],
+  side: 'pop', label: 'Pop & Latin', noun: 'artist', storage: 'encore', deck: 'all',
+  deckNote: 'The biggest English and Latin pop acts. Spin for an artist, then for one of their songs.',
+  chartMethod: 'Score = (Spotify streams + official MV views) / 2.',
+  source: { name: 'kworb.net', href: 'https://kworb.net/' },
+  pool: (artists) => artists.filter((a) => a.main),
+  statStrip: (s) => [
+    { label: 'Spotify streams', value: s.s > 0 ? G.fmt(s.s) : '' },
+    { label: 'MV views', value: s.v > 0 ? G.fmt(s.v) : '' },
+    { label: 'Score', value: G.score(s) > 0 ? G.fmt(G.score(s)) : '' },
+  ],
 });

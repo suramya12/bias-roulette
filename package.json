@@ -17,6 +17,8 @@
     "anime:runtime": "node anime/scripts/runtime.mjs",
     "charts": "node scripts/charts.mjs",
     "portraits": "node scripts/portraits.mjs",
-    "sets": "node scripts/sets.mjs"
+    "sets": "node scripts/sets.mjs",
+    "data:kpop": "node scripts/kpop-engine-data.mjs",
+    "data:anime-engine": "node anime/scripts/engine-data.mjs"
   }
 }

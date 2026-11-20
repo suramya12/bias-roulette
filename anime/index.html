@@ -29,64 +29,7 @@
   <div class="stage-bg" aria-hidden="true">
     <div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div><div class="beam b4"></div>
   </div>
-  <header class="top">
-    <h1 class="sr-only">Bias Roulette: Anime</h1>
-    <details class="genre" id="genre">
-      <summary aria-label="Music: Anime. Switch music">Anime <span aria-hidden="true">▾</span></summary>
-      <div class="genre-menu">
-        <a href="../kpop/#top100">K-pop</a>
-        <a href="../pop/#top100">Pop &amp; Latin</a>
-        <a aria-current="page" href="./">Anime</a>
-        <a href="../bollywood/#top100">Bollywood</a>
-      </div>
-    </details>
-    <span class="heard-count" id="heardCount" role="status"></span>
-    <a class="home-link" href="../">Bias Roulette</a>
-  </header>
-  <main>
-    <section aria-label="Surprise me">
-      <p class="sub">Openings, endings, MVs &amp; film songs</p>
-      <div class="ring-stage">
-        <div class="ring" id="ring" aria-hidden="true"></div>
-        <button class="ring-hit" id="ringBtn" type="button" aria-label="Pull a song" disabled></button>
-        <div class="floor" aria-hidden="true"></div>
-      </div>
-      <div class="row-btns center">
-        <button class="pull" id="pull" type="button" disabled>Pull</button>
-        <button class="ghost btn-drop" id="dailyDropBtn" type="button" disabled><svg class="btn-ico" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M2 4l6 4.5L14 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span id="dailyDropLabel">Today's drop</span></button>
-        <button class="ghost btn-unseen" id="unseenBtn" type="button" disabled>✦ 60 · Unseen pull</button>
-        <label class="ghost switch chart-auto"><input id="auto" type="checkbox"> Auto <span class="auto-state" id="autoState">off</span></label>
-        <button class="ghost" id="sound" type="button" aria-pressed="true">Sound on</button>
-      </div>
-      <div class="filters" aria-label="Song filters">
-        <div class="use-chips" role="group" aria-label="Anime themes">
-          <button class="filter-chip" type="button" data-use="OP" aria-pressed="true">OP</button>
-          <button class="filter-chip" type="button" data-use="ED" aria-pressed="true">ED</button>
-          <button class="filter-chip" type="button" data-use="IN" aria-pressed="true">Insert</button>
-        </div>
-        <div id="addons"></div>
-        <span class="song-count" id="songCount" role="status"></span>
-      </div>
-      <p class="sub page-status" id="pageStatus" role="status">Loading…</p>
-      <p class="sr-only" id="announce" role="status" aria-live="polite"></p>
-      <div class="result" id="result" hidden>
-        <div class="big-slot" id="songCard"></div>
-        <div class="player-slot">
-          <div class="player" id="player"></div>
-          <h2 class="now-title" id="nowTitle"></h2>
-          <p class="now-meta" id="nowMeta"></p>
-          <div class="copy-row">
-            <span id="copyLabel"></span>
-            <button class="ghost" id="swap" type="button" title="Switching restarts the video" hidden></button>
-          </div>
-          <p class="play-status" id="playStatus" role="status" hidden></p>
-        </div>
-      </div>
-    </section>
-  </main>
-  <div class="toast-stack" id="toastStack" role="status" aria-live="polite"></div>
-  <div id="fx" aria-hidden="true"></div>
   <noscript><p class="noscript">This game needs JavaScript.</p></noscript>
-  <script type="module" src="src/app.js"></script>
+  <script type="module" src="entry.js"></script>
 </body>
 </html>

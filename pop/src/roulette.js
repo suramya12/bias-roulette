@@ -2,7 +2,7 @@
 //  1. every artist is on the wheel; spin to draw 5 finalists,
 //  2. showdown: the wheel holds only the finalists, first to 3 hits wins,
 //  3. the winner's songs go on the wheel; draw 5, showdown, and the MV plays.
-// Used twice: the All deck (main roster) and the Favourites deck (the bias list).
+// One deck per side.
 import * as G from './game.js';
 import { reveal, creditLine, reduced } from './cards.js';
 import { createWheel } from './wheel.js';
@@ -11,7 +11,7 @@ import { createAutoAdvance } from '../../src/auto-advance.js';
 
 const wait = (ms) => new Promise((r) => setTimeout(r, reduced.matches ? Math.min(ms, 60) : ms));
 
-// Autoplay, shared by both decks and kept in the browser. on: when the MV ends, the next round
+// Autoplay, kept in the browser. on: when the MV ends, the next round
 // plays by itself. same: keep the artist and draw another of their songs.
 let AUTO_KEY = 'encore.autoplay';
 export function normalizeAutoplay(value) {
@@ -135,7 +135,8 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     if (document.hidden) reveal(card); else requestAnimationFrame(() => reveal(card));
   }
 
-  async function finishArtist() {
+  async function finishArtist(fast = false) {
+    const generation = roundGeneration;
     chosen = items[duel.winner];
     $('.result').hidden = false;
     player.stop();
@@ -144,9 +145,20 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     const isNew = win('artist', chosen.name);
     $('.restart').hidden = false;
     steps('song');
-    startStage('song', G.wheelSongs(chosen, songsById, Infinity));
-    hint(`${chosen.name} wins${isNew ? ' and joins your binder' : ''}! ${$('.hint').textContent}`);
-    if (duel.phase === 'done') await finishSong(); // only one song: nothing to spin for
+    const songs = G.wheelSongs(chosen, songsById, Infinity);
+    if (songs.length === 1) {
+      // One song: no wheel to spin. Let the winner's card land, then reveal that song and play it.
+      stage = 'song'; items = songs; duel = new G.Duel(1); slots = [];
+      $('.hand').replaceChildren();
+      $('.readout').textContent = '';
+      hint(`${chosen.name} wins${isNew ? ' and joins your collection' : ''}! Its only song plays next.`);
+      if (!document.hidden) await wait(fast ? 500 : 1100);
+      if (generation !== roundGeneration) return;
+      await finishSong();
+      return;
+    }
+    startStage('song', songs);
+    hint(`${chosen.name} wins${isNew ? ' and joins your collection' : ''}! ${$('.hint').textContent}`);
   }
 
   async function finishSong() {
@@ -158,7 +170,7 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     const token = autoplay.begin();
     if (section.closest('[hidden]')) player.cue(song.id, token); else player.play(song.id, token);
     $('.now').replaceChildren('Now playing: ', Object.assign(document.createElement('b'), { textContent: song.t }), ` · ${song.by} · #${song.o}`);
-    hint(isNew ? 'New card collected! Spin again?' : 'Already in your binder. Spin again?');
+    hint(isNew ? 'New card collected! Spin again?' : 'Already in your collection. Spin again?');
     stage = 'done';
     $('.spin').textContent = 'AGAIN';
     $('.auto').hidden = true;
@@ -172,9 +184,12 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
   async function step(fast = false) {
     const generation = roundGeneration;
     const ev = duel.spin();
-    if (!document.hidden) await wheel.spin(ev.segment, (t) => { $('.readout').textContent = t; }, fast);
-    if (generation !== roundGeneration) return;
+    hint('Spinning…'); // the old result never sits beside a new spin
     const name = label(items[ev.index]);
+    // Hidden tab: no animation, but the wheel and title still land on the result so they never disagree with the hint.
+    if (!document.hidden) await wheel.spin(ev.segment, (t) => { $('.readout').textContent = t; }, fast);
+    else { wheel.spin(ev.segment, null, true); $('.readout').textContent = name; }
+    if (generation !== roundGeneration) return;
     if (ev.kind === 'draw') {
       await addFinalist(ev, fast);
       if (generation !== roundGeneration) return;
@@ -190,7 +205,7 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     slots.forEach((s, f) => s.card.classList.toggle('lose', f !== ev.finalist));
     if (!document.hidden) await wait(fast ? 300 : 600);
     if (generation !== roundGeneration) return;
-    if (stage === 'artist') await finishArtist(); else await finishSong();
+    if (stage === 'artist') await finishArtist(fast); else await finishSong();
   }
 
   async function run(fn) {
@@ -203,7 +218,6 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
   $('.spin').addEventListener('click', () => run(async () => {
     invalidate(false);
     if (stage === 'done') { newGame(true); return; }
-    hint('Spinning…');
     await step();
   }));
   // Plays every remaining spin quickly, keeping whatever has been drawn so far.

@@ -29,7 +29,7 @@ export function artistModel(a, portrait, songs) {
   return {
     kind: 'artist', id: a.name, tier: G.artistRarity(a.power), title: a.name,
     by: a.kind === 'group' ? 'Group' : a.bands.length ? `of ${a.bands.join(' · ')}` : 'Solo artist',
-    gem: '⚡' + a.power, img: portrait?.img, yt: !!portrait?.mv,
+    gem: '⚡' + a.power, img: portrait?.img || (songs?.[0] ? videoThumbnail(songs[0].id) : undefined), yt: portrait ? !!portrait.mv : !!songs?.[0],
     stats: [{ v: st.band, label: 'Band songs', n: true }, { v: st.solo, label: 'Solo songs', n: true }],
     chips: G.artistKeywords(a, songs), flavour: G.artistFlavour(a), portrait,
   };
@@ -77,6 +77,7 @@ export function makeCard(m, { size = 'big', faceDown = false, locked = false } =
   for (const c of m.chips) chips.append(el('span', '', c));
   const stones = el('div', 'stones');
   for (const st of m.stats) {
+    if (!st.v) continue; // unknown or zero stat: not shown
     const s = el('div', 'stone');
     const b = el('b', '', fmtStat(st));
     b.dataset.v = st.v;
