@@ -993,13 +993,22 @@ function paintPhoto(ctx, W, H, spec, img, R, fxLevel, motif, scenes) {
 }
 
 // ---------- scheduling: paint on demand, a few per frame, cached ----------
-const SIZES = { big: [520, 500], small: [240, 320] };
-const CUSTOM_SIZES = { big: [640, 960], small: [256, 384] }; // illustrated covers keep their 2:3 shape
-const sizeOf = (spec, size) => (spec.photo?.kind === 'custom' ? CUSTOM_SIZES : SIZES)[size];
+const SIZES = { big: [520, 500], small: [240, 320], ring: [240, 320] };
+const CUSTOM_SIZES = { big: [640, 960], small: [256, 384], ring: [256, 384] }; // illustrated covers keep their 2:3 shape
+const sizeOf = (spec, size) => (spec.photo?.kind === 'custom' ? CUSTOM_SIZES : SIZES)[size] || SIZES.small;
 const cache = new Map(); // key -> canvas, least recently used first
 const CACHE_MAX = 48; // painted covers kept for reuse; each holds a bitmap, so keep it small for phones
 const queue = [];
 const images = new Map();
+const loadedArt = new Set(); // illustrated cover URLs already decoded in this session
+
+/** True when this card's ring/small cover is already loaded and decoded. */
+export function isArtLoaded(spec) {
+  if (spec?.photo?.kind === 'custom' && isCardArtPath(spec.photo.src)) {
+    return loadedArt.has(new URL(`../${spec.photo.src}`, import.meta.url).href);
+  }
+  return cache.has(`${spec?.seed}@ring`) || cache.has(`${spec?.seed}@small`);
+}
 /** Load a cross-origin image for pixel access. Resolves null if it fails. */
 export function loadImage(src) {
   src = safeUrl(src, IMAGE_HOSTS);
@@ -1070,14 +1079,19 @@ export function artNode(current, spec, size, cls, sizes) {
     if (img !== current) { img.className = cls; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async'; current?.replaceWith(img); }
     const full = new URL(`../${spec.photo.src}`, import.meta.url).href;
     const small = full.replace(/\/([^/]+)$/, '/s/$1');
+    const xs = full.replace(/\/([^/]+)$/, '/xs/$1');
     if (img.dataset.art === full) return img;
     img.dataset.art = full;
     img.classList.remove('painted');
-    img.onload = () => img.classList.add('painted');
+    img.onload = () => {
+      img.classList.add('painted');
+      if (typeof img.decode === 'function') img.decode().then(() => loadedArt.add(full), () => loadedArt.add(full));
+      else loadedArt.add(full);
+    };
     img.sizes = sizes;
-    img.srcset = `${small} 400w, ${full} 768w`;
-    img.src = small;
-    if (img.complete && img.naturalWidth) img.classList.add('painted');
+    img.srcset = size === 'big' ? `${small} 400w` : size === 'ring' ? `${xs} 256w` : `${xs} 256w, ${small} 400w`;
+    img.src = size === 'big' ? small : xs;
+    if (img.complete && img.naturalWidth) { img.classList.add('painted'); loadedArt.add(full); }
     return img;
   }
   const canvas = current?.tagName === 'CANVAS' ? current : document.createElement('canvas');

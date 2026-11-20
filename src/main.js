@@ -6,10 +6,11 @@ import { Wheel } from './wheel.js';
 import { Sound } from './sound.js';
 import { VideoPlayer, loadApi } from './player.js';
 import * as fx from './fx.js';
-import { Charts, Crowd, toRgb, loadChartData } from './charts.js';
-import { makeCard, cardBack, idolCard, artPlan, rouletteSongCard, chartIndex, playIn, collection, openBinder, hasArt } from './card.js';
+import { Charts, Crowd, toRgb, loadChartData, showToast } from './charts.js';
+import { makeCard, cardBack, idolCard, songCard, artPlan, rouletteSongCard, chartIndex, playIn, collection, openBinder, hasArt } from './card.js';
 import { createAutoAdvance } from './auto-advance.js';
 import { CREDIT_HOSTS, isVideoId, safeUrl } from './validation.js';
+import * as passport from './passport.js';
 
 const $ = (id) => document.getElementById(id);
 const CANDY = ['#ff5fa2', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff', '#ffb38a'];
@@ -62,12 +63,48 @@ const charts = new Charts({ sound, store });
 const wheelCrowd = new Crowd($('crowdWheel'));
 let chartIdx = null; // Top 100 by act, for card power
 let catalogIdols = [];
+let chartSongsAll = [];
 let portraits = null; // data/portraits.json, then the art plan: idol name -> {photo, credit}
 const reduced = () => fx.prefersReducedMotion();
 const forceVideo = new URLSearchParams(location.search).get('forceVideo'); // for testing the player, see README
 
 let game = null;
+let loadingRoulette = false;
+let rouletteIdle = null;
+let apiWarmed = false;
 let busy = false;
+
+function warmApi() {
+  if (apiWarmed) return;
+  apiWarmed = true;
+  loadApi().catch(() => { apiWarmed = false; });
+}
+
+function cancelRouletteSchedule() {
+  if (rouletteIdle === null) return;
+  if (typeof cancelIdleCallback === 'function') cancelIdleCallback(rouletteIdle);
+  else clearTimeout(rouletteIdle);
+  rouletteIdle = null;
+}
+
+function ensureRoulette() {
+  cancelRouletteSchedule();
+  if (!game && !loadingRoulette) loadRoulette();
+}
+
+function scheduleRoulette() {
+  if (game || loadingRoulette || rouletteIdle !== null) return;
+  const kick = () => {
+    rouletteIdle = null;
+    if (mode === 'roulette') ensureRoulette();
+  };
+  requestAnimationFrame(() => {
+    if (mode !== 'roulette' || game || loadingRoulette || rouletteIdle !== null) return;
+    rouletteIdle = typeof requestIdleCallback === 'function'
+      ? requestIdleCallback(kick, { timeout: 1200 })
+      : setTimeout(kick, 1);
+  });
+}
 
 // ---------- rendering ----------
 const announce = (text) => { $('announce').textContent = text; };
@@ -193,8 +230,12 @@ function showResult() {
   $('anotherBtn').hidden = idol.songs.length < 2;
   setAccent(idol.color);
   const data = idolCard(idol, chartIdx, portraits);
-  const card = makeCard(data, { isNew: collection.add('idol', data.key) });
+  const isNew = collection.add('idol', data.key);
+  const dust = passport.collected('kpop', { isNew, tier: data.tier });
+  if (dust) showToast(`Duplicate · +${dust} ✦`);
+  const card = makeCard(data, { isNew });
   updateBinder();
+  reportPassport();
   $('idolCardSlot').replaceChildren(card);
   playIn(card, { reduced: reduced() });
   renderSteps();
@@ -221,6 +262,7 @@ async function spin() {
   rouletteAuto.invalidate();
   setBusy(true);
   sound.unlock();
+  warmApi();
   $('stamp').hidden = true;
 
   const ev = game.spin(); // the outcome is decided here; the wheel only acts it out
@@ -268,6 +310,7 @@ function chooseForMe({ restart = false } = {}) {
   if (busy || !game) return;
   rouletteAuto.invalidate();
   sound.unlock();
+  warmApi();
   if (restart) game.reset();
   game.chooseForMe();
   sound.fanfare();
@@ -348,7 +391,7 @@ function setTicker(items) {
   track.style.setProperty('--dur', `${Math.max(12, Math.round(items.reduce((a, n) => a + n.length, 0) * 0.16))}s`);
 }
 
-function setMode(next) {
+function setMode(next, { defer = false } = {}) {
   mode = next === 'charts' ? 'charts' : 'roulette';
   store.set('mode', mode);
   const isCharts = mode === 'charts';
@@ -363,6 +406,7 @@ function setMode(next) {
   syncUrl();
   updateBinder();
   if (isCharts) {
+    cancelRouletteSchedule();
     rouletteAuto.invalidate();
     player.stop();
     fx.setSkyColor(null);
@@ -374,10 +418,39 @@ function setMode(next) {
     wheelCrowd.resize();
     wheelCrowd.start();
     if (rouletteTicker.length) setTicker(rouletteTicker);
+    if (!game && !loadingRoulette) {
+      if (defer) scheduleRoulette();
+      else ensureRoulette();
+    }
   }
 }
 charts.onListChange = () => { setTicker(charts.tickerItems()); syncUrl(); updateBinder(); };
-charts.onCollect = () => updateBinder();
+charts.onCollect = () => { updateBinder(); reportPassport(); };
+charts.onDataReady = () => {
+  chartSongsAll = [...(charts.data?.top || []), ...(charts.data?.newbie || [])];
+  reportPassport();
+};
+
+function reportPassport() {
+  const uniqueSongs = new Map();
+  for (const s of chartSongsAll) {
+    const key = songCard(s).key;
+    if (!uniqueSongs.has(key)) uniqueSongs.set(key, s.videoId);
+  }
+  const ownedSongIds = [];
+  for (const key of collection.keys('song')) {
+    const id = uniqueSongs.get(key);
+    if (isVideoId(id)) ownedSongIds.push(id);
+  }
+  const total = catalogIdols.length + uniqueSongs.size;
+  const payload = { owned: collection.totalUnique(), ids: ownedSongIds };
+  if (total > 0) payload.total = total;
+  passport.report('kpop', payload);
+  passport.loadSets().then((sets) => {
+    const { completed } = passport.checkSets(sets);
+    for (const set of completed) showToast(`Set complete: ${set.name}`);
+  });
+}
 
 /** The hash that names the current screen. */
 const hashFor = () => (mode === 'charts' ? (charts.list === 'new' ? '#top100/easy' : '#top100') : '#roulette');
@@ -386,6 +459,7 @@ function syncUrl() {
   if (location.hash !== hash) history.replaceState(null, '', location.pathname + location.search + hash);
   $('toKpop').setAttribute('href', hash); // already here: a no-op link
   $('toPop').setAttribute('href', '../pop/' + hash.split('/')[0]); // pop has no Easy list
+  $('toBollywood').setAttribute('href', '../bollywood/' + hash.split('/')[0]);
 }
 
 /** Collection button in the header: the count for whatever deck is on screen. */
@@ -409,7 +483,7 @@ function applyHash({ navigated = false } = {}) {
   if (h === '#top100/easy') charts.chooseList('new');
   else if (h === '#top100' && navigated) charts.chooseList('pro'); // at load, #top100 keeps the stored list
   const next = h.startsWith('#top100') ? 'charts' : h ? 'roulette' : store.get('mode', 'roulette');
-  if (!navigated || next !== mode) setMode(next);
+  if (!navigated || next !== mode) setMode(next, { defer: !navigated });
   else syncUrl();
 }
 
@@ -431,12 +505,17 @@ async function buildCredits() {
 }
 
 // ---------- start ----------
-async function start() {
+function start() {
   fx.initSky($('sky'));
   fx.initRimLights($('rim'));
   document.addEventListener('pointerdown', (e) => fx.tapBurst($('fx'), e.clientX, e.clientY));
-  $('modeRoulette').addEventListener('click', () => mode !== 'roulette' && setMode('roulette'));
+  $('modeRoulette').addEventListener('click', () => {
+    if (mode !== 'roulette') setMode('roulette');
+    else ensureRoulette();
+  });
   $('modeCharts').addEventListener('click', () => mode !== 'charts' && setMode('charts'));
+  $('roulette').addEventListener('pointerdown', ensureRoulette, { once: true, capture: true });
+  $('roulette').addEventListener('keydown', ensureRoulette, { once: true, capture: true });
   $('soundBtn').addEventListener('click', () => {
     sound.enabled = !sound.enabled;
     store.set('sound', sound.enabled ? 'on' : 'off');
@@ -457,10 +536,10 @@ async function start() {
   $('toKpop').addEventListener('click', () => { genre.open = false; });
   $('credits').addEventListener('toggle', buildCredits);
 
-  await loadRoulette();
 }
 
 async function loadRoulette() {
+  loadingRoulette = true;
   const actions = ['spinBtn', 'autoBtn', 'wheelBtn', 't3', 't2', 'resetBtn'];
   for (const id of actions) $(id).disabled = true;
   announce('Loading…');
@@ -468,15 +547,17 @@ async function loadRoulette() {
   try {
     const load = (f) => fetch(new URL(`../data/${f}`, import.meta.url), { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(f); return r.json(); });
     const chartData = loadChartData().catch(() => null); // in parallel with the rest
-    const [roster, videos] = await Promise.all([load('roster.json'), load('videos.json')]);
+    const [roster, videos] = await Promise.all([load('roster.json'), load('video-ids.json')]);
     // Photos are only painted for idols without an illustrated cover.
     const needPhotos = (roster.idols || []).some((i) => !hasArt('idol', i.name));
     let top;
     [top, portraits] = await Promise.all([chartData, needPhotos ? load('portraits.json').catch(() => null) : null]);
     chartIdx = chartIndex(top?.top);
+    if (top) chartSongsAll = [...(top.top || []), ...(top.newbie || [])];
     catalog = buildCatalog(roster, videos);
     if (!catalog.idols.length) throw new Error('No songs have videos');
   } catch (error) {
+    loadingRoulette = false;
     console.warn('Could not load Roulette data. Serve the site with npm start and generate video data with npm run resolve.', error);
     announce('Could not load the song data. ');
     const retry = el('button', { type: 'button', class: 'btn btn-small', text: 'Retry' });
@@ -488,6 +569,7 @@ async function loadRoulette() {
   portraits = artPlan(catalog.idols, portraits);
 
   game = new Game(catalog.idols, { target: store.get('target', '3') === '2' ? 2 : 3 });
+  loadingRoulette = false;
   for (const id of actions) $(id).disabled = false;
 
   rouletteTicker = catalog.idols.map((i) => i.name);
@@ -510,8 +592,8 @@ async function loadRoulette() {
   $('t2').addEventListener('click', () => setTarget(2));
   renderOptions();
   updateBinder();
+  reportPassport();
   showPlay();
-  loadApi().catch(() => {}); // warm up the YouTube API so the result screen is quick
   if (new URLSearchParams(location.search).has('debug')) Object.assign(window, { __game: game, __player: player });
 }
 

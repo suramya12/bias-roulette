@@ -72,6 +72,7 @@ export function makeCard(m, { size = 'big', faceDown = false, locked = false } =
   setCardImage(art, m, size);
   art.append(el('div', 'gem', m.gem), el('div', 'tier', m.tier.label));
   panel.append(art, el('div', 'name', m.title), el('div', 'by', m.by));
+  if (m.detail) panel.append(el('div', 'by detail', m.detail));
   const chips = el('div', 'chips');
   for (const c of m.chips) chips.append(el('span', '', c));
   const stones = el('div', 'stones');

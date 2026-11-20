@@ -37,8 +37,10 @@
         <a href="../kpop/#top100">K-pop</a>
         <a href="../pop/#top100">Pop &amp; Latin</a>
         <a aria-current="page" href="./">Anime</a>
+        <a href="../bollywood/#top100">Bollywood</a>
       </div>
     </details>
+    <span class="heard-count" id="heardCount" role="status"></span>
     <a class="home-link" href="../">Bias Roulette</a>
   </header>
   <main>
@@ -51,6 +53,8 @@
       </div>
       <div class="row-btns center">
         <button class="pull" id="pull" type="button" disabled>Pull</button>
+        <button class="ghost btn-drop" id="dailyDropBtn" type="button" disabled><svg class="btn-ico" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M2 4l6 4.5L14 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span id="dailyDropLabel">Today's drop</span></button>
+        <button class="ghost btn-unseen" id="unseenBtn" type="button" disabled>✦ 60 · Unseen pull</button>
         <label class="ghost switch chart-auto"><input id="auto" type="checkbox"> Auto <span class="auto-state" id="autoState">off</span></label>
         <button class="ghost" id="sound" type="button" aria-pressed="true">Sound on</button>
       </div>
@@ -80,6 +84,7 @@
       </div>
     </section>
   </main>
+  <div class="toast-stack" id="toastStack" role="status" aria-live="polite"></div>
   <div id="fx" aria-hidden="true"></div>
   <noscript><p class="noscript">This game needs JavaScript.</p></noscript>
   <script type="module" src="src/app.js"></script>

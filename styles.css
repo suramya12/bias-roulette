@@ -232,9 +232,15 @@ button { font-family: inherit; }
 .pc[data-tier="epic"] { --incoming: #ff8ad1; }
 .pc[data-tier="rare"] { --incoming: #7fd0ff; }
 .pc[data-tier="common"] { --incoming: #c9ccd8; }
-.pc.incoming .pc-front { box-shadow: 0 0 22px 5px var(--incoming); animation: incoming-glow .45s ease-in-out infinite alternate; }
-@keyframes incoming-glow { to { box-shadow: 0 0 34px 9px var(--incoming); } }
-@media (prefers-reduced-motion: reduce) { .pc.incoming .pc-front { animation: none; } }
+.pc.incoming .pc-front { box-shadow: 0 0 22px 5px var(--incoming); }
+.pc.incoming::after {
+  content: ""; position: absolute; inset: 0; border-radius: 10px; pointer-events: none;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  box-shadow: 0 0 34px 9px var(--incoming); opacity: 0; will-change: opacity;
+  animation: incoming-glow .45s ease-in-out infinite alternate;
+}
+@keyframes incoming-glow { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .pc.incoming::after { animation: none; opacity: 0; } }
 .ring-hit {
   position: absolute; left: 22%; right: 22%; top: 8%; height: 66%; z-index: 3;
   background: none; border: 0; border-radius: var(--r-l); cursor: pointer; touch-action: manipulation;
@@ -291,6 +297,11 @@ button { font-family: inherit; }
 .chart-actions #pullBtn { grid-column: 1; }
 .chart-actions #quickBtn { grid-column: 1 / -1; }
 .chart-actions #chartAutoPill { grid-column: 2; grid-row: 1; }
+.chart-actions #dailyDropBtn { grid-column: 1 / -1; border-color: color-mix(in srgb, #f2c14e 55%, var(--line)); }
+.chart-actions #dailyDropBtn:not(:disabled):hover { border-color: #f2c14e; }
+.chart-actions #unseenBtn { grid-column: 1 / -1; color: var(--muted); }
+.chart-actions #unseenBtn:not(:disabled) { color: var(--text); }
+.btn-ico { width: 1em; height: 1em; flex: none; }
 .chart-auto { margin: 0; gap: 8px; }
 .chart-auto.switch span { display: flex; align-items: center; gap: 6px; }
 .chart-auto.is-on .auto-state { background: var(--accent); color: var(--on-light); }
@@ -457,6 +468,18 @@ button { font-family: inherit; }
 .binder-grid figcaption { margin-top: 6px; max-width: clamp(90px, 25vw, 112px); font-size: .75rem; text-align: center; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .binder-view { position: fixed; inset: 0; z-index: 5; display: grid; place-items: center; padding: 24px; background: rgba(5,3,10,.85); }
 @keyframes float { 50% { transform: translateY(-7px); } }
+
+/* ---------- passport toasts ---------- */
+.toast-stack {
+  position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom)); z-index: 60;
+  transform: translateX(-50%); display: grid; gap: 8px; justify-items: center; pointer-events: none;
+  width: min(calc(100vw - 32px), 360px);
+}
+.toast {
+  padding: 9px 16px; border-radius: 999px; font: 600 .88rem/1.2 var(--body); color: var(--text);
+  background: rgba(16, 13, 24, .94); border: 1px solid color-mix(in srgb, #f2c14e 55%, var(--line-2));
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .55); animation: rise .22s var(--ease) both;
+}
 
 /* ---------- tap sparks and confetti ---------- */
 .fx { position: fixed; inset: 0; z-index: 50; overflow: hidden; pointer-events: none; }

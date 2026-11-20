@@ -8,6 +8,7 @@ import {
   parseSeedLine, extractInitialData, extractPlayerResponse, videosFromSearch,
   playability, classify, score, watchMetadata, copySource, copyGate, orderCopies, sameSong, COPY_POLICY,
 } from './lib.mjs';
+import { writeRuntimeCatalog } from './runtime.mjs';
 
 const animeRoot = fileURLToPath(new URL('../', import.meta.url));
 const hash = value => createHash('sha256').update(value).digest('hex');
@@ -47,6 +48,8 @@ export function createPageLoader({
 }) {
   let lastRequest = -Infinity;
   const pages = new Map();
+  // Keep only recent pages in memory; watch pages are ~1 MB each and a full run reads thousands.
+  const remember = (url, html) => { pages.delete(url); pages.set(url, html); if (pages.size > 32) pages.delete(pages.keys().next().value); };
   // The resolver calls this serially. Only network requests consume the delay.
   return async function loadPage(url) {
     if (pages.has(url)) return pages.get(url);
@@ -54,7 +57,7 @@ export function createPageLoader({
     if (!refresh) {
       try {
         const html = await readFile(path, 'utf8');
-        pages.set(url, html);
+        remember(url, html);
         return html;
       } catch (error) { if (error.code !== 'ENOENT') throw error; }
     }
@@ -97,7 +100,7 @@ export function createPageLoader({
     }
     await mkdir(cacheDir, { recursive: true });
     await writeFile(path, html, 'utf8');
-    pages.set(url, html);
+    remember(url, html);
     return html;
   };
 }
@@ -292,6 +295,7 @@ export async function runResolver({ root = animeRoot, refresh = false, only = ''
   const catalog = { generated: now(), songs };
   await mkdir(cacheDir, { recursive: true });
   await writeFile(join(dataDir, 'catalog.json'), `${JSON.stringify(catalog, null, 2)}\n`, 'utf8');
+  await writeRuntimeCatalog({ root, catalog });
   await writeFile(join(root, 'REVIEW.md'), reviewMarkdown(catalog), 'utf8');
   await writeFile(join(cacheDir, 'resolve-state.json'), `${JSON.stringify(nextState, null, 2)}\n`, 'utf8');
   log(summary(catalog));

@@ -36,9 +36,11 @@ export function allSongs(roster) {
   return map;
 }
 
+const videoIdOf = (entry) => (typeof entry === 'string' ? entry : entry?.id) || '';
+
 /**
- * Join the roster with resolved videos. Songs without a video are left out,
- * and idols left with no songs are left out too (listed in `skipped`).
+ * Join the roster with resolved videos (full records or ID-only map). Songs without a video
+ * are left out, and idols left with no songs are left out too (listed in `skipped`).
  */
 export function buildCatalog(roster, videos) {
   const idols = [];
@@ -46,8 +48,8 @@ export function buildCatalog(roster, videos) {
   for (const idol of roster.idols) {
     const group = roster.groups.find((g) => g.id === idol.group);
     const songs = idolSongs(roster, idol)
-      .filter((s) => videos[s.key]?.id)
-      .map((s) => ({ title: s.title, artist: s.artist, key: s.key, videoId: videos[s.key].id }));
+      .filter((s) => videoIdOf(videos[s.key]))
+      .map((s) => ({ title: s.title, artist: s.artist, key: s.key, videoId: videoIdOf(videos[s.key]) }));
     if (!songs.length) {
       skipped.push(idol.name);
       continue;

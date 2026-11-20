@@ -1,0 +1,600 @@
+{
+  "sets": [
+    {
+      "id": "kpop-2nd-gen-royalty",
+      "side": "kpop",
+      "name": "2nd Gen Royalty",
+      "blurb": "The 2007-2012 viral hooks that built modern K-pop.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "U7mPqycQ0tQ"
+        },
+        {
+          "side": "kpop",
+          "id": "AAbokV76tkU"
+        },
+        {
+          "side": "kpop",
+          "id": "Dww9UjJ4Dt8"
+        },
+        {
+          "side": "kpop",
+          "id": "x6QA3m58DQw"
+        },
+        {
+          "side": "kpop",
+          "id": "j7_lSP8Vc3o"
+        },
+        {
+          "side": "kpop",
+          "id": "QZBn1e9pr2Q"
+        }
+      ]
+    },
+    {
+      "id": "kpop-3rd-gen-queens",
+      "side": "kpop",
+      "name": "3rd Gen Queens",
+      "blurb": "Iconic girl group anthems from K-pop's 2016-2019 peak.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "kOHB85vDuow"
+        },
+        {
+          "side": "kpop",
+          "id": "dISNgvVpWlo"
+        },
+        {
+          "side": "kpop",
+          "id": "J_CFBjAyPWE"
+        },
+        {
+          "side": "kpop",
+          "id": "KhTeiaCezwM"
+        },
+        {
+          "side": "kpop",
+          "id": "r_6q_-d-7Sk"
+        },
+        {
+          "side": "kpop",
+          "id": "iDjQSdN_ig8"
+        }
+      ]
+    },
+    {
+      "id": "kpop-3rd-gen-titans",
+      "side": "kpop",
+      "name": "3rd Gen Titans",
+      "blurb": "Stadium-filling boy group classics of the 2010s.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "hmE9f-TEutc"
+        },
+        {
+          "side": "kpop",
+          "id": "I3dezFzsNss"
+        },
+        {
+          "side": "kpop",
+          "id": "J-wFp43XOrA"
+        },
+        {
+          "side": "kpop",
+          "id": "vrdk3IGcau8"
+        },
+        {
+          "side": "kpop",
+          "id": "FZ9lJ5ctd0s"
+        },
+        {
+          "side": "kpop",
+          "id": "vecSVX1QYbQ"
+        }
+      ]
+    },
+    {
+      "id": "kpop-solo-sovereigns",
+      "side": "kpop",
+      "name": "Solo Sovereigns",
+      "blurb": "Unstoppable soloists commanding the stage alone.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "d9IxdwEFk1c"
+        },
+        {
+          "side": "kpop",
+          "id": "rcEyUNeZqmY"
+        },
+        {
+          "side": "kpop",
+          "id": "AbZH7XWDW_k"
+        },
+        {
+          "side": "kpop",
+          "id": "ur0hCdne2-s"
+        },
+        {
+          "side": "kpop",
+          "id": "RKhsHGfrFmY"
+        },
+        {
+          "side": "kpop",
+          "id": "HlN2BXNJzxA"
+        }
+      ]
+    },
+    {
+      "id": "kpop-seoul-after-dark",
+      "side": "kpop",
+      "name": "Seoul After Dark",
+      "blurb": "Late-night K-R&B and hip-hop essentials.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "wKyMIrBClYw"
+        },
+        {
+          "side": "kpop",
+          "id": "_1SX7W1IfJw"
+        },
+        {
+          "side": "kpop",
+          "id": "afxLaQiLu-o"
+        },
+        {
+          "side": "kpop",
+          "id": "uLUvHUzd4UA"
+        },
+        {
+          "side": "kpop",
+          "id": "kqckfuUnC1U"
+        },
+        {
+          "side": "kpop",
+          "id": "7QQzDQceGgU"
+        }
+      ]
+    },
+    {
+      "id": "kpop-idol-band-room",
+      "side": "kpop",
+      "name": "Idol Band Room",
+      "blurb": "Live guitars, soaring choruses, and festival anthems.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "BS7tz2rAOSA"
+        },
+        {
+          "side": "kpop",
+          "id": "vnS_jn2uibs"
+        },
+        {
+          "side": "kpop",
+          "id": "B-cKxO0m8g4"
+        },
+        {
+          "side": "kpop",
+          "id": "VpaUh_BGqE0"
+        },
+        {
+          "side": "kpop",
+          "id": "7arOrCfvumQ"
+        },
+        {
+          "side": "kpop",
+          "id": "ImuWa3SJulY"
+        }
+      ]
+    },
+    {
+      "id": "kpop-dark-theatrical",
+      "side": "kpop",
+      "name": "Dark & Theatrical",
+      "blurb": "Rock riffs, gothic drama, and sinister concepts.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "FKlGHHhTOsQ"
+        },
+        {
+          "side": "kpop",
+          "id": "MOG7BexjPjM"
+        },
+        {
+          "side": "kpop",
+          "id": "KSH-FVVtTf0"
+        },
+        {
+          "side": "kpop",
+          "id": "hFQL7BS6lrs"
+        },
+        {
+          "side": "kpop",
+          "id": "uR8Mrt1IpXg"
+        }
+      ]
+    },
+    {
+      "id": "kpop-viral-resurrection",
+      "side": "kpop",
+      "name": "Viral Resurrection",
+      "blurb": "Sleeper hits and cult hooks that broke the internet.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "-Axm4IYHVYk"
+        },
+        {
+          "side": "kpop",
+          "id": "hfXZ6ydgZyo"
+        },
+        {
+          "side": "kpop",
+          "id": "Nu2yQ1zYDYU"
+        },
+        {
+          "side": "kpop",
+          "id": "Med2XipHJJM"
+        },
+        {
+          "side": "kpop",
+          "id": "o4wJGWcHzVA"
+        },
+        {
+          "side": "kpop",
+          "id": "UuV2BmJ1p_I"
+        }
+      ]
+    },
+    {
+      "id": "kpop-sm-sound-lab",
+      "side": "kpop",
+      "name": "SM Sound Lab",
+      "blurb": "Bold genre-bending production and vocal flexes.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "HtJS32n6LNQ"
+        },
+        {
+          "side": "kpop",
+          "id": "4j7Umwfx60Q"
+        },
+        {
+          "side": "kpop",
+          "id": "3UGMDJ9kZCA"
+        },
+        {
+          "side": "kpop",
+          "id": "8kyG5tTZ1iE"
+        },
+        {
+          "side": "kpop",
+          "id": "iwd8N6K-sLk"
+        },
+        {
+          "side": "kpop",
+          "id": "phuiiNCxRMg"
+        }
+      ]
+    },
+    {
+      "id": "kpop-2024-2025-wave",
+      "side": "kpop",
+      "name": "2024-2025 K-Wave",
+      "blurb": "The freshest hooks dominating charts right now.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "jWQx2f-CErU"
+        },
+        {
+          "side": "kpop",
+          "id": "Vk5-c_v4gMU"
+        },
+        {
+          "side": "kpop",
+          "id": "IajeQM00yfE"
+        },
+        {
+          "side": "kpop",
+          "id": "n6B5gQXlB-0"
+        },
+        {
+          "side": "kpop",
+          "id": "ekr2nIex040"
+        },
+        {
+          "side": "kpop",
+          "id": "JSFG-IE8n_c"
+        }
+      ]
+    },
+    {
+      "id": "pop-urbano-reggaeton",
+      "side": "pop",
+      "name": "Urbano & Reggaeton",
+      "blurb": "Global Spanish-language club juggernauts.",
+      "items": [
+        {
+          "side": "pop",
+          "id": "Cr8K88UcO0s"
+        },
+        {
+          "side": "pop",
+          "id": "CCF1_jI8Prk"
+        },
+        {
+          "side": "pop",
+          "id": "kJQP7kiw5Fk"
+        },
+        {
+          "side": "pop",
+          "id": "wnJ6LuUFpMo"
+        },
+        {
+          "side": "pop",
+          "id": "ca48oMV59LU"
+        },
+        {
+          "side": "pop",
+          "id": "CFPLIaMpGrY"
+        }
+      ]
+    },
+    {
+      "id": "pop-rock-alt-latino",
+      "side": "pop",
+      "name": "Rock & Alt Latino",
+      "blurb": "Guitars, poetry, and avant-garde Latin anthems.",
+      "items": [
+        {
+          "side": "pop",
+          "id": "OX-us7PEfkc"
+        },
+        {
+          "side": "pop",
+          "id": "kRt2sRyup6A"
+        },
+        {
+          "side": "pop",
+          "id": "bE3ABNHDnAc"
+        },
+        {
+          "side": "pop",
+          "id": "WT-VE9OyAJk"
+        },
+        {
+          "side": "pop",
+          "id": "Rht7rBHuXW8"
+        },
+        {
+          "side": "pop",
+          "id": "IKmPci5VXz0"
+        }
+      ]
+    },
+    {
+      "id": "pop-2000s-club-royalty",
+      "side": "pop",
+      "name": "2000s Club Royalty",
+      "blurb": "Timbaland beats, Y2K gloss, and R&B-pop peaks.",
+      "items": [
+        {
+          "side": "pop",
+          "id": "LOZuxwVk7TU"
+        },
+        {
+          "side": "pop",
+          "id": "0J3vgcE5i2o"
+        },
+        {
+          "side": "pop",
+          "id": "GxBSyx85Kp8"
+        },
+        {
+          "side": "pop",
+          "id": "CvBfHwUxHIk"
+        },
+        {
+          "side": "pop",
+          "id": "DUT5rEU6pqM"
+        },
+        {
+          "side": "pop",
+          "id": "ViwtNLUqkMY"
+        }
+      ]
+    },
+    {
+      "id": "pop-2010s-electropop",
+      "side": "pop",
+      "name": "2010s Electropop",
+      "blurb": "Neon synth-pop and maximalist dancefloor bangers.",
+      "items": [
+        {
+          "side": "pop",
+          "id": "TeccAtqd5K8"
+        },
+        {
+          "side": "pop",
+          "id": "CcNo07Xp8aQ"
+        },
+        {
+          "side": "pop",
+          "id": "dMK_npDG12Q"
+        },
+        {
+          "side": "pop",
+          "id": "dX3k_QDnzHE"
+        },
+        {
+          "side": "pop",
+          "id": "iP6XpLQM2Cs"
+        },
+        {
+          "side": "pop",
+          "id": "qrO4YZeyl0I"
+        }
+      ]
+    },
+    {
+      "id": "pop-spanglish-brazil",
+      "side": "pop",
+      "name": "Spanglish & Brazil",
+      "blurb": "Borderless hits blending English, Spanish, and funk.",
+      "items": [
+        {
+          "side": "pop",
+          "id": "bn_p95HbHoQ"
+        },
+        {
+          "side": "pop",
+          "id": "hFCjGiawJi4"
+        },
+        {
+          "side": "pop",
+          "id": "pRpeEdMmmQ0"
+        },
+        {
+          "side": "pop",
+          "id": "BQ0mxQXmLsk"
+        },
+        {
+          "side": "pop",
+          "id": "t4H_Zoh7G5A"
+        },
+        {
+          "side": "pop",
+          "id": "NUsoVlDFqZg"
+        }
+      ]
+    },
+    {
+      "id": "pop-modern-rnb-groove",
+      "side": "pop",
+      "name": "Modern R&B Groove",
+      "blurb": "Silky vocals, retro funk, and crisp choreography.",
+      "items": [
+        {
+          "side": "pop",
+          "id": "MSRcC626prw"
+        },
+        {
+          "side": "pop",
+          "id": "4NRXx6U8ABQ"
+        },
+        {
+          "side": "pop",
+          "id": "rywUS-ohqeE"
+        },
+        {
+          "side": "pop",
+          "id": "jrjESdPsLxE"
+        },
+        {
+          "side": "pop",
+          "id": "XoiOOiuH8iI"
+        }
+      ]
+    },
+    {
+      "id": "pop-euro-global-pop",
+      "side": "pop",
+      "name": "Euro & Global Pop",
+      "blurb": "High-gloss European dance hooks that went worldwide.",
+      "items": [
+        {
+          "side": "pop",
+          "id": "VHoT4N43jK8"
+        },
+        {
+          "side": "pop",
+          "id": "c18441Eh_WE"
+        },
+        {
+          "side": "pop",
+          "id": "TUVcZfQe-Kw"
+        },
+        {
+          "side": "pop",
+          "id": "Dll6VJ2C7wo"
+        },
+        {
+          "side": "pop",
+          "id": "oftolPu9qp4"
+        }
+      ]
+    },
+    {
+      "id": "anime-dark-shonen",
+      "side": "anime",
+      "name": "Modern Dark Shonen",
+      "blurb": "Curses, devils, titans, and explosive rock hooks.",
+      "items": [
+        {
+          "side": "anime",
+          "id": "8OkpRK2_gVs"
+        },
+        {
+          "side": "anime",
+          "id": "v8bZVdTgXoY"
+        },
+        {
+          "side": "anime",
+          "id": "5yb2N3pnztU"
+        },
+        {
+          "side": "anime",
+          "id": "dFlDRhvM4L0"
+        },
+        {
+          "side": "anime",
+          "id": "pmanD_s7G3U"
+        },
+        {
+          "side": "anime",
+          "id": "7aMOurgDB-o"
+        }
+      ]
+    },
+    {
+      "id": "bridge-dark-concepts",
+      "side": "bridge",
+      "name": "Dark Concepts",
+      "blurb": "Anti-heroes, curses, and razor-sharp dark anthems.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "KSH-FVVtTf0"
+        },
+        {
+          "side": "kpop",
+          "id": "FKlGHHhTOsQ"
+        },
+        {
+          "side": "pop",
+          "id": "DyDfgMOUjCI"
+        },
+        {
+          "side": "pop",
+          "id": "Rht7rBHuXW8"
+        },
+        {
+          "side": "anime",
+          "id": "lnVDIA0QIvY"
+        },
+        {
+          "side": "anime",
+          "id": "5yb2N3pnztU"
+        }
+      ]
+    }
+  ]
+}

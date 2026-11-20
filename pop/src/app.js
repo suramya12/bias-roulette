@@ -1,15 +1,24 @@
 import * as G from './game.js';
 import { makeCard, reveal, songModel, artistModel, reduced, setCardImage, creditLine } from './cards.js';
 import { createPlayer } from './player.js';
-import { createRoulette } from './roulette.js';
+import { createRoulette, configureAutoplay } from './roulette.js';
 import { startCrowd } from './stage.js';
 import { PullMachine } from '../../src/pull-machine.js';
 import { Sound } from '../../src/sound.js';
 import { createAutoAdvance } from '../../src/auto-advance.js';
-import { CREDIT_HOSTS, IMAGE_HOSTS, safeUrl, videoThumbnail } from '../../src/validation.js';
+import { cryptoInt } from '../../src/game.js';
+import { CREDIT_HOSTS, IMAGE_HOSTS, isVideoId, safeUrl, videoThumbnail } from '../../src/validation.js';
+import * as passport from '../../src/passport.js';
+import { showToast } from '../../src/toast.js';
 
 const $ = (s) => document.querySelector(s);
-try { localStorage.setItem('bias-roulette.lastSide', 'pop'); } catch { /* private mode */ }
+let config;
+export async function start(options) {
+  config = options;
+  try { localStorage.setItem('bias-roulette.lastSide', config.side); } catch {}
+  configureAutoplay(config.storage + '.autoplay');
+  await boot();
+}
 
 async function loadJson(path) {
   const response = await fetch(path, { cache: 'no-cache' });
@@ -17,16 +26,18 @@ async function loadJson(path) {
   return response.json();
 }
 
-const portraitsReady = loadJson('data/portraits.json').catch(() => null);
+let portraitsReady;
 const actions = [...document.querySelectorAll('.top .toggle button'), $('#openBinder'), ...document.querySelectorAll('[data-deck]')];
 async function boot() {
+  portraitsReady = loadJson('data/portraits.json').catch(() => null);
   actions.forEach((button) => { button.disabled = true; });
   let data;
   try {
     data = await loadJson('data/data.json');
     if (!Array.isArray(data?.artists) || !Array.isArray(data?.songs)) throw new Error('Invalid game data');
+    config.prepare?.(data);
   } catch (error) {
-    console.warn('Could not load Pop game data.', error);
+    console.warn(`Could not load ${config.label ?? 'Pop'} game data.`, error);
     const p = Object.assign(document.createElement('p'), { className: 'sub', role: 'status' });
     const retry = Object.assign(document.createElement('button'), { className: 'ghost', type: 'button', textContent: 'Retry' });
     retry.addEventListener('click', () => { p.remove(); boot(); });
@@ -47,7 +58,7 @@ function init(data) {
   const songsById = new Map(data.songs.map((s) => [s.id, s]));
 
   // ---------- collection (localStorage) ----------
-  const KEY = 'encore.collection.v1';
+  const KEY = config.storage + '.collection.v1';
   let col = {};
   try { col = JSON.parse(localStorage.getItem(KEY)) || {}; } catch {}
   // Keep only cards that still exist after a data rebuild, and survive a damaged value.
@@ -58,28 +69,83 @@ function init(data) {
       s: (Array.isArray(col?.s) ? col.s : []).filter((id) => songsById.has(id)),
     };
   }
+  const artistsByName = new Map(artists.map((a) => [a.name, a]));
+  function reportPassport() {
+    const owned = (col.a?.length || 0) + (col.s?.length || 0);
+    const total = artists.length + binderSongs.length;
+    const ids = (col.s || []).filter(isVideoId);
+    passport.report(config.side, { owned, total, ids });
+    passport.loadSets().then((sets) => {
+      const { completed } = passport.checkSets(sets);
+      for (const set of completed) showToast(`Set complete: ${set.name}`);
+    });
+  }
   function win(kind, id) {
     const r = G.collect(col, kind, id);
     col = r.col;
     try { localStorage.setItem(KEY, JSON.stringify(col)); } catch {}
+    let tier = 'common';
+    if (kind === 'artist') {
+      const artist = artistsByName.get(id);
+      if (artist) tier = G.artistRarity(artist.power).id;
+    } else {
+      const song = songsById.get(id);
+      if (song) tier = G.songRarity(song.o).id;
+    }
+    const dust = passport.collected(config.side, { isNew: r.isNew, tier });
+    if (dust) showToast(`Duplicate · +${dust} ✦`);
     updateCount();
+    reportPassport();
+    renderPassportButtons();
     return r.isNew;
   }
   const updateCount = () => ($('#binderCount').textContent = (col.a?.length || 0) + (col.s?.length || 0));
 
-  const artistCard = (a, o) => makeCard(artistModel(a, portraits[a.name], songsOf(a)), o);
-  const songCard = (s, o) => makeCard(songModel(s), o);
+  function tunePortraitImg(card) {
+    const img = card?.querySelector?.('.art img');
+    if (!img) return;
+    img.decoding = 'async';
+    if (img.loading !== 'lazy') {
+      const src = img.getAttribute('src');
+      img.loading = 'lazy';
+      if (src && !img.complete) {
+        img.removeAttribute('src');
+        img.setAttribute('src', src);
+      }
+    }
+  }
+  const artistCard = (a, o) => {
+    const card = makeCard(config.artistModel ? config.artistModel(a, portraits[a.name], songsOf(a)) : artistModel(a, portraits[a.name], songsOf(a)), o);
+    if (o?.lazy) {
+      card.dataset.lazy = '1';
+      tunePortraitImg(card);
+    }
+    return card;
+  };
+  const songCard = (s, o) => makeCard(config.songModel ? config.songModel(s, o) : songModel(s), o);
 
   // ---------- modes: #roulette (deck all), #roulette/favs, #top100 ----------
   const modes = { roulette: $('#roulette'), top100: $('#top100') };
   const modeTabs = [...document.querySelectorAll('.top .toggle button')];
   const stops = {};
-  const DECK_NOTE = {
-    all: 'The biggest English and Latin pop acts. Spin for an artist, then for one of their songs.',
-    favs: 'A curated 100, from Beyoncé to Tate McRae. Spin for an artist, then for one of their songs.',
-  };
-  let deck = 'all';
-  function setMode(m, d = deck) {
+  const DECK_NOTE = config.deckNotes;
+  let deck = config.decks[0];
+  let chartRendered = false;
+  let playingTopId = null;
+  function ensureChart() {
+    if (chartRendered) return;
+    chartRendered = true;
+    renderChart();
+  }
+  function scheduleChart() {
+    if (chartRendered) return;
+    requestAnimationFrame(() => {
+      if (chartRendered) return;
+      if (typeof requestIdleCallback === 'function') requestIdleCallback(ensureChart, { timeout: 1500 });
+      else setTimeout(ensureChart, 1);
+    });
+  }
+  function setMode(m, d = deck, { deferChart = false } = {}) {
     deck = d;
     for (const [k, sec] of Object.entries(modes)) sec.hidden = k !== m;
     for (const tab of modeTabs) {
@@ -88,15 +154,20 @@ function init(data) {
       tab.tabIndex = selected ? 0 : -1;
     }
     for (const b of document.querySelectorAll('[data-deck]')) b.setAttribute('aria-checked', b.dataset.deck === d);
-    for (const k of ['all', 'favs']) $(`#deck-${k}`).hidden = k !== d;
+    for (const k of config.decks) $(`#deck-${k}`).hidden = k !== d;
     $('#deckNote').textContent = DECK_NOTE[d];
-    if (m === 'top100') machine.activate();
+    if (m === 'top100') {
+      if (!deferChart) ensureChart();
+      machine.activate();
+    }
     const live = m === 'roulette' ? d : m;
     for (const [k, stop] of Object.entries(stops)) if (k !== live) stop();
-    history.replaceState(null, '', m === 'top100' ? '#top100' : d === 'favs' ? '#roulette/favs' : '#roulette');
-    // The genre switch lands on the same mode in the K-pop app.
-    $('#toKpop').href = m === 'top100' ? '../kpop/#top100' : '../kpop/#roulette';
-    try { localStorage.setItem('encore.deck', d); } catch {}
+    history.replaceState(null, '', m === 'top100' ? '#top100' : d === config.decks[1] ? '#roulette/' + d : '#roulette');
+    // The genre switch lands on the same mode on sides with Roulette and Top 100.
+    for (const link of document.querySelectorAll('[data-mode-link]')) {
+      link.href = `../${link.dataset.modeLink}/#${m}`;
+    }
+    try { localStorage.setItem(config.storage + '.deck', d); } catch {}
   }
   modeTabs.forEach((tab, index) => {
     tab.addEventListener('click', () => setMode(tab.dataset.mode));
@@ -121,16 +192,11 @@ function init(data) {
 
   // ---------- Mode 1: Roulette, two decks ----------
   const shared = { songsById, portraits, win, artistCard, songCard };
-  const mainPool = artists.filter((a) => a.main);
-  stops.all = createRoulette($('#deck-all'), { ...shared, pool: mainPool }).stop;
-  const BIAS_FILLS = [
-    ['#ff6fb5', '#b3135f'], ['#ffd76a', '#c27b00'], ['#c18cff', '#6a2fd1'], ['#ff8fa0', '#b8304a'],
-    ['#ffb3e1', '#c2367e'], ['#f7c873', '#9a6200'],
-  ];
-  const biasPool = artists.filter((a) => a.bias).sort((a, b) => a.bias - b.bias);
-  stops.favs = createRoulette($('#deck-favs'), { ...shared, pool: biasPool, fills: BIAS_FILLS }).stop;
-  $('#nAll').textContent = mainPool.length;
-  $('#nFavs').textContent = biasPool.length;
+  config.decks.forEach((key, index) => {
+    const pool = config.pool(artists, key);
+    stops[key] = createRoulette($(`#deck-${key}`), { ...shared, pool, fills: config.fills?.[index], noun: config.nouns?.[index] }).stop;
+    $(`#n${index === 0 ? 'All' : 'Favs'}`).textContent = pool.length;
+  });
 
   // ---------- Mode 2: Top 100 ----------
   const tPlayer = createPlayer($('#tPlayer'), {
@@ -138,7 +204,7 @@ function init(data) {
     onPlay: (token) => topAuto.play(token), onBlocked: (token) => topAuto.blocked(token),
   });
   let chartAutoOn = false;
-  try { chartAutoOn = localStorage.getItem('encore.chartAuto') === 'on'; } catch {}
+  try { chartAutoOn = localStorage.getItem(config.storage + '.chartAuto') === 'on'; } catch {}
   const topAuto = createAutoAdvance({
     enabled: chartAutoOn, isActive: () => !$('#top100').closest('[hidden]'),
     advance: () => machine.pull({ short: true, immediate: document.hidden }),
@@ -151,7 +217,7 @@ function init(data) {
   chartAutoInput.checked = chartAutoOn;
   chartAutoInput.nextElementSibling.textContent = chartAutoOn ? 'on' : 'off';
   chartAutoInput.addEventListener('change', () => {
-    try { localStorage.setItem('encore.chartAuto', chartAutoInput.checked ? 'on' : 'off'); } catch {}
+    try { localStorage.setItem(config.storage + '.chartAuto', chartAutoInput.checked ? 'on' : 'off'); } catch {}
     chartAutoInput.nextElementSibling.textContent = chartAutoInput.checked ? 'on' : 'off';
     topAuto.setEnabled(chartAutoInput.checked);
   });
@@ -164,7 +230,7 @@ function init(data) {
   const shown = new Set();
   const ringSize = () => (innerWidth < 520 ? 10 : 12);
   let soundOn = true;
-  try { soundOn = localStorage.getItem('encore.sound') !== 'off'; } catch {}
+  try { soundOn = localStorage.getItem(config.storage + '.sound') !== 'off'; } catch {}
   const sound = new Sound(soundOn);
   function soundLabel() {
     $('#sound').textContent = sound.enabled ? 'Sound on' : 'Sound off';
@@ -173,10 +239,27 @@ function init(data) {
   $('#sound').addEventListener('click', () => {
     sound.enabled = !sound.enabled;
     if (sound.enabled) sound.unlock();
-    try { localStorage.setItem('encore.sound', sound.enabled ? 'on' : 'off'); } catch {}
+    try { localStorage.setItem(config.storage + '.sound', sound.enabled ? 'on' : 'off'); } catch {}
     soundLabel();
   });
   soundLabel();
+  let pendingDrop = false;
+  let forcedSong = null;
+  function renderPassportButtons() {
+    const busy = ['spinning', 'landing', 'revealing'].includes(machine?.state);
+    const dropBtn = $('#dailyDropBtn');
+    const dropLabel = $('#dailyDropLabel');
+    const unseenBtn = $('#unseenBtn');
+    if (dropBtn && dropLabel) {
+      const claimed = passport.isClaimedToday(config.side);
+      dropLabel.textContent = claimed ? `Claimed · new drop in ${passport.hoursUntilMidnight()} h` : "Today's drop";
+      dropBtn.disabled = claimed || busy || !TOP.length;
+    }
+    if (unseenBtn) {
+      const unowned = TOP.some((s) => !col.s.includes(s.id));
+      unseenBtn.disabled = busy || !unowned || passport.summary().dust < passport.UNSEEN_COST;
+    }
+  }
   const machine = new PullMachine({
     ring: $('#ring'), hit: $('#ringBtn'), buttons: [$('#pull')], slots: ringSize,
     radius: (width, n) => Math.round((width / 2) / Math.tan(Math.PI / n) + 18),
@@ -185,23 +268,51 @@ function init(data) {
       slot.replaceChildren(songCard(song, { size: 'mini', faceDown: true }));
     },
     sound, tierOf: (song) => G.songRarity(song.o).id,
-    onPull: () => { topAuto.invalidate(); tPlayer.stop(); tPlayer.clearAutoPaused(); },
-    onCancel: () => { topAuto.invalidate(); tPlayer.stop(); },
+    onPull: () => { topAuto.invalidate(); tPlayer.stop(); tPlayer.clearAutoPaused(); renderPassportButtons(); },
+    onCancel: () => { pendingDrop = false; forcedSong = null; topAuto.invalidate(); tPlayer.stop(); renderPassportButtons(); },
     say: (text) => { $('#topAnnounce').textContent = text; },
     onLand: (song, tier) => { $('#topAnnounce').textContent = `#${song.o} ${song.t} ? ${tier}!`; },
     onReveal: (song, { short } = {}) => {
       const token = machine.generation;
       const isNew = win('song', song.id);
+      if (pendingDrop) {
+        pendingDrop = false;
+        const res = passport.claim(config.side);
+        if (res.tour) showToast('World tour complete · +50 ✦');
+      }
+      renderPassportButtons();
       playTop(song, !short, isNew, () => machine.generation === token && machine.active, short);
     },
   });
   machine.setPool(TOP, () => {
+    if (forcedSong) {
+      const forced = forcedSong;
+      forcedSong = null;
+      return forced;
+    }
     const song = G.dealRing(TOP, 1, shown)[0];
     if (song) shown.add(song.id);
     return song;
   });
+  $('#dailyDropBtn')?.addEventListener('click', () => {
+    if (passport.isClaimedToday(config.side) || !TOP.length) return;
+    if (modes.top100.hidden) setMode('top100');
+    const pickId = passport.dailyPick(config.side, TOP.map((s) => s.id));
+    const song = TOP.find((s) => s.id === pickId) || TOP[0];
+    if (!song) return;
+    pendingDrop = true;
+    forcedSong = song;
+    machine.pull();
+  });
+  $('#unseenBtn')?.addEventListener('click', () => {
+    const unowned = TOP.filter((s) => !col.s.includes(s.id));
+    if (!unowned.length || !passport.spend(passport.UNSEEN_COST)) return;
+    forcedSong = unowned[cryptoInt(unowned.length)];
+    renderPassportButtons();
+    machine.pull();
+  });
   function playTop(song, pulled, isNew, valid, short = false) {
-    const card = songCard(song, { size: 'big' });
+    const card = songCard(song, { size: 'big', chart: true });
     const extra = [];
     if (pulled) {
       const stamp = document.createElement('div');
@@ -212,6 +323,7 @@ function init(data) {
     $('#tResult').hidden = false;
     showBig($('#tCard'), card, extra, valid);
     tPlayer.play(song.id, topAuto.begin());
+    playingTopId = song.id;
     $('#tNow').replaceChildren('Now playing: ', Object.assign(document.createElement('b'), { textContent: song.t }), ` · ${song.by} · #${song.o}`);
     document.querySelectorAll('.chart li').forEach((li) => li.classList.toggle('playing', li.dataset.id === song.id));
     if (!short && !document.hidden) $('#tResult').scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'nearest' });
@@ -221,17 +333,19 @@ function init(data) {
     const frag = document.createDocumentFragment();
     for (const s of TOP) {
       const li = document.createElement('li');
-      li.className = G.songRarity(s.o).id;
+      li.className = G.songRarity(s.o).id + (s.id === playingTopId ? ' playing' : '');
       if (typeof s.id === 'string') li.dataset.id = s.id;
-      li.innerHTML = `<button class="row"><span class="rk"></span><img alt="" loading="lazy" referrerpolicy="no-referrer"><span class="tt"><b></b><span></span></span><span class="nums"><b></b><br></span></button>`;
+      li.innerHTML = `<button class="row"><span class="rk"></span><img alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"><span class="tt"><b></b><span></span></span><span class="nums"><b></b><br></span></button>`;
       li.querySelector('button').setAttribute('aria-label', `Play number ${s.o}: ${s.t} by ${s.by}`);
       li.querySelector('.rk').textContent = s.o;
       const src = videoThumbnail(s.id, 'mqdefault');
       if (src) li.querySelector('img').src = src;
       li.querySelector('.tt b').textContent = s.t;
       li.querySelector('.tt span').textContent = s.by;
-      li.querySelector('.nums b').textContent = G.fmt(G.score(s)) + ' pts';
-      li.querySelector('.nums').append(`${s.s ? G.fmt(s.s) : '—'} streams · ${G.fmt(s.v)} views`);
+      li.querySelector('.nums b').textContent = config.chartScore ? config.chartScore(s) : G.fmt(G.score(s)) + ' pts';
+      const stats = config.chartStats ? config.chartStats(s) : `${s.s ? G.fmt(s.s) : '—'} streams · ${G.fmt(s.v)} views`;
+      if (stats) li.querySelector('.nums').append(stats);
+      else li.querySelector('.nums br').remove();
       li.querySelector('button').addEventListener('click', () => {
         machine.cancel();
         const token = machine.generation;
@@ -256,12 +370,16 @@ function init(data) {
     const list = binderTab === 'a' ? [...artists].sort((a, b) => b.power - a.power || a.name.localeCompare(b.name)) : binderSongs;
     $('#bA').textContent = `${col.a?.length || 0}/${artists.length}`;
     $('#bS').textContent = `${col.s?.length || 0}/${binderSongs.length}`;
+    const gridWidth = $('#binderGrid').clientWidth || Math.min(innerWidth - 16, 1100);
+    const firstRow = Math.max(2, Math.floor((gridWidth - 20) / 130));
     const frag = document.createDocumentFragment();
-    for (const x of list) {
+    list.forEach((x, index) => {
       const id = binderTab === 'a' ? x.name : x.id;
-      const o = { size: 'mini', faceDown: !have.has(id), locked: true }; // uncollected: a plain back, no art loaded
-      frag.append(binderTab === 'a' ? artistCard(x, o) : songCard(x, o));
-    }
+      const o = { size: 'mini', faceDown: !have.has(id), locked: true, lazy: index >= firstRow }; // uncollected: a plain back, no art loaded
+      const card = binderTab === 'a' ? artistCard(x, o) : songCard(x, o);
+      if (binderTab !== 'a' && o.lazy) tunePortraitImg(card);
+      frag.append(card);
+    });
     $('#binderGrid').replaceChildren(frag);
   }
   $('#openBinder').addEventListener('click', () => { renderBinder(); binder.showModal(); });
@@ -299,6 +417,7 @@ function init(data) {
       if (!portrait) return;
       setCardImage(card.querySelector('.art'), { kind: 'artist', title: card.dataset.id, img: safeUrl(portrait.img, IMAGE_HOSTS), yt: portrait.mv },
         card.classList.contains('mini') ? 'mini' : 'big');
+      if (card.dataset.lazy === '1') tunePortraitImg(card);
       if (card.nextElementSibling?.matches('.credit')) card.nextElementSibling.replaceWith(creditLine(portrait));
     });
     renderCredits();
@@ -306,22 +425,24 @@ function init(data) {
 
   // ---------- boot ----------
   startCrowd($('#crowd'));
-  renderChart();
   updateCount();
+  reportPassport();
+  renderPassportButtons();
   /** #top100, #roulette, #roulette/favs; old #top and #bias links still work. No hash: last deck used. */
-  function modeFromHash() {
+  function modeFromHash(initial = false) {
     const h = location.hash.slice(1);
-    let saved = 'all';
-    try { saved = localStorage.getItem('encore.deck') === 'favs' ? 'favs' : 'all'; } catch {}
-    if (h === 'top100' || h === 'top') return setMode('top100');
-    if (h === 'roulette/favs' || h === 'bias') return setMode('roulette', 'favs');
-    if (h === 'roulette') return setMode('roulette', 'all');
-    setMode('roulette', saved);
+    let saved = config.decks[0];
+    try { if (localStorage.getItem(config.storage + '.deck') === config.decks[1]) saved = config.decks[1]; } catch {}
+    if (h === 'top100' || h === 'top') return setMode('top100', config.rememberDeckInChart ? saved : deck, { deferChart: initial });
+    if (h === 'roulette/' + config.decks[1] || (config.side === 'pop' && h === 'bias')) return setMode('roulette', config.decks[1], { deferChart: initial });
+    if (h === 'roulette') return setMode('roulette', config.decks[0], { deferChart: initial });
+    setMode('roulette', saved, { deferChart: initial });
   }
-  addEventListener('hashchange', modeFromHash);
+  addEventListener('hashchange', () => modeFromHash(false));
   addEventListener('pagehide', () => { for (const stop of Object.values(stops)) stop(); });
-  addEventListener('pageshow', (e) => { if (e.persisted) modeFromHash(); });
-  modeFromHash();
+  addEventListener('pageshow', (e) => { if (e.persisted) modeFromHash(false); });
+  modeFromHash(true);
+  scheduleChart();
 }
 
-await boot();
+

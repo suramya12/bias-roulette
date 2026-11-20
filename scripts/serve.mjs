@@ -6,12 +6,14 @@ import { serveStatic } from './static-server.mjs';
 // Publish page assets only; update scripts and review files stay private.
 const PUBLIC = ['index.html', 'landing.css', 'landing.js', 'favicon.svg', 'og.png', 'kpop/index.html', 'styles.css', 'src/', 'data/', 'art/', 'landing-art/',
   'pop/index.html', 'pop/styles.css', 'pop/src/', 'pop/data/',
-  'anime/index.html', 'anime/styles.css', 'anime/src/', 'anime/data/'];
+  'anime/index.html', 'anime/styles.css', 'anime/src/', 'anime/data/',
+  'bollywood/index.html', 'bollywood/styles.css', 'bollywood/entry.js',
+  'bollywood/data/data.json', 'bollywood/data/portraits.json', 'bollywood/data/landing.json'];
 
 await serveStatic({
   root: fileURLToPath(new URL('..', import.meta.url)),
   port: Number(process.env.PORT) || 5173,
   publicPaths: PUBLIC,
-  redirects: new Map(['/kpop', '/pop', '/anime'].map((side) => [side, side + '/'])),
+  redirects: new Map(['/kpop', '/pop', '/anime', '/bollywood'].map((side) => [side, side + '/'])),
   name: 'Bias Roulette',
 });

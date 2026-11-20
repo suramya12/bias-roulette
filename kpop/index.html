@@ -36,6 +36,7 @@
           <a aria-current="page" href="#roulette" id="toKpop">K-pop</a>
           <a id="toPop" href="../pop/#roulette">Pop &amp; Latin</a>
           <a href="../anime/">Anime</a>
+          <a id="toBollywood" href="../bollywood/#roulette">Bollywood</a>
         </div>
       </details>
       <div class="tabs" role="group" aria-label="Game mode">
@@ -161,6 +162,8 @@
       <div class="actions chart-actions">
         <button class="btn btn-pink btn-big" id="pullBtn" type="button">Pull a card</button>
         <label class="btn switch chart-auto" id="chartAutoPill"><input type="checkbox" id="chartAuto" disabled><span>Auto <b class="auto-state" id="chartAutoState">off</b></span></label>
+        <button class="btn btn-drop" id="dailyDropBtn" type="button" disabled><svg class="btn-ico" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M2 4l6 4.5L14 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span id="dailyDropLabel">Today's drop</span></button>
+        <button class="btn btn-unseen" id="unseenBtn" type="button" disabled>✦ 60 · Unseen pull</button>
         <button class="btn btn-lemon" id="quickBtn" type="button">Just play one</button>
       </div>
 
@@ -216,6 +219,7 @@
     <div class="binder-view" id="binderView" hidden></div>
   </dialog>
 
+  <div class="toast-stack" id="toastStack" role="status" aria-live="polite"></div>
   <div class="fx" id="fx" aria-hidden="true"></div>
   <script type="module" src="../src/main.js"></script>
 </body>

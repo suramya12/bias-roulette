@@ -9230,5 +9230,441 @@
   "channel": "THEL1VE",
   "flags": [],
   "source": "override"
+ },
+ "H.O.T. | Candy": {
+  "id": "3NUaXU1d-NY",
+  "title": "H.O.T. 'Candy' MV",
+  "channel": "SMTOWN",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "S.E.S. | I'm Your Girl": {
+  "id": "fBge8oUfFwU",
+  "title": "S.E.S. '('Cause) I'm Your Girl' MV",
+  "channel": "SMTOWN",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "g.o.d | Road": {
+  "id": "r7qovpFAGrQ",
+  "title": "Lil Nas X - Old Town Road (Official Video) ft. Billy Ray Cyrus",
+  "channel": "Lil Nas X",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "BoA | No.1": {
+  "id": "ceZc-5p3g1w",
+  "title": "BoA 보아 'No.1' MV",
+  "channel": "SMTOWN",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "Lee Hyori | 10 Minutes": {
+  "id": "iKdr44yEBQU",
+  "title": "[MV] Lee Hyori(이효리) _ 10 Minutes",
+  "channel": "1theK (원더케이)",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "Rain | Rainism": {
+  "id": "IVBW7sI8IhY",
+  "title": "[RAIN/비] 5th - Rainism M/V Full version (2008.10.15) [Official MV]",
+  "channel": "RAIN's Official Channel",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "KARA | Mister": {
+  "id": "MONePHBPUBo",
+  "title": "BLINGONE - 미스터 Mister Official M/V",
+  "channel": "GENIE MUSIC",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "KARA | Step": {
+  "id": "zYoYoBtLqOY",
+  "title": "KARA - STEP M/V",
+  "channel": "KARA Official",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "Brown Eyed Girls | Abracadabra": {
+  "id": "o4wJGWcHzVA",
+  "title": "Brown Eyed Girls 'Abracadabra' (Performance Version)",
+  "channel": "Brown Eyed Girls",
+  "verified": true,
+  "flags": [
+   "alternate version"
+  ],
+  "source": "search"
+ },
+ "f(x) | Electric Shock": {
+  "id": "n8I8QGFA1oM",
+  "title": "f(x) 에프엑스 'Electric Shock' MV",
+  "channel": "SMTOWN",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "f(x) | 4 Walls": {
+  "id": "4j7Umwfx60Q",
+  "title": "f(x) 에프엑스 '4 Walls' MV",
+  "channel": "SMTOWN",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "T-ARA | Roly-Poly": {
+  "id": "3Xolk2cFzlo",
+  "title": "T-ARA(티아라) _ Roly-Poly in Copacabana MV",
+  "channel": "1theK (원더케이)",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "BEAST | Fiction": {
+  "id": "ZAzWT8mRoR0",
+  "title": "BEAST - 'FICTION' (Official Music Video)",
+  "channel": "BEAST 비스트 (Official YouTube Channel)",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "INFINITE | Be Mine": {
+  "id": "UKGwMly1HkE",
+  "title": "[MV] INFINITE(인피니트) _ Be Mine(내꺼하자)",
+  "channel": "1theK (원더케이)",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "INFINITE | The Chaser": {
+  "id": "wgmSImDoJNg",
+  "title": "INFINITE(인피니트) _ The Chaser(추격자) MV",
+  "channel": "1theK (원더케이)",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "SISTAR | Alone": {
+  "id": "E0ZHXVp_wUE",
+  "title": "씨스타(SISTAR) - 나혼자 Music Video (Alone)",
+  "channel": "STARSHIP",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "SISTAR | Touch My Body": {
+  "id": "9txzvu6eQuw",
+  "title": "[MV] SISTAR(씨스타)_Touch my body(터치 마이 바디)",
+  "channel": "STARSHIP",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "Girl's Day | Something": {
+  "id": "akPDKYwIoVk",
+  "title": "Girl's Day(걸스데이) 'Something' Official MV",
+  "channel": "GIRL'S DAY",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "Apink | Mr. Chu": {
+  "id": "K5H-GvnNz2Y",
+  "title": "[MV] Apink(에이핑크) _ Mr. Chu(미스터 츄)",
+  "channel": "1theK (원더케이)",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "Orange Caramel | Catallena": {
+  "id": "Med2XipHJJM",
+  "title": "[MV] ORANGE CARAMEL '까탈레나(Catallena)' Music video",
+  "channel": "PLEDIS ENTERTAINMENT",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "Brave Girls | Rollin'": {
+  "id": "-Axm4IYHVYk",
+  "title": "[MV] 브레이브걸스 (Brave Girls) - 롤린 (Rollin') Dance ver.",
+  "channel": "Brave Entertainment",
+  "verified": false,
+  "flags": [
+   "alternate version"
+  ],
+  "source": "search"
+ },
+ "VIXX | Voodoo Doll": {
+  "id": "MOG7BexjPjM",
+  "title": "빅스(VIXX) - 저주인형 (VOODOO DOLL) Official Music Video",
+  "channel": "RealVIXX",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "iKON | LOVE SCENARIO": {
+  "id": "vecSVX1QYbQ",
+  "title": "iKON - ‘사랑을 했다(LOVE SCENARIO)’ M/V",
+  "channel": "iKON",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "PENTAGON | Shine": {
+  "id": "Nu2yQ1zYDYU",
+  "title": "[MV] PENTAGON(펜타곤) _ Shine(빛나리)",
+  "channel": "1theK (원더케이)",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "EXID | Up & Down": {
+  "id": "hfXZ6ydgZyo",
+  "title": "[EXID(이엑스아이디)] '위아래' (UP&DOWN) MV",
+  "channel": "EXID_OFFICIAL",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "EXID | Ah Yeah": {
+  "id": "egqDPipqIAg",
+  "title": "[EXID(이엑스아이디)] 아예 (Ah Yeah) Music Video [Official MV]",
+  "channel": "EXID_OFFICIAL",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "KARD | Hola Hola": {
+  "id": "USx4WyrkfU4",
+  "title": "KARD - Hola Hola M/V",
+  "channel": "KARD",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "LOONA Odd Eye Circle | Girl Front": {
+  "id": "tyInv6RWL0Q",
+  "title": "[MV] 이달의 소녀 오드아이써클 (LOONA/ODD EYE CIRCLE) \"Girl Front\"",
+  "channel": "loonatheworld",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "TAEYANG | EYES, NOSE, LIPS": {
+  "id": "UwuAPyOImoI",
+  "title": "TAEYANG - 눈,코,입 (EYES, NOSE, LIPS) M/V",
+  "channel": "BIGBANG",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "BIBI | Bam Yang Gang": {
+  "id": "smdmEhkIRVc",
+  "title": "비비 (BIBI) - 밤양갱(Bam Yang Gang) Official M/V",
+  "channel": "BIBI",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "DEAN | D (Half Moon)": {
+  "id": "LKiauCIJhv0",
+  "title": "DEAN - D (half moon) (ft. Gaeko) Music Video",
+  "channel": "DEANTRBL",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "DEAN | Instagram": {
+  "id": "wKyMIrBClYw",
+  "title": "DEAN - instagram",
+  "channel": "DEANTRBL",
+  "verified": true,
+  "flags": [
+   "no MV marker in title"
+  ],
+  "source": "search"
+ },
+ "Crush | Oasis": {
+  "id": "_1SX7W1IfJw",
+  "title": "[MV] Crush(크러쉬) _ Oasis (Feat. ZICO)",
+  "channel": "1theK (원더케이)",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "Crush | Rush Hour": {
+  "id": "PS0qkO5qty0",
+  "title": "Crush (크러쉬) - 'Rush Hour (Feat. j-hope of BTS)' MV",
+  "channel": "Crush",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "Heize | You, Clouds, Rain": {
+  "id": "afxLaQiLu-o",
+  "title": "헤이즈 (Heize) - 비도 오고 그래서 (You, Clouds, Rain) (Feat. 신용재 (Shin Yong Jae)) MV",
+  "channel": "STONE MUSIC",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "Zion.T | Yanghwa BRDG": {
+  "id": "uLUvHUzd4UA",
+  "title": "[MV] Zion.T(자이언티) _ Yanghwa BRDG(양화대교)",
+  "channel": "1theK (원더케이)",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "Zion.T | Eat": {
+  "id": "Ibb5RhoKfzE",
+  "title": "[MV] Zion.T _ Eat(꺼내 먹어요)",
+  "channel": "1theK (원더케이)",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "Epik High | Fly": {
+  "id": "_548tQ05LpU",
+  "title": "[MV] Epik High - Fly",
+  "channel": "bpaperwings",
+  "verified": false,
+  "flags": [
+   "unofficial channel"
+  ],
+  "source": "search"
+ },
+ "Epik High | Born Hater": {
+  "id": "3s1jaFDrp5M",
+  "title": "EPIK HIGH (에픽하이) - BORN HATER ft. Beenzino, Verbal Jint, B.I, MINO, BOBBY [Official MV]",
+  "channel": "EPIK HIGH",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "DPR IAN | So Beautiful": {
+  "id": "7QQzDQceGgU",
+  "title": "DPR IAN - So Beautiful (OFFICIAL M/V)",
+  "channel": "Dream Perfect Regime",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "DAY6 | You Were Beautiful": {
+  "id": "BS7tz2rAOSA",
+  "title": "DAY6 \"You Were Beautiful(예뻤어)\" M/V",
+  "channel": "JYP Entertainment",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "DAY6 | Time of Our Life": {
+  "id": "vnS_jn2uibs",
+  "title": "DAY6 \"Time of Our Life(한 페이지가 될 수 있게)\" M/V",
+  "channel": "JYP Entertainment",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "DAY6 | Welcome to the Show": {
+  "id": "RowlrvmyFEk",
+  "title": "DAY6(데이식스) \"Welcome to the Show\" M/V",
+  "channel": "JYP Entertainment",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "The Rose | Sorry": {
+  "id": "B-cKxO0m8g4",
+  "title": "The Rose 'Sorry' MV",
+  "channel": "The Rose",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "N.Flying | Rooftop": {
+  "id": "VpaUh_BGqE0",
+  "title": "[MV] N.Flying(엔플라잉) _ Rooftop(옥탑방)",
+  "channel": "1theK (원더케이)",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "LUCY | Flowering": {
+  "id": "WQdFA55hT80",
+  "title": "[MV] LUCY _ Flowering(개화)",
+  "channel": "1theK (원더케이)",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "QWER | T.B.H": {
+  "id": "ImuWa3SJulY",
+  "title": "QWER 'T.B.H(고민중독)' Official MV",
+  "channel": "QWER",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "TWS | plot twist": {
+  "id": "9f6AdfijSTg",
+  "title": "[최초공개] TWS(투어스) - 첫 만남은 계획대로 되지 않아 (plot twist) (4K) | TWS DEBUT SHOW | Mnet 240122 방송",
+  "channel": "M2",
+  "verified": true,
+  "flags": [
+   "no MV marker in title"
+  ],
+  "source": "search"
+ },
+ "KISS OF LIFE | Sticky": {
+  "id": "IajeQM00yfE",
+  "title": "KISS OF LIFE (키스오브라이프) 'Sticky' Official Music Video",
+  "channel": "KISS OF LIFE",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "tripleS | Girls Never Die": {
+  "id": "2tda_TCjz8w",
+  "title": "tripleS(트리플에스) 'Girls Never Die' Official MV",
+  "channel": "tripleS official",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "BOYNEXTDOOR | IF I SAY, I LOVE YOU": {
+  "id": "B4mLKcVIERs",
+  "title": "BOYNEXTDOOR (보이넥스트도어) '오늘만 I LOVE YOU' Official MV",
+  "channel": "HYBE LABELS and BOYNEXTDOOR",
+  "verified": false,
+  "flags": [
+   "title mismatch"
+  ],
+  "source": "search"
+ },
+ "Hearts2Hearts | The Chase": {
+  "id": "kxUA2wwYiME",
+  "title": "Hearts2Hearts 하츠투하츠 'The Chase' MV",
+  "channel": "SMTOWN",
+  "verified": true,
+  "flags": [],
+  "source": "search"
+ },
+ "KiiiKiii | I DO ME": {
+  "id": "hAEfi_SKTEU",
+  "title": "KiiiKiii 키키 'I DO ME' MV",
+  "channel": "STARSHIP and KiiiKiii",
+  "verified": false,
+  "flags": [],
+  "source": "search"
  }
 }

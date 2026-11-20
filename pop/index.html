@@ -37,9 +37,10 @@
     <details class="genre" id="genre">
       <summary aria-label="Music: Pop and Latin. Switch music">Pop<span class="long"> &amp; Latin</span> <span aria-hidden="true">▾</span></summary>
       <div class="genre-menu">
-        <a id="toKpop" href="../kpop/#roulette">K-pop</a>
+        <a id="toKpop" data-mode-link="kpop" href="../kpop/#roulette">K-pop</a>
         <a aria-current="page" href="#">Pop &amp; Latin</a>
         <a href="../anime/">Anime</a>
+        <a data-mode-link="bollywood" href="../bollywood/#roulette">Bollywood</a>
       </div>
     </details>
     <div class="toggle" role="tablist" aria-label="Game mode">
@@ -114,6 +115,8 @@
       </div>
       <div class="row-btns center">
         <button class="pull" id="pull">Pull a card</button>
+        <button class="ghost btn-drop" id="dailyDropBtn" type="button" disabled><svg class="btn-ico" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M2 4l6 4.5L14 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span id="dailyDropLabel">Today's drop</span></button>
+        <button class="ghost btn-unseen" id="unseenBtn" type="button" disabled>✦ 60 · Unseen pull</button>
         <label class="ghost switch chart-auto"><input id="chartAuto" type="checkbox"> Auto <span class="auto-state">off</span></label>
         <button class="ghost" id="sound" type="button" aria-pressed="true">Sound on</button>
       </div>
@@ -149,8 +152,9 @@
     <div class="grid" id="binderGrid"></div>
   </dialog>
 
+  <div class="toast-stack" id="toastStack" role="status" aria-live="polite"></div>
   <div id="fx" aria-hidden="true"></div>
   <noscript><p class="noscript">This game needs JavaScript.</p></noscript>
-  <script type="module" src="src/app.js"></script>
+  <script type="module" src="src/pop-entry.js"></script>
 </body>
 </html>

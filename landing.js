@@ -1,6 +1,20 @@
 import { isLite } from './src/fx.js';
+import * as passport from './src/passport.js';
+import { videoThumbnail } from './src/validation.js';
+import { shareCard } from './src/share-card.js';
+
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const SIDE_COLORS = { kpop: '#b693ff', pop: '#ffb020', anime: '#ff2d55', bollywood: '#22d3b0' };
+const SIDE_LABELS = { kpop: 'K-pop', pop: 'Pop', anime: 'Anime', bollywood: 'Bollywood' };
 
 const cards = [...document.querySelectorAll('.stage-card')];
+const passportBar = document.getElementById('passportBar');
+const passportSheet = document.getElementById('passportSheet');
+const passportShare = document.getElementById('passportShare');
+const passportClose = document.getElementById('passportClose');
+const sheetRing = document.getElementById('sheetRing');
+const sheetNumbers = document.getElementById('sheetNumbers');
+const setsList = document.getElementById('setsList');
 const introCard = document.querySelector('.intro-card');
 const heading = document.querySelector('.stage-heading');
 const figures = document.querySelectorAll('.card-figure');
@@ -13,20 +27,22 @@ const still = () => reduced.matches || isLite();
 const ease = 'cubic-bezier(.33, 1, .68, 1)';
 const rand = (min, max) => min + Math.random() * (max - min);
 
-async function loadManifest() {
+async function loadManifest(path) {
   try {
-    const response = await fetch(new URL('data/landing.json', import.meta.url));
-    if (!response.ok) return;
+    const response = await fetch(new URL(path, import.meta.url));
+    if (!response?.ok) return;
     const manifest = await response.json();
+    if (!manifest || typeof manifest !== 'object') return;
     for (const card of cards) {
       const stats = manifest[card.dataset.side]?.stats;
-      if (!Array.isArray(stats)) continue;
+      if (!Array.isArray(stats) || !stats.length) continue;
       const stat = card.querySelector('.stat');
+      if (!stat) continue;
       stat.textContent = stats.join(' · ');
       stat.hidden = false;
     }
   } catch {
-    // The links work without stats.
+    // Keep the card's static text if a manifest is missing or unreadable.
   }
 }
 
@@ -47,7 +63,10 @@ function finishIntro() {
   introCard.hidden = true;
   cards.forEach((card) => card.classList.remove('is-dealing'));
   intro.splice(0).forEach((animation) => animation.cancel());
-  figures.forEach((figure) => { figure.src = figure.dataset.src; });
+  figures.forEach((figure) => {
+    if (figure.dataset.srcset && !figure.srcset) figure.srcset = figure.dataset.srcset;
+    if (figure.dataset.src && !figure.getAttribute('src')) figure.src = figure.dataset.src;
+  });
 }
 
 function dealCards() {
@@ -55,7 +74,7 @@ function dealCards() {
     finishIntro();
     return;
   }
-  const center = cards[1].getBoundingClientRect();
+  const bounds = document.querySelector('.cards').getBoundingClientRect();
   introCard.hidden = false;
   const lift = introCard.animate([
     { transform: 'translate(-50%, -50%) scale(.88)', opacity: 0 },
@@ -72,7 +91,9 @@ function dealCards() {
 
   cards.forEach((card, index) => {
     const rect = card.getBoundingClientRect();
-    const start = `translate(${center.left - rect.left}px, ${center.top - rect.top}px)`;
+    const x = bounds.left + (bounds.width - rect.width) / 2 - rect.left;
+    const y = bounds.top + (bounds.height - rect.height) / 2 - rect.top;
+    const start = `translate(${x}px, ${y}px)`;
     card.classList.add('is-dealing');
     intro.push(card.animate([
       { transform: start, opacity: 0 },
@@ -292,7 +313,228 @@ addEventListener('pageshow', ({ persisted }) => {
   showContinue();
 });
 
+function svgEl(tag, attrs = {}) {
+  const node = document.createElementNS(SVG_NS, tag);
+  for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, String(v));
+  return node;
+}
+
+function buildRing(info) {
+  const svg = svgEl('svg', { class: 'passport-ring', viewBox: '0 0 44 44', width: 44, height: 44, 'aria-hidden': 'true' });
+  const r = 18;
+  const C = 2 * Math.PI * r;
+  const g = svgEl('g', { transform: 'rotate(-90 22 22)' });
+
+  const sumTotals = passport.SIDES.reduce((sum, side) => sum + (info.total[side] || 0), 0);
+  const activeSides = sumTotals > 0
+    ? passport.SIDES.filter((side) => (info.total[side] || 0) > 0)
+    : passport.SIDES;
+  const gap = activeSides.length > 1 ? 3 : 0;
+  const avail = Math.max(1, C - activeSides.length * gap);
+  let cursor = 0;
+
+  for (const side of activeSides) {
+    const sideTotal = info.total[side] || 0;
+    const share = sumTotals > 0 ? sideTotal / sumTotals : 1 / activeSides.length;
+    const arcLen = Math.max(1, avail * share);
+    const color = SIDE_COLORS[side];
+
+    g.append(svgEl('circle', {
+      cx: 22, cy: 22, r, fill: 'none', stroke: color, 'stroke-width': 3.5,
+      'stroke-opacity': 0.18, 'stroke-linecap': 'round',
+      'stroke-dasharray': `${arcLen.toFixed(2)} ${C.toFixed(2)}`,
+      'stroke-dashoffset': (-cursor).toFixed(2),
+    }));
+
+    const ratio = sideTotal > 0 ? Math.min(1, (info.owned[side] || 0) / sideTotal) : 0;
+    if (ratio > 0) {
+      const fillLen = Math.max(1.5, arcLen * ratio);
+      g.append(svgEl('circle', {
+        cx: 22, cy: 22, r, fill: 'none', stroke: color, 'stroke-width': 3.5,
+        'stroke-linecap': 'round',
+        'stroke-dasharray': `${fillLen.toFixed(2)} ${C.toFixed(2)}`,
+        'stroke-dashoffset': (-cursor).toFixed(2),
+      }));
+    }
+    cursor += arcLen + gap;
+  }
+
+  svg.append(g);
+  return svg;
+}
+
+function flameIcon() {
+  const svg = svgEl('svg', { class: 'passport-ico', viewBox: '0 0 16 16', width: 14, height: 14, 'aria-hidden': 'true' });
+  svg.append(svgEl('path', {
+    d: 'M8.7 1.6c.4 2.2-1 3.5-1.7 4.4-.6.8-.9 1.5-.7 2.4.1.6.5 1 .9 1.2-.2-1 .3-1.8 1.2-2.4.4 1.3 1.6 2 1.6 3.5 0 1.4-1 2.7-2.7 2.7-1.9 0-3.3-1.5-3.3-3.5 0-1.9 1.1-3.3 2.2-4.6.9-1 1.8-2.1 2.5-3.7Z',
+    fill: 'currentColor',
+  }));
+  return svg;
+}
+
+function checkIcon() {
+  const svg = svgEl('svg', { viewBox: '0 0 12 12', width: 10, height: 10, 'aria-hidden': 'true' });
+  svg.append(svgEl('path', {
+    d: 'M2.2 6.2 4.8 8.8 9.8 3.4',
+    fill: 'none', stroke: '#07060d', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round',
+  }));
+  return svg;
+}
+
+function renderSeals(info) {
+  for (const card of cards) {
+    const seal = card.querySelector('.card-seal');
+    if (!seal) continue;
+    const claimed = Boolean(info.day.sealed[card.dataset.side]);
+    seal.classList.toggle('is-claimed', claimed);
+    seal.setAttribute('aria-label', claimed ? "Today's drop: claimed" : "Today's drop: ready");
+    if (claimed) seal.replaceChildren(checkIcon());
+    else seal.replaceChildren();
+  }
+}
+
+function renderPassport() {
+  const info = passport.summary();
+  renderSeals(info);
+  if (!passportBar) return;
+
+  if (!info.hasProfile) {
+    const copy = document.createElement('span');
+    copy.className = 'passport-empty';
+    copy.textContent = "Start your passport: open today's drop on any side";
+    passportBar.replaceChildren(buildRing(info), copy);
+    return;
+  }
+
+  const main = document.createElement('span');
+  main.className = 'passport-main';
+  const count = document.createElement('strong');
+  count.className = 'passport-count';
+  count.textContent = `${info.totalOwned.toLocaleString()} ${info.totalOwned === 1 ? 'card' : 'cards'}`;
+  main.append(count);
+  if (info.totalCards > 0) {
+    const of = document.createElement('span');
+    of.className = 'passport-of';
+    of.textContent = `of ${info.totalCards.toLocaleString()}`;
+    main.append(of);
+  }
+
+  const meta = document.createElement('span');
+  meta.className = 'passport-meta';
+  if (info.streak.count > 0) {
+    const streak = document.createElement('span');
+    streak.className = 'passport-streak';
+    streak.append(flameIcon(), `${info.streak.count}-day streak`);
+    meta.append(streak);
+  }
+  const dust = document.createElement('span');
+  dust.className = 'passport-dust';
+  dust.textContent = `✦ ${info.dust.toLocaleString()}`;
+  meta.append(dust);
+
+  passportBar.replaceChildren(buildRing(info), main, meta);
+}
+
+async function openPassportSheet() {
+  if (!passportSheet) return;
+  const info = passport.summary();
+  sheetRing.replaceChildren(buildRing(info));
+  const parts = [`${info.totalOwned.toLocaleString()} ${info.totalOwned === 1 ? 'card' : 'cards'}`];
+  if (info.totalCards > 0) parts[0] += ` of ${info.totalCards.toLocaleString()}`;
+  if (info.streak.count > 0) parts.push(`${info.streak.count}-day streak`);
+  parts.push(`✦ ${info.dust.toLocaleString()}`);
+  sheetNumbers.textContent = parts.join(' · ');
+
+  setsList.replaceChildren(Object.assign(document.createElement('p'), { className: 'sets-empty', textContent: 'Loading sets…' }));
+  passportSheet.showModal();
+
+  const sets = await passport.loadSets();
+  if (!sets.length) {
+    setsList.replaceChildren(Object.assign(document.createElement('p'), { className: 'sets-empty', textContent: 'No sets available yet.' }));
+    return;
+  }
+
+  const rows = passport.setProgress(sets).map((set) => {
+    const row = document.createElement('article');
+    row.className = 'set-row' + (set.complete ? ' is-complete' : '');
+
+    const top = document.createElement('div');
+    top.className = 'set-top';
+
+    const titleWrap = document.createElement('div');
+    titleWrap.className = 'set-title-wrap';
+
+    const dots = document.createElement('span');
+    dots.className = 'set-dots';
+    const distinctSides = set.side === 'bridge'
+      ? [...new Set(set.items.map((i) => i.side))]
+      : [set.side];
+    for (const s of distinctSides) {
+      const dot = document.createElement('i');
+      dot.className = 'set-dot';
+      dot.style.setProperty('--dot', SIDE_COLORS[s] || '#f2c14e');
+      dots.append(dot);
+    }
+
+    const name = document.createElement('h4');
+    name.className = 'set-name';
+    name.textContent = set.name;
+    titleWrap.append(dots, name);
+
+    const status = document.createElement('span');
+    status.className = 'set-status';
+    status.textContent = set.complete ? 'Complete' : `${set.ownedCount} / ${set.totalCount}`;
+    top.append(titleWrap, status);
+
+    const blurb = document.createElement('p');
+    blurb.className = 'set-blurb';
+    blurb.textContent = set.blurb;
+
+    const bar = document.createElement('div');
+    bar.className = 'set-bar';
+    const fill = document.createElement('i');
+    fill.style.setProperty('--p', `${(set.ratio * 100).toFixed(1)}%`);
+    bar.append(fill);
+
+    const items = document.createElement('div');
+    items.className = 'set-items';
+    for (const item of set.items) {
+      if (item.owned) {
+        const thumb = document.createElement('img');
+        thumb.className = 'set-thumb';
+        thumb.alt = `${SIDE_LABELS[item.side] || item.side} song`;
+        thumb.loading = 'lazy';
+        thumb.decoding = 'async';
+        const src = videoThumbnail(item.id, 'mqdefault');
+        if (src) thumb.src = src;
+        items.append(thumb);
+      } else {
+        const missing = document.createElement('span');
+        missing.className = 'set-missing';
+        missing.style.setProperty('--side', SIDE_COLORS[item.side] || '#a9a3c4');
+        missing.textContent = SIDE_LABELS[item.side] || item.side;
+        items.append(missing);
+      }
+    }
+
+    row.append(top, blurb, bar, items);
+    return row;
+  });
+  setsList.replaceChildren(...rows);
+}
+
+passportBar?.addEventListener('click', openPassportSheet);
+passportShare?.addEventListener('click', async () => {
+  passportShare.disabled = true;
+  try { await shareCard(passport.summary()); } finally { passportShare.disabled = false; }
+});
+passportClose?.addEventListener('click', () => passportSheet?.close());
+passportSheet?.addEventListener('click', (e) => { if (e.target === passportSheet) passportSheet.close(); });
+addEventListener('pageshow', ({ persisted }) => { if (persisted) renderPassport(); });
+
 showContinue();
+renderPassport();
 dealCards();
 updateMotion();
-loadManifest();
+loadManifest('data/landing.json').catch(() => {});
+loadManifest('bollywood/data/landing.json').catch(() => {});

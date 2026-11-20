@@ -12,7 +12,11 @@
     "landing": "node scripts/landing-manifest.mjs",
     "anime:health": "node anime/scripts/health.mjs",
     "resolve": "node scripts/resolve.mjs",
+    "video-ids": "node scripts/video-ids.mjs",
+    "art:variants": "node scripts/art-variants.mjs",
+    "anime:runtime": "node anime/scripts/runtime.mjs",
     "charts": "node scripts/charts.mjs",
-    "portraits": "node scripts/portraits.mjs"
+    "portraits": "node scripts/portraits.mjs",
+    "sets": "node scripts/sets.mjs"
   }
 }

@@ -4,15 +4,21 @@ import { confetti, isLite, prefersReducedMotion } from './fx.js';
 const mod = (a, n) => ((a % n) + n) % n;
 const lift = ' translateZ(70px) translateY(-6px) scale(1.12)';
 
+const MAX_NEW_LOADS = 4;
+
 /** Shared motion only; the caller owns selection, card faces and playback. */
 export class PullMachine {
-  constructor({ ring, hit, buttons = [], slots = 14, radius, renderSlot, sound,
+  constructor({ ring, hit, buttons = [], slots = 14, radius, renderSlot, isLoaded, sound,
     onLand, onReveal, onPull, onCancel, tierOf, say }) {
     Object.assign(this, { ring, hit, buttons: Array.from(buttons), slotCount: slots,
-      radiusOf: radius, renderSlot, sound, onLand, onReveal, onPull, onCancel, tierOf, say });
+      radiusOf: radius, renderSlot, isLoaded, sound, onLand, onReveal, onPull, onCancel, tierOf, say });
     this.angle = 0;
     this.slots = [];
     this.items = [];
+    this.warm = [];
+    this.warmSet = new Set();
+    this.loaded = new Set();
+    this.inFlight = new Map();
     this.generation = 0;
     this._state = 'inactive';
     this.active = false;
@@ -57,6 +63,9 @@ export class PullMachine {
   setPool(items, pick) {
     if (this.destroyed) return;
     this.#invalidate();
+    this.#clearInFlight();
+    this.warm = [];
+    this.warmSet = new Set();
     this.items = Array.from(items);
     this.pick = pick;
     this.#build();
@@ -85,6 +94,7 @@ export class PullMachine {
     this.active = false;
     this.destroyed = true;
     this.#invalidate();
+    this.#clearInFlight();
     this.observer.disconnect();
     window.removeEventListener('resize', this.resize);
     document.removeEventListener?.('visibilitychange', this.visibility);
@@ -140,7 +150,64 @@ export class PullMachine {
     return Math.max(1, Math.round(typeof this.slotCount === 'function' ? this.slotCount() : this.slotCount));
   }
 
+  #clearInFlight() {
+    for (const slot of this.slots) { slot._cleanup?.(); slot._cleanup = null; }
+    this.inFlight.clear();
+  }
+
+  #isItemLoaded(item) {
+    return this.loaded.has(item) || Boolean(this.isLoaded?.(item));
+  }
+
+  #remember(item) {
+    if (!item || this.warmSet.has(item)) return;
+    const cap = Math.max(this.slots.length + 6, 20);
+    if (this.warm.length >= cap) {
+      const drop = this.warm.findIndex((x) => x !== this.winner?.item && !this.slots.some((s) => s.item === x));
+      if (drop >= 0) this.warmSet.delete(this.warm.splice(drop, 1)[0]);
+    }
+    this.warmSet.add(item);
+    this.warm.push(item);
+  }
+
+  #trackSlot(slot, item) {
+    slot._cleanup?.();
+    slot._cleanup = null;
+    this.inFlight.delete(slot);
+    this.#remember(item);
+    if (this.#isItemLoaded(item)) { this.loaded.add(item); return; }
+    const img = slot.el.querySelector?.('img');
+    if (!img) { this.loaded.add(item); return; }
+    if (img.complete && img.naturalWidth > 0) {
+      this.loaded.add(item);
+      return;
+    }
+    this.inFlight.set(slot, item);
+    const cleanup = () => {
+      img.removeEventListener('load', onLoad);
+      img.removeEventListener('error', onError);
+      if (slot._cleanup === cleanup) slot._cleanup = null;
+    };
+    const onLoad = () => {
+      cleanup();
+      const done = () => {
+        if (this.inFlight.get(slot) === item) this.inFlight.delete(slot);
+        this.loaded.add(item);
+      };
+      if (typeof img.decode === 'function') img.decode().then(done, done);
+      else done();
+    };
+    const onError = () => {
+      cleanup();
+      if (this.inFlight.get(slot) === item) this.inFlight.delete(slot);
+    };
+    slot._cleanup = cleanup;
+    img.addEventListener('load', onLoad, { once: true });
+    img.addEventListener('error', onError, { once: true });
+  }
+
   #build() {
+    this.#clearInFlight();
     this.lifted = null;
     this.slots = [];
     this.ring.replaceChildren();
@@ -159,6 +226,26 @@ export class PullMachine {
     slot.item = item;
     this.renderSlot(slot.el, item);
     slot.el.dataset.tier = this.tierOf(item);
+    this.#trackSlot(slot, item);
+  }
+
+  #refill(slot, motion) {
+    if (this.inFlight.has(slot)) return;
+    const idx = this.slots.indexOf(slot);
+    const prev = this.slots[mod(idx - 1, this.slots.length)]?.item;
+    const next = this.slots[mod(idx + 1, this.slots.length)]?.item;
+    const ready = this.warm.filter((x) => x !== slot.item && x !== this.winner?.item && this.#isItemLoaded(x));
+    const distinct = ready.filter((x) => x !== prev && x !== next);
+    const pool = distinct.length ? distinct : ready;
+    if (pool.length) {
+      this.#fill(slot, pool[cryptoInt(pool.length)]);
+      return;
+    }
+    if (motion.newLoads >= MAX_NEW_LOADS || this.inFlight.size >= MAX_NEW_LOADS) return;
+    const candidate = this.#random();
+    if (!candidate || candidate === slot.item || candidate === this.winner?.item) return;
+    if (!this.#isItemLoaded(candidate)) motion.newLoads++;
+    this.#fill(slot, candidate);
   }
 
   #random() {
@@ -226,6 +313,7 @@ export class PullMachine {
     this.sound?.unlock();
     const k = mod(this.#front() + Math.floor(this.slots.length / 2), this.slots.length);
     this.winner = this.slots[k];
+    const winnerWasLoaded = this.#isItemLoaded(item);
     this.#fill(this.winner, item);
     this.reduced = prefersReducedMotion();
     const end = this.angle - ((this.reduced ? 0 : short ? 1 : 3) * 360 + mod(this.angle + k * this.step, 360));
@@ -241,7 +329,7 @@ export class PullMachine {
     const duration = this.reduced ? 350 : short ? 1200 : 3600;
     this.#animate({ start: this.angle, end, duration,
       at: performance.now(), pullAt: performance.now(), pullDuration: duration,
-      tick: Math.floor(this.angle / this.step), token, item, short });
+      tick: Math.floor(this.angle / this.step), newLoads: winnerWasLoaded ? 0 : 1, token, item, short });
   }
 
   slamStop() {
@@ -265,7 +353,7 @@ export class PullMachine {
         this.sound?.tick();
         const back = mod(Math.round(-(motion.tick * this.step) / this.step) + Math.floor(this.slots.length / 2), this.slots.length);
         if (this.slots[back] !== this.winner && (t - motion.pullAt) / motion.pullDuration < 0.8) {
-          this.#fill(this.slots[back], this.#random());
+          this.#refill(this.slots[back], motion);
         }
       }
       if (Math.abs(this.angle - motion.end) < this.step * 1.5) this.winner.el.classList.add('incoming');

@@ -8,6 +8,9 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const cache = path.join(root, '.cache', 'hangout-check');
 await mkdir(cache, { recursive: true });
+const shots = process.env.HANGOUT_SHOTS_DIR;
+const liveBollywood = process.argv.includes('--live-bollywood');
+if (shots) await mkdir(shots, { recursive: true });
 const chrome = process.env.CHROME_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const server = spawn(process.execPath, ['scripts/serve.mjs'], { cwd: root, env: { ...process.env, PORT: '5174' }, windowsHide: true });
 let browser, socket, browserLog = '';
@@ -61,14 +64,20 @@ try {
     const msg = JSON.parse(data);
     if (msg.method === 'Runtime.exceptionThrown') errors.push(msg.params.exceptionDetails.exception?.description || msg.params.exceptionDetails.text);
     if (msg.method === 'Log.entryAdded' && msg.params.entry.level === 'error') consoleErrors.push(msg.params.entry);
+    if (msg.method === 'Runtime.consoleAPICalled' && msg.params.type === 'error') {
+      consoleErrors.push({ text: msg.params.args.map((arg) => arg.description ?? arg.value).join(' ') });
+    }
     if (msg.method === 'Network.responseReceived') {
       const { status, url } = msg.params.response;
       if (status >= 400) badResponses.push([status, url]);
       if (url.startsWith('http://localhost:5174/')) localAssets.add(url);
     }
   });
-  await cdp('Page.addScriptToEvaluateOnNewDocument', { source: `
-    localStorage.setItem('bias-roulette.chart.auto','off'); localStorage.setItem('encore.chartAuto','off');
+  await cdp('Page.addScriptToEvaluateOnNewDocument', { source: `(() => {
+    if (location.origin !== 'http://localhost:5174') return;
+    localStorage.setItem('bias-roulette.chart.auto','off'); localStorage.setItem('encore.chartAuto','off'); localStorage.setItem('bolly.chartAuto','off');
+    window.__csp = [];
+    document.addEventListener('securitypolicyviolation', (event) => __csp.push([event.effectiveDirective, event.blockedURI]));
     window.__yt = []; window.__advances = new Map();
     const timeout = window.setTimeout.bind(window), clear = window.clearTimeout.bind(window);
     let serial = -1;
@@ -86,7 +95,19 @@ try {
     }};
     window.__emit = (name, data) => { const p = __yt.at(-1); if (name === 'onStateChange') p.state = data; p.events[name]({target:p,data}); };
     const scenario = new URLSearchParams(location.search).get('scenario');
-    if (scenario === 'network-check') delete window.YT;
+    if (scenario === 'network-check' || scenario === 'live-youtube') delete window.YT;
+    if (scenario === 'live-youtube') {
+      window.__playing = new Set();
+      addEventListener('message', (event) => {
+        if (event.origin !== 'https://www.youtube.com' || typeof event.data !== 'string') return;
+        let message;
+        try { message = JSON.parse(event.data); } catch { return; }
+        if (!(message.event === 'onStateChange' && message.info === 1) &&
+            !(message.event === 'infoDelivery' && message.info?.playerState === 1)) return;
+        const frame = [...document.querySelectorAll('iframe')].find((iframe) => iframe.contentWindow === event.source);
+        if (frame) __playing.add(frame.src);
+      });
+    }
     if (scenario === 'data-retry') {
       const realFetch = window.fetch.bind(window);
       const failOnce = new Set(['/data/roster.json', '/data/charts.json', '/pop/data/data.json']);
@@ -111,22 +132,44 @@ try {
         ? (window.__apiTimeout = fn, -8000)
         : setTimer(fn, ms, ...args);
     }
-  ` });
+  })();` });
   async function evaluate(expression) {
     const result = await cdp('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true });
     if (result.exceptionDetails) throw new Error(result.exceptionDetails.exception?.description || result.exceptionDetails.text);
     return result.result.value;
   }
-  async function until(expression) {
-    for (let i = 0; i < 200; i++) { if (await evaluate(expression)) return; await delay(40); }
+  async function until(expression, timeout = 8000) {
+    const end = Date.now() + timeout;
+    do { if (await evaluate(expression)) return; await delay(40); } while (Date.now() < end);
     throw new Error(`Timed out: ${expression}\n${JSON.stringify(errors)}\n${await evaluate("JSON.stringify({url:location.href,state:document.readyState,text:document.body?.innerText.slice(0,1800)})")}`);
   }
   async function shot(name) {
     const result = await cdp('Page.captureScreenshot', { format: 'png' });
-    await writeFile(path.join(cache, `${name}.png`), Buffer.from(result.data, 'base64'));
+    const image = Buffer.from(result.data, 'base64');
+    await writeFile(path.join(cache, `${name}.png`), image);
+    if (shots && /^(landing|bolly)-(desktop|phone)$/.test(name)) {
+      await writeFile(path.join(shots, `${name}.png`), image);
+    }
   }
   const origin = 'http://localhost:5174/';
   const navigate = (page) => cdp('Page.navigate', { url: origin + page });
+  const desktop = (height) => cdp('Emulation.setDeviceMetricsOverride', { width: 1280, height, deviceScaleFactor: 1, mobile: false });
+  const phone = () => cdp('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
+  const noScroll = 'document.documentElement.scrollWidth <= innerWidth && document.documentElement.scrollHeight <= innerHeight';
+  const landingBoxes = () => evaluate(`[...document.querySelectorAll('.stage-card')].map(card => {
+    const { x, y, width, height, right, bottom } = card.getBoundingClientRect();
+    return { x, y, width, height, right, bottom };
+  })`);
+  const click = async (selector) => {
+    const { x, y } = await evaluate(`(() => {
+      const node = document.querySelector(${JSON.stringify(selector)});
+      node.scrollIntoView({ block: 'center' });
+      const rect = node.getBoundingClientRect();
+      return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    })()`);
+    await cdp('Input.dispatchMouseEvent', { type: 'mousePressed', button: 'left', clickCount: 1, x, y });
+    await cdp('Input.dispatchMouseEvent', { type: 'mouseReleased', button: 'left', clickCount: 1, x, y });
+  };
   const press = (selector, key) => evaluate('(() => { const tab = document.querySelector(' + JSON.stringify(selector)
     + '); tab.focus(); tab.dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, key: ' + JSON.stringify(key) + ' })); })()');
   const checkHitAreas = async (selector) => {
@@ -141,20 +184,27 @@ try {
   };
 
   for (const [page, ready, targetSelector] of [
-    ['', 'document.querySelectorAll(".stat:not([hidden])").length === 3', '.continue'],
+    ['', 'document.querySelectorAll(".stat:not([hidden])").length === 4', '.continue'],
     ['kpop/', 'document.querySelector("#spinBtn") && !document.querySelector("#spinBtn").disabled && document.querySelector("#announce").textContent.startsWith("Round")', '.mode-btn'],
     ['pop/', 'document.querySelector("#deck-all .spin")', '.top [role=tab]'],
     ['anime/', 'document.querySelector("#pull") && !document.querySelector("#pull").disabled', '.filter-chip, .addon'],
+    ['bollywood/', 'document.querySelector("#deck-stars .spin") && +document.querySelector("#nAll").textContent > 0', '.top [role=tab]'],
   ]) {
-    await navigate(page + '?scenario=network-check');
+    await navigate(page + '?scenario=network-check' + (page === 'bollywood/' ? '#roulette' : ''));
     await until(ready);
     await evaluate('document.fonts.ready.then(() => true)');
     assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'), true, page + ' phone overflow');
     if (!page) {
       const json = await evaluate('performance.getEntriesByType("resource").filter(x => x.name.endsWith(".json")).map(x => new URL(x.name).pathname)');
-      assert.deepEqual(json, ['/data/landing.json']);
-      await until('[...document.querySelectorAll(".card-face img")].filter(image => image.complete && image.naturalWidth).length === 6');
-      await evaluate('localStorage.setItem("bias-roulette.lastSide","anime"); dispatchEvent(new PageTransitionEvent("pageshow", {persisted:true}))');
+      assert.deepEqual(json.sort(), ['/bollywood/data/landing.json', '/data/landing.json']);
+      assert.deepEqual(await evaluate('[...document.querySelectorAll(".stage-card")].map(card => card.dataset.side)'), ['kpop', 'pop', 'anime', 'bollywood']);
+      await until('[...document.querySelectorAll(".card-face img")].filter(image => image.complete && image.naturalWidth).length >= 6');
+      await evaluate('localStorage.setItem("bias-roulette.lastSide","bollywood"); dispatchEvent(new PageTransitionEvent("pageshow", {persisted:true}))');
+      assert.equal(await evaluate('document.querySelector(".continue").href'), origin + 'bollywood/');
+      assert.equal(await evaluate(noScroll), true, 'landing fits 390 × 844');
+      const boxes = await landingBoxes();
+      assert.ok(boxes.every(({ width, height, bottom }) => width >= 350 && height < 152 && bottom < 844), 'four full-width landing strips');
+      assert.equal(new Set(boxes.map(({ y }) => y)).size, 4, 'landing phone cards stack');
     }
     await until('document.querySelector(' + JSON.stringify(targetSelector) + ')?.getBoundingClientRect().height > 0');
     await checkHitAreas(targetSelector);
@@ -168,14 +218,60 @@ try {
         && parseFloat(getComputedStyle(node).fontSize) < 12;
     }).slice(0, 10).map(node => [node.className, node.textContent.trim().slice(0,50)])`);
     assert.deepEqual(smallText, [], page + ' visitor text below 12px');
-    if (!page || page === 'anime/') {
+    assert.deepEqual(await evaluate('__csp'), [], page + ' CSP violations');
+    if (!page || page === 'anime/' || page === 'bollywood/') {
       await evaluate('scrollTo(0, 0)');
-      await shot(page ? 'anime-phone' : 'landing-phone');
+      const name = !page ? 'landing' : page === 'anime/' ? 'anime' : 'bolly';
+      await shot(name + '-phone');
+      if (page !== 'anime/') {
+        await desktop(720);
+        await until('innerWidth === 1280 && innerHeight === 720');
+        if (!page) {
+          assert.equal(await evaluate(noScroll), true, 'landing fits 1280 × 720');
+          const boxes = await landingBoxes();
+          assert.equal(new Set(boxes.map(({ y }) => y)).size, 1, 'landing desktop cards share a row');
+          assert.ok(boxes.every(({ width, height, right, bottom }) => Math.abs(width / height - 5 / 7) < .01 && right < 1280 && bottom < 720), 'four proportional desktop cards');
+        }
+        await shot(name + '-desktop');
+        await phone();
+      }
     }
   }
   assert.deepEqual(badResponses, [], 'startup HTTP errors');
   assert.deepEqual(consoleErrors.map(({ text, url }) => ({ text, url })), [], 'startup console errors');
-  console.log('Four pages started cleanly, ' + localAssets.size + ' distinct local URLs loaded');
+  console.log('Five pages started cleanly, ' + localAssets.size + ' distinct local URLs loaded');
+
+  const bollyErrors = consoleErrors.length;
+  await navigate('bollywood/#roulette');
+  await until('document.querySelector("#deck-stars .spin")');
+  await click('[data-deck="voices"]');
+  assert.equal(await evaluate('localStorage.getItem("bolly.deck")'), 'voices');
+  await navigate('bollywood/?scenario=restore-deck');
+  await until('location.search === "?scenario=restore-deck" && document.querySelector("#deck-voices:not([hidden]) .spin")');
+  assert.match(await evaluate('document.querySelector("#deck-voices .auto-menu").textContent'), /Same voice/);
+  await click('[data-deck="stars"]');
+  assert.match(await evaluate('document.querySelector("#deck-stars .auto-menu").textContent'), /Same star/);
+  await click('#deck-stars .auto');
+  await until('__yt.length === 1 && __yt[0].plays > 0');
+  await evaluate('__emit("onStateChange", 1)');
+  assert.equal(await evaluate('document.querySelector("#deck-stars .result").hidden'), false);
+  assert.match(await evaluate('document.querySelector("#deck-stars .now").textContent'), /Now playing:/);
+  await click('#openBinder');
+  assert.equal(await evaluate('document.querySelector("#binder").open && document.querySelector("#binderGrid").childElementCount > 0'), true);
+  await click('#closeBinder');
+  await click('#tab-top100');
+  await until('document.querySelectorAll("#chart li").length === 100 && !document.querySelector("#pull").disabled');
+  await click('#pull');
+  await until('__yt.length === 2 && __yt[1].plays > 0');
+  await evaluate('__emit("onStateChange", 1)');
+  assert.equal(await evaluate('document.querySelector("#tResult").hidden'), false);
+  const chips = await evaluate('[...document.querySelectorAll("#tCard .chips span")].map(chip => chip.textContent)');
+  assert.ok(chips.some((chip) => /^\d{4}$/.test(chip)), `Expected a release-year chip, got ${chips.join(', ')}`);
+  assert.doesNotMatch(await evaluate('document.querySelector("#chart li .nums").textContent'), /streams/);
+  assert.deepEqual(await evaluate('__csp'), [], 'Bollywood gameplay CSP violations');
+  assert.deepEqual(consoleErrors.slice(bollyErrors).map(({ text, url }) => ({ text, url })), [], 'Bollywood gameplay console errors');
+  console.log('Bollywood: Stars/Voices persistence, roulette, binder and Top 100 passed with the test player. Zero CSP and console errors.');
+
   await cdp('Network.setBlockedURLs', { urls: ['https://*'] });
 
   await navigate('kpop/?scenario=data-retry#roulette');
@@ -291,9 +387,33 @@ try {
     await evaluate(`__emit('onStateChange',1); __emit('onStateChange',0); window.__genreStale=[...__advances.values()][0].fn; dispatchEvent(new PageTransitionEvent('pagehide')); dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})); __genreStale();`);
     await delay(450); assert.equal(await evaluate('__yt.length'), 12, `${side}: genre navigation cancels advances across page cache restore`);
   }
+  if (liveBollywood) {
+    await cdp('Network.setBlockedURLs', { urls: [] });
+    const liveErrors = consoleErrors.length;
+    await desktop(720);
+    await navigate('bollywood/?scenario=live-youtube#roulette');
+    await until('document.querySelector("#deck-stars .auto:not(:disabled)")');
+    const playLive = async (button, host) => {
+      await click(button);
+      const frame = `document.querySelector('${host} iframe')`;
+      const tap = `${host} .tap-to-play`;
+      const playing = `${frame} && __playing.has(${frame}.src)`;
+      await until(`(${playing}) || document.querySelector('${tap}') || document.querySelector('${host} .fallback')`, 30000);
+      if (await evaluate(`document.querySelector('${tap}') !== null`)) await click(tap);
+      assert.equal(await evaluate(`document.querySelector('${host} .fallback') === null`), true, host + ' live YouTube failed');
+      await until(playing, 30000);
+    };
+    await playLive('#deck-stars .auto', '#deck-stars .player');
+    await click('#tab-top100');
+    await until('document.querySelectorAll("#chart li").length === 100 && !document.querySelector("#pull").disabled');
+    await playLive('#pull', '#tPlayer');
+    assert.deepEqual(await evaluate('__csp'), [], 'live Bollywood CSP violations');
+    assert.deepEqual(consoleErrors.slice(liveErrors).map(({ text, url }) => ({ text, url })), [], 'live Bollywood console errors');
+    console.log('Bollywood: live YouTube reported PLAYING in Roulette and Top 100. Zero CSP and console errors.');
+  }
   assert.deepEqual(errors, [], 'browser exceptions');
-  await writeFile(path.join(cache, 'assets.txt'), 'Generated by tests/browser-hangout.mjs: landing-phone.png, anime-phone.png, kpop-phone.png, kpop-desktop.png, pop-phone.png, pop-desktop.png; profile/ is the isolated Chromium profile.\n');
-  console.log('Browser acceptance: all four pages passed; 0 exceptions. Screenshots: .cache/hangout-check/');
+  await writeFile(path.join(cache, 'assets.txt'), 'Generated by tests/browser-hangout.mjs: landing-phone.png, landing-desktop.png, bolly-phone.png, bolly-desktop.png, anime-phone.png, kpop-phone.png, kpop-desktop.png, pop-phone.png, pop-desktop.png; profile/ is the isolated Chromium profile.\n');
+  console.log('Browser acceptance: all five pages passed; 0 exceptions. Screenshots: .cache/hangout-check/');
 } finally {
   try { if (socket?.readyState === WebSocket.OPEN) await Promise.race([send('Browser.close'), delay(500)]); } catch {}
   socket?.close(); browser?.kill(); server.kill();

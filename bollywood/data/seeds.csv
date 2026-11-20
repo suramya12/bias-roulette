@@ -1,0 +1,513 @@
+deck,name,song,film,year,singers,composer,picturised_on
+STARS,Dilip Kumar,Suhana Safar Aur Yeh Mausam Haseen,Madhumati,1958,Mukesh,Salil Chowdhury,Dilip Kumar
+STARS,Dilip Kumar,Uden Jab Jab Zulfen Teri,Naya Daur,1957,"Mohammed Rafi, Asha Bhosle",O.P. Nayyar,"Dilip Kumar, Vyjayanthimala"
+STARS,Dilip Kumar,Madhuban Mein Radhika Nache Re,Kohinoor,1960,Mohammed Rafi,Naushad,"Dilip Kumar, Kumkum"
+STARS,Dilip Kumar,Nain Lad Jaihen,Gunga Jumna,1961,Mohammed Rafi,Naushad,Dilip Kumar
+STARS,Dilip Kumar,Yeh Desh Hai Veer Jawanon Ka,Naya Daur,1957,"Mohammed Rafi, Balbir",O.P. Nayyar,"Dilip Kumar, Ajit"
+STARS,Dilip Kumar,Ae Mere Dil Kahin Aur Chal,Daag,1952,Talat Mahmood,Shankar-Jaikishan,Dilip Kumar
+STARS,Dilip Kumar,Aaj Purani Raahon Se,Aadmi,1968,Mohammed Rafi,Naushad,Dilip Kumar
+STARS,Dilip Kumar,Dil Tadap Tadap Ke Kah Raha,Madhumati,1958,"Mukesh, Lata Mangeshkar",Salil Chowdhury,"Dilip Kumar, Vyjayanthimala"
+STARS,Dev Anand,Gaata Rahe Mera Dil,Guide,1965,"Kishore Kumar, Lata Mangeshkar",S.D. Burman,"Dev Anand, Waheeda Rehman"
+STARS,Dev Anand,Abhi Na Jao Chhod Kar,Hum Dono,1961,"Mohammed Rafi, Asha Bhosle",Jaidev,"Dev Anand, Sadhana"
+STARS,Dev Anand,Main Zindagi Ka Saath Nibhata Chala Gaya,Hum Dono,1961,Mohammed Rafi,Jaidev,Dev Anand
+STARS,Dev Anand,Khoya Khoya Chand,Kala Bazar,1960,Mohammed Rafi,S.D. Burman,"Dev Anand, Waheeda Rehman"
+STARS,Dev Anand,Hai Apna Dil To Awara,Solva Saal,1958,Hemant Kumar,S.D. Burman,"Dev Anand, Waheeda Rehman"
+STARS,Dev Anand,Pal Bhar Ke Liye,Johny Mera Naam,1970,Kishore Kumar,Kalyanji-Anandji,"Dev Anand, Hema Malini"
+STARS,Dev Anand,Phoolon Ke Rang Se,Prem Pujari,1970,Kishore Kumar,S.D. Burman,"Dev Anand, Waheeda Rehman"
+STARS,Dev Anand,Din Dhal Jaye,Guide,1965,Mohammed Rafi,S.D. Burman,Dev Anand
+STARS,Raj Kapoor,Awaara Hoon,Awaara,1951,Mukesh,Shankar-Jaikishan,Raj Kapoor
+STARS,Raj Kapoor,Mera Joota Hai Japani,Shree 420,1955,Mukesh,Shankar-Jaikishan,Raj Kapoor
+STARS,Raj Kapoor,Pyar Hua Ikrar Hua,Shree 420,1955,"Manna Dey, Lata Mangeshkar",Shankar-Jaikishan,"Raj Kapoor, Nargis"
+STARS,Raj Kapoor,Jeena Yahan Marna Yahan,Mera Naam Joker,1970,Mukesh,Shankar-Jaikishan,Raj Kapoor
+STARS,Raj Kapoor,Kisi Ki Muskurahaton Pe Ho Nisar,Anari,1959,Mukesh,Shankar-Jaikishan,Raj Kapoor
+STARS,Raj Kapoor,Sab Kuchh Seekha Humne,Anari,1959,Mukesh,Shankar-Jaikishan,Raj Kapoor
+STARS,Raj Kapoor,Dum Dum Diga Diga,Chhalia,1960,Mukesh,Kalyanji-Anandji,Raj Kapoor
+STARS,Raj Kapoor,Dost Dost Na Raha,Sangam,1964,Mukesh,Shankar-Jaikishan,"Raj Kapoor, Vyjayanthimala, Rajendra Kumar"
+STARS,Madhubala,Pyar Kiya To Darna Kya,Mughal-e-Azam,1960,Lata Mangeshkar,Naushad,"Madhubala, Dilip Kumar, Prithviraj Kapoor"
+STARS,Madhubala,Aayega Aanewala,Mahal,1949,Lata Mangeshkar,Khemchand Prakash,"Madhubala, Ashok Kumar"
+STARS,Madhubala,Ek Ladki Bheegi Bhaagi Si,Chalti Ka Naam Gaadi,1958,Kishore Kumar,S.D. Burman,"Kishore Kumar, Madhubala"
+STARS,Madhubala,Haal Kaisa Hai Janab Ka,Chalti Ka Naam Gaadi,1958,"Kishore Kumar, Asha Bhosle",S.D. Burman,"Kishore Kumar, Madhubala"
+STARS,Madhubala,Aaiye Meherban,Howrah Bridge,1958,Asha Bhosle,O.P. Nayyar,"Madhubala, Ashok Kumar"
+STARS,Madhubala,Achha Ji Main Haari Chalo,Kala Pani,1958,"Mohammed Rafi, Asha Bhosle",S.D. Burman,"Dev Anand, Madhubala"
+STARS,Madhubala,Mohe Panghat Pe,Mughal-e-Azam,1960,Lata Mangeshkar,Naushad,"Madhubala, Dilip Kumar"
+STARS,Madhubala,Thandi Hawa Kali Ghata,Mr. & Mrs. '55,1955,Geeta Dutt,O.P. Nayyar,Madhubala
+STARS,Waheeda Rehman,Aaj Phir Jeene Ki Tamanna Hai,Guide,1965,Lata Mangeshkar,S.D. Burman,Waheeda Rehman
+STARS,Waheeda Rehman,Piya Tose Naina Laage Re,Guide,1965,Lata Mangeshkar,S.D. Burman,Waheeda Rehman
+STARS,Waheeda Rehman,Chaudhvin Ka Chand Ho,Chaudhvin Ka Chand,1960,Mohammed Rafi,Ravi,"Guru Dutt, Waheeda Rehman"
+STARS,Waheeda Rehman,Rangeela Re,Prem Pujari,1970,Lata Mangeshkar,S.D. Burman,Waheeda Rehman
+STARS,Waheeda Rehman,Paan Khaye Saiyan Hamaro,Teesri Kasam,1966,Asha Bhosle,Shankar-Jaikishan,"Waheeda Rehman, Raj Kapoor"
+STARS,Waheeda Rehman,Kahin Pe Nigahen Kahin Pe Nishana,C.I.D.,1956,Shamshad Begum,O.P. Nayyar,Waheeda Rehman
+STARS,Waheeda Rehman,Jaane Kya Tune Kahi,Pyaasa,1957,Geeta Dutt,S.D. Burman,"Waheeda Rehman, Guru Dutt"
+STARS,Waheeda Rehman,Waqt Ne Kiya Kya Haseen Sitam,Kaagaz Ke Phool,1959,Geeta Dutt,S.D. Burman,"Guru Dutt, Waheeda Rehman"
+STARS,Shammi Kapoor,Chahe Koi Mujhe Junglee Kahe,Junglee,1961,Mohammed Rafi,Shankar-Jaikishan,Shammi Kapoor
+STARS,Shammi Kapoor,Badan Pe Sitare Lapete Huye,Prince,1969,Mohammed Rafi,Shankar-Jaikishan,"Shammi Kapoor, Vyjayanthimala"
+STARS,Shammi Kapoor,Taarif Karoon Kya Uski,Kashmir Ki Kali,1964,Mohammed Rafi,O.P. Nayyar,"Shammi Kapoor, Sharmila Tagore"
+STARS,Shammi Kapoor,O Haseena Zulfonwali,Teesri Manzil,1966,"Mohammed Rafi, Asha Bhosle",R.D. Burman,"Shammi Kapoor, Helen"
+STARS,Shammi Kapoor,Aaja Aaja Main Hoon Pyar Tera,Teesri Manzil,1966,"Mohammed Rafi, Asha Bhosle",R.D. Burman,"Shammi Kapoor, Asha Parekh"
+STARS,Shammi Kapoor,Aajkal Tere Mere Pyar Ke Charche,Brahmachari,1968,"Mohammed Rafi, Suman Kalyanpur",Shankar-Jaikishan,"Shammi Kapoor, Mumtaz"
+STARS,Shammi Kapoor,Baar Baar Dekho,China Town,1962,Mohammed Rafi,Ravi,"Shammi Kapoor, Shakila"
+STARS,Shammi Kapoor,Ehsaan Tera Hoga Mujh Par,Junglee,1961,Mohammed Rafi,Shankar-Jaikishan,"Shammi Kapoor, Saira Banu"
+STARS,Rajesh Khanna,Mere Sapnon Ki Rani,Aradhana,1969,Kishore Kumar,S.D. Burman,"Rajesh Khanna, Sharmila Tagore"
+STARS,Rajesh Khanna,Roop Tera Mastana,Aradhana,1969,Kishore Kumar,S.D. Burman,"Rajesh Khanna, Sharmila Tagore"
+STARS,Rajesh Khanna,Yeh Shaam Mastani,Kati Patang,1971,Kishore Kumar,R.D. Burman,"Rajesh Khanna, Asha Parekh"
+STARS,Rajesh Khanna,Zindagi Ek Safar Hai Suhana,Andaz,1971,Kishore Kumar,Shankar-Jaikishan,"Rajesh Khanna, Hema Malini"
+STARS,Rajesh Khanna,Chingari Koi Bhadke,Amar Prem,1972,Kishore Kumar,R.D. Burman,"Rajesh Khanna, Sharmila Tagore"
+STARS,Rajesh Khanna,Kahin Door Jab Din Dhal Jaye,Anand,1971,Mukesh,Salil Chowdhury,Rajesh Khanna
+STARS,Rajesh Khanna,Jai Jai Shiv Shankar,Aap Ki Kasam,1974,"Kishore Kumar, Lata Mangeshkar",R.D. Burman,"Rajesh Khanna, Mumtaz"
+STARS,Rajesh Khanna,Gulabi Aankhen,The Train,1970,Mohammed Rafi,R.D. Burman,"Rajesh Khanna, Nanda"
+STARS,Amitabh Bachchan,Yeh Dosti Hum Nahin Todenge,Sholay,1975,"Kishore Kumar, Manna Dey",R.D. Burman,"Amitabh Bachchan, Dharmendra"
+STARS,Amitabh Bachchan,Khaike Paan Banaras Wala,Don,1978,Kishore Kumar,Kalyanji-Anandji,"Amitabh Bachchan, Zeenat Aman"
+STARS,Amitabh Bachchan,Kabhi Kabhi Mere Dil Mein,Kabhi Kabhie,1976,Mukesh,Khayyam,"Amitabh Bachchan, Raakhee"
+STARS,Amitabh Bachchan,Pag Ghungroo Baandh,Namak Halaal,1982,Kishore Kumar,Bappi Lahiri,Amitabh Bachchan
+STARS,Amitabh Bachchan,Rang Barse,Silsila,1981,Amitabh Bachchan,Shiv-Hari,"Amitabh Bachchan, Rekha, Jaya Bachchan, Sanjeev Kumar"
+STARS,Amitabh Bachchan,Dekha Ek Khwab,Silsila,1981,"Kishore Kumar, Lata Mangeshkar",Shiv-Hari,"Amitabh Bachchan, Rekha"
+STARS,Amitabh Bachchan,Tere Jaisa Yaar Kahan,Yaarana,1981,Kishore Kumar,Rajesh Roshan,"Amitabh Bachchan, Amjad Khan"
+STARS,Amitabh Bachchan,Jumma Chumma De De,Hum,1991,"Sudesh Bhosale, Kavita Krishnamurthy",Laxmikant-Pyarelal,"Amitabh Bachchan, Kimi Katkar"
+STARS,Rekha,In Aankhon Ki Masti,Umrao Jaan,1981,Asha Bhosle,Khayyam,Rekha
+STARS,Rekha,Dil Cheez Kya Hai,Umrao Jaan,1981,Asha Bhosle,Khayyam,Rekha
+STARS,Rekha,Salaam-E-Ishq Meri Jaan,Muqaddar Ka Sikandar,1978,"Lata Mangeshkar, Kishore Kumar",Kalyanji-Anandji,"Rekha, Amitabh Bachchan"
+STARS,Rekha,Pardesiya,Mr. Natwarlal,1979,"Lata Mangeshkar, Kishore Kumar",Rajesh Roshan,"Rekha, Amitabh Bachchan"
+STARS,Rekha,Yeh Kahan Aa Gaye Hum,Silsila,1981,"Lata Mangeshkar, Amitabh Bachchan",Shiv-Hari,"Rekha, Amitabh Bachchan"
+STARS,Rekha,Gum Hai Kisi Ke Pyar Mein,Raampur Ka Lakshman,1972,"Kishore Kumar, Lata Mangeshkar",R.D. Burman,"Randhir Kapoor, Rekha"
+STARS,Rekha,Tere Bina Jiya Jaye Na,Ghar,1978,Lata Mangeshkar,R.D. Burman,"Rekha, Vinod Mehra"
+STARS,Rekha,Mann Kyon Behka Re Behka,Utsav,1984,"Lata Mangeshkar, Asha Bhosle",Laxmikant-Pyarelal,"Rekha, Anuradha Patel"
+STARS,Hema Malini,Jab Tak Hai Jaan,Sholay,1975,Lata Mangeshkar,R.D. Burman,"Hema Malini, Dharmendra"
+STARS,Hema Malini,Dream Girl,Dream Girl,1977,Kishore Kumar,Laxmikant-Pyarelal,"Hema Malini, Dharmendra"
+STARS,Hema Malini,Hawa Ke Saath Saath,Seeta Aur Geeta,1972,"Kishore Kumar, Asha Bhosle",R.D. Burman,"Sanjeev Kumar, Hema Malini"
+STARS,Hema Malini,O Saathi Chal,Seeta Aur Geeta,1972,"Kishore Kumar, Asha Bhosle",R.D. Burman,"Dharmendra, Hema Malini"
+STARS,Hema Malini,Tune O Rangeele,Kudrat,1981,Lata Mangeshkar,R.D. Burman,"Hema Malini, Rajesh Khanna"
+STARS,Hema Malini,Mere Naseeb Mein,Naseeb,1981,Lata Mangeshkar,Laxmikant-Pyarelal,"Hema Malini, Amitabh Bachchan"
+STARS,Hema Malini,Dilbar Mere Kab Tak Mujhe,Satte Pe Satta,1982,"Kishore Kumar, Anette",R.D. Burman,"Amitabh Bachchan, Hema Malini"
+STARS,Hema Malini,Kya Khoob Lagti Ho,Dharmatma,1975,"Mukesh, Kanchan",Kalyanji-Anandji,"Feroz Khan, Hema Malini"
+STARS,Zeenat Aman,Dum Maro Dum,Hare Rama Hare Krishna,1971,Asha Bhosle,R.D. Burman,Zeenat Aman
+STARS,Zeenat Aman,Chura Liya Hai Tumne Jo Dil Ko,Yaadon Ki Baaraat,1973,"Asha Bhosle, Mohammed Rafi",R.D. Burman,"Zeenat Aman, Vijay Arora"
+STARS,Zeenat Aman,Laila Main Laila,Qurbani,1980,Kanchan,Kalyanji-Anandji,Zeenat Aman
+STARS,Zeenat Aman,Aap Jaisa Koi,Qurbani,1980,Nazia Hassan,Biddu,"Zeenat Aman, Feroz Khan"
+STARS,Zeenat Aman,Satyam Shivam Sundaram,Satyam Shivam Sundaram,1978,Lata Mangeshkar,Laxmikant-Pyarelal,Zeenat Aman
+STARS,Zeenat Aman,Do Lafzon Ki Hai Dil Ki Kahani,The Great Gambler,1979,"Asha Bhosle, Sharad Kumar",R.D. Burman,"Amitabh Bachchan, Zeenat Aman"
+STARS,Zeenat Aman,Hai Hai Yeh Majboori,Roti Kapada Aur Makaan,1974,Lata Mangeshkar,Laxmikant-Pyarelal,Zeenat Aman
+STARS,Zeenat Aman,Samundar Mein Nahake,Pukar,1983,R.D. Burman,R.D. Burman,"Amitabh Bachchan, Zeenat Aman"
+STARS,Sridevi,Hawa Hawai,Mr. India,1987,Kavita Krishnamurthy,Laxmikant-Pyarelal,Sridevi
+STARS,Sridevi,Kaate Nahin Kat Te,Mr. India,1987,"Kishore Kumar, Alisha Chinai",Laxmikant-Pyarelal,"Sridevi, Anil Kapoor"
+STARS,Sridevi,Mere Haathon Mein Nau Nau Choodiyan,Chandni,1989,Lata Mangeshkar,Shiv-Hari,Sridevi
+STARS,Sridevi,Chandni O Meri Chandni,Chandni,1989,"Sridevi, Jolly Mukherjee",Shiv-Hari,"Sridevi, Rishi Kapoor"
+STARS,Sridevi,Main Teri Dushman,Nagina,1986,Lata Mangeshkar,Laxmikant-Pyarelal,Sridevi
+STARS,Sridevi,Naino Mein Sapna,Himmatwala,1983,"Kishore Kumar, Lata Mangeshkar",Bappi Lahiri,"Jeetendra, Sridevi"
+STARS,Sridevi,Morni Baaga Ma Bole,Lamhe,1991,"Lata Mangeshkar, Ila Arun",Shiv-Hari,"Sridevi, Anil Kapoor"
+STARS,Sridevi,Navrai Majhi,English Vinglish,2012,"Sunidhi Chauhan, Swanand Kirkire, Natalie Di Luccio, Neelambari Kirkire",Amit Trivedi,Sridevi
+STARS,Madhuri Dixit,Ek Do Teen,Tezaab,1988,Alka Yagnik,Laxmikant-Pyarelal,Madhuri Dixit
+STARS,Madhuri Dixit,Dhak Dhak Karne Laga,Beta,1992,"Anuradha Paudwal, Udit Narayan",Anand-Milind,"Madhuri Dixit, Anil Kapoor"
+STARS,Madhuri Dixit,Choli Ke Peeche Kya Hai,Khalnayak,1993,"Alka Yagnik, Ila Arun",Laxmikant-Pyarelal,"Madhuri Dixit, Neena Gupta"
+STARS,Madhuri Dixit,Didi Tera Devar Deewana,Hum Aapke Hain Koun..!,1994,"Lata Mangeshkar, S.P. Balasubrahmanyam",Raamlaxman,"Madhuri Dixit, Salman Khan"
+STARS,Madhuri Dixit,Dola Re Dola,Devdas,2002,"Kavita Krishnamurthy, Shreya Ghoshal, KK",Ismail Darbar,"Madhuri Dixit, Aishwarya Rai"
+STARS,Madhuri Dixit,Maar Dala,Devdas,2002,"Kavita Krishnamurthy, KK",Ismail Darbar,Madhuri Dixit
+STARS,Madhuri Dixit,Chane Ke Khet Mein,Anjaam,1994,Poornima,Anand-Milind,Madhuri Dixit
+STARS,Madhuri Dixit,Aaja Nachle,Aaja Nachle,2007,Sunidhi Chauhan,Salim-Sulaiman,Madhuri Dixit
+STARS,Shah Rukh Khan,Chaiyya Chaiyya,Dil Se..,1998,"Sukhwinder Singh, Sapna Awasthi",A.R. Rahman,"Shah Rukh Khan, Malaika Arora"
+STARS,Shah Rukh Khan,Tujhe Dekha To,Dilwale Dulhania Le Jayenge,1995,"Kumar Sanu, Lata Mangeshkar",Jatin-Lalit,"Shah Rukh Khan, Kajol"
+STARS,Shah Rukh Khan,Kal Ho Naa Ho,Kal Ho Naa Ho,2003,Sonu Nigam,Shankar-Ehsaan-Loy,"Shah Rukh Khan, Preity Zinta, Saif Ali Khan"
+STARS,Shah Rukh Khan,Suraj Hua Maddham,Kabhi Khushi Kabhie Gham,2001,"Sonu Nigam, Alka Yagnik",Sandesh Shandilya,"Shah Rukh Khan, Kajol"
+STARS,Shah Rukh Khan,Aankhon Mein Teri (Ajab Si),Om Shanti Om,2007,KK,Vishal-Shekhar,"Shah Rukh Khan, Deepika Padukone"
+STARS,Shah Rukh Khan,Tujh Mein Rab Dikhta Hai,Rab Ne Bana Di Jodi,2008,Roop Kumar Rathod,Salim-Sulaiman,"Shah Rukh Khan, Anushka Sharma"
+STARS,Shah Rukh Khan,Chammak Challo,Ra.One,2011,"Akon, Hamsika Iyer",Vishal-Shekhar,"Shah Rukh Khan, Kareena Kapoor"
+STARS,Shah Rukh Khan,Chaleya,Jawan,2023,"Arijit Singh, Shilpa Rao",Anirudh Ravichander,"Shah Rukh Khan, Nayanthara"
+STARS,Salman Khan,Pehla Pehla Pyar,Hum Aapke Hain Koun..!,1994,S.P. Balasubrahmanyam,Raamlaxman,"Salman Khan, Madhuri Dixit"
+STARS,Salman Khan,O O Jaane Jaana,Pyaar Kiya To Darna Kya,1998,Kamaal Khan,Jatin-Lalit,Salman Khan
+STARS,Salman Khan,Dil Deewana,Maine Pyar Kiya,1989,S.P. Balasubrahmanyam,Raamlaxman,"Salman Khan, Bhagyashree"
+STARS,Salman Khan,Tere Naam,Tere Naam,2003,"Udit Narayan, Alka Yagnik",Himesh Reshammiya,"Salman Khan, Bhumika Chawla"
+STARS,Salman Khan,Tere Mast Mast Do Nain,Dabangg,2010,Rahat Fateh Ali Khan,Sajid-Wajid,"Salman Khan, Sonakshi Sinha"
+STARS,Salman Khan,Jeene Ke Hain Chaar Din,Mujhse Shaadi Karogi,2004,"Sonu Nigam, Sunidhi Chauhan",Anu Malik,"Salman Khan, Priyanka Chopra"
+STARS,Salman Khan,Jag Ghoomeya,Sultan,2016,Rahat Fateh Ali Khan,Vishal-Shekhar,"Salman Khan, Anushka Sharma"
+STARS,Salman Khan,Swag Se Swagat,Tiger Zinda Hai,2017,"Vishal Dadlani, Neha Bhasin",Vishal-Shekhar,"Salman Khan, Katrina Kaif"
+STARS,Aamir Khan,Papa Kehte Hain,Qayamat Se Qayamat Tak,1988,Udit Narayan,Anand-Milind,Aamir Khan
+STARS,Aamir Khan,Pehla Nasha,Jo Jeeta Wohi Sikandar,1992,"Udit Narayan, Sadhana Sargam",Jatin-Lalit,"Aamir Khan, Ayesha Jhulka, Pooja Bedi"
+STARS,Aamir Khan,Aati Kya Khandala,Ghulam,1998,"Aamir Khan, Alka Yagnik",Jatin-Lalit,"Aamir Khan, Rani Mukerji"
+STARS,Aamir Khan,Dil Chahta Hai,Dil Chahta Hai,2001,Shankar Mahadevan,Shankar-Ehsaan-Loy,"Aamir Khan, Saif Ali Khan, Akshaye Khanna"
+STARS,Aamir Khan,Mitwa,Lagaan,2001,"Udit Narayan, Alka Yagnik, Sukhwinder Singh, Srinivas",A.R. Rahman,"Aamir Khan, Gracy Singh"
+STARS,Aamir Khan,Chand Sifarish,Fanaa,2006,"Shaan, Kailash Kher",Jatin-Lalit,"Aamir Khan, Kajol"
+STARS,Aamir Khan,Aal Izz Well,3 Idiots,2009,"Sonu Nigam, Shaan, Swanand Kirkire",Shantanu Moitra,"Aamir Khan, R. Madhavan, Sharman Joshi"
+STARS,Aamir Khan,Kaise Mujhe,Ghajini,2008,"Benny Dayal, Shreya Ghoshal",A.R. Rahman,"Aamir Khan, Asin"
+STARS,Kajol,Mehndi Laga Ke Rakhna,Dilwale Dulhania Le Jayenge,1995,"Lata Mangeshkar, Udit Narayan",Jatin-Lalit,"Shah Rukh Khan, Kajol"
+STARS,Kajol,Mere Khwabon Mein,Dilwale Dulhania Le Jayenge,1995,Lata Mangeshkar,Jatin-Lalit,Kajol
+STARS,Kajol,Kuch Kuch Hota Hai,Kuch Kuch Hota Hai,1998,"Udit Narayan, Alka Yagnik",Jatin-Lalit,"Shah Rukh Khan, Kajol, Rani Mukerji"
+STARS,Kajol,Yeh Kaali Kaali Aankhen,Baazigar,1993,"Kumar Sanu, Anu Malik",Anu Malik,"Shah Rukh Khan, Kajol"
+STARS,Kajol,Bole Chudiyan,Kabhi Khushi Kabhie Gham,2001,"Kavita Krishnamurthy, Alka Yagnik, Sonu Nigam, Udit Narayan, Amit Kumar",Jatin-Lalit,"Kareena Kapoor, Hrithik Roshan, Shah Rukh Khan, Kajol"
+STARS,Kajol,Mere Haath Mein,Fanaa,2006,"Sonu Nigam, Sunidhi Chauhan",Jatin-Lalit,"Aamir Khan, Kajol"
+STARS,Kajol,Sajdaa,My Name Is Khan,2010,"Rahat Fateh Ali Khan, Shankar Mahadevan, Richa Sharma",Shankar-Ehsaan-Loy,"Shah Rukh Khan, Kajol"
+STARS,Kajol,Gerua,Dilwale,2015,"Arijit Singh, Antara Mitra",Pritam,"Shah Rukh Khan, Kajol"
+STARS,Juhi Chawla,Gazab Ka Hai Din,Qayamat Se Qayamat Tak,1988,"Alka Yagnik, Udit Narayan",Anand-Milind,"Aamir Khan, Juhi Chawla"
+STARS,Juhi Chawla,Ae Mere Humsafar,Qayamat Se Qayamat Tak,1988,"Udit Narayan, Alka Yagnik",Anand-Milind,"Aamir Khan, Juhi Chawla"
+STARS,Juhi Chawla,Jaadu Teri Nazar,Darr,1993,Udit Narayan,Shiv-Hari,"Shah Rukh Khan, Juhi Chawla"
+STARS,Juhi Chawla,Main Koi Aisa Geet Gaoon,Yes Boss,1997,"Abhijeet, Alka Yagnik",Jatin-Lalit,"Shah Rukh Khan, Juhi Chawla"
+STARS,Juhi Chawla,Ghoonghat Ki Aad Se,Hum Hain Rahi Pyar Ke,1993,"Kumar Sanu, Alka Yagnik",Nadeem-Shravan,"Aamir Khan, Juhi Chawla"
+STARS,Juhi Chawla,Ishq Hua Kaise Hua,Ishq,1997,"Udit Narayan, Vibha Sharma",Anu Malik,"Aamir Khan, Juhi Chawla"
+STARS,Juhi Chawla,Tu Mere Samne,Darr,1993,"Lata Mangeshkar, Udit Narayan",Shiv-Hari,"Shah Rukh Khan, Juhi Chawla"
+STARS,Juhi Chawla,Banke Tera Jogi,Phir Bhi Dil Hai Hindustani,2000,"Sonu Nigam, Alka Yagnik",Jatin-Lalit,"Shah Rukh Khan, Juhi Chawla"
+STARS,Govinda,Main Toh Raste Se Ja Raha Tha,Coolie No. 1,1995,"Kumar Sanu, Alka Yagnik",Anand-Milind,"Govinda, Karisma Kapoor"
+STARS,Govinda,Husn Hai Suhana,Coolie No. 1,1995,"Abhijeet, Chandana Dixit",Anand-Milind,"Govinda, Karisma Kapoor"
+STARS,Govinda,Sona Kitna Sona Hai,Hero No. 1,1997,"Udit Narayan, Poornima",Anand-Milind,"Govinda, Karisma Kapoor"
+STARS,Govinda,Sarkai Lo Khatiya,Raja Babu,1994,"Kumar Sanu, Poornima",Anand-Milind,"Govinda, Karisma Kapoor"
+STARS,Govinda,Ankhiyon Se Goli Maare,Dulhe Raja,1998,"Sonu Nigam, Jaspinder Narula",Anand-Milind,"Govinda, Raveena Tandon"
+STARS,Govinda,Kisi Disco Mein Jaaye,Bade Miyan Chote Miyan,1998,"Udit Narayan, Alka Yagnik",Viju Shah,"Govinda, Raveena Tandon"
+STARS,Govinda,UP Wala Thumka,Hero No. 1,1997,Sonu Nigam,Anand-Milind,"Govinda, Karisma Kapoor"
+STARS,Govinda,Soni De Nakhre,Partner,2007,"Wajid, Labh Janjua, Sneha Pant",Sajid-Wajid,"Govinda, Salman Khan, Katrina Kaif"
+STARS,Aishwarya Rai,Nimbooda,Hum Dil De Chuke Sanam,1999,"Kavita Krishnamurthy, Karsan Sagathia",Ismail Darbar,"Aishwarya Rai, Ajay Devgn"
+STARS,Aishwarya Rai,Taal Se Taal,Taal,1999,"Alka Yagnik, Udit Narayan",A.R. Rahman,"Aishwarya Rai, Akshaye Khanna"
+STARS,Aishwarya Rai,Kajra Re,Bunty Aur Babli,2005,"Alisha Chinai, Shankar Mahadevan, Javed Ali",Shankar-Ehsaan-Loy,"Aishwarya Rai, Amitabh Bachchan, Abhishek Bachchan"
+STARS,Aishwarya Rai,Barso Re,Guru,2007,"Shreya Ghoshal, Uday Mazumdar",A.R. Rahman,Aishwarya Rai
+STARS,Aishwarya Rai,Tere Bina,Guru,2007,"A.R. Rahman, Chinmayi, Murtuza Khan, Qadir Khan",A.R. Rahman,"Aishwarya Rai, Abhishek Bachchan"
+STARS,Aishwarya Rai,Jashn-E-Bahaaraa,Jodhaa Akbar,2008,Javed Ali,A.R. Rahman,"Hrithik Roshan, Aishwarya Rai"
+STARS,Aishwarya Rai,Crazy Kiya Re,Dhoom 2,2006,Sunidhi Chauhan,Pritam,"Aishwarya Rai, Hrithik Roshan"
+STARS,Aishwarya Rai,Silsila Ye Chaahat Ka,Devdas,2002,Shreya Ghoshal,Ismail Darbar,Aishwarya Rai
+STARS,Hrithik Roshan,Ek Pal Ka Jeena,Kaho Naa... Pyaar Hai,2000,Lucky Ali,Rajesh Roshan,Hrithik Roshan
+STARS,Hrithik Roshan,Kaho Naa... Pyaar Hai,Kaho Naa... Pyaar Hai,2000,"Udit Narayan, Alka Yagnik",Rajesh Roshan,"Hrithik Roshan, Ameesha Patel"
+STARS,Hrithik Roshan,Dhoom Again,Dhoom 2,2006,"Vishal Dadlani, Dominique Cerejo",Pritam,"Hrithik Roshan, Aishwarya Rai"
+STARS,Hrithik Roshan,Senorita,Zindagi Na Milegi Dobara,2011,"Farhan Akhtar, Hrithik Roshan, Abhay Deol, Maria del Mar Fernandez",Shankar-Ehsaan-Loy,"Hrithik Roshan, Farhan Akhtar, Abhay Deol"
+STARS,Hrithik Roshan,Tu Meri,Bang Bang!,2014,Vishal Dadlani,Vishal-Shekhar,"Hrithik Roshan, Katrina Kaif"
+STARS,Hrithik Roshan,Ghungroo,War,2019,"Arijit Singh, Shilpa Rao",Vishal-Shekhar,"Hrithik Roshan, Vaani Kapoor"
+STARS,Hrithik Roshan,Jai Jai Shivshankar,War,2019,"Vishal Dadlani, Benny Dayal",Vishal-Shekhar,"Hrithik Roshan, Tiger Shroff"
+STARS,Hrithik Roshan,Main Aisa Kyun Hoon,Lakshya,2004,Shaan,Shankar-Ehsaan-Loy,Hrithik Roshan
+STARS,Kareena Kapoor,You Are My Soniya,Kabhi Khushi Kabhie Gham,2001,"Sonu Nigam, Alka Yagnik",Sandesh Shandilya,"Kareena Kapoor, Hrithik Roshan"
+STARS,Kareena Kapoor,Mauja Hi Mauja,Jab We Met,2007,Mika Singh,Pritam,"Shahid Kapoor, Kareena Kapoor"
+STARS,Kareena Kapoor,Ye Ishq Hai,Jab We Met,2007,Shreya Ghoshal,Pritam,Kareena Kapoor
+STARS,Kareena Kapoor,Tum Se Hi,Jab We Met,2007,Mohit Chauhan,Pritam,"Shahid Kapoor, Kareena Kapoor"
+STARS,Kareena Kapoor,Zoobi Doobi,3 Idiots,2009,"Sonu Nigam, Shreya Ghoshal",Shantanu Moitra,"Aamir Khan, Kareena Kapoor"
+STARS,Kareena Kapoor,Fevicol Se,Dabangg 2,2012,"Mamta Sharma, Wajid",Sajid-Wajid,"Kareena Kapoor, Salman Khan"
+STARS,Kareena Kapoor,Tareefan,Veere Di Wedding,2018,Badshah,Qaran,"Kareena Kapoor, Sonam Kapoor, Swara Bhasker, Shikha Talsania"
+STARS,Kareena Kapoor,Teri Meri,Bodyguard,2011,"Rahat Fateh Ali Khan, Shreya Ghoshal",Himesh Reshammiya,"Salman Khan, Kareena Kapoor"
+STARS,Priyanka Chopra,Desi Girl,Dostana,2008,"Shankar Mahadevan, Sunidhi Chauhan, Vishal Dadlani",Vishal-Shekhar,"Priyanka Chopra, Abhishek Bachchan, John Abraham"
+STARS,Priyanka Chopra,Pinga,Bajirao Mastani,2015,"Shreya Ghoshal, Vaishali Mhade",Sanjay Leela Bhansali,"Priyanka Chopra, Deepika Padukone"
+STARS,Priyanka Chopra,Ram Chahe Leela,Goliyon Ki Raasleela Ram-Leela,2013,Bhoomi Trivedi,Sanjay Leela Bhansali,Priyanka Chopra
+STARS,Priyanka Chopra,Gallan Goodiyaan,Dil Dhadakne Do,2015,"Yashita Sharma, Manish Kumar Tipu, Farhan Akhtar, Shankar Mahadevan, Sukhwinder Singh",Shankar-Ehsaan-Loy,"Priyanka Chopra, Ranveer Singh, Anil Kapoor, Shefali Shah, Anushka Sharma, Farhan Akhtar"
+STARS,Priyanka Chopra,Mujhse Shaadi Karogi,Mujhse Shaadi Karogi,2004,"Sonu Nigam, Udit Narayan, Sunidhi Chauhan",Sajid-Wajid,"Salman Khan, Akshay Kumar, Priyanka Chopra"
+STARS,Priyanka Chopra,Darling,7 Khoon Maaf,2011,"Usha Uthup, Rekha Bhardwaj",Vishal Bhardwaj,Priyanka Chopra
+STARS,Priyanka Chopra,Tune Maari Entriyaan,Gunday,2014,"Vishal Dadlani, KK, Neeti Mohan, Bappi Lahiri",Sohail Sen,"Ranveer Singh, Arjun Kapoor, Priyanka Chopra"
+STARS,Priyanka Chopra,Aaj Ki Raat,Don,2006,"Alisha Chinai, Mahalakshmi Iyer, Sonu Nigam",Shankar-Ehsaan-Loy,"Shah Rukh Khan, Priyanka Chopra, Isha Koppikar"
+STARS,Katrina Kaif,Sheila Ki Jawani,Tees Maar Khan,2010,"Sunidhi Chauhan, Vishal Dadlani",Vishal-Shekhar,Katrina Kaif
+STARS,Katrina Kaif,Chikni Chameli,Agneepath,2012,Shreya Ghoshal,Ajay-Atul,Katrina Kaif
+STARS,Katrina Kaif,Kala Chashma,Baar Baar Dekho,2016,"Amar Arshi, Badshah, Neha Kakkar","Prem-Hardeep, Badshah","Katrina Kaif, Sidharth Malhotra"
+STARS,Katrina Kaif,Kamli,Dhoom 3,2013,Sunidhi Chauhan,Pritam,Katrina Kaif
+STARS,Katrina Kaif,Mashallah,Ek Tha Tiger,2012,"Wajid, Shreya Ghoshal",Sajid-Wajid,"Salman Khan, Katrina Kaif"
+STARS,Katrina Kaif,Teri Ore,Singh Is Kinng,2008,"Rahat Fateh Ali Khan, Shreya Ghoshal",Pritam,"Akshay Kumar, Katrina Kaif"
+STARS,Katrina Kaif,Zara Zara Touch Me,Race,2008,Monali Thakur,Pritam,Katrina Kaif
+STARS,Katrina Kaif,Afghan Jalebi (Ya Baba),Phantom,2015,Asrar,Pritam,Katrina Kaif
+STARS,Deepika Padukone,Deewani Mastani,Bajirao Mastani,2015,Shreya Ghoshal,Sanjay Leela Bhansali,Deepika Padukone
+STARS,Deepika Padukone,Ghoomar,Padmaavat,2018,"Shreya Ghoshal, Swaroop Khan",Sanjay Leela Bhansali,Deepika Padukone
+STARS,Deepika Padukone,Nagada Sang Dhol,Goliyon Ki Raasleela Ram-Leela,2013,"Shreya Ghoshal, Osman Mir",Sanjay Leela Bhansali,"Deepika Padukone, Ranveer Singh"
+STARS,Deepika Padukone,Agar Tum Saath Ho,Tamasha,2015,"Alka Yagnik, Arijit Singh",A.R. Rahman,"Ranbir Kapoor, Deepika Padukone"
+STARS,Deepika Padukone,Besharam Rang,Pathaan,2023,"Shilpa Rao, Caralisa Monteiro, Vishal Dadlani, Shekhar Ravjiani",Vishal-Shekhar,"Deepika Padukone, Shah Rukh Khan"
+STARS,Deepika Padukone,Lungi Dance,Chennai Express,2013,Yo Yo Honey Singh,Yo Yo Honey Singh,"Shah Rukh Khan, Deepika Padukone"
+STARS,Deepika Padukone,Tumhi Ho Bandhu,Cocktail,2012,"Neeraj Shridhar, Kavita Seth",Pritam,"Deepika Padukone, Saif Ali Khan, Diana Penty"
+STARS,Deepika Padukone,Lovely,Happy New Year,2014,"Kanika Kapoor, Ravindra Upadhyay, Miraya Varma, Fateh",Dr. Zeus,Deepika Padukone
+STARS,Ranbir Kapoor,Badtameez Dil,Yeh Jawaani Hai Deewani,2013,"Benny Dayal, Shefali Alvares",Pritam,"Ranbir Kapoor, Deepika Padukone"
+STARS,Ranbir Kapoor,Channa Mereya,Ae Dil Hai Mushkil,2016,Arijit Singh,Pritam,"Ranbir Kapoor, Anushka Sharma"
+STARS,Ranbir Kapoor,Kun Faya Kun,Rockstar,2011,"A.R. Rahman, Javed Ali, Mohit Chauhan",A.R. Rahman,Ranbir Kapoor
+STARS,Ranbir Kapoor,Kesariya,Brahmastra,2022,Arijit Singh,Pritam,"Ranbir Kapoor, Alia Bhatt"
+STARS,Ranbir Kapoor,Balam Pichkari,Yeh Jawaani Hai Deewani,2013,"Vishal Dadlani, Shalmali Kholgade",Pritam,"Ranbir Kapoor, Deepika Padukone, Aditya Roy Kapur, Kalki Koechlin"
+STARS,Ranbir Kapoor,Khuda Jaane,Bachna Ae Haseeno,2008,"KK, Shilpa Rao",Vishal-Shekhar,"Ranbir Kapoor, Deepika Padukone"
+STARS,Ranbir Kapoor,Sadda Haq,Rockstar,2011,Mohit Chauhan,A.R. Rahman,Ranbir Kapoor
+STARS,Ranbir Kapoor,Satranga,Animal,2023,Arijit Singh,Shreyas Puranik,"Ranbir Kapoor, Rashmika Mandanna"
+STARS,Ranveer Singh,Malhari,Bajirao Mastani,2015,Vishal Dadlani,Sanjay Leela Bhansali,Ranveer Singh
+STARS,Ranveer Singh,Khalibali,Padmaavat,2018,"Shivam Pathak, Shail Hada",Sanjay Leela Bhansali,Ranveer Singh
+STARS,Ranveer Singh,Tattad Tattad,Goliyon Ki Raasleela Ram-Leela,2013,Aditya Narayan,Sanjay Leela Bhansali,Ranveer Singh
+STARS,Ranveer Singh,Aankh Marey,Simmba,2018,"Neha Kakkar, Mika Singh, Kumar Sanu",Tanishk Bagchi,"Ranveer Singh, Sara Ali Khan"
+STARS,Ranveer Singh,Apna Time Aayega,Gully Boy,2019,Ranveer Singh,"Dub Sharma, Divine",Ranveer Singh
+STARS,Ranveer Singh,Nashe Si Chadh Gayi,Befikre,2016,"Arijit Singh, Caralisa Monteiro",Vishal-Shekhar,"Ranveer Singh, Vaani Kapoor"
+STARS,Ranveer Singh,Ainvayi Ainvayi,Band Baaja Baaraat,2010,"Salim Merchant, Sunidhi Chauhan",Salim-Sulaiman,"Ranveer Singh, Anushka Sharma"
+STARS,Ranveer Singh,What Jhumka?,Rocky Aur Rani Kii Prem Kahaani,2023,"Arijit Singh, Jonita Gandhi","Pritam, Madan Mohan","Ranveer Singh, Alia Bhatt"
+STARS,Alia Bhatt,Radha,Student of the Year,2012,"Shreya Ghoshal, Udit Narayan, Vishal Dadlani, Shekhar Ravjiani",Vishal-Shekhar,"Alia Bhatt, Sidharth Malhotra, Varun Dhawan"
+STARS,Alia Bhatt,Kar Gayi Chull,Kapoor & Sons,2016,"Badshah, Fazilpuria, Sukriti Kakar, Neha Kakkar","Amaal Mallik, Badshah","Alia Bhatt, Sidharth Malhotra"
+STARS,Alia Bhatt,Samjhawan,Humpty Sharma Ki Dulhania,2014,"Arijit Singh, Shreya Ghoshal","Jawad Ahmad, Sharib-Toshi","Alia Bhatt, Varun Dhawan"
+STARS,Alia Bhatt,Dholida,Gangubai Kathiawadi,2022,"Janhvi Shrimankar, Shail Hada",Sanjay Leela Bhansali,Alia Bhatt
+STARS,Alia Bhatt,Ghar More Pardesiya,Kalank,2019,"Shreya Ghoshal, Vaishali Mhade",Pritam,"Alia Bhatt, Madhuri Dixit"
+STARS,Alia Bhatt,Tum Kya Mile,Rocky Aur Rani Kii Prem Kahaani,2023,"Arijit Singh, Shreya Ghoshal",Pritam,"Ranveer Singh, Alia Bhatt"
+STARS,Alia Bhatt,Love You Zindagi,Dear Zindagi,2016,Jasleen Royal,Amit Trivedi,"Alia Bhatt, Shah Rukh Khan"
+STARS,Alia Bhatt,Tamma Tamma Again,Badrinath Ki Dulhania,2017,"Bappi Lahiri, Anuradha Paudwal, Badshah","Bappi Lahiri, Tanishk Bagchi","Varun Dhawan, Alia Bhatt"
+STARS,Shahid Kapoor,Nagada Nagada,Jab We Met,2007,"Sonu Nigam, Javed Ali",Pritam,Shahid Kapoor
+STARS,Shahid Kapoor,Bekhayali,Kabir Singh,2019,Sachet Tandon,Sachet-Parampara,"Shahid Kapoor, Kiara Advani"
+STARS,Shahid Kapoor,Tujhe Kitna Chahne Lage,Kabir Singh,2019,Arijit Singh,Mithoon,"Shahid Kapoor, Kiara Advani"
+STARS,Shahid Kapoor,Dhan Te Nan,Kaminey,2009,"Sukhwinder Singh, Vishal Dadlani",Vishal Bhardwaj,Shahid Kapoor
+STARS,Shahid Kapoor,Saree Ke Fall Sa,R... Rajkumar,2013,"Antara Mitra, Nakash Aziz",Pritam,"Shahid Kapoor, Sonakshi Sinha"
+STARS,Shahid Kapoor,Gandi Baat,R... Rajkumar,2013,"Mika Singh, Kalpana Patowary",Pritam,"Shahid Kapoor, Sonakshi Sinha"
+STARS,Shahid Kapoor,Teri Baaton Mein Aisa Uljha Jiya,Teri Baaton Mein Aisa Uljha Jiya,2024,"Raghav, Asees Kaur, Tanishk Bagchi","Raghav, Tanishk Bagchi","Shahid Kapoor, Kriti Sanon"
+STARS,Shahid Kapoor,Bismil,Haider,2014,Sukhwinder Singh,Vishal Bhardwaj,Shahid Kapoor
+STARS,Akshay Kumar,Tip Tip Barsa Paani,Mohra,1994,"Alka Yagnik, Udit Narayan",Viju Shah,"Akshay Kumar, Raveena Tandon"
+STARS,Akshay Kumar,Chura Ke Dil Mera,Main Khiladi Tu Anari,1994,"Kumar Sanu, Alka Yagnik",Anu Malik,"Akshay Kumar, Shilpa Shetty"
+STARS,Akshay Kumar,Hare Ram Hare Ram,Bhool Bhulaiyaa,2007,Neeraj Shridhar,Pritam,Akshay Kumar
+STARS,Akshay Kumar,Subha Hone Na De,Desi Boyz,2011,"Mika Singh, Shefali Alvares",Pritam,"Akshay Kumar, John Abraham"
+STARS,Akshay Kumar,Main Khiladi Tu Anari,Main Khiladi Tu Anari,1994,"Abhijeet, Udit Narayan, Anu Malik",Anu Malik,"Akshay Kumar, Saif Ali Khan"
+STARS,Akshay Kumar,Hookah Bar,Khiladi 786,2012,"Himesh Reshammiya, Vineet Singh, Aman Trikha",Himesh Reshammiya,"Akshay Kumar, Asin"
+STARS,Akshay Kumar,Bala (Shaitan Ka Saala),Housefull 4,2019,Vishal Dadlani,Sohail Sen,Akshay Kumar
+STARS,Akshay Kumar,Soch Na Sake,Airlift,2016,"Arijit Singh, Tulsi Kumar, Amaal Mallik",Amaal Mallik,"Akshay Kumar, Nimrat Kaur"
+STARS,Vicky Kaushal,Tauba Tauba,Bad Newz,2024,Karan Aujla,Karan Aujla,"Vicky Kaushal, Triptii Dimri"
+STARS,Vicky Kaushal,Tere Vaaste,Zara Hatke Zara Bachke,2023,"Varun Jain, Sachin-Jigar, Shadab Faridi, Altamash Faridi",Sachin-Jigar,"Vicky Kaushal, Sara Ali Khan"
+STARS,Vicky Kaushal,Phir Aur Kya Chahiye,Zara Hatke Zara Bachke,2023,"Arijit Singh, Sachin-Jigar",Sachin-Jigar,"Vicky Kaushal, Sara Ali Khan"
+STARS,Vicky Kaushal,Channa Ve,Bhoot Part One: The Haunted Ship,2020,"Akhil Sachdeva, Mansheel Gujral",Akhil Sachdeva,"Vicky Kaushal, Bhumi Pednekar"
+STARS,Vicky Kaushal,Daryaa,Manmarziyaan,2018,"Ammy Virk, Shahid Mallya",Amit Trivedi,"Vicky Kaushal, Taapsee Pannu, Abhishek Bachchan"
+STARS,Vicky Kaushal,Bijli,Govinda Naam Mera,2022,"Mika Singh, Neha Kakkar, Sachin-Jigar",Sachin-Jigar,"Vicky Kaushal, Kiara Advani"
+STARS,Vicky Kaushal,Jaanam,Bad Newz,2024,Vishal Mishra,Vishal Mishra,"Vicky Kaushal, Triptii Dimri"
+STARS,Vicky Kaushal,Kyaa Baat Haii 2.0,Govinda Naam Mera,2022,"Harrdy Sandhu, Nikhita Gandhi","Tanishk Bagchi, B Praak","Vicky Kaushal, Kiara Advani"
+STARS,Kartik Aaryan,Dil Chori,Sonu Ke Titu Ki Sweety,2018,"Yo Yo Honey Singh, Simar Kaur, Ishers",Yo Yo Honey Singh,"Kartik Aaryan, Nushrratt Bharuccha, Sunny Singh"
+STARS,Kartik Aaryan,Bom Diggy Diggy,Sonu Ke Titu Ki Sweety,2018,"Zack Knight, Jasmin Walia",Zack Knight,"Kartik Aaryan, Sunny Singh"
+STARS,Kartik Aaryan,Bhool Bhulaiyaa 2 Title Track,Bhool Bhulaiyaa 2,2022,Neeraj Shridhar,"Pritam, Tanishk Bagchi",Kartik Aaryan
+STARS,Kartik Aaryan,Coca Cola,Luka Chuppi,2019,"Tony Kakkar, Neha Kakkar","Tony Kakkar, Tanishk Bagchi","Kartik Aaryan, Kriti Sanon"
+STARS,Kartik Aaryan,Dheeme Dheeme,Pati Patni Aur Woh,2019,"Neha Kakkar, Tony Kakkar","Tanishk Bagchi, Tony Kakkar","Kartik Aaryan, Bhumi Pednekar, Ananya Panday"
+STARS,Kartik Aaryan,Shayad,Love Aaj Kal,2020,Arijit Singh,Pritam,"Kartik Aaryan, Sara Ali Khan"
+STARS,Kartik Aaryan,Pasoori Nu,Satyaprem Ki Katha,2023,"Arijit Singh, Tulsi Kumar","Rochak Kohli, Ali Sethi","Kartik Aaryan, Kiara Advani"
+STARS,Kartik Aaryan,Poster Lagwa Do,Luka Chuppi,2019,"Mika Singh, Sunanda Sharma",White Noise,"Kartik Aaryan, Kriti Sanon"
+STARS,Shraddha Kapoor,Tum Hi Ho,Aashiqui 2,2013,Arijit Singh,Mithoon,"Aditya Roy Kapur, Shraddha Kapoor"
+STARS,Shraddha Kapoor,Sunn Raha Hai (Female),Aashiqui 2,2013,Shreya Ghoshal,Ankit Tiwari,Shraddha Kapoor
+STARS,Shraddha Kapoor,Galliyan,Ek Villain,2014,Ankit Tiwari,Ankit Tiwari,"Sidharth Malhotra, Shraddha Kapoor"
+STARS,Shraddha Kapoor,Cham Cham,Baaghi,2016,Monali Thakur,Meet Bros,"Shraddha Kapoor, Tiger Shroff"
+STARS,Shraddha Kapoor,Aayi Nai,Stree 2,2024,"Pawan Singh, Simran Choudhary, Divya Kumar, Sachin-Jigar",Sachin-Jigar,"Rajkummar Rao, Shraddha Kapoor"
+STARS,Shraddha Kapoor,Sab Tera,Baaghi,2016,"Armaan Malik, Shraddha Kapoor",Amaal Mallik,"Tiger Shroff, Shraddha Kapoor"
+STARS,Shraddha Kapoor,Tere Pyaar Mein,Tu Jhoothi Main Makkaar,2023,"Arijit Singh, Nikhita Gandhi",Pritam,"Ranbir Kapoor, Shraddha Kapoor"
+STARS,Shraddha Kapoor,Sun Saathiya,ABCD 2,2015,"Priya Saraiya, Divya Kumar",Sachin-Jigar,"Shraddha Kapoor, Varun Dhawan"
+STARS,Anushka Sharma,Haule Haule,Rab Ne Bana Di Jodi,2008,Sukhwinder Singh,Salim-Sulaiman,"Shah Rukh Khan, Anushka Sharma"
+STARS,Anushka Sharma,Jazba,Ladies vs Ricky Bahl,2011,Shilpa Rao,Salim-Sulaiman,Anushka Sharma
+STARS,Anushka Sharma,Jiya Re,Jab Tak Hai Jaan,2012,Neeti Mohan,A.R. Rahman,Anushka Sharma
+STARS,Anushka Sharma,Baby Ko Bass Pasand Hai,Sultan,2016,"Vishal Dadlani, Shalmali Kholgade, Isheeta, Badshah",Vishal-Shekhar,"Salman Khan, Anushka Sharma"
+STARS,Anushka Sharma,The Breakup Song,Ae Dil Hai Mushkil,2016,"Arijit Singh, Badshah, Jonita Gandhi, Nakash Aziz",Pritam,"Ranbir Kapoor, Anushka Sharma"
+STARS,Anushka Sharma,Cutiepie,Ae Dil Hai Mushkil,2016,"Pradeep Singh Sran, Nakash Aziz",Pritam,"Anushka Sharma, Ranbir Kapoor"
+STARS,Anushka Sharma,Radha,Jab Harry Met Sejal,2017,"Shahid Mallya, Sunidhi Chauhan",Pritam,"Shah Rukh Khan, Anushka Sharma"
+STARS,Anushka Sharma,Chaar Kadam,PK,2014,"Shaan, Shreya Ghoshal",Shantanu Moitra,"Sushant Singh Rajput, Anushka Sharma"
+STARS,Rani Mukerji,Koi Mil Gaya,Kuch Kuch Hota Hai,1998,"Udit Narayan, Alka Yagnik, Kavita Krishnamurthy",Jatin-Lalit,"Shah Rukh Khan, Kajol, Rani Mukerji"
+STARS,Rani Mukerji,Saathiya,Saathiya,2002,Sonu Nigam,A.R. Rahman,"Vivek Oberoi, Rani Mukerji"
+STARS,Rani Mukerji,O Humdum Suniyo Re,Saathiya,2002,"KK, Shaan, Kunal Ganjawala",A.R. Rahman,"Vivek Oberoi, Rani Mukerji"
+STARS,Rani Mukerji,Tauba Tumhare Yeh Ishare,Chalte Chalte,2003,"Abhijeet, Alka Yagnik",Jatin-Lalit,"Shah Rukh Khan, Rani Mukerji"
+STARS,Rani Mukerji,Hum Tum,Hum Tum,2004,"Babul Supriyo, Alka Yagnik",Jatin-Lalit,"Saif Ali Khan, Rani Mukerji"
+STARS,Rani Mukerji,Kabhi Alvida Naa Kehna,Kabhi Alvida Naa Kehna,2006,"Sonu Nigam, Alka Yagnik",Shankar-Ehsaan-Loy,"Shah Rukh Khan, Rani Mukerji"
+STARS,Rani Mukerji,Dhadak Dhadak,Bunty Aur Babli,2005,"Udit Narayan, Sunidhi Chauhan, Nihira Joshi",Shankar-Ehsaan-Loy,"Abhishek Bachchan, Rani Mukerji"
+STARS,Rani Mukerji,Mitwa,Kabhi Alvida Naa Kehna,2006,"Shafqat Amanat Ali, Shankar Mahadevan, Caralisa Monteiro",Shankar-Ehsaan-Loy,"Shah Rukh Khan, Rani Mukerji"
+STARS,Ajay Devgn,Dheere Dheere Pyar Ko Badhana Hai,Phool Aur Kaante,1991,"Kumar Sanu, Alka Yagnik",Nadeem-Shravan,"Ajay Devgn, Madhoo"
+STARS,Ajay Devgn,Jeeta Tha Jiske Liye,Dilwale,1994,"Kumar Sanu, Alka Yagnik",Nadeem-Shravan,"Ajay Devgn, Raveena Tandon"
+STARS,Ajay Devgn,Neend Churai Meri,Ishq,1997,"Kumar Sanu, Udit Narayan, Alka Yagnik, Kavita Krishnamurthy",Anu Malik,"Ajay Devgn, Aamir Khan, Kajol, Juhi Chawla"
+STARS,Ajay Devgn,Pyaar To Hona Hi Tha,Pyaar To Hona Hi Tha,1998,"Remo Fernandes, Jaspinder Narula",Jatin-Lalit,"Ajay Devgn, Kajol"
+STARS,Ajay Devgn,O Saathi Re,Omkara,2006,"Shreya Ghoshal, Vishal Bhardwaj",Vishal Bhardwaj,"Ajay Devgn, Kareena Kapoor"
+STARS,Ajay Devgn,Tum Jo Aaye,Once Upon a Time in Mumbaai,2010,"Rahat Fateh Ali Khan, Tulsi Kumar",Pritam,"Ajay Devgn, Kangana Ranaut"
+STARS,Ajay Devgn,Singham,Singham,2011,Sukhwinder Singh,Ajay-Atul,Ajay Devgn
+STARS,Ajay Devgn,Sanu Ek Pal Chain,Raid,2018,Rahat Fateh Ali Khan,Tanishk Bagchi,"Ajay Devgn, Ileana D'Cruz"
+VOICES,Lata Mangeshkar,Lag Ja Gale,Woh Kaun Thi?,1964,Lata Mangeshkar,Madan Mohan,Sadhana
+VOICES,Lata Mangeshkar,Ajeeb Dastan Hai Yeh,Dil Apna Aur Preet Parai,1960,Lata Mangeshkar,Shankar-Jaikishan,"Meena Kumari, Raaj Kumar"
+VOICES,Lata Mangeshkar,Pyar Kiya To Darna Kya,Mughal-e-Azam,1960,Lata Mangeshkar,Naushad,"Madhubala, Dilip Kumar, Prithviraj Kapoor"
+VOICES,Lata Mangeshkar,Aaj Phir Jeene Ki Tamanna Hai,Guide,1965,Lata Mangeshkar,S.D. Burman,Waheeda Rehman
+VOICES,Lata Mangeshkar,Tujhe Dekha To,Dilwale Dulhania Le Jayenge,1995,"Kumar Sanu, Lata Mangeshkar",Jatin-Lalit,"Shah Rukh Khan, Kajol"
+VOICES,Lata Mangeshkar,Didi Tera Devar Deewana,Hum Aapke Hain Koun..!,1994,"Lata Mangeshkar, S.P. Balasubrahmanyam",Raamlaxman,"Madhuri Dixit, Salman Khan"
+VOICES,Lata Mangeshkar,Tere Bina Zindagi Se,Aandhi,1975,"Lata Mangeshkar, Kishore Kumar",R.D. Burman,"Suchitra Sen, Sanjeev Kumar"
+VOICES,Lata Mangeshkar,Luka Chuppi,Rang De Basanti,2006,"Lata Mangeshkar, A.R. Rahman",A.R. Rahman,"Waheeda Rehman, Aamir Khan"
+VOICES,Asha Bhosle,Dum Maro Dum,Hare Rama Hare Krishna,1971,Asha Bhosle,R.D. Burman,Zeenat Aman
+VOICES,Asha Bhosle,Chura Liya Hai Tumne Jo Dil Ko,Yaadon Ki Baaraat,1973,"Asha Bhosle, Mohammed Rafi",R.D. Burman,"Zeenat Aman, Vijay Arora"
+VOICES,Asha Bhosle,In Aankhon Ki Masti,Umrao Jaan,1981,Asha Bhosle,Khayyam,Rekha
+VOICES,Asha Bhosle,Piya Tu Ab To Aaja,Caravan,1971,"Asha Bhosle, R.D. Burman",R.D. Burman,Helen
+VOICES,Asha Bhosle,Yeh Mera Dil,Don,1978,Asha Bhosle,Kalyanji-Anandji,"Helen, Amitabh Bachchan"
+VOICES,Asha Bhosle,Aaiye Meherban,Howrah Bridge,1958,Asha Bhosle,O.P. Nayyar,"Madhubala, Ashok Kumar"
+VOICES,Asha Bhosle,Mera Kuchh Saamaan,Ijaazat,1987,Asha Bhosle,R.D. Burman,"Rekha, Naseeruddin Shah"
+VOICES,Asha Bhosle,Rangeela Re,Rangeela,1995,"Asha Bhosle, Aditya Narayan",A.R. Rahman,Urmila Matondkar
+VOICES,Mohammed Rafi,Gulabi Aankhen,The Train,1970,Mohammed Rafi,R.D. Burman,"Rajesh Khanna, Nanda"
+VOICES,Mohammed Rafi,Kya Hua Tera Vada,Hum Kisise Kum Naheen,1977,"Mohammed Rafi, Sushma Shrestha",R.D. Burman,"Tariq Khan, Kajal Kiran, Rishi Kapoor"
+VOICES,Mohammed Rafi,Chahe Koi Mujhe Junglee Kahe,Junglee,1961,Mohammed Rafi,Shankar-Jaikishan,Shammi Kapoor
+VOICES,Mohammed Rafi,Badan Pe Sitare Lapete Huye,Prince,1969,Mohammed Rafi,Shankar-Jaikishan,"Shammi Kapoor, Vyjayanthimala"
+VOICES,Mohammed Rafi,Chaudhvin Ka Chand Ho,Chaudhvin Ka Chand,1960,Mohammed Rafi,Ravi,"Guru Dutt, Waheeda Rehman"
+VOICES,Mohammed Rafi,Abhi Na Jao Chhod Kar,Hum Dono,1961,"Mohammed Rafi, Asha Bhosle",Jaidev,"Dev Anand, Sadhana"
+VOICES,Mohammed Rafi,Baharo Phool Barsao,Suraj,1966,Mohammed Rafi,Shankar-Jaikishan,"Rajendra Kumar, Vyjayanthimala"
+VOICES,Mohammed Rafi,Likhe Jo Khat Tujhe,Kanyadaan,1968,Mohammed Rafi,Shankar-Jaikishan,"Shashi Kapoor, Asha Parekh"
+VOICES,Kishore Kumar,Mere Sapnon Ki Rani,Aradhana,1969,Kishore Kumar,S.D. Burman,"Rajesh Khanna, Sharmila Tagore"
+VOICES,Kishore Kumar,Pal Pal Dil Ke Paas,Blackmail,1973,Kishore Kumar,Kalyanji-Anandji,"Dharmendra, Raakhee"
+VOICES,Kishore Kumar,Ek Ladki Bheegi Bhaagi Si,Chalti Ka Naam Gaadi,1958,Kishore Kumar,S.D. Burman,"Kishore Kumar, Madhubala"
+VOICES,Kishore Kumar,Roop Tera Mastana,Aradhana,1969,Kishore Kumar,S.D. Burman,"Rajesh Khanna, Sharmila Tagore"
+VOICES,Kishore Kumar,Yeh Shaam Mastani,Kati Patang,1971,Kishore Kumar,R.D. Burman,"Rajesh Khanna, Asha Parekh"
+VOICES,Kishore Kumar,Khaike Paan Banaras Wala,Don,1978,Kishore Kumar,Kalyanji-Anandji,"Amitabh Bachchan, Zeenat Aman"
+VOICES,Kishore Kumar,O Mere Dil Ke Chain,Mere Jeevan Saathi,1972,Kishore Kumar,R.D. Burman,"Rajesh Khanna, Tanuja"
+VOICES,Kishore Kumar,Neele Neele Ambar Par,Kalakaar,1983,Kishore Kumar,Kalyanji-Anandji,"Kunal Goswami, Sridevi"
+VOICES,Mukesh,Awaara Hoon,Awaara,1951,Mukesh,Shankar-Jaikishan,Raj Kapoor
+VOICES,Mukesh,Mera Joota Hai Japani,Shree 420,1955,Mukesh,Shankar-Jaikishan,Raj Kapoor
+VOICES,Mukesh,Kabhi Kabhi Mere Dil Mein,Kabhi Kabhie,1976,Mukesh,Khayyam,"Amitabh Bachchan, Raakhee"
+VOICES,Mukesh,Kahin Door Jab Din Dhal Jaye,Anand,1971,Mukesh,Salil Chowdhury,Rajesh Khanna
+VOICES,Mukesh,Kisi Ki Muskurahaton Pe Ho Nisar,Anari,1959,Mukesh,Shankar-Jaikishan,Raj Kapoor
+VOICES,Mukesh,Jeena Yahan Marna Yahan,Mera Naam Joker,1970,Mukesh,Shankar-Jaikishan,Raj Kapoor
+VOICES,Mukesh,Ek Pyar Ka Nagma Hai,Shor,1972,"Lata Mangeshkar, Mukesh",Laxmikant-Pyarelal,"Manoj Kumar, Nanda"
+VOICES,Mukesh,Suhana Safar Aur Yeh Mausam Haseen,Madhumati,1958,Mukesh,Salil Chowdhury,Dilip Kumar
+VOICES,Manna Dey,Pyar Hua Ikrar Hua,Shree 420,1955,"Manna Dey, Lata Mangeshkar",Shankar-Jaikishan,"Raj Kapoor, Nargis"
+VOICES,Manna Dey,Yeh Dosti Hum Nahin Todenge,Sholay,1975,"Kishore Kumar, Manna Dey",R.D. Burman,"Amitabh Bachchan, Dharmendra"
+VOICES,Manna Dey,Zindagi Kaisi Hai Paheli,Anand,1971,Manna Dey,Salil Chowdhury,Rajesh Khanna
+VOICES,Manna Dey,Ae Meri Zohra Jabeen,Waqt,1965,Manna Dey,Ravi,"Balraj Sahni, Achala Sachdev"
+VOICES,Manna Dey,Ek Chatur Naar,Padosan,1968,"Kishore Kumar, Manna Dey, Mehmood",R.D. Burman,"Sunil Dutt, Mehmood, Kishore Kumar, Saira Banu"
+VOICES,Manna Dey,Laaga Chunari Mein Daag,Dil Hi To Hai,1963,Manna Dey,Roshan,Raj Kapoor
+VOICES,Manna Dey,Poochho Na Kaise Maine Rain Bitai,Meri Surat Teri Ankhen,1963,Manna Dey,S.D. Burman,Ashok Kumar
+VOICES,Manna Dey,Yaari Hai Imaan Mera,Zanjeer,1973,Manna Dey,Kalyanji-Anandji,"Pran, Amitabh Bachchan"
+VOICES,Kumar Sanu,Tujhe Dekha To,Dilwale Dulhania Le Jayenge,1995,"Kumar Sanu, Lata Mangeshkar",Jatin-Lalit,"Shah Rukh Khan, Kajol"
+VOICES,Kumar Sanu,Ek Ladki Ko Dekha,1942: A Love Story,1994,Kumar Sanu,R.D. Burman,"Anil Kapoor, Manisha Koirala"
+VOICES,Kumar Sanu,Dheere Dheere Se,Aashiqui,1990,"Kumar Sanu, Anuradha Paudwal",Nadeem-Shravan,"Rahul Roy, Anu Aggarwal"
+VOICES,Kumar Sanu,Mera Dil Bhi Kitna Pagal Hai,Saajan,1991,"Kumar Sanu, Alka Yagnik",Nadeem-Shravan,"Sanjay Dutt, Madhuri Dixit"
+VOICES,Kumar Sanu,Yeh Kaali Kaali Aankhen,Baazigar,1993,"Kumar Sanu, Anu Malik",Anu Malik,"Shah Rukh Khan, Kajol"
+VOICES,Kumar Sanu,Chura Ke Dil Mera,Main Khiladi Tu Anari,1994,"Kumar Sanu, Alka Yagnik",Anu Malik,"Akshay Kumar, Shilpa Shetty"
+VOICES,Kumar Sanu,Do Dil Mil Rahe Hain,Pardes,1997,Kumar Sanu,Nadeem-Shravan,"Shah Rukh Khan, Mahima Chaudhry"
+VOICES,Kumar Sanu,Ladki Badi Anjani Hai,Kuch Kuch Hota Hai,1998,"Kumar Sanu, Alka Yagnik",Jatin-Lalit,"Shah Rukh Khan, Kajol"
+VOICES,Udit Narayan,Pehla Nasha,Jo Jeeta Wohi Sikandar,1992,"Udit Narayan, Sadhana Sargam",Jatin-Lalit,"Aamir Khan, Ayesha Jhulka, Pooja Bedi"
+VOICES,Udit Narayan,Papa Kehte Hain,Qayamat Se Qayamat Tak,1988,Udit Narayan,Anand-Milind,Aamir Khan
+VOICES,Udit Narayan,Kuch Kuch Hota Hai,Kuch Kuch Hota Hai,1998,"Udit Narayan, Alka Yagnik",Jatin-Lalit,"Shah Rukh Khan, Kajol, Rani Mukerji"
+VOICES,Udit Narayan,Mehndi Laga Ke Rakhna,Dilwale Dulhania Le Jayenge,1995,"Lata Mangeshkar, Udit Narayan",Jatin-Lalit,"Shah Rukh Khan, Kajol"
+VOICES,Udit Narayan,Kaho Naa... Pyaar Hai,Kaho Naa... Pyaar Hai,2000,"Udit Narayan, Alka Yagnik",Rajesh Roshan,"Hrithik Roshan, Ameesha Patel"
+VOICES,Udit Narayan,Tip Tip Barsa Paani,Mohra,1994,"Alka Yagnik, Udit Narayan",Viju Shah,"Akshay Kumar, Raveena Tandon"
+VOICES,Udit Narayan,Main Yahaan Hoon,Veer-Zaara,2004,Udit Narayan,Madan Mohan,"Shah Rukh Khan, Preity Zinta"
+VOICES,Udit Narayan,Mitwa,Lagaan,2001,"Udit Narayan, Alka Yagnik, Sukhwinder Singh, Srinivas",A.R. Rahman,"Aamir Khan, Gracy Singh"
+VOICES,Alka Yagnik,Ek Do Teen,Tezaab,1988,Alka Yagnik,Laxmikant-Pyarelal,Madhuri Dixit
+VOICES,Alka Yagnik,Agar Tum Saath Ho,Tamasha,2015,"Alka Yagnik, Arijit Singh",A.R. Rahman,"Ranbir Kapoor, Deepika Padukone"
+VOICES,Alka Yagnik,Suraj Hua Maddham,Kabhi Khushi Kabhie Gham,2001,"Sonu Nigam, Alka Yagnik",Sandesh Shandilya,"Shah Rukh Khan, Kajol"
+VOICES,Alka Yagnik,Choli Ke Peeche Kya Hai,Khalnayak,1993,"Alka Yagnik, Ila Arun",Laxmikant-Pyarelal,"Madhuri Dixit, Neena Gupta"
+VOICES,Alka Yagnik,Taal Se Taal,Taal,1999,"Alka Yagnik, Udit Narayan",A.R. Rahman,"Aishwarya Rai, Akshaye Khanna"
+VOICES,Alka Yagnik,Bole Chudiyan,Kabhi Khushi Kabhie Gham,2001,"Kavita Krishnamurthy, Alka Yagnik, Sonu Nigam, Udit Narayan, Amit Kumar",Jatin-Lalit,"Kareena Kapoor, Hrithik Roshan, Shah Rukh Khan, Kajol"
+VOICES,Alka Yagnik,Pardesi Pardesi,Raja Hindustani,1996,"Udit Narayan, Alka Yagnik, Sapna Awasthi",Nadeem-Shravan,"Aamir Khan, Karisma Kapoor"
+VOICES,Alka Yagnik,Chamma Chamma,China Gate,1998,Alka Yagnik,Anu Malik,Urmila Matondkar
+VOICES,Kavita Krishnamurthy,Hawa Hawai,Mr. India,1987,Kavita Krishnamurthy,Laxmikant-Pyarelal,Sridevi
+VOICES,Kavita Krishnamurthy,Nimbooda,Hum Dil De Chuke Sanam,1999,"Kavita Krishnamurthy, Karsan Sagathia",Ismail Darbar,"Aishwarya Rai, Ajay Devgn"
+VOICES,Kavita Krishnamurthy,Dola Re Dola,Devdas,2002,"Kavita Krishnamurthy, Shreya Ghoshal, KK",Ismail Darbar,"Madhuri Dixit, Aishwarya Rai"
+VOICES,Kavita Krishnamurthy,Tu Hi Re,Bombay,1995,"Hariharan, Kavita Krishnamurthy",A.R. Rahman,"Arvind Swamy, Manisha Koirala"
+VOICES,Kavita Krishnamurthy,Maar Dala,Devdas,2002,"Kavita Krishnamurthy, KK",Ismail Darbar,Madhuri Dixit
+VOICES,Kavita Krishnamurthy,Aaj Main Upar,Khamoshi: The Musical,1996,"Kavita Krishnamurthy, Kumar Sanu",Jatin-Lalit,Manisha Koirala
+VOICES,Kavita Krishnamurthy,Pyar Hua Chupke Se,1942: A Love Story,1994,Kavita Krishnamurthy,R.D. Burman,Manisha Koirala
+VOICES,Kavita Krishnamurthy,Mera Piya Ghar Aaya,Yaraana,1995,Kavita Krishnamurthy,Anu Malik,Madhuri Dixit
+VOICES,Sonu Nigam,Kal Ho Naa Ho,Kal Ho Naa Ho,2003,Sonu Nigam,Shankar-Ehsaan-Loy,"Shah Rukh Khan, Preity Zinta, Saif Ali Khan"
+VOICES,Sonu Nigam,Abhi Mujh Mein Kahin,Agneepath,2012,Sonu Nigam,Ajay-Atul,"Hrithik Roshan, Priyanka Chopra"
+VOICES,Sonu Nigam,Sandese Aate Hain,Border,1997,"Sonu Nigam, Roop Kumar Rathod",Anu Malik,"Sunny Deol, Suniel Shetty, Akshaye Khanna, Jackie Shroff"
+VOICES,Sonu Nigam,Main Hoon Na,Main Hoon Na,2004,"Sonu Nigam, Shreya Ghoshal",Anu Malik,"Shah Rukh Khan, Sushmita Sen"
+VOICES,Sonu Nigam,Saathiya,Saathiya,2002,Sonu Nigam,A.R. Rahman,"Vivek Oberoi, Rani Mukerji"
+VOICES,Sonu Nigam,Suraj Hua Maddham,Kabhi Khushi Kabhie Gham,2001,"Sonu Nigam, Alka Yagnik",Sandesh Shandilya,"Shah Rukh Khan, Kajol"
+VOICES,Sonu Nigam,Mere Haath Mein,Fanaa,2006,"Sonu Nigam, Sunidhi Chauhan",Jatin-Lalit,"Aamir Khan, Kajol"
+VOICES,Sonu Nigam,Yeh Dil Deewana,Pardes,1997,Sonu Nigam,Nadeem-Shravan,Shah Rukh Khan
+VOICES,Shaan,Chand Sifarish,Fanaa,2006,"Shaan, Kailash Kher",Jatin-Lalit,"Aamir Khan, Kajol"
+VOICES,Shaan,Jab Se Tere Naina,Saawariya,2007,Shaan,Monty Sharma,Ranbir Kapoor
+VOICES,Shaan,Behti Hawa Sa Tha Woh,3 Idiots,2009,"Shaan, Shantanu Moitra",Shantanu Moitra,"Aamir Khan, R. Madhavan, Sharman Joshi"
+VOICES,Shaan,Woh Ladki Hai Kahan,Dil Chahta Hai,2001,"Shaan, Kavita Krishnamurthy",Shankar-Ehsaan-Loy,"Saif Ali Khan, Sonali Kulkarni"
+VOICES,Shaan,Main Aisa Kyun Hoon,Lakshya,2004,Shaan,Shankar-Ehsaan-Loy,Hrithik Roshan
+VOICES,Shaan,Bum Bum Bole,Taare Zameen Par,2007,"Shaan, Aamir Khan",Shankar-Ehsaan-Loy,"Aamir Khan, Darsheel Safary"
+VOICES,Shaan,Hey Shona,Ta Ra Rum Pum,2007,"Shaan, Sunidhi Chauhan",Vishal-Shekhar,"Saif Ali Khan, Rani Mukerji"
+VOICES,Shaan,Kuch To Hua Hai,Kal Ho Naa Ho,2003,"Shaan, Alka Yagnik",Shankar-Ehsaan-Loy,"Saif Ali Khan, Preity Zinta"
+VOICES,KK,Aankhon Mein Teri (Ajab Si),Om Shanti Om,2007,KK,Vishal-Shekhar,"Shah Rukh Khan, Deepika Padukone"
+VOICES,KK,Khuda Jaane,Bachna Ae Haseeno,2008,"KK, Shilpa Rao",Vishal-Shekhar,"Ranbir Kapoor, Deepika Padukone"
+VOICES,KK,Tadap Tadap,Hum Dil De Chuke Sanam,1999,"KK, Dominique Cerejo",Ismail Darbar,"Salman Khan, Aishwarya Rai"
+VOICES,KK,Zara Sa,Jannat,2008,KK,Pritam,"Emraan Hashmi, Sonal Chauhan"
+VOICES,KK,Tu Hi Meri Shab Hai,Gangster,2006,KK,Pritam,"Emraan Hashmi, Kangana Ranaut"
+VOICES,KK,Kya Mujhe Pyaar Hai,Woh Lamhe,2006,KK,Pritam,"Shiney Ahuja, Kangana Ranaut"
+VOICES,KK,Dil Ibaadat,Tum Mile,2009,KK,Pritam,"Emraan Hashmi, Soha Ali Khan"
+VOICES,KK,Alvida,Life in a... Metro,2007,KK,Pritam,"Sharman Joshi, Kangana Ranaut, Kay Kay Menon, Shilpa Shetty"
+VOICES,Sunidhi Chauhan,Sheila Ki Jawani,Tees Maar Khan,2010,"Sunidhi Chauhan, Vishal Dadlani",Vishal-Shekhar,Katrina Kaif
+VOICES,Sunidhi Chauhan,Dhoom Machale,Dhoom,2004,Sunidhi Chauhan,Pritam,Esha Deol
+VOICES,Sunidhi Chauhan,Beedi,Omkara,2006,"Sunidhi Chauhan, Sukhwinder Singh, Nachiketa Chakraborty, Clinton Cerejo",Vishal Bhardwaj,"Bipasha Basu, Saif Ali Khan"
+VOICES,Sunidhi Chauhan,Kamli,Dhoom 3,2013,Sunidhi Chauhan,Pritam,Katrina Kaif
+VOICES,Sunidhi Chauhan,Crazy Kiya Re,Dhoom 2,2006,Sunidhi Chauhan,Pritam,"Aishwarya Rai, Hrithik Roshan"
+VOICES,Sunidhi Chauhan,Aaja Nachle,Aaja Nachle,2007,Sunidhi Chauhan,Salim-Sulaiman,Madhuri Dixit
+VOICES,Sunidhi Chauhan,Desi Girl,Dostana,2008,"Shankar Mahadevan, Sunidhi Chauhan, Vishal Dadlani",Vishal-Shekhar,"Priyanka Chopra, Abhishek Bachchan, John Abraham"
+VOICES,Sunidhi Chauhan,Dance Pe Chance,Rab Ne Bana Di Jodi,2008,"Sunidhi Chauhan, Labh Janjua",Salim-Sulaiman,"Shah Rukh Khan, Anushka Sharma"
+VOICES,Shreya Ghoshal,Deewani Mastani,Bajirao Mastani,2015,Shreya Ghoshal,Sanjay Leela Bhansali,Deepika Padukone
+VOICES,Shreya Ghoshal,Barso Re,Guru,2007,"Shreya Ghoshal, Uday Mazumdar",A.R. Rahman,Aishwarya Rai
+VOICES,Shreya Ghoshal,Chikni Chameli,Agneepath,2012,Shreya Ghoshal,Ajay-Atul,Katrina Kaif
+VOICES,Shreya Ghoshal,Ye Ishq Hai,Jab We Met,2007,Shreya Ghoshal,Pritam,Kareena Kapoor
+VOICES,Shreya Ghoshal,Nagada Sang Dhol,Goliyon Ki Raasleela Ram-Leela,2013,"Shreya Ghoshal, Osman Mir",Sanjay Leela Bhansali,"Deepika Padukone, Ranveer Singh"
+VOICES,Shreya Ghoshal,Teri Ore,Singh Is Kinng,2008,"Rahat Fateh Ali Khan, Shreya Ghoshal",Pritam,"Akshay Kumar, Katrina Kaif"
+VOICES,Shreya Ghoshal,Sunn Raha Hai (Female),Aashiqui 2,2013,Shreya Ghoshal,Ankit Tiwari,Shraddha Kapoor
+VOICES,Shreya Ghoshal,Mere Dholna,Bhool Bhulaiyaa,2007,"Shreya Ghoshal, M.G. Sreekumar",Pritam,"Vidya Balan, Shiney Ahuja"
+VOICES,Shankar Mahadevan,Dil Chahta Hai,Dil Chahta Hai,2001,Shankar Mahadevan,Shankar-Ehsaan-Loy,"Aamir Khan, Saif Ali Khan, Akshaye Khanna"
+VOICES,Shankar Mahadevan,Kajra Re,Bunty Aur Babli,2005,"Alisha Chinai, Shankar Mahadevan, Javed Ali",Shankar-Ehsaan-Loy,"Aishwarya Rai, Amitabh Bachchan, Abhishek Bachchan"
+VOICES,Shankar Mahadevan,Koi Kahe Kehta Rahe,Dil Chahta Hai,2001,"Shankar Mahadevan, Shaan, KK",Shankar-Ehsaan-Loy,"Aamir Khan, Saif Ali Khan, Akshaye Khanna"
+VOICES,Shankar Mahadevan,Maa,Taare Zameen Par,2007,Shankar Mahadevan,Shankar-Ehsaan-Loy,Darsheel Safary
+VOICES,Shankar Mahadevan,Mitwa,Kabhi Alvida Naa Kehna,2006,"Shafqat Amanat Ali, Shankar Mahadevan, Caralisa Monteiro",Shankar-Ehsaan-Loy,"Shah Rukh Khan, Rani Mukerji"
+VOICES,Shankar Mahadevan,Lakshya,Lakshya,2004,Shankar Mahadevan,Shankar-Ehsaan-Loy,Hrithik Roshan
+VOICES,Shankar Mahadevan,Uff Teri Adaa,Karthik Calling Karthik,2010,"Shankar Mahadevan, Alyssa Mendonsa",Shankar-Ehsaan-Loy,"Farhan Akhtar, Deepika Padukone"
+VOICES,Shankar Mahadevan,Desi Girl,Dostana,2008,"Shankar Mahadevan, Sunidhi Chauhan, Vishal Dadlani",Vishal-Shekhar,"Priyanka Chopra, Abhishek Bachchan, John Abraham"
+VOICES,Sukhwinder Singh,Chaiyya Chaiyya,Dil Se..,1998,"Sukhwinder Singh, Sapna Awasthi",A.R. Rahman,"Shah Rukh Khan, Malaika Arora"
+VOICES,Sukhwinder Singh,Chak De! India,Chak De! India,2007,"Sukhwinder Singh, Salim Merchant, Marianne D'Cruz",Salim-Sulaiman,Shah Rukh Khan
+VOICES,Sukhwinder Singh,Haule Haule,Rab Ne Bana Di Jodi,2008,Sukhwinder Singh,Salim-Sulaiman,"Shah Rukh Khan, Anushka Sharma"
+VOICES,Sukhwinder Singh,Dard-E-Disco,Om Shanti Om,2007,"Sukhwinder Singh, Caralisa Monteiro, Nisha Mascarenhas, Marianne D'Cruz",Vishal-Shekhar,Shah Rukh Khan
+VOICES,Sukhwinder Singh,Dhan Te Nan,Kaminey,2009,"Sukhwinder Singh, Vishal Dadlani",Vishal Bhardwaj,Shahid Kapoor
+VOICES,Sukhwinder Singh,Bismil,Haider,2014,Sukhwinder Singh,Vishal Bhardwaj,Shahid Kapoor
+VOICES,Sukhwinder Singh,Ramta Jogi,Taal,1999,"Sukhwinder Singh, Alka Yagnik",A.R. Rahman,"Aishwarya Rai, Anil Kapoor"
+VOICES,Sukhwinder Singh,Singham,Singham,2011,Sukhwinder Singh,Ajay-Atul,Ajay Devgn
+VOICES,Mohit Chauhan,Tum Se Hi,Jab We Met,2007,Mohit Chauhan,Pritam,"Shahid Kapoor, Kareena Kapoor"
+VOICES,Mohit Chauhan,Kun Faya Kun,Rockstar,2011,"A.R. Rahman, Javed Ali, Mohit Chauhan",A.R. Rahman,Ranbir Kapoor
+VOICES,Mohit Chauhan,Sadda Haq,Rockstar,2011,Mohit Chauhan,A.R. Rahman,Ranbir Kapoor
+VOICES,Mohit Chauhan,Pee Loon,Once Upon a Time in Mumbaai,2010,Mohit Chauhan,Pritam,"Emraan Hashmi, Prachi Desai"
+VOICES,Mohit Chauhan,Masakali,Delhi-6,2009,Mohit Chauhan,A.R. Rahman,Sonam Kapoor
+VOICES,Mohit Chauhan,Phir Se Ud Chala,Rockstar,2011,Mohit Chauhan,A.R. Rahman,Ranbir Kapoor
+VOICES,Mohit Chauhan,Matargashti,Tamasha,2015,Mohit Chauhan,A.R. Rahman,"Ranbir Kapoor, Deepika Padukone"
+VOICES,Mohit Chauhan,Tujhe Bhula Diya,Anjaana Anjaani,2010,"Mohit Chauhan, Shekhar Ravjiani, Shruti Pathak",Vishal-Shekhar,"Ranbir Kapoor, Priyanka Chopra"
+VOICES,Atif Aslam,Pehli Nazar Mein,Race,2008,Atif Aslam,Pritam,"Akshaye Khanna, Bipasha Basu"
+VOICES,Atif Aslam,Tera Hone Laga Hoon,Ajab Prem Ki Ghazab Kahani,2009,"Atif Aslam, Alisha Chinai",Pritam,"Ranbir Kapoor, Katrina Kaif"
+VOICES,Atif Aslam,Tu Jaane Na,Ajab Prem Ki Ghazab Kahani,2009,Atif Aslam,Pritam,"Ranbir Kapoor, Katrina Kaif"
+VOICES,Atif Aslam,Tere Sang Yaara,Rustom,2016,Atif Aslam,Arko,"Akshay Kumar, Ileana D'Cruz"
+VOICES,Atif Aslam,Dil Diyan Gallan,Tiger Zinda Hai,2017,Atif Aslam,Vishal-Shekhar,"Salman Khan, Katrina Kaif"
+VOICES,Atif Aslam,Jeene Laga Hoon,Ramaiya Vastavaiya,2013,"Atif Aslam, Shreya Ghoshal",Sachin-Jigar,"Girish Kumar, Shruti Haasan"
+VOICES,Atif Aslam,Woh Lamhe Woh Baatein,Zeher,2005,Atif Aslam,Mithoon,"Emraan Hashmi, Shamita Shetty"
+VOICES,Atif Aslam,Be Intehaan,Race 2,2013,"Atif Aslam, Sunidhi Chauhan",Pritam,"Saif Ali Khan, Deepika Padukone"
+VOICES,Arijit Singh,Tum Hi Ho,Aashiqui 2,2013,Arijit Singh,Mithoon,"Aditya Roy Kapur, Shraddha Kapoor"
+VOICES,Arijit Singh,Channa Mereya,Ae Dil Hai Mushkil,2016,Arijit Singh,Pritam,"Ranbir Kapoor, Anushka Sharma"
+VOICES,Arijit Singh,Kesariya,Brahmastra,2022,Arijit Singh,Pritam,"Ranbir Kapoor, Alia Bhatt"
+VOICES,Arijit Singh,Agar Tum Saath Ho,Tamasha,2015,"Alka Yagnik, Arijit Singh",A.R. Rahman,"Ranbir Kapoor, Deepika Padukone"
+VOICES,Arijit Singh,Apna Bana Le,Bhediya,2022,"Arijit Singh, Sachin-Jigar",Sachin-Jigar,"Varun Dhawan, Kriti Sanon"
+VOICES,Arijit Singh,Gerua,Dilwale,2015,"Arijit Singh, Antara Mitra",Pritam,"Shah Rukh Khan, Kajol"
+VOICES,Arijit Singh,Chaleya,Jawan,2023,"Arijit Singh, Shilpa Rao",Anirudh Ravichander,"Shah Rukh Khan, Nayanthara"
+VOICES,Arijit Singh,Satranga,Animal,2023,Arijit Singh,Shreyas Puranik,"Ranbir Kapoor, Rashmika Mandanna"
+VOICES,Neha Kakkar,Kala Chashma,Baar Baar Dekho,2016,"Amar Arshi, Badshah, Neha Kakkar","Prem-Hardeep, Badshah","Katrina Kaif, Sidharth Malhotra"
+VOICES,Neha Kakkar,Dilbar,Satyameva Jayate,2018,"Neha Kakkar, Dhvani Bhanushali, Ikka",Tanishk Bagchi,Nora Fatehi
+VOICES,Neha Kakkar,Aankh Marey,Simmba,2018,"Neha Kakkar, Mika Singh, Kumar Sanu",Tanishk Bagchi,"Ranveer Singh, Sara Ali Khan"
+VOICES,Neha Kakkar,Kar Gayi Chull,Kapoor & Sons,2016,"Badshah, Fazilpuria, Sukriti Kakar, Neha Kakkar","Amaal Mallik, Badshah","Alia Bhatt, Sidharth Malhotra"
+VOICES,Neha Kakkar,London Thumakda,Queen,2014,"Labh Janjua, Sonu Kakkar, Neha Kakkar",Amit Trivedi,Kangana Ranaut
+VOICES,Neha Kakkar,O Saki Saki,Batla House,2019,"Neha Kakkar, Tulsi Kumar, B Praak",Tanishk Bagchi,Nora Fatehi
+VOICES,Neha Kakkar,Coca Cola,Luka Chuppi,2019,"Tony Kakkar, Neha Kakkar","Tony Kakkar, Tanishk Bagchi","Kartik Aaryan, Kriti Sanon"
+VOICES,Neha Kakkar,Sunny Sunny,Yaariyan,2014,"Yo Yo Honey Singh, Neha Kakkar",Yo Yo Honey Singh,"Himansh Kohli, Rakul Preet Singh"
+VOICES,Jubin Nautiyal,Raataan Lambiyan,Shershaah,2021,"Jubin Nautiyal, Asees Kaur",Tanishk Bagchi,"Sidharth Malhotra, Kiara Advani"
+VOICES,Jubin Nautiyal,Tum Hi Aana,Marjaavaan,2019,Jubin Nautiyal,Payal Dev,"Sidharth Malhotra, Tara Sutaria"
+VOICES,Jubin Nautiyal,Kaabil Hoon,Kaabil,2017,"Jubin Nautiyal, Palak Muchhal",Rajesh Roshan,"Hrithik Roshan, Yami Gautam"
+VOICES,Jubin Nautiyal,The Humma Song,OK Jaanu,2017,"Jubin Nautiyal, Shashaa Tirupati, Badshah","A.R. Rahman, Tanishk Bagchi, Badshah","Aditya Roy Kapur, Shraddha Kapoor"
+VOICES,Jubin Nautiyal,Lo Safar,Baaghi 2,2018,Jubin Nautiyal,Mithoon,"Tiger Shroff, Disha Patani"
+VOICES,Jubin Nautiyal,Akh Lad Jaave,Loveyatri,2018,"Badshah, Asees Kaur, Jubin Nautiyal",Tanishk Bagchi,"Aayush Sharma, Warina Hussain"
+VOICES,Jubin Nautiyal,Zindagi Kuch Toh Bata,Bajrangi Bhaijaan,2015,"Jubin Nautiyal, Pritam",Pritam,"Salman Khan, Harshaali Malhotra"
+VOICES,Jubin Nautiyal,Bawara Mann,Jolly LLB 2,2017,"Jubin Nautiyal, Neeti Mohan",Chirantan Bhatt,"Akshay Kumar, Huma Qureshi"
+VOICES,Vishal Dadlani,Malhari,Bajirao Mastani,2015,Vishal Dadlani,Sanjay Leela Bhansali,Ranveer Singh
+VOICES,Vishal Dadlani,Balam Pichkari,Yeh Jawaani Hai Deewani,2013,"Vishal Dadlani, Shalmali Kholgade",Pritam,"Ranbir Kapoor, Deepika Padukone, Aditya Roy Kapur, Kalki Koechlin"
+VOICES,Vishal Dadlani,Dhoom Again,Dhoom 2,2006,"Vishal Dadlani, Dominique Cerejo",Pritam,"Hrithik Roshan, Aishwarya Rai"
+VOICES,Vishal Dadlani,Tu Meri,Bang Bang!,2014,Vishal Dadlani,Vishal-Shekhar,"Hrithik Roshan, Katrina Kaif"
+VOICES,Vishal Dadlani,Swag Se Swagat,Tiger Zinda Hai,2017,"Vishal Dadlani, Neha Bhasin",Vishal-Shekhar,"Salman Khan, Katrina Kaif"
+VOICES,Vishal Dadlani,Jai Jai Shivshankar,War,2019,"Vishal Dadlani, Benny Dayal",Vishal-Shekhar,"Hrithik Roshan, Tiger Shroff"
+VOICES,Vishal Dadlani,Bala (Shaitan Ka Saala),Housefull 4,2019,Vishal Dadlani,Sohail Sen,Akshay Kumar
+VOICES,Vishal Dadlani,Selfie Le Le Re,Bajrangi Bhaijaan,2015,"Vishal Dadlani, Nakash Aziz, Pritam",Pritam,Salman Khan
+VOICES,Mika Singh,Mauja Hi Mauja,Jab We Met,2007,Mika Singh,Pritam,"Shahid Kapoor, Kareena Kapoor"
+VOICES,Mika Singh,Subha Hone Na De,Desi Boyz,2011,"Mika Singh, Shefali Alvares",Pritam,"Akshay Kumar, John Abraham"
+VOICES,Mika Singh,Jumme Ki Raat,Kick,2014,"Mika Singh, Palak Muchhal",Himesh Reshammiya,"Salman Khan, Jacqueline Fernandez"
+VOICES,Mika Singh,Gandi Baat,R... Rajkumar,2013,"Mika Singh, Kalpana Patowary",Pritam,"Shahid Kapoor, Sonakshi Sinha"
+VOICES,Mika Singh,Aaj Ki Party,Bajrangi Bhaijaan,2015,Mika Singh,Pritam,"Salman Khan, Kareena Kapoor"
+VOICES,Mika Singh,440 Volt,Sultan,2016,Mika Singh,Vishal-Shekhar,"Salman Khan, Anushka Sharma"
+VOICES,Mika Singh,Dhinka Chika,Ready,2011,"Mika Singh, Amrita Kak",Devi Sri Prasad,"Salman Khan, Asin"
+VOICES,Mika Singh,Aankh Marey,Simmba,2018,"Neha Kakkar, Mika Singh, Kumar Sanu",Tanishk Bagchi,"Ranveer Singh, Sara Ali Khan"
+VOICES,Rahat Fateh Ali Khan,Tere Mast Mast Do Nain,Dabangg,2010,Rahat Fateh Ali Khan,Sajid-Wajid,"Salman Khan, Sonakshi Sinha"
+VOICES,Rahat Fateh Ali Khan,Jag Ghoomeya,Sultan,2016,Rahat Fateh Ali Khan,Vishal-Shekhar,"Salman Khan, Anushka Sharma"
+VOICES,Rahat Fateh Ali Khan,Teri Ore,Singh Is Kinng,2008,"Rahat Fateh Ali Khan, Shreya Ghoshal",Pritam,"Akshay Kumar, Katrina Kaif"
+VOICES,Rahat Fateh Ali Khan,Tum Jo Aaye,Once Upon a Time in Mumbaai,2010,"Rahat Fateh Ali Khan, Tulsi Kumar",Pritam,"Ajay Devgn, Kangana Ranaut"
+VOICES,Rahat Fateh Ali Khan,Teri Meri,Bodyguard,2011,"Rahat Fateh Ali Khan, Shreya Ghoshal",Himesh Reshammiya,"Salman Khan, Kareena Kapoor"
+VOICES,Rahat Fateh Ali Khan,O Re Piya,Aaja Nachle,2007,Rahat Fateh Ali Khan,Salim-Sulaiman,Madhuri Dixit
+VOICES,Rahat Fateh Ali Khan,Main Jahaan Rahoon,Namastey London,2007,"Rahat Fateh Ali Khan, Krishna Beura",Himesh Reshammiya,"Akshay Kumar, Katrina Kaif"
+VOICES,Rahat Fateh Ali Khan,Sanu Ek Pal Chain,Raid,2018,Rahat Fateh Ali Khan,Tanishk Bagchi,"Ajay Devgn, Ileana D'Cruz"
+VOICES,Javed Ali,Jashn-E-Bahaaraa,Jodhaa Akbar,2008,Javed Ali,A.R. Rahman,"Hrithik Roshan, Aishwarya Rai"
+VOICES,Javed Ali,Kun Faya Kun,Rockstar,2011,"A.R. Rahman, Javed Ali, Mohit Chauhan",A.R. Rahman,Ranbir Kapoor
+VOICES,Javed Ali,Guzarish,Ghajini,2008,"Javed Ali, Sonu Nigam",A.R. Rahman,"Aamir Khan, Asin"
+VOICES,Javed Ali,Kajra Re,Bunty Aur Babli,2005,"Alisha Chinai, Shankar Mahadevan, Javed Ali",Shankar-Ehsaan-Loy,"Aishwarya Rai, Amitabh Bachchan, Abhishek Bachchan"
+VOICES,Javed Ali,Nagada Nagada,Jab We Met,2007,"Sonu Nigam, Javed Ali",Pritam,Shahid Kapoor
+VOICES,Javed Ali,Arziyan,Delhi-6,2009,"Javed Ali, Kailash Kher",A.R. Rahman,"Abhishek Bachchan, Sonam Kapoor"
+VOICES,Javed Ali,Ek Din Teri Raahon Mein,Naqaab,2007,Javed Ali,Pritam,"Akshaye Khanna, Urvashi Sharma"
+VOICES,Javed Ali,Tum Tak,Raanjhanaa,2013,"Javed Ali, Keerthi Sagathia, Pooja Vaidyanath",A.R. Rahman,"Dhanush, Sonam Kapoor"
+VOICES,Armaan Malik,Bol Do Na Zara,Azhar,2016,Armaan Malik,Amaal Mallik,"Emraan Hashmi, Nargis Fakhri"
+VOICES,Armaan Malik,Sab Tera,Baaghi,2016,"Armaan Malik, Shraddha Kapoor",Amaal Mallik,"Tiger Shroff, Shraddha Kapoor"
+VOICES,Armaan Malik,Jab Tak,M.S. Dhoni: The Untold Story,2016,Armaan Malik,Amaal Mallik,"Sushant Singh Rajput, Disha Patani"
+VOICES,Armaan Malik,Besabriyaan,M.S. Dhoni: The Untold Story,2016,Armaan Malik,Amaal Mallik,Sushant Singh Rajput
+VOICES,Armaan Malik,Hua Hain Aaj Pehli Baar,Sanam Re,2016,"Armaan Malik, Palak Muchhal, Amaal Mallik",Amaal Mallik,"Pulkit Samrat, Urvashi Rautela"
+VOICES,Armaan Malik,Pehla Pyaar,Kabir Singh,2019,Armaan Malik,Vishal Mishra,"Shahid Kapoor, Kiara Advani"
+VOICES,Armaan Malik,Buddhu Sa Mann,Kapoor & Sons,2016,Armaan Malik,Amaal Mallik,"Sidharth Malhotra, Fawad Khan, Alia Bhatt, Rishi Kapoor"
+VOICES,Armaan Malik,Sau Aasmaan,Baar Baar Dekho,2016,"Armaan Malik, Neeti Mohan",Amaal Mallik,"Sidharth Malhotra, Katrina Kaif"
+VOICES,Shilpa Rao,Khuda Jaane,Bachna Ae Haseeno,2008,"KK, Shilpa Rao",Vishal-Shekhar,"Ranbir Kapoor, Deepika Padukone"
+VOICES,Shilpa Rao,Ghungroo,War,2019,"Arijit Singh, Shilpa Rao",Vishal-Shekhar,"Hrithik Roshan, Vaani Kapoor"
+VOICES,Shilpa Rao,Besharam Rang,Pathaan,2023,"Shilpa Rao, Caralisa Monteiro, Vishal Dadlani, Shekhar Ravjiani",Vishal-Shekhar,"Deepika Padukone, Shah Rukh Khan"
+VOICES,Shilpa Rao,Chaleya,Jawan,2023,"Arijit Singh, Shilpa Rao",Anirudh Ravichander,"Shah Rukh Khan, Nayanthara"
+VOICES,Shilpa Rao,Bulleya,Ae Dil Hai Mushkil,2016,"Amit Mishra, Shilpa Rao",Pritam,"Ranbir Kapoor, Aishwarya Rai"
+VOICES,Shilpa Rao,Subhanallah,Yeh Jawaani Hai Deewani,2013,"Sreeram, Shilpa Rao",Pritam,"Ranbir Kapoor, Deepika Padukone"
+VOICES,Shilpa Rao,Ishq Shava,Jab Tak Hai Jaan,2012,"Raghav Mathur, Shilpa Rao",A.R. Rahman,"Shah Rukh Khan, Katrina Kaif"
+VOICES,Shilpa Rao,Tere Hawaale,Laal Singh Chaddha,2022,"Arijit Singh, Shilpa Rao",Pritam,"Aamir Khan, Kareena Kapoor"

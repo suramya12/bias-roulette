@@ -13,7 +13,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, reduced.matches ? Math.min
 
 // Autoplay, shared by both decks and kept in the browser. on: when the MV ends, the next round
 // plays by itself. same: keep the artist and draw another of their songs.
-const AUTO_KEY = 'encore.autoplay';
+let AUTO_KEY = 'encore.autoplay';
 export function normalizeAutoplay(value) {
   const saved = value ?? {};
   return {
@@ -21,10 +21,14 @@ export function normalizeAutoplay(value) {
     same: Object.hasOwn(saved, 'same') && saved.same === true,
   };
 }
-let savedAuto;
-try { savedAuto = JSON.parse(localStorage.getItem(AUTO_KEY)); } catch {}
-const auto = normalizeAutoplay(savedAuto);
+let auto = normalizeAutoplay();
 const controllers = [];
+export function configureAutoplay(key) {
+  AUTO_KEY = key;
+  let savedAuto;
+  try { savedAuto = JSON.parse(localStorage.getItem(AUTO_KEY)); } catch {}
+  auto = normalizeAutoplay(savedAuto);
+}
 
 function renderAuto() {
   document.querySelectorAll('#roulette .autoplay').forEach((d) => {
@@ -33,13 +37,27 @@ function renderAuto() {
     same.checked = auto.same;
     same.disabled = !auto.on;
     d.classList.toggle('is-on', auto.on);
-    d.querySelector('.auto-state').textContent = !auto.on ? 'off' : auto.same ? 'same artist' : 'on';
+    d.querySelector('.auto-state').textContent = !auto.on ? 'off' : auto.same ? `same ${d.dataset.noun || 'artist'}` : 'on';
   });
 }
 
 export function createRoulette(section, { pool, songsById, portraits, win, artistCard, songCard, fills, noun = 'artist' }) {
   section.append(document.querySelector('#rouletteTpl').content.cloneNode(true));
   const $ = (s) => section.querySelector(s);
+  $('.autoplay').dataset.noun = noun;
+  if (noun !== 'artist') {
+    $('[data-step=artist]').textContent = noun[0].toUpperCase() + noun.slice(1);
+    const same = $('[data-auto=same]').parentElement.querySelector('span');
+    same.firstChild.textContent = `Same ${noun}`;
+    same.querySelector('small').textContent = `Keep this ${noun} and draw another of their songs`;
+  }
+  if (!pool.length) {
+    $('.spin').disabled = true;
+    $('.auto').disabled = true;
+    $('.autoplay').hidden = true;
+    $('.hint').textContent = `No ${noun}s are available in this deck yet.`;
+    return { stop() {} };
+  }
   const wheel = createWheel($('.wheel-canvas'), fills);
   const player = createPlayer($('.player'), {
     onEnd: (token) => autoplay.end(token),

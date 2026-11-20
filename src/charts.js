@@ -6,10 +6,13 @@ import { cryptoInt } from './game.js';
 import { VideoPlayer } from './player.js';
 import * as fx from './fx.js';
 import { makeCard, songCard, playIn, collection, openBinder } from './card.js';
-import { artNode } from './art.js';
+import { artNode, isArtLoaded } from './art.js';
 import { PullMachine } from './pull-machine.js';
 import { createAutoAdvance } from './auto-advance.js';
 import { isVideoId, videoThumbnail } from './validation.js';
+import * as passport from './passport.js';
+import { showToast } from './toast.js';
+export { showToast };
 
 const $ = (id) => document.getElementById(id);
 const CANDY = ['#ff4fa3', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff'];
@@ -61,17 +64,28 @@ function el(tag, props = {}, ...children) {
   return node;
 }
 
+
+
 // ---------- lightstick crowd ----------
 export class Crowd {
+  #hype = 0;
+
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.sticks = [];
-    this.hype = 0; // 0 calm .. 1 spinning
     this.pulse = -1e9;
     this.running = false;
     this.resize();
     new ResizeObserver(() => this.resize()).observe(canvas);
+  }
+
+  get hype() { return this.#hype; }
+  set hype(value) {
+    const next = Number(value) || 0;
+    if (next === this.#hype) return;
+    this.#hype = next;
+    if (next <= 0 && this.running) this.#tick();
   }
 
   resize() {
@@ -92,7 +106,7 @@ export class Crowd {
         this.sticks.push({ x: x + (Math.random() - 0.5) * 6, row, phase: Math.random() * 6.28, from: c, to: c, at: 0, delay: 0 });
       }
     }
-    if (!this.running) this.draw(performance.now());
+    if (!this.running || this.#hype > 0) this.draw(performance.now());
   }
 
   /** Sweep a colour across the crowd from left to right (null = mixed candy colours). */
@@ -125,11 +139,15 @@ export class Crowd {
   }
 
   #tick() {
-    if (this.ticking || !this.running || this.onScreen === false) return;
+    if (this.ticking || !this.running || this.onScreen === false || this.#hype > 0) return;
     this.ticking = true;
     let last = 0;
     const loop = (t) => {
-      if (!this.running || this.onScreen === false || fx.isLite()) { this.ticking = false; if (fx.isLite()) { this.running = false; this.draw(t + 2000); } return; }
+      if (!this.running || this.onScreen === false || this.#hype > 0 || fx.isLite()) {
+        this.ticking = false;
+        if (fx.isLite()) { this.running = false; this.draw(t + 2000); }
+        return;
+      }
       if (t - last >= 30) { last = t; this.draw(t); } // ~30 fps is plenty for swaying light sticks
       requestAnimationFrame(loop);
     };
@@ -182,6 +200,8 @@ export class Charts {
     this.range = chartRange(store.get('chart.range', '100'));
     this.recent = [];
     this.active = false;
+    this.pendingDrop = false;
+    this.forcedSong = null;
     this.auto = createAutoAdvance({
       enabled: store.get('chart.auto', 'off') === 'on',
       isActive: () => this.active && !$('charts').hidden,
@@ -204,13 +224,15 @@ export class Charts {
     this.machine = new PullMachine({
       ring: $('ring'), hit: $('ringBtn'), buttons: [$('pullBtn')], sound,
       renderSlot: (card, song) => this.#renderSlot(card, song),
+      isLoaded: (song) => isArtLoaded(songCard(song).art),
       tierOf: (song) => { const tier = tierOf(overall(song)); return tier === 'legend' ? 'legendary' : tier; },
-      onPull: () => { this.auto.invalidate(); this.player.stop(); },
-      onCancel: () => this.auto.invalidate(),
+      onPull: () => { this.crowd.hype = 1; this.auto.invalidate(); this.player.stop(); },
+      onCancel: () => { this.crowd.hype = 0; this.pendingDrop = false; this.forcedSong = null; this.auto.invalidate(); this.#renderPassportButtons(); },
       say: (text) => {
         this.crowd.hype = 1;
         $('pullStamp').hidden = true;
         $('quickBtn').setAttribute('aria-disabled', 'true');
+        this.#renderPassportButtons();
         this.#say(text);
       },
       onLand: (song, tier, { short }) => {
@@ -229,6 +251,7 @@ export class Charts {
     });
     this.#bind();
     this.#renderAuto();
+    this.#renderPassportButtons();
   }
 
   get busy() { return ['spinning', 'landing', 'revealing'].includes(this.machine.state); }
@@ -259,6 +282,8 @@ export class Charts {
     this.#renderList();
     this.#say(this.#intro());
     for (const id of actions) $(id).disabled = false;
+    this.#renderPassportButtons();
+    this.onDataReady?.();
     return true;
   }
 
@@ -341,13 +366,18 @@ export class Charts {
           el('span', { class: 'pc-shine' }), el('span', { class: 'pc-rank' })),
         el('div', { class: 'pc-back' }, el('span', { text: '?' })));
     }
-    artNode(card.querySelector('.pc-art'), songCard(song).art, 'small', 'pc-art', '122px');
+    artNode(card.querySelector('.pc-art'), songCard(song).art, 'ring', 'pc-art', '(max-width: 600px) 89px, 122px');
     card.querySelector('.pc-rank').textContent = `#${song.rank}`;
     card.style.setProperty('--c', css(colorOf(song.artist)));
   }
 
   // ---------- actions ----------
   #pick() {
+    if (this.forcedSong) {
+      const forced = this.forcedSong;
+      this.forcedSong = null;
+      return forced;
+    }
     const pool = this.pool;
     let i;
     for (let tries = 0; tries < 8; tries++) {
@@ -389,7 +419,10 @@ export class Charts {
       this.#setAccent(song);
     }
     const data = songCard(song);
-    const card = makeCard(data, { isNew: collection.add('song', data.key) });
+    const isNew = collection.add('song', data.key);
+    const dust = passport.collected('kpop', { isNew, tier: data.tier });
+    if (dust) showToast(`Duplicate · +${dust} ✦`);
+    const card = makeCard(data, { isNew });
     this.onCollect?.();
     $('songCardSlot').replaceChildren(card);
     playIn(card, { reduced: fx.prefersReducedMotion() });
@@ -407,8 +440,54 @@ export class Charts {
     $('pull').hidden = false;
     const forced = new URLSearchParams(location.search).get('forceVideo');
     this.player.show(isVideoId(forced) ? forced : song.videoId, this.auto.begin());
+    if (this.pendingDrop) {
+      this.pendingDrop = false;
+      const res = passport.claim('kpop');
+      if (res.tour) showToast('World tour complete · +50 ✦');
+    }
+    this.#renderPassportButtons();
     this.#say(`Now playing #${song.rank}: ${song.title} by ${song.artist}.`);
     if (!shortPull && !document.hidden) $('pull').scrollIntoView({ block: 'start', behavior: fx.prefersReducedMotion() ? 'auto' : 'smooth' });
+  }
+
+  #unownedPool() {
+    return this.pool.filter((s) => !collection.has('song', songCard(s).key));
+  }
+
+  #renderPassportButtons() {
+    const dropBtn = $('dailyDropBtn');
+    const dropLabel = $('dailyDropLabel');
+    const unseenBtn = $('unseenBtn');
+    if (dropBtn && dropLabel) {
+      const claimed = passport.isClaimedToday('kpop');
+      dropLabel.textContent = claimed ? `Claimed · new drop in ${passport.hoursUntilMidnight()} h` : "Today's drop";
+      dropBtn.disabled = claimed || this.busy || !this.data;
+    }
+    if (unseenBtn) {
+      const canUnseen = !this.busy && !!this.data && passport.summary().dust >= passport.UNSEEN_COST && this.#unownedPool().length > 0;
+      unseenBtn.disabled = !canUnseen;
+    }
+  }
+
+  dailyDrop() {
+    if (this.busy || !this.data || passport.isClaimedToday('kpop')) return;
+    const ids = this.data.top.map((s) => s.videoId).filter(isVideoId);
+    const pickId = passport.dailyPick('kpop', ids);
+    const song = this.data.top.find((s) => s.videoId === pickId) || this.data.top[0];
+    if (!song) return;
+    this.pendingDrop = true;
+    this.forcedSong = song;
+    this.machine.pull();
+  }
+
+  unseenPull() {
+    if (this.busy || !this.data) return;
+    const unowned = this.#unownedPool();
+    if (!unowned.length || !passport.spend(passport.UNSEEN_COST)) return;
+    const song = unowned[cryptoInt(unowned.length)];
+    this.forcedSong = song;
+    this.#renderPassportButtons();
+    this.machine.pull();
   }
 
   /** Switch list from outside (URL hash). Before the chart has loaded it only records the choice. */
@@ -438,6 +517,7 @@ export class Charts {
     this.#renderList();
     this.machine.setPool(this.pool, () => this.#pick());
     this.onListChange?.();
+    this.#renderPassportButtons();
     this.#say(this.#intro());
   }
 
@@ -448,6 +528,7 @@ export class Charts {
     this.recent = [];
     this.#renderControls();
     this.machine.setPool(this.pool, () => this.#pick());
+    this.#renderPassportButtons();
     this.#say(this.#intro());
   }
 
@@ -459,6 +540,8 @@ export class Charts {
       this.#renderAuto();
     });
     $('quickBtn').addEventListener('click', () => this.quick());
+    $('dailyDropBtn')?.addEventListener('click', () => this.dailyDrop());
+    $('unseenBtn')?.addEventListener('click', () => this.unseenPull());
     $('againPull').addEventListener('click', () => {
       $('stage').scrollIntoView({ block: 'center', behavior: fx.prefersReducedMotion() ? 'auto' : 'smooth' });
       this.pull();

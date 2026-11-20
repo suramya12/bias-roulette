@@ -1,0 +1,33 @@
+:root { --bg: #04110e; --bg2: #06271f; --ink: #f4efe6; --muted: #b1c6bc; --pink: #22d3b0; --cyan: #22d3b0; --gold: #f2c14e; --violet: #087d65; --panel: rgba(5, 38, 29, .86); --line: rgba(242, 193, 78, .3); }
+body { background: radial-gradient(120% 70% at 50% -10%, #116a58 0%, #06271f 35%, #04110e 70%) fixed, #04110e; }
+.top { background: rgba(4, 17, 14, .88); }
+.genre-menu { background: #06271f; }
+.b1, .b2, .b3, .b4 { background-image: linear-gradient(to bottom, rgba(34, 211, 176, .3), transparent 75%); }
+.page-intro { text-align: center; margin: 12px 0; }
+.page-intro h1 { margin: 0; font: 400 30px/1.2 'Yatra One', system-ui; }
+.page-intro h1 span { color: var(--cyan); font-size: .65em; }
+.page-intro p { margin: 3px 0; color: var(--muted); }
+.toggle button[aria-selected="true"] { box-shadow: 0 4px 18px rgba(34, 211, 176, .35); }
+.toggle [role="radio"][aria-checked="true"] { background: linear-gradient(135deg, var(--gold), #dba83a); }
+.card .detail { margin-top: 2px; }
+.wheel-canvas { box-shadow: 0 0 0 6px rgba(242,193,78,.15), 0 0 40px rgba(34,211,176,.35), 0 0 120px rgba(34,211,176,.15); }
+.pointer { background: linear-gradient(#f2c14e, #a8791b); }
+.spin { background: radial-gradient(circle at 35% 30%, #91f5df, #22d3b0 45%, #075b4b); box-shadow: 0 6px 24px rgba(34,211,176,.45), inset 0 -6px 12px rgba(0,0,0,.25); }
+.steps li.on { border-color: #22d3b0; box-shadow: 0 0 14px rgba(34,211,176,.35) inset; }
+.floor { background: radial-gradient(50% 50%, rgba(34, 211, 176, .35), rgba(8, 125, 101, .15) 50%, transparent 70%); }
+.pull { background: linear-gradient(135deg, #fff2b3, var(--gold) 40%, #dba83a); }
+.chart li.legendary { --tier: var(--gold); }
+.chart li:hover, .chart li.playing { background: #105343; }
+dialog#binder { background: var(--bg2); }
+.panel { background: linear-gradient(180deg, #0b382b, var(--plate)); }
+.foil { background: repeating-linear-gradient(115deg, #22d3b0 0%, #f2c14e 8%, #087d65 16%, #22d3b0 24%); background-size: 260% 260%; }
+
+@media (width <= 520px) {
+  .top { padding-inline: 8px; gap: 6px; }
+  .genre summary { padding-inline: 8px; font-size: 14px; }
+}
+
+@media (width < 370px) {
+  .top { flex-wrap: wrap; }
+  .top .toggle { flex-basis: 100%; order: 1; }
+}

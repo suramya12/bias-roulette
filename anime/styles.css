@@ -2,6 +2,7 @@
 
 :root { --accent: #ff2d55; --pink: var(--accent); --cyan: var(--accent); }
 .sub { font-size: 13px; }
+.heard-count { margin-left: auto; font-size: 13px; color: var(--muted); white-space: nowrap; }
 .genre-menu a[aria-current="page"] { color: var(--accent); }
 .beam { background-image: linear-gradient(to bottom, rgba(255, 45, 85, .4), transparent 75%); }
 .floor {

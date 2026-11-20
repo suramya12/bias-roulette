@@ -6,17 +6,20 @@
 //   node scripts/resolve.mjs --recheck-flagged  search flagged matches again
 //   node scripts/resolve.mjs --only "IVE"    limit to keys containing the text
 //
-// Needs yt-dlp (pip install yt-dlp). Manual fixes live in data/overrides.json
-// and always win; this script never writes to that file.
+// Uses yt-dlp when installed, with a paced YouTube page fallback.
+// Manual fixes live in data/overrides.json and always win.
 
 import { execFile } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { extractInitialData, playability, videosFromSearch } from '../anime/scripts/lib.mjs';
+import { createPageLoader } from '../anime/scripts/resolve.mjs';
 import { allSongs } from '../src/catalog.js';
 import { isVideoId } from '../src/validation.js';
 import { MAX_BYTES, TIMEOUT_MS, safeFetch } from './safe-fetch.mjs';
 import { escapeMarkdown as esc } from './safe-text.mjs';
+import { writeVideoIds } from './video-ids.mjs';
 
 const hosts = ['www.youtube.com'];
 
@@ -111,6 +114,32 @@ function ytSearch(query, n = 8) {
   });
 }
 
+function hasYtDlp() {
+  return new Promise((resolve) => {
+    execFile('python', ['-m', 'yt_dlp', '--version'], { timeout: TIMEOUT_MS }, (error) => resolve(!error));
+  });
+}
+
+const loadPage = createPageLoader({
+  cacheDir: P('.cache/resolve'),
+  refresh: flag('--refresh') || flag('--retry-dropped') || flag('--recheck-flagged'),
+  fetchImpl: (url, { headers }) => safeFetch(url, { hosts, headers }),
+});
+
+async function pageSearch(query) {
+  try {
+    const html = await loadPage(`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`);
+    const entries = videosFromSearch(extractInitialData(html)).filter(({ id }) => isVideoId(id)).slice(0, 8)
+      .map((video) => ({
+        ...video, duration: video.seconds, view_count: video.views,
+        channel_is_verified: video.verified || video.officialArtist,
+      }));
+    return { entries };
+  } catch (error) {
+    return { error: error.message };
+  }
+}
+
 /** 'ok' | 'blocked' | 'unknown' — can this video play in an embedded player? */
 async function embedStatus(id) {
   try {
@@ -126,6 +155,14 @@ async function embedStatus(id) {
   return 'unknown';
 }
 
+async function watchEmbedStatus(id) {
+  const html = await loadPage(`https://www.youtube.com/watch?v=${id}`);
+  const { status, embed, reason } = playability(html);
+  if (/captcha|challenge|unusual traffic|confirm you.re not a bot|consent/i.test(reason)) throw new Error(reason);
+  if (status === 'UNKNOWN' || (status === 'OK' && embed === null)) return 'unknown';
+  return status === 'OK' && embed === true ? 'ok' : 'blocked';
+}
+
 async function oembed(id) {
   try {
     const r = await safeFetch(`https://www.youtube.com/oembed?format=json&url=${encodeURIComponent('https://www.youtube.com/watch?v=' + id)}`, { hosts });
@@ -137,16 +174,26 @@ async function oembed(id) {
 const parseId = (v) => (String(v).match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/) || String(v).match(/^([\w-]{11})$/) || [])[1];
 
 // ---------- per-song work ----------
-async function resolveSong(key, song) {
-  const rank = (r) => r.entries.filter((e) => e && e.id).map((e, i) => judge(song, e, i))
-    .filter((j) => j.qualifies).sort((a, b) => b.score - a.score);
+function namesAct(candidate, artist) {
+  const name = tokens(artist);
+  return [candidate.title, candidate.channel].some((text) => {
+    const words = tokens(text || '');
+    return words.includes(name.join('')) || words.some((_, i) => name.every((word, j) => word === words[i + j]));
+  });
+}
+
+async function resolveSong(song, { search, checkEmbed, requireEvidence }) {
+  const rank = (r) => r.entries.map((entry, index) => {
+    if (!entry?.id || (requireEvidence && !namesAct(entry, song.artist))) return null;
+    return judge(song, entry, index);
+  }).filter((j) => j?.qualifies).sort((a, b) => b.score - a.score);
   // Try a few phrasings: some queries come back empty or only with fan uploads.
   let res = null;
   let ranked = [];
   let lastError = 'search returned nothing';
   for (const q of [`${song.artist} ${song.title} MV`, `${song.artist} ${song.title} official music video`, `${song.artist} ${song.title}`]) {
     if (res && q.endsWith(song.title)) break; // the bare query is only for searches that came back empty
-    const r = await ytSearch(q);
+    const r = await search(q);
     if (r.error) { lastError = r.error; continue; }
     if (!r.entries.length) continue;
     const got = rank(r);
@@ -159,12 +206,17 @@ async function resolveSong(key, song) {
     return { drop: 'no qualifying music video found' + (top ? ` (top result: "${top.title}" by ${top.channel})` : '') };
   }
   const blocked = [];
+  let checkError;
   for (const cand of ranked.slice(0, 3)) {
-    const st = await embedStatus(cand.id);
+    let st;
+    try { st = await checkEmbed(cand.id); }
+    catch (error) { checkError = error.message; continue; }
     if (st === 'blocked') { blocked.push(cand.id); continue; }
+    if (st === 'unknown' && requireEvidence) { checkError = 'embed check inconclusive'; continue; }
     if (st === 'unknown') cand.flags.push('embed check inconclusive');
     return { video: { id: cand.id, title: cand.title, channel: cand.channel, verified: cand.verified, flags: cand.flags, source: 'search' } };
   }
+  if (checkError) return { error: checkError };
   return { drop: `embedding disabled or unavailable (${blocked.map((b) => 'https://youtu.be/' + b).join(', ')})` };
 }
 
@@ -191,7 +243,15 @@ for (const k of Object.keys(dropped)) if (!songs.has(k)) delete dropped[k];
 const todo = [];
 for (const [key, song] of songs) {
   if (only && !key.toLowerCase().includes(only)) continue;
-  if (key in overrides) { todo.push([key, song, 'override']); continue; }
+  if (Object.hasOwn(overrides, key)) {
+    const value = overrides[key];
+    const isDrop = value === null || value === 'drop';
+    const unchanged = isDrop
+      ? dropped[key] === 'dropped by hand in overrides.json'
+      : videos[key]?.source === 'override' && videos[key].id === parseId(value);
+    if (!unchanged || only || (flag('--recheck-flagged') && videos[key]?.flags.length)) todo.push([key, song, 'override']);
+    continue;
+  }
   if (videos[key]?.source === 'override') delete videos[key]; // override was removed
   if (flag('--recheck-flagged') && videos[key]?.flags.length) delete videos[key];
   if (videos[key] || dropped[key]) continue;
@@ -204,6 +264,11 @@ const save = async () => {
 };
 
 console.log(`${songs.size} songs in roster, ${todo.length} to resolve`);
+const usePages = todo.some(([, , mode]) => mode === 'search') && !(await hasYtDlp());
+const backend = usePages
+  ? { search: pageSearch, checkEmbed: watchEmbedStatus, requireEvidence: true }
+  : { search: ytSearch, checkEmbed: embedStatus };
+if (usePages) console.log('yt-dlp unavailable; using paced YouTube page checks.');
 let done = 0;
 let errors = 0;
 async function worker() {
@@ -214,8 +279,8 @@ async function worker() {
       const v = overrides[key];
       r = v === null || v === 'drop' ? { drop: 'dropped by hand in overrides.json' } : await resolveOverride(key, v);
     } else {
-      r = await resolveSong(key, song);
-      if (r.error) r = await resolveSong(key, song); // one retry
+      r = await resolveSong(song, backend);
+      if (r.error) r = await resolveSong(song, backend); // one retry
     }
     if (r.video) { videos[key] = r.video; delete dropped[key]; }
     else if (r.drop) { dropped[key] = r.drop; delete videos[key]; }
@@ -223,7 +288,7 @@ async function worker() {
     if (++done % 25 === 0) { console.log(`  ${done} done, ${todo.length} left`); await save(); }
   }
 }
-await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+await Promise.all(Array.from({ length: usePages ? 1 : CONCURRENCY }, worker));
 
 // one video must not stand in for two different songs
 const byId = new Map();
@@ -237,6 +302,7 @@ for (const [id, keys] of byId) {
   }
 }
 await save();
+await writeVideoIds({ root, videos });
 
 // ---------- reports ----------
 const row = (key) => {

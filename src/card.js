@@ -359,6 +359,15 @@ export const collection = {
   },
   count(kind, keys) { const box = readAll()[kind]; return keys.filter((k) => box?.[k]).length; },
   times(kind, key) { return readAll()[kind]?.[key] || 0; },
+  keys(kind) { const box = readAll()[kind]; return box ? Object.keys(box).filter((k) => box[k] > 0) : []; },
+  totalUnique() {
+    const all = readAll();
+    let n = 0;
+    for (const box of Object.values(all)) {
+      for (const count of Object.values(box)) if (count > 0) n++;
+    }
+    return n;
+  },
 };
 
 // ---------- binder (collection dialog) ----------

@@ -2,24 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self'; connect-src 'self'; manifest-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' https://i.ytimg.com; connect-src 'self'; manifest-src 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="description" content="Spin for K-pop, Pop &amp; Latin, or Anime, and discover music videos.">
+  <meta name="description" content="Spin for K-pop, Pop &amp; Latin, Anime, or Bollywood, and discover music videos.">
   <meta name="theme-color" content="#07060d">
   <meta property="og:title" content="Bias Roulette">
-  <meta property="og:description" content="Spin for K-pop, Pop &amp; Latin, or Anime, and discover music videos.">
+  <meta property="og:description" content="Spin for K-pop, Pop &amp; Latin, Anime, or Bollywood, and discover music videos.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://suramya12.github.io/bias-roulette/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Bias Roulette">
-  <meta name="twitter:description" content="Spin for K-pop, Pop &amp; Latin, or Anime, and discover music videos.">
+  <meta name="twitter:description" content="Spin for K-pop, Pop &amp; Latin, Anime, or Bollywood, and discover music videos.">
   <script src="src/landing-redirect.js"></script>
   <title>Bias Roulette</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="preload" as="image" href="landing-art/kpop-bg.webp">
-  <link rel="preload" as="image" href="landing-art/poplatin-bg.webp">
-  <link rel="preload" as="image" href="landing-art/anime-bg.webp">
+  <link rel="preload" as="image" href="landing-art/s/kpop-bg.webp" imagesrcset="landing-art/s/kpop-bg.webp 512w, landing-art/kpop-bg.webp 1024w" imagesizes="(max-width: 699px) 240px, 260px">
+  <link rel="preload" as="image" href="landing-art/s/poplatin-bg.webp" imagesrcset="landing-art/s/poplatin-bg.webp 512w, landing-art/poplatin-bg.webp 1024w" imagesizes="(max-width: 699px) 240px, 260px">
+  <link rel="preload" as="image" href="landing-art/s/anime-bg.webp" imagesrcset="landing-art/s/anime-bg.webp 512w, landing-art/anime-bg.webp 1024w" imagesizes="(max-width: 699px) 240px, 260px">
+  <link rel="preload" as="image" href="landing-art/s/bollywood-bg.webp" imagesrcset="landing-art/s/bollywood-bg.webp 512w, landing-art/bollywood-bg.webp 1024w" imagesizes="(max-width: 699px) 240px, 260px">
   <link rel="stylesheet" href="landing.css">
   <script type="module" src="landing.js"></script>
 </head>
@@ -35,8 +36,9 @@
         <a class="stage-card" data-side="kpop" href="kpop/#roulette">
           <div class="card-tilt"><div class="card-flip">
             <div class="card-face">
-              <img class="card-scene" src="landing-art/kpop-bg.webp" alt="">
-              <img class="card-figure" data-src="landing-art/kpop-fg.webp" decoding="async" alt="">
+              <img class="card-scene" src="landing-art/s/kpop-bg.webp" srcset="landing-art/s/kpop-bg.webp 512w, landing-art/kpop-bg.webp 1024w" sizes="(max-width: 699px) 240px, 260px" decoding="async" alt="">
+              <img class="card-figure" data-src="landing-art/s/kpop-fg.webp" data-srcset="landing-art/s/kpop-fg.webp 512w, landing-art/kpop-fg.webp 1024w" sizes="(max-width: 699px) 220px, 250px" decoding="async" alt="">
+              <span class="card-seal" role="img" aria-label="Today's drop: ready"></span>
               <div class="card-copy">
                 <h2>K-pop</h2>
                 <p>Bias wheels, showdowns and the all-time Top 100</p>
@@ -50,8 +52,9 @@
         <a class="stage-card" data-side="pop" href="pop/#roulette">
           <div class="card-tilt"><div class="card-flip">
             <div class="card-face">
-              <img class="card-scene" src="landing-art/poplatin-bg.webp" alt="">
-              <img class="card-figure" data-src="landing-art/poplatin-fg.webp" decoding="async" alt="">
+              <img class="card-scene" src="landing-art/s/poplatin-bg.webp" srcset="landing-art/s/poplatin-bg.webp 512w, landing-art/poplatin-bg.webp 1024w" sizes="(max-width: 699px) 240px, 260px" decoding="async" alt="">
+              <img class="card-figure" data-src="landing-art/s/poplatin-fg.webp" data-srcset="landing-art/s/poplatin-fg.webp 512w, landing-art/poplatin-fg.webp 1024w" sizes="(max-width: 699px) 220px, 250px" decoding="async" alt="">
+              <span class="card-seal" role="img" aria-label="Today's drop: ready"></span>
               <div class="card-copy">
                 <h2>Pop &amp; Latin</h2>
                 <p>Artist roulette and a bilingual Top 100</p>
@@ -65,8 +68,9 @@
         <a class="stage-card" data-side="anime" href="anime/">
           <div class="card-tilt"><div class="card-flip">
             <div class="card-face">
-              <img class="card-scene" src="landing-art/anime-bg.webp" alt="">
-              <img class="card-figure" data-src="landing-art/anime-fg.webp" decoding="async" alt="">
+              <img class="card-scene" src="landing-art/s/anime-bg.webp" srcset="landing-art/s/anime-bg.webp 512w, landing-art/anime-bg.webp 1024w" sizes="(max-width: 699px) 240px, 260px" decoding="async" alt="">
+              <img class="card-figure" data-src="landing-art/s/anime-fg-v2.webp" data-srcset="landing-art/s/anime-fg-v2.webp 512w, landing-art/anime-fg-v2.webp 1024w" sizes="(max-width: 699px) 220px, 250px" decoding="async" alt="">
+              <span class="card-seal" role="img" aria-label="Today's drop: ready"></span>
               <div class="card-copy">
                 <h2>Anime</h2>
                 <p>Openings, endings, MVs and film songs</p>
@@ -77,10 +81,47 @@
             <div class="card-back" aria-hidden="true">Bias Roulette</div>
           </div></div>
         </a>
+        <a class="stage-card" data-side="bollywood" href="bollywood/">
+          <div class="card-tilt"><div class="card-flip">
+            <div class="card-face">
+              <img class="card-scene" src="landing-art/s/bollywood-bg.webp" srcset="landing-art/s/bollywood-bg.webp 512w, landing-art/bollywood-bg.webp 1024w" sizes="(max-width: 699px) 240px, 260px" decoding="async" alt="">
+              <img class="card-figure" data-src="landing-art/s/bollywood-fg.webp" data-srcset="landing-art/s/bollywood-fg.webp 512w, landing-art/bollywood-fg.webp 1024w" sizes="(max-width: 699px) 220px, 250px" decoding="async" alt="">
+              <span class="card-seal" role="img" aria-label="Today's drop: ready"></span>
+              <div class="card-copy">
+                <h2>Bollywood</h2>
+                <p>Star and singer roulette, Hindi film Top 100</p>
+                <p class="stat" hidden></p>
+                <span class="enter">Enter <span aria-hidden="true">→</span></span>
+              </div>
+            </div>
+            <div class="card-back" aria-hidden="true">Bias Roulette</div>
+          </div></div>
+        </a>
         <div class="intro-card card-back" aria-hidden="true" hidden>Bias Roulette</div>
       </div>
-      <a class="continue" hidden></a>
+      <div class="stage-footer">
+        <button class="passport-bar" id="passportBar" type="button" aria-haspopup="dialog"></button>
+        <a class="continue" hidden></a>
+      </div>
     </div>
   </main>
+
+  <dialog class="passport-sheet" id="passportSheet" aria-labelledby="passportTitle">
+    <div class="sheet-head">
+      <div class="sheet-ring" id="sheetRing"></div>
+      <div class="sheet-summary">
+        <h2 id="passportTitle">Passport</h2>
+        <p class="sheet-numbers" id="sheetNumbers"></p>
+      </div>
+      <div class="sheet-actions">
+        <button class="sheet-share" id="passportShare" type="button">Share passport</button>
+        <button class="sheet-close" id="passportClose" type="button" aria-label="Close">Close</button>
+      </div>
+    </div>
+    <div class="sheet-body">
+      <h3 class="sheet-section">Sets</h3>
+      <div class="sets-list" id="setsList"></div>
+    </div>
+  </dialog>
 </body>
 </html>
