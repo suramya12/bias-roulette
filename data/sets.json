@@ -705,6 +705,34 @@
       ]
     },
     {
+      "id": "bolly-king-khan",
+      "side": "bollywood",
+      "name": "King Khan Classics",
+      "blurb": "Open arms, chiffon sarees, and peak SRK romance.",
+      "items": [
+        {
+          "side": "bollywood",
+          "id": "cNV5hLSa9H8"
+        },
+        {
+          "side": "bollywood",
+          "id": "g0eO74UmRBs"
+        },
+        {
+          "side": "bollywood",
+          "id": "L0zKs8i7Nc8"
+        },
+        {
+          "side": "bollywood",
+          "id": "2drIKUOCZxU"
+        },
+        {
+          "side": "bollywood",
+          "id": "VAdGW7QDJiU"
+        }
+      ]
+    },
+    {
       "id": "bolly-pritam-party-pain",
       "side": "bollywood",
       "name": "Pritam Party & Pain",
@@ -761,6 +789,10 @@
         {
           "side": "bollywood",
           "id": "_KhQT-LGb-4"
+        },
+        {
+          "side": "bollywood",
+          "id": "LK7-_dgAVQE"
         }
       ]
     },
@@ -897,6 +929,42 @@
         {
           "side": "pop",
           "id": "34Na4j8AVgA"
+        }
+      ]
+    },
+    {
+      "id": "bridge-iconic-debuts",
+      "side": "bridge",
+      "name": "Iconic Debuts",
+      "blurb": "First impressions that immediately changed the game.",
+      "items": [
+        {
+          "side": "kpop",
+          "id": "0k2Zzkw_-0I"
+        },
+        {
+          "side": "kpop",
+          "id": "VTASffPQGhY"
+        },
+        {
+          "side": "kpop",
+          "id": "dISNgvVpWlo"
+        },
+        {
+          "side": "pop",
+          "id": "nlcIKh6sBtc"
+        },
+        {
+          "side": "pop",
+          "id": "Urdlvw0SSEc"
+        },
+        {
+          "side": "pop",
+          "id": "C-u5WLJ9Yk4"
+        },
+        {
+          "side": "bollywood",
+          "id": "-LESbtPT8uw"
         }
       ]
     }
