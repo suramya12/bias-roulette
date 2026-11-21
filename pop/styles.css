@@ -10,6 +10,9 @@ html { scroll-padding-top: 96px; }
   --violet: #8b5cff;
   --panel: rgba(22, 14, 52, 0.72);
   --line: rgba(255, 255, 255, 0.12);
+  /* Surfaces of menus and the Collection: each side sets its own, so no purple leaks into other themes. */
+  --menu-bg: #1a1240;
+  --dialog-bg: #0d0a24;
   --display: 'Baloo 2', system-ui, sans-serif;
   --body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --r: 16px;
@@ -70,7 +73,7 @@ a { color: var(--cyan); }
 .genre summary:focus-visible { outline: 3px solid var(--cyan); outline-offset: 2px; }
 .genre-menu {
   position: absolute; z-index: 30; top: calc(100% + 6px); left: 0; min-width: 170px; display: grid; padding: 6px;
-  border-radius: 14px; background: #1a1040; border: 1px solid var(--line); box-shadow: 0 12px 30px rgba(0, 0, 0, .5);
+  border-radius: 14px; background: var(--menu-bg); border: 1px solid var(--line); box-shadow: 0 12px 30px rgba(0, 0, 0, .5);
 }
 .genre-menu a { padding: 10px 12px; border-radius: 10px; color: var(--ink); text-decoration: none; font: 700 15px/1 var(--display); }
 .genre-menu a:hover { background: rgba(255, 255, 255, .08); }
@@ -87,7 +90,9 @@ a { color: var(--cyan); }
   position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
   padding: 10px 16px; background: rgba(7, 6, 26, .72); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
 }
-.home-link { color: var(--ink); font: 700 13px/1.1 var(--display); text-underline-offset: 3px; }
+.home-link { display: inline-flex; align-items: center; gap: 6px; color: var(--ink); font: 700 14px/1.1 var(--display); text-decoration: none; white-space: nowrap; }
+.home-link:hover .long { text-decoration: underline; text-underline-offset: 3px; }
+.sound-btn { padding: 7px 12px; border-radius: 999px; font: 600 13px/1 var(--body); white-space: nowrap; }
 .toggle { display: inline-flex; padding: 4px; gap: 4px; border-radius: 999px; background: rgba(255, 255, 255, .07); border: 1px solid var(--line); }
 .toggle button { border: 0; background: none; padding: 8px 14px; border-radius: 999px; font: 700 15px/1 var(--display); color: var(--muted); }
 .toggle button[aria-selected="true"] { background: linear-gradient(135deg, var(--pink), var(--violet)); color: #fff; box-shadow: 0 4px 18px rgba(255, 79, 163, .35); }
@@ -135,8 +140,9 @@ main { max-width: 1160px; margin: 0 auto; padding: 16px 16px 120px; }
 .tap-to-play { position: absolute; inset: 0; z-index: 2; width: 100%; background: rgba(0,0,0,.7); color: white; border: 0; font: 700 24px var(--display); cursor: pointer; }
 .auto-paused { color: var(--ink); }
 .auto-menu {
-  position: absolute; right: 0; bottom: calc(100% + 8px); z-index: 20; display: grid; gap: 2px;
-  width: min(300px, calc(100vw - 32px)); padding: 6px; background: #1a1240;
+  /* Opens below the buttons, so it never covers the finalist cards or the hint above them. */
+  position: absolute; right: 0; top: calc(100% + 8px); z-index: 20; display: grid; gap: 2px;
+  width: min(300px, calc(100vw - 32px)); padding: 6px; background: var(--menu-bg);
   border: 1px solid rgba(255, 255, 255, .22); border-radius: 14px; box-shadow: 0 18px 40px -12px rgba(0, 0, 0, .75);
 }
 .switch { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 10px; cursor: pointer; }
@@ -191,6 +197,11 @@ main { max-width: 1160px; margin: 0 auto; padding: 16px 16px 120px; }
 .big-slot { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .big-slot .card { width: 100%; max-width: 340px; }
 .credit { font-size: 12px; color: var(--muted); text-align: center; max-width: 340px; }
+.drawn-for { margin: 0; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); font-size: 13px; color: var(--muted); }
+.drawn-for b { color: var(--ink); }
+.credits .version { opacity: .7; font-variant-numeric: tabular-nums; }
+/* Hold the stage's place while the game data loads, so the footer does not jump. */
+.deck:empty { min-height: 560px; }
 .player-slot { min-width: 0; }
 .player { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: var(--r); overflow: hidden; background: #000; box-shadow: 0 10px 40px rgba(0, 0, 0, .6), 0 0 0 1px var(--line); }
 .player iframe, .player > div { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -273,7 +284,10 @@ main { max-width: 1160px; margin: 0 auto; padding: 16px 16px 120px; }
 .row-rank { font: 800 1.05rem/1 var(--display); font-variant-numeric: tabular-nums; text-align: center; color: var(--muted); }
 .row-rank.epic { color: #d48bff; }
 .row-rank.legendary { color: var(--gold); }
-.row-thumb { width: 64px; height: 36px; object-fit: cover; border-radius: 6px; background: #222; }
+.row-thumb { width: 64px; height: 36px; object-fit: cover; border-radius: 6px; color: transparent;
+  background: linear-gradient(100deg, rgba(255,255,255,.06) 30%, rgba(255,255,255,.16) 50%, rgba(255,255,255,.06) 70%) 0 0 / 300% 100%, #1d1a2b;
+  animation: shimmer 1.4s linear infinite; }
+@keyframes shimmer { to { background-position: -150% 0; } }
 .row-text { min-width: 0; display: grid; }
 .row-text b, .row-text span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .row-text b { font-weight: 600; }
@@ -285,11 +299,21 @@ main { max-width: 1160px; margin: 0 auto; padding: 16px 16px 120px; }
 .row-score small { font-size: .75rem; color: var(--muted); white-space: nowrap; }
 
 /* ---------- binder ---------- */
-dialog#binder { width: min(1100px, (100vw - 16px) / var(--z, 1)); max-height: calc((100vh - 32px) / var(--z, 1)); padding: 0; border: 1px solid var(--line); border-radius: 20px; background: #0d0a24; color: var(--ink); }
+dialog#binder { width: min(1100px, (100vw - 16px) / var(--z, 1)); max-height: calc((100vh - 32px) / var(--z, 1)); padding: 0; border: 1px solid var(--line); border-radius: 20px; background: var(--dialog-bg); color: var(--ink);
+  overscroll-behavior: contain; scrollbar-color: rgba(255, 255, 255, .28) transparent; scrollbar-width: thin; }
+/* One scrollbar while a dialog is open: the page behind it stays put. */
+html:has(dialog[open]) { overflow: hidden; }
 dialog::backdrop { background: rgba(0, 0, 0, .7); backdrop-filter: blur(4px); }
-.binder-head { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 14px 16px; background: #0d0a24; border-bottom: 1px solid var(--line); }
+.binder-head { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 14px 16px; background: var(--dialog-bg); border-bottom: 1px solid var(--line); }
+.binder-tools { flex: 1 1 100%; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.binder-tools input { flex: 1 1 200px; min-width: 0; min-height: 36px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255, 255, 255, .06); color: var(--ink); font: 500 .9rem/1 var(--body); }
+.binder-tools input::placeholder { color: var(--muted); }
+.binder-tools input:focus-visible { outline: 3px solid var(--cyan); outline-offset: 2px; }
+.binder-empty { margin: 32px 16px; text-align: center; color: var(--muted); }
 .binder-head h2 { margin: 0; font: 800 22px var(--display); }
-.close { margin-left: auto; border: 0; background: rgba(255, 255, 255, .1); width: 36px; height: 36px; border-radius: 50%; }
+.close { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 7px 14px; border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .45); background: rgba(255, 255, 255, .12); color: var(--ink); font: 700 14px/1 var(--display); }
+.close:hover { background: rgba(255, 255, 255, .22); }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; padding: 16px; }
 .grid .card { content-visibility: auto; contain-intrinsic-size: 118px 170px; }
 
@@ -336,8 +360,9 @@ dialog::backdrop { background: rgba(0, 0, 0, .7); backdrop-filter: blur(4px); }
 .card.mini .chips, .card.mini .flavour, .card.mini .by, .card.mini .tier { display: none; }
 .card.mini .name { font-size: max(12px, 10cqw); margin-top: -12cqw; }
 .card.mini .stones { gap: 1.6cqw; }
-.card.mini .stone b { font-size: max(11px, 8cqw); } .card.mini .stone span { display: block; font-size: max(8px, 4.6cqw); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.stone span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Stat labels wrap instead of cutting off ("SOLO SON…" on two-stat mini cards). */
+.stone span { display: block; line-height: 1.1; overflow-wrap: anywhere; }
+.card.mini .stone b { font-size: max(11px, 8cqw); } .card.mini .stone span { font-size: max(8px, 4cqw); letter-spacing: 0; }
 .card.mini .art { flex-basis: 66%; }
 
 /* foil + glare follow the pointer */
@@ -370,10 +395,11 @@ dialog::backdrop { background: rgba(0, 0, 0, .7); backdrop-filter: blur(4px); }
   .wheel-wrap { max-width: 340px; }
   .wheel-side { text-align: center; }
   .wheel-side .row-btns { justify-content: center; }
+  .deck:empty { min-height: 860px; }
   .big-slot .card { max-width: 300px; }
 }
 @media (max-width: 520px) {
-  .top .home-link { max-width: 48px; }
+  .home-link .long { display: none; }
   .top { padding: 8px 12px; gap: 8px; }
   .toggle button { padding: 7px 9px; font-size: 13px; }
   .toggle .long { display: none; }
@@ -413,3 +439,17 @@ dialog::backdrop { background: rgba(0, 0, 0, .7); backdrop-filter: blur(4px); }
 .lite .top { background: rgba(7, 6, 26, .95); backdrop-filter: none; }
 .lite dialog::backdrop { backdrop-filter: none; }
 .lite .flare { animation: fadeIn 1s .6s both; }
+
+/* Narrow headers: the sound button becomes an icon (its text stays as the accessible name). */
+@media (max-width: 700px) {
+  .sound-btn { font-size: 0; padding: 6px 10px; }
+  .sound-btn::after { content: '\1F50A'; font-size: 15px; }
+  .sound-btn[aria-pressed="false"]::after { content: '\1F507'; }
+}
+/* Small phones: six header items share 375px, so trim the gaps instead of hiding controls. */
+@media (max-width: 420px) {
+  .top { gap: 5px; padding-inline: 8px; }
+  .top .toggle button { padding-inline: 7px; }
+  .binder-btn { padding-inline: 8px; }
+  .sound-btn { padding-inline: 7px; }
+}

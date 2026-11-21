@@ -429,7 +429,8 @@ function renderPassport() {
   }
   const dust = document.createElement('span');
   dust.className = 'passport-dust';
-  dust.textContent = `✦ ${info.dust.toLocaleString()}`;
+  dust.textContent = `✦ ${info.dust.toLocaleString()} stardust`;
+  dust.title = "Stardust: earned for every duplicate card";
   meta.append(dust);
 
   passportBar.replaceChildren(buildRing(info), main, meta);
@@ -442,7 +443,7 @@ async function openPassportSheet() {
   const parts = [`${info.totalOwned.toLocaleString()} ${info.totalOwned === 1 ? 'card' : 'cards'}`];
   if (info.totalCards > 0) parts[0] += ` of ${info.totalCards.toLocaleString()}`;
   if (info.streak.count > 0) parts.push(`${info.streak.count}-day streak`);
-  parts.push(`✦ ${info.dust.toLocaleString()}`);
+  parts.push(`✦ ${info.dust.toLocaleString()} stardust (from duplicates)`);
   sheetNumbers.textContent = parts.join(' · ');
 
   setsList.replaceChildren(Object.assign(document.createElement('p'), { className: 'sets-empty', textContent: 'Loading sets…' }));
@@ -537,4 +538,3 @@ renderPassport();
 dealCards();
 updateMotion();
 loadManifest('data/landing.json').catch(() => {});
-loadManifest('bollywood/data/landing.json').catch(() => {});

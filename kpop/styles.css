@@ -3,6 +3,7 @@
   --bg: #0c0a12; --bg2: #14101f; --ink: #f5f3fa; --muted: #a39db5;
   --pink: #ff4fa3; --cyan: #7fd0ff; --gold: #ffe45c; --violet: #b693ff; --accent: #b693ff;
   --panel: rgba(255, 255, 255, .045); --line: rgba(255, 255, 255, .1);
+  --menu-bg: #16121f; --dialog-bg: #0f0c18;
   --display: 'Outfit', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --body: 'Outfit', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 }

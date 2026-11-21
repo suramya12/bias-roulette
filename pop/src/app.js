@@ -10,6 +10,7 @@ import { createAutoAdvance } from '../../src/auto-advance.js';
 import { CREDIT_HOSTS, IMAGE_HOSTS, isVideoId, safeUrl, videoThumbnail } from '../../src/validation.js';
 import * as passport from '../../src/passport.js';
 import { showToast } from '../../src/toast.js';
+import { collectible } from './deck.js';
 
 const $ = (s) => document.querySelector(s);
 const RANGES = [10, 50, 100];
@@ -53,7 +54,6 @@ async function boot() {
 
 function init(data) {
   const portraits = Object.create(null);
-  const artists = data.artists.filter((a) => a.songs.length);
   const songsOf = (a) => G.wheelSongs(a, songsById, 99);
   const TOP = G.top100(data.songs);
 
@@ -71,9 +71,16 @@ function init(data) {
       s: (Array.isArray(col?.s) ? col.s : []).filter((id) => songsById.has(id)),
     };
   }
+  // What can be won here (pop/src/deck.js): the wheel's artists and every song Roulette or Top 100 can award.
+  // The Collection, the header count and the Passport all count against this, like the hub does.
+  const deck = collectible(data, config.pool);
+  const deckArtists = new Set(deck.artists.map((a) => a.name));
+  const deckSongs = new Set(deck.songs.map((s) => s.id));
+  const ownedA = () => (col.a || []).filter((n) => deckArtists.has(n)).length;
+  const ownedS = () => (col.s || []).filter((id) => deckSongs.has(id)).length;
   function reportPassport() {
-    const owned = (col.a?.length || 0) + (col.s?.length || 0);
-    const total = artists.length + binderSongs.length;
+    const owned = ownedA() + ownedS();
+    const total = deck.artists.length + deck.songs.length;
     const ids = (col.s || []).filter(isVideoId);
     passport.report(config.side, { owned, total, ids });
     passport.loadSets().then((sets) => {
@@ -89,7 +96,7 @@ function init(data) {
     reportPassport();
     return r.isNew;
   }
-  const updateCount = () => ($('#binderCount').textContent = (col.a?.length || 0) + (col.s?.length || 0));
+  const updateCount = () => ($('#binderCount').textContent = ownedA() + ownedS());
 
   function tunePortraitImg(card) {
     const img = card?.querySelector?.('.art img');
@@ -133,8 +140,11 @@ function init(data) {
       else setTimeout(ensureChart, 1);
     });
   }
-  function setMode(m, { deferChart = false } = {}) {
+  function setMode(m, { deferChart = false, scroll = false } = {}) {
+    const changed = modes[m].hidden;
     for (const [k, sec] of Object.entries(modes)) sec.hidden = k !== m;
+    // A new mode starts at its title, not at the old mode's scroll offset (which hid it under the header).
+    if (scroll && changed && globalThis.scrollY > 0) globalThis.scrollTo?.({ top: 0, behavior: 'instant' });
     for (const tab of modeTabs) {
       const selected = tab.dataset.mode === m;
       tab.setAttribute('aria-selected', String(selected));
@@ -153,7 +163,7 @@ function init(data) {
     }
   }
   modeTabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => setMode(tab.dataset.mode));
+    tab.addEventListener('click', () => setMode(tab.dataset.mode, { scroll: true }));
     tab.addEventListener('keydown', (event) => {
       let next;
       switch (event.key) {
@@ -165,17 +175,33 @@ function init(data) {
       }
       event.preventDefault();
       const target = modeTabs[next];
-      setMode(target.dataset.mode);
+      setMode(target.dataset.mode, { scroll: true });
       target.focus();
     });
   });
   $('#genre').addEventListener('keydown', (e) => e.key === 'Escape' && ($('#genre').open = false));
   document.addEventListener('click', (e) => !e.target.closest('#genre') && ($('#genre').open = false));
 
+  // ---------- sound (header button, shared by both modes) ----------
+  let soundOn = true;
+  try { soundOn = localStorage.getItem(config.storage + '.sound') !== 'off'; } catch {}
+  const sound = new Sound(soundOn);
+  function soundLabel() {
+    $('#sound').textContent = sound.enabled ? 'Sound on' : 'Sound off';
+    $('#sound').setAttribute('aria-pressed', String(sound.enabled));
+  }
+  $('#sound').addEventListener('click', () => {
+    sound.enabled = !sound.enabled;
+    if (sound.enabled) sound.unlock();
+    try { localStorage.setItem(config.storage + '.sound', sound.enabled ? 'on' : 'off'); } catch {}
+    soundLabel();
+  });
+  soundLabel();
+
   // ---------- Mode 1: Roulette ----------
   stops.roulette = createRoulette($(`#deck-${config.deck}`), {
-    songsById, portraits, win, artistCard, songCard,
-    pool: config.pool(artists), fills: config.fills, noun: config.noun,
+    songsById, portraits, win, artistCard, songCard, sound,
+    pool: deck.artists, fills: config.fills, noun: config.noun,
   }).stop;
 
   // ---------- Mode 2: Top 100 ----------
@@ -210,20 +236,6 @@ function init(data) {
   const say = (text) => { $('#topAnnounce').textContent = text; };
   const shown = new Set();
   const ringSize = () => (innerWidth < 520 ? 10 : 12);
-  let soundOn = true;
-  try { soundOn = localStorage.getItem(config.storage + '.sound') !== 'off'; } catch {}
-  const sound = new Sound(soundOn);
-  function soundLabel() {
-    $('#sound').textContent = sound.enabled ? 'Sound on' : 'Sound off';
-    $('#sound').setAttribute('aria-pressed', String(sound.enabled));
-  }
-  $('#sound').addEventListener('click', () => {
-    sound.enabled = !sound.enabled;
-    if (sound.enabled) sound.unlock();
-    try { localStorage.setItem(config.storage + '.sound', sound.enabled ? 'on' : 'off'); } catch {}
-    soundLabel();
-  });
-  soundLabel();
 
   // "Pull from": the top 10, 50 or 100, remembered per side.
   let range = 100;
@@ -359,16 +371,30 @@ function init(data) {
   // ---------- collection ----------
   const binder = $('#binder');
   let binderTab = 'a';
-  const binderSongs = (() => {
-    const ids = new Set(TOP.map((s) => s.id));
-    for (const a of artists) for (const id of a.songs.slice(0, 12)) ids.add(id);
-    return [...ids].map((id) => songsById.get(id)).sort((a, b) => a.o - b.o);
-  })();
+  let binderOwnedOnly = false;
+  const binderArtists = [...deck.artists].sort((a, b) => b.power - a.power || a.name.localeCompare(b.name));
+  const binderSongs = deck.songs;
+  // Accent-free, case-free match on the name, the artist and (Bollywood) the film.
+  const fold = (s) => String(s ?? '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const haystack = (x) => fold(binderTab === 'a' ? x.name : [x.t, x.by, x.film].join(' '));
   function renderBinder() {
     const have = new Set(binderTab === 'a' ? col.a : col.s);
-    const list = binderTab === 'a' ? [...artists].sort((a, b) => b.power - a.power || a.name.localeCompare(b.name)) : binderSongs;
-    $('#bA').textContent = `${col.a?.length || 0}/${artists.length}`;
-    $('#bS').textContent = `${col.s?.length || 0}/${binderSongs.length}`;
+    const idOf = (x) => (binderTab === 'a' ? x.name : x.id);
+    const query = fold($('#binderSearch').value.trim());
+    $('#bA').textContent = `${ownedA()}/${deck.artists.length}`;
+    $('#bS').textContent = `${ownedS()}/${binderSongs.length}`;
+    $('#binderOwned').setAttribute('aria-pressed', String(binderOwnedOnly));
+    // Searching only looks through collected cards: an uncollected card is a face-down back.
+    const list = (binderTab === 'a' ? binderArtists : binderSongs)
+      .filter((x) => (!binderOwnedOnly && !query) || have.has(idOf(x)))
+      .filter((x) => !query || haystack(x).includes(query));
+    const empty = $('#binderEmpty');
+    empty.hidden = list.length > 0;
+    if (!list.length) {
+      const what = binderTab === 'a' ? `${config.noun}s` : 'songs';
+      empty.textContent = query ? `No collected ${what} match “${$('#binderSearch').value.trim()}”.`
+        : `No ${what} collected yet. ${binderTab === 'a' ? 'Win a Roulette round' : 'Pull a Top 100 card or finish a Roulette round'} to add one.`;
+    }
     const gridWidth = $('#binderGrid').clientWidth || Math.min(innerWidth - 16, 1100);
     const firstRow = Math.max(2, Math.floor((gridWidth - 20) / 130));
     const frag = document.createDocumentFragment();
@@ -388,6 +414,13 @@ function init(data) {
     binderTab = b.dataset.bt;
     binder.querySelectorAll('[data-bt]').forEach((x) => x.setAttribute('aria-selected', x === b));
     renderBinder();
+  });
+  $('#binderOwned').addEventListener('click', () => { binderOwnedOnly = !binderOwnedOnly; renderBinder(); });
+  let searchTimer = 0;
+  $('#binderSearch').addEventListener('input', () => { clearTimeout(searchTimer); searchTimer = setTimeout(renderBinder, 120); });
+  // Escape in a filled search box clears it; the dialog only closes on a second Escape.
+  $('#binderSearch').addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && e.target.value) { e.preventDefault(); e.target.value = ''; renderBinder(); }
   });
 
   // ---------- photo credits (built when opened) ----------

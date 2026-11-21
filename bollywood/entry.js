@@ -1,13 +1,14 @@
 import { start } from '../pop/src/app.js';
+import { DECKS } from '../pop/src/deck.js';
 import * as G from '../pop/src/game.js';
 import { videoThumbnail } from '../src/validation.js';
 
 const fills = [['#22d3b0', '#075b4b'], ['#0b614d', '#043328'], ['#f2c14e', '#80601b'], ['#148b75', '#064337']];
 start({
   side: 'bollywood', label: 'Bollywood', noun: 'star', storage: 'bolly', deck: 'stars', fills,
-  deckNote: 'Spin for a star, then for one of her songs.',
+  deckNote: 'Spin for a star, then for one of their songs.',
   chartMethod: 'Ranked by official video views.',
-  pool: (artists) => artists.filter((a) => a.deck === 'stars'),
+  pool: DECKS.bollywood.pool,
   prepare: (data) => { for (const s of data.songs) s.by = (s.singers || []).join(' · '); },
   songModel: (s, { chart } = {}) => ({
     kind: 'song', id: s.id, tier: G.songRarity(s.o), title: s.t,

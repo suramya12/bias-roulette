@@ -76,11 +76,14 @@ export function makeCard(m, { size = 'big', faceDown = false, locked = false } =
   const chips = el('div', 'chips');
   for (const c of m.chips) chips.append(el('span', '', c));
   const stones = el('div', 'stones');
+  // Unknown or zero stats are left out, unless every stat is unknown: then they show "—"
+  // so the card never has an empty hole where its numbers belong.
+  const anyKnown = m.stats.some((st) => st.v);
   for (const st of m.stats) {
-    if (!st.v) continue; // unknown or zero stat: not shown
+    if (!st.v && anyKnown) continue;
     const s = el('div', 'stone');
     const b = el('b', '', fmtStat(st));
-    b.dataset.v = st.v;
+    b.dataset.v = st.v || 0;
     b.dataset.n = st.n ? 1 : '';
     s.append(b, el('span', '', st.label));
     stones.append(s);

@@ -1,5 +1,6 @@
 {
   "_how": "Add lines like  \"ARTIST | SONG\": \"https://youtu.be/VIDEO_ID\"  (key exactly as shown in REVIEW.md). Use null instead of a link to drop a song. Then run: npm run resolve",
+  "SEJEONG | Flower Way": "https://youtu.be/zumBqDr0FCk",
   "HWASA | I'm a B": "https://youtu.be/s1kwS3riCQI",
   "ITZY | Mafia In the Morning": "https://youtu.be/_ysomCGaZLw",
   "Agust D | People Pt.2": "https://youtu.be/uVD-YgzDzyY",

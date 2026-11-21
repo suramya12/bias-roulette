@@ -1,4 +1,5 @@
 import { start } from '../pop/src/app.js';
+import { DECKS } from '../pop/src/deck.js';
 import * as G from '../pop/src/game.js';
 import { videoThumbnail } from '../src/validation.js';
 
@@ -7,10 +8,10 @@ const USE = { OP: 'OP', ED: 'ED', IN: 'Insert', MV: 'MV' };
 const useOf = (s) => USE[s.use] ?? s.use;
 
 start({
-  side: 'anime', label: 'Anime', noun: 'show', storage: 'anime', deck: 'shows', fills, photos: false,
-  deckNote: 'Spin for an anime, then for one of its songs.',
+  side: 'anime', label: 'Anime', noun: DECKS.anime.noun, storage: 'anime', deck: 'shows', fills, photos: false,
+  deckNote: 'Spin for an anime series, film or animated MV, then for one of its songs.',
   chartMethod: 'Ranked by official video views.',
-  pool: (artists) => artists.filter((a) => a.main),
+  pool: DECKS.anime.pool,
   songModel: (s) => ({
     kind: 'song', id: s.id, tier: G.songRarity(s.o), title: s.t, by: s.by,
     detail: [s.show, useOf(s)].filter(Boolean).join(' \u00B7 '), gem: '#' + s.o,
@@ -21,12 +22,13 @@ start({
   artistModel: (a, portrait, songs) => {
     const best = [...songs].sort((x, y) => (y.v || 0) - (x.v || 0))[0];
     return {
-      kind: 'artist', id: a.name, tier: G.artistRarity(a.power), title: a.name, by: 'Anime',
+      kind: 'artist', id: a.name, tier: G.artistRarity(a.power), title: a.name, by: /animated music video/i.test(a.name) ? 'Animated MV' : 'Anime',
       gem: '\u26A1' + a.power, img: best && videoThumbnail(best.id), yt: true,
       stats: [{ v: a.songs.length, label: 'Songs', n: true }],
       chips: [...new Set(songs.map(useOf))], flavour: '',
     };
   },
+  crowdColors: ['#ff2d55', '#8b5cff', '#ff8fa6', '#ffd76a'],
   score: (s) => s.v,
   chartScore: (s) => (s.v > 0 ? G.fmt(s.v) + ' views' : ''),
   statStrip: (s) => [

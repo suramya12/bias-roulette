@@ -8,7 +8,7 @@ const PUBLIC = ['index.html', 'landing.css', 'landing.js', 'favicon.svg', 'og.pn
   'pop/index.html', 'pop/styles.css', 'pop/src/', 'pop/data/',
   'anime/index.html', 'anime/styles.css', 'anime/entry.js', 'anime/src/', 'anime/data/',
   'bollywood/index.html', 'bollywood/styles.css', 'bollywood/entry.js',
-  'bollywood/data/data.json', 'bollywood/data/portraits.json', 'bollywood/data/landing.json'];
+  'bollywood/data/data.json', 'bollywood/data/portraits.json'];
 
 await serveStatic({
   root: fileURLToPath(new URL('..', import.meta.url)),

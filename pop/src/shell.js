@@ -1,6 +1,7 @@
 // The page shell every music page shares: header, Roulette and Top 100 sections, credits, collection dialog.
 // Static markup is a template string; everything that comes from the side's config goes in with textContent.
 // No inline scripts or handlers: the pages have a strict CSP.
+import { VERSION } from '../../src/version.js';
 
 const SIDES = [
   { id: 'kpop', label: 'K-pop', modes: true },
@@ -11,6 +12,7 @@ const SIDES = [
 
 const markup = (config) => `
   <header class="top">
+    <a class="home-link" href="../" aria-label="Bias Roulette home"><span aria-hidden="true">←</span> <span class="long">Bias Roulette</span></a>
     <details class="genre" id="genre">
       <summary id="genreSummary"><span id="genreFirst"></span><span class="long" id="genreRest"></span> <span aria-hidden="true">▾</span></summary>
       <div class="genre-menu">${SIDES.map((side) => (side.id === config.side
@@ -22,7 +24,7 @@ const markup = (config) => `
       <button role="tab" id="tab-top100" aria-selected="false" aria-controls="top100" tabindex="-1" data-mode="top100">Top 100</button>
     </div>
     <button class="binder-btn" id="openBinder" aria-haspopup="dialog" aria-label="Collection"><span class="long">Collection</span><span class="icon" aria-hidden="true">\u{1F0CF}</span> <b id="binderCount">0</b></button>
-    <a class="home-link" href="../">Bias Roulette</a>
+    <button class="ghost sound-btn" id="sound" type="button" aria-pressed="true">Sound on</button>
   </header>
 
   <main>
@@ -88,7 +90,6 @@ const markup = (config) => `
       <div class="row-btns center chart-actions">
         <button class="pull" id="pull" type="button">Pull a card</button>
         <label class="ghost switch chart-auto"><input id="chartAuto" type="checkbox"> Auto <span class="auto-state">off</span></label>
-        <button class="ghost" id="sound" type="button" aria-pressed="true">Sound on</button>
       </div>
       <div class="result" id="tResult" hidden>
         <div class="big-slot" id="tCard"></div>
@@ -103,7 +104,7 @@ const markup = (config) => `
         </div>
       </div>
       <details class="chart-box" id="chartBox">
-        <summary><span id="chartName"></span> <small>tap a song to play it</small></summary>
+        <summary><span id="chartName"></span> <small>tap a song to play it · only pulls add cards to your collection</small></summary>
         <p class="method" id="chartMethod"></p>
         <ol class="chart" id="chart"></ol>
       </details>
@@ -125,8 +126,13 @@ const markup = (config) => `
         <button role="tab" aria-selected="true" data-bt="a"><span id="bAName"></span> <b id="bA"></b></button>
         <button role="tab" aria-selected="false" data-bt="s">Songs <b id="bS"></b></button>
       </div>
-      <button class="close" id="closeBinder" aria-label="Close">✕</button>
+      <button class="close" id="closeBinder" type="button">Close <span aria-hidden="true">✕</span></button>
+      <div class="binder-tools">
+        <input type="search" id="binderSearch" placeholder="Search" aria-label="Search your collection" autocomplete="off" spellcheck="false">
+        <button class="chip-btn" id="binderOwned" type="button" aria-pressed="false">Collected only</button>
+      </div>
     </div>
+    <p class="binder-empty" id="binderEmpty" hidden></p>
     <div class="grid" id="binderGrid"></div>
   </dialog>
 
@@ -159,5 +165,30 @@ export function renderShell(config) {
   }
   const photos = config.photos !== false; // anime cards use video stills, so no photo credits
   credit.append(`Videos play from YouTube.${photos ? ` ${noun} photos: Wikimedia Commons, each under its own licence.` : ''}`);
+  credit.append(Object.assign(document.createElement('span'), { className: 'version', textContent: ` v${VERSION}` }));
   $('#credits').hidden = !photos;
+  paintInitialState(config);
+}
+
+/**
+ * Before the data loads, show the screen the URL asks for (#top100 or #roulette) and the saved
+ * card count, so nothing flashes from Roulette / 0 to the real state once the game starts.
+ */
+function paintInitialState(config) {
+  const $ = (selector) => document.querySelector(selector);
+  const h = location.hash.slice(1);
+  const mode = h === 'top100' || h === 'top' ? 'top100' : 'roulette';
+  $('#roulette').hidden = mode !== 'roulette';
+  $('#top100').hidden = mode !== 'top100';
+  for (const tab of document.querySelectorAll('.top .toggle button')) {
+    const selected = tab.dataset.mode === mode;
+    tab.setAttribute('aria-selected', String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+  }
+  $('#titleAccent').textContent = mode === 'top100' ? 'Top 100' : 'Roulette';
+  try {
+    const saved = JSON.parse(localStorage.getItem(config.storage + '.collection.v1')) || {};
+    const n = (Array.isArray(saved.a) ? saved.a.length : 0) + (Array.isArray(saved.s) ? saved.s.length : 0);
+    $('#binderCount').textContent = String(n);
+  } catch { /* private mode or a damaged value: the game fixes the count once it loads */ }
 }

@@ -2,6 +2,7 @@
 :root {
   --accent: #ff2d55; --pink: var(--accent); --cyan: var(--accent);
   --bg: #07061a; --bg2: #110a24;
+  --menu-bg: #150c2a; --dialog-bg: #0c0820;
 }
 body { background: radial-gradient(120% 70% at 50% -10%, #3a0f2e 0%, var(--bg2) 38%, var(--bg) 72%) fixed, var(--bg); }
 .genre-menu a[aria-current="page"] { color: var(--accent); }

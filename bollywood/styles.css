@@ -1,4 +1,4 @@
-:root { --bg: #04110e; --bg2: #06271f; --ink: #f4efe6; --muted: #b1c6bc; --pink: #22d3b0; --cyan: #22d3b0; --gold: #f2c14e; --violet: #087d65; --panel: rgba(5, 38, 29, .86); --line: rgba(242, 193, 78, .3); }
+:root { --bg: #04110e; --bg2: #06271f; --ink: #f4efe6; --muted: #b1c6bc; --pink: #22d3b0; --cyan: #22d3b0; --gold: #f2c14e; --violet: #087d65; --panel: rgba(5, 38, 29, .86); --line: rgba(242, 193, 78, .3); --menu-bg: #06271f; --dialog-bg: #06271f; }
 body { background: radial-gradient(120% 70% at 50% -10%, #116a58 0%, #06271f 35%, #04110e 70%) fixed, #04110e; }
 .top { background: rgba(4, 17, 14, .88); }
 .genre-menu { background: #06271f; }
@@ -17,8 +17,8 @@ dialog#binder { background: var(--bg2); }
 .foil { background: repeating-linear-gradient(115deg, #22d3b0 0%, #f2c14e 8%, #087d65 16%, #22d3b0 24%); background-size: 260% 260%; }
 
 @media (width <= 520px) {
-  .top { padding-inline: 8px; gap: 6px; }
-  .genre summary { padding-inline: 8px; font-size: 14px; }
+  .top { padding-inline: 8px; gap: 4px; }
+  .genre summary { padding-inline: 7px; font-size: 13px; }
 }
 
 @media (width < 370px) {

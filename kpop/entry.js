@@ -1,4 +1,5 @@
 import { start } from '../pop/src/app.js';
+import { DECKS } from '../pop/src/deck.js';
 import * as G from '../pop/src/game.js';
 import { videoThumbnail } from '../src/validation.js';
 
@@ -24,7 +25,7 @@ start({
   source: { name: 'kworb.net', href: 'https://kworb.net/' },
   fills: [['#ff4fa3', '#a1135c'], ['#b693ff', '#5a2fb8'], ['#ffe45c', '#b08a00'], ['#6ff2c8', '#0d8a69'], ['#7fd0ff', '#1a6aa8'], ['#ff8ad1', '#b0307e']],
   crowdColors: ['#ff4fa3', '#ffe45c', '#6ff2c8', '#b693ff', '#7fd0ff'],
-  pool: (artists) => artists.filter((a) => a.main),
+  pool: DECKS.kpop.pool,
   prepare: (data) => migrateCollection(data, 'kpop.collection.v1'),
   artistModel: (a, portrait, songs) => ({
     kind: 'artist', id: a.name, tier: G.artistRarity(a.power), title: a.name,

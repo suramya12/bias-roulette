@@ -10,6 +10,9 @@ import { createPlayer } from './player.js';
 import { createAutoAdvance } from '../../src/auto-advance.js';
 
 const wait = (ms) => new Promise((r) => setTimeout(r, reduced.matches ? Math.min(ms, 60) : ms));
+// A wheel stays readable up to about 24 slices (15° each). Bigger decks still draw from every
+// entry; the wheel shows a fresh random 24 that always includes the one the draw picked.
+export const MAX_SLICES = 24;
 
 // Autoplay, kept in the browser. on: when the MV ends, the next round
 // plays by itself. same: keep the artist and draw another of their songs.
@@ -41,7 +44,7 @@ function renderAuto() {
   });
 }
 
-export function createRoulette(section, { pool, songsById, portraits, win, artistCard, songCard, fills, noun = 'artist' }) {
+export function createRoulette(section, { pool, songsById, portraits, win, artistCard, songCard, fills, noun = 'artist', sound = null }) {
   section.append(document.querySelector('#rouletteTpl').content.cloneNode(true));
   const $ = (s) => section.querySelector(s);
   $('.autoplay').dataset.noun = noun;
@@ -86,9 +89,24 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     li.classList.toggle('done', i < idx);
   });
 
+  /** Big draw: more open entries than the wheel can show legibly. */
+  const windowed = () => duel.phase === 'draw' && duel.n - duel.fin.length > MAX_SLICES;
+  let view = null; // item indexes on the wheel while windowed, else null
+
   function drawWheel() {
+    if (windowed()) { showWindow(null); return; }
+    view = null;
     const w = duel.wheel();
     wheel.set(w.map((s) => label(items[s.index])), w.map((s) => s.taken));
+  }
+
+  /** A random MAX_SLICES of the entries not drawn yet, with `target` (the draw's pick) among them. */
+  function showWindow(target) {
+    const open = [];
+    for (let i = 0; i < items.length; i++) if (i !== target && !duel.fin.includes(i)) open.push(i);
+    view = G.shuffle(open).slice(0, MAX_SLICES - (target == null ? 0 : 1));
+    if (target != null) view.splice(Math.floor(Math.random() * (view.length + 1)), 0, target);
+    wheel.set(view.map((i) => label(items[i])), view.map(() => false));
   }
 
   function pips(f) {
@@ -103,7 +121,9 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     $('.readout').textContent = '';
     drawWheel();
     const what = stage === 'artist' ? `${noun}s` : 'songs';
-    hint(`All ${list.length} ${what} are on the wheel. Spin to draw ${duel.needed} finalists.`);
+    hint(view
+      ? `All ${list.length} ${what} are in the draw; the wheel shows ${MAX_SLICES} at a time. Spin to draw ${duel.needed} finalists.`
+      : `All ${list.length} ${what} are on the wheel. Spin to draw ${duel.needed} finalists.`);
   }
 
   /** keepResult: after a finished round the MV keeps playing below; otherwise clear the old result. */
@@ -143,6 +163,7 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     $('.player-slot').hidden = true;
     showBig(artistCard(chosen, { size: 'big' }), [creditLine(portraits[chosen.name])]);
     const isNew = win('artist', chosen.name);
+    sound?.chime();
     $('.restart').hidden = false;
     steps('song');
     const songs = G.wheelSongs(chosen, songsById, Infinity);
@@ -163,7 +184,11 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
 
   async function finishSong() {
     const song = items[duel.winner];
-    showBig(songCard(song, { size: 'big' }));
+    // The winner of round one stays named next to its song instead of vanishing.
+    const drawnFor = Object.assign(document.createElement('p'), { className: 'drawn-for' });
+    drawnFor.append('♥ Drawn for ', Object.assign(document.createElement('b'), { textContent: chosen.name }));
+    showBig(songCard(song, { size: 'big' }), [drawnFor]);
+    sound?.fanfare(song.o <= 10 ? 'legendary' : undefined);
     const isNew = win('song', song.id);
     $('.player-slot').hidden = false;
     // The user may have switched tabs during the spin: never start sound in a hidden section.
@@ -177,18 +202,27 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
     $('.another').hidden = G.wheelSongs(chosen, songsById, Infinity).length < 2; // one song: nothing to redo
     $('.another').textContent = `Another ${chosen.name} song`;
     steps('mv');
-    if (!document.hidden) $('.result').scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'nearest' });
+    // Land with the result's top just under the sticky header (html scroll-padding-top), never behind it.
+    if (!document.hidden) $('.result').scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'start' });
   }
 
   /** One spin of the current stage. */
   async function step(fast = false) {
     const generation = roundGeneration;
+    const wasWindowed = windowed();
     const ev = duel.spin();
     hint('Spinning…'); // the old result never sits beside a new spin
     const name = label(items[ev.index]);
+    let segment = ev.segment;
+    if (wasWindowed) { showWindow(ev.index); segment = view.indexOf(ev.index); }
+    let last = '';
+    const onTick = (t) => {
+      $('.readout').textContent = t;
+      if (t !== last) { last = t; sound?.tick(); }
+    };
     // Hidden tab: no animation, but the wheel and title still land on the result so they never disagree with the hint.
-    if (!document.hidden) await wheel.spin(ev.segment, (t) => { $('.readout').textContent = t; }, fast);
-    else { wheel.spin(ev.segment, null, true); $('.readout').textContent = name; }
+    if (!document.hidden) await wheel.spin(segment, onTick, fast);
+    else { wheel.spin(segment, null, true); $('.readout').textContent = name; }
     if (generation !== roundGeneration) return;
     if (ev.kind === 'draw') {
       await addFinalist(ev, fast);
@@ -211,6 +245,7 @@ export function createRoulette(section, { pool, songsById, portraits, win, artis
   async function run(fn) {
     if (busy) return;
     busy = true;
+    sound?.unlock();
     $('.spin').disabled = $('.auto').disabled = true;
     try { await fn(); } finally { $('.spin').disabled = $('.auto').disabled = false; busy = false; }
   }

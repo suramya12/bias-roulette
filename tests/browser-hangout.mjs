@@ -196,7 +196,7 @@ try {
     assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'), true, page + ' phone overflow');
     if (!page) {
       const json = await evaluate('performance.getEntriesByType("resource").filter(x => x.name.endsWith(".json")).map(x => new URL(x.name).pathname)');
-      assert.deepEqual(json.sort(), ['/bollywood/data/landing.json', '/data/landing.json']);
+      assert.deepEqual(json.sort(), ['/data/landing.json']);
       assert.deepEqual(await evaluate('[...document.querySelectorAll(".stage-card")].map(card => card.dataset.side)'), ['kpop', 'pop', 'anime', 'bollywood']);
       await until('[...document.querySelectorAll(".card-face img")].filter(image => image.complete && image.naturalWidth).length >= 6');
       await evaluate('localStorage.setItem("bias-roulette.lastSide","bollywood"); dispatchEvent(new PageTransitionEvent("pageshow", {persisted:true}))');
