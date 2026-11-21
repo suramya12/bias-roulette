@@ -1,6 +1,13 @@
 {
   "_how": "Add lines like  \"ARTIST | SONG\": \"https://youtu.be/VIDEO_ID\"  (key exactly as shown in REVIEW.md). Use null instead of a link to drop a song. Then run: npm run resolve",
   "SEJEONG | Flower Way": "https://youtu.be/zumBqDr0FCk",
+  "g.o.d | Road": "https://youtu.be/LwJ2FsAljLc",
+  "D.O. | Sing Along!": "https://youtu.be/JESHGc9PXNg",
+  "D.O. | Popcorn": "https://youtu.be/3AoruwUKQ3I",
+  "KARA | Mister": "https://youtu.be/pHtDaScwNjU",
+  "JOY | Je T'aime": "https://youtu.be/ZYBY490Undc",
+  "WHEE IN | In The Mood": "https://youtu.be/_znHIJ8rY24",
+  "LISA | MONEY": "https://youtu.be/dNCWe_6HAM8",
   "HWASA | I'm a B": "https://youtu.be/s1kwS3riCQI",
   "ITZY | Mafia In the Morning": "https://youtu.be/_ysomCGaZLw",
   "Agust D | People Pt.2": "https://youtu.be/uVD-YgzDzyY",

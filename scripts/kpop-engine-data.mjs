@@ -94,11 +94,19 @@ for (const idol of roster.idols) {
   artists.push({ idol, g, list, nBand, nSolo });
 }
 
+// ---- MV views for songs the chart does not score (npm run kpop:views) ----
+const extraViews = (await read('data/kpop-views.json').catch(() => ({}))).views || {};
+let filledViews = 0;
+for (const s of order) {
+  if (s.v === undefined && extraViews[s.id]) { s.v = extraViews[s.id]; filledViews++; }
+}
+
 // ---- overall rank for everything that is not in the chart top ----
+// Chart-scored songs first, then the rest by MV views, then roster order.
 const rest = order.filter((s) => s.o === undefined);
 const scoreOf = (s) => (s.s !== undefined ? (s.s + s.v) / 2 : -1);
 const pos = new Map(order.map((s, i) => [s.id, i]));
-rest.sort((a, b) => scoreOf(b) - scoreOf(a) || pos.get(a.id) - pos.get(b.id));
+rest.sort((a, b) => scoreOf(b) - scoreOf(a) || (b.v || 0) - (a.v || 0) || pos.get(a.id) - pos.get(b.id));
 rest.forEach((s, i) => { s.o = 101 + i; });
 
 // ---- power by group chart strength ----
@@ -158,6 +166,7 @@ await write('kpop/data/portraits.json', popPortraits);
 
 const few = out.filter((a) => a.songs.length < 3).map((a) => `${a.name}(${a.songs.length})`);
 console.log(`kpop: ${out.length} idols, ${songList.length} songs, ${Object.keys(popPortraits).length} portraits -> kpop/data/`);
+console.log(`MV views from data/kpop-views.json on ${filledViews} songs; ${songList.filter((s) => !s.v).length} songs still without views`);
 if (skipped.length) console.log(`skipped idols with no songs: ${skipped.join(', ')}`);
 if (few.length) console.log(`idols with <3 songs: ${few.join(', ')}`);
 if (swapped.size) console.log(`roster video replaced by chart video for the same song (${swapped.size}):\n  ${[...swapped].join('\n  ')}`);

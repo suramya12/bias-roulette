@@ -1088,12 +1088,12 @@
   "source": "search"
  },
  "JOY | Je T'aime": {
-  "id": "kiRYllgp8dI",
-  "title": "[MV] 해이 _ Je T'aime",
-  "channel": "1theK (원더케이)",
+  "id": "ZYBY490Undc",
+  "title": "JOY 조이 'Je T’aime' Live Video",
+  "channel": "Red Velvet",
   "verified": true,
   "flags": [],
-  "source": "search"
+  "source": "override"
  },
  "JOY | Love Splash!": {
   "id": "-2fAmkQS854",
@@ -7119,12 +7119,12 @@
   "source": "search"
  },
  "WHEE IN | In The Mood": {
-  "id": "6YfWrMpR7c0",
-  "title": "COUPLE REACTS TO 휘인(Whee In) - In The Mood MV",
-  "channel": "Kess and Han Reacts",
+  "id": "_znHIJ8rY24",
+  "title": "휘인(Whee In) - In The Mood MV",
+  "channel": "THEL1VE",
   "verified": true,
   "flags": [],
-  "source": "search"
+  "source": "override"
  },
  "SUNMI | 24 hours": {
   "id": "2UmDrsMlXXg",
@@ -8542,20 +8542,20 @@
   "source": "search"
  },
  "D.O. | Popcorn": {
-  "id": "3NNLYiw0YxM",
-  "title": "Warhaus - Popcorn (Official Video)",
-  "channel": "Warhaus",
+  "id": "3AoruwUKQ3I",
+  "title": "도경수 Doh Kyung Soo 'Popcorn' MV",
+  "channel": "컴퍼니수수 Company Soosoo",
   "verified": true,
   "flags": [],
-  "source": "search"
+  "source": "override"
  },
  "D.O. | Sing Along!": {
-  "id": "SpSMoBp8awM",
-  "title": "Sturgill Simpson - Sing Along (Official Video)",
-  "channel": "Johnny Blue Skies",
+  "id": "JESHGc9PXNg",
+  "title": "도경수 Doh Kyung Soo 'SING ALONG!' MV",
+  "channel": "컴퍼니수수 Company Soosoo",
   "verified": true,
   "flags": [],
-  "source": "search"
+  "source": "override"
  },
  "VIVIZ | Shhh!": {
   "id": "_ow5Yp9RWhM",
@@ -8590,12 +8590,12 @@
   "source": "search"
  },
  "LISA | MONEY": {
-  "id": "YUKKmvRB3WA",
-  "title": "Lisa - \"MONEY\" F/MV",
-  "channel": "Kpop Cloud",
+  "id": "dNCWe_6HAM8",
+  "title": "LISA - 'MONEY' EXCLUSIVE PERFORMANCE VIDEO",
+  "channel": "BLACKPINK",
   "verified": true,
   "flags": [],
-  "source": "search"
+  "source": "override"
  },
  "LISA | Dream": {
   "id": "FMX98ROVRCE",
@@ -9248,12 +9248,12 @@
   "source": "search"
  },
  "g.o.d | Road": {
-  "id": "r7qovpFAGrQ",
-  "title": "Lil Nas X - Old Town Road (Official Video) ft. Billy Ray Cyrus",
-  "channel": "Lil Nas X",
+  "id": "LwJ2FsAljLc",
+  "title": "god(지오디) '길(Road)' OFFICIAL MV",
+  "channel": "god",
   "verified": true,
   "flags": [],
-  "source": "search"
+  "source": "override"
  },
  "BoA | No.1": {
   "id": "ceZc-5p3g1w",
@@ -9280,12 +9280,12 @@
   "source": "search"
  },
  "KARA | Mister": {
-  "id": "MONePHBPUBo",
-  "title": "BLINGONE - 미스터 Mister Official M/V",
-  "channel": "GENIE MUSIC",
+  "id": "pHtDaScwNjU",
+  "title": "KARA - ミスター M/V",
+  "channel": "KARA Official",
   "verified": true,
   "flags": [],
-  "source": "search"
+  "source": "override"
  },
  "KARA | Step": {
   "id": "zYoYoBtLqOY",

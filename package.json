@@ -1,6 +1,6 @@
 {
   "name": "bias-roulette",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "type": "module",
   "description": "K-pop roulette game with a built-in YouTube player. Static site, no dependencies.",
@@ -19,6 +19,7 @@
     "portraits": "node scripts/portraits.mjs",
     "sets": "node scripts/sets.mjs",
     "data:kpop": "node scripts/kpop-engine-data.mjs",
+    "kpop:views": "node scripts/kpop-views.mjs",
     "data:anime-engine": "node anime/scripts/engine-data.mjs"
   }
 }
